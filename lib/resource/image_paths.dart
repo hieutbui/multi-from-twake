@@ -64,6 +64,21 @@ class ImagePaths {
   static String get icShieldLockFill =>
       _getImagePath('ic_shield_lock_fill.svg');
 
+  // Entrance Main Screen assets
+  static String get splashBackground =>
+      _getImagePath('img_splash_background.png');
+  static String get splashBackgrounDDark =>
+      _getImagePath('img_splash_background_dark.png');
+  static String get multiWordLogo => _getImagePath('img_multi_word_logo.svg');
+  static String get multiSlogan => _getImagePath('img_multi_slogan.svg');
+  static String get multiAvatars => _getImagePath('img_multi_avatars.png');
+  static String get entranceAppleIcon =>
+      _getImagePath('entrance_apple_icon.svg');
+  static String get entranceEmailIcon =>
+      _getImagePath('entrance_email_icon.svg');
+  static String get entranceGoogleIcon =>
+      _getImagePath('entrance_google_icon.svg');
+
   static String _getImagePath(String imageName) {
     return AssetsPaths.images + imageName;
   }
