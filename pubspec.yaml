@@ -217,6 +217,7 @@ dependencies:
   heif_converter: 1.0.0
   pull_down_button: 0.10.2
   pretty_qr_code: 3.3.0
+  auth_buttons: ^3.0.3
 
 dev_dependencies:
   build_runner: 2.4.12
@@ -272,6 +273,26 @@ flutter:
         - asset: assets/google_fonts/Inter-SemiBold.ttf
           weight: 600
         - asset: assets/google_fonts/Inter-Bold.ttf
+          weight: 700
+    - family: SFPro
+      fonts:
+        - asset: assets/sf_pro_text_fonts/SF-Pro-Text-Regular.otf
+          weight: 400
+        - asset: assets/sf_pro_text_fonts/SF-Pro-Text-Medium.otf
+          weight: 500
+        - asset: assets/sf_pro_text_fonts/SF-Pro-Text-Semibold.otf
+          weight: 600
+        - asset: assets/sf_pro_text_fonts/SF-Pro-Text-Bold.otf
+          weight: 700
+    - family: SFProDisplay
+      fonts:
+        - asset: assets/sf_pro_display_fonts/SF-Pro-Display-Regular.otf
+          weight: 400
+        - asset: assets/sf_pro_display_fonts/SF-Pro-Display-Medium.otf
+          weight: 500
+        - asset: assets/sf_pro_display_fonts/SF-Pro-Display-Semibold.otf
+          weight: 600
+        - asset: assets/sf_pro_display_fonts/SF-Pro-Display-Bold.otf
           weight: 700
 
 msix_config:
