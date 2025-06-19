@@ -19,6 +19,7 @@ import 'package:fluffychat/pages/settings_dashboard/settings_app_language/settin
 import 'package:fluffychat/pages/settings_dashboard/settings_profile/settings_profile.dart';
 import 'package:fluffychat/pages/story/story_page.dart';
 import 'package:fluffychat/pages/twake_welcome/twake_welcome.dart';
+import 'package:fluffychat/pages/entrance/entrance.dart';
 import 'package:fluffychat/presentation/model/chat/chat_router_input_argument.dart';
 import 'package:fluffychat/presentation/model/forward/forward_argument.dart';
 import 'package:fluffychat/presentation/model/contact/presentation_contact.dart';
@@ -61,7 +62,7 @@ abstract class AppRoutes {
     BuildContext context,
     GoRouterState state,
   ) =>
-      Matrix.of(context).client.isLogged() ? null : '/home/twakeWelcome';
+      Matrix.of(context).client.isLogged() ? null : '/home/welcome';
 
   AppRoutes();
 
@@ -71,7 +72,7 @@ abstract class AppRoutes {
     GoRoute(
       path: '/',
       redirect: (context, state) =>
-          Matrix.of(context).client.isLogged() ? '/rooms' : '/home',
+          Matrix.of(context).client.isLogged() ? '/rooms' : '/home/welcome',
     ),
     GoRoute(
       path: '/home',
@@ -85,6 +86,14 @@ abstract class AppRoutes {
       ),
       redirect: loggedInRedirect,
       routes: [
+        GoRoute(
+          path: 'welcome',
+          pageBuilder: (context, state) => defaultPageBuilder(
+            context,
+            const Entrance(),
+          ),
+          redirect: loggedInRedirect,
+        ),
         GoRoute(
           path: 'login',
           pageBuilder: (context, state) => defaultPageBuilder(
