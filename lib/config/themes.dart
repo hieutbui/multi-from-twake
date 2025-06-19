@@ -24,70 +24,69 @@ abstract class TwakeThemes {
 
   static var fallbackTextTheme = const TextTheme(
     bodyLarge: TextStyle(
-      fontFamily: 'Inter',
+      fontFamily: 'SFPro',
       fontWeight: FontWeight.w500,
       letterSpacing: -0.15,
     ),
     bodyMedium: TextStyle(
-      fontFamily: 'Inter',
+      fontFamily: 'SFPro',
       fontWeight: FontWeight.w500,
       letterSpacing: 0.25,
     ),
     bodySmall: TextStyle(
-      fontFamily: 'Inter',
+      fontFamily: 'SFPro',
       fontWeight: FontWeight.w500,
       letterSpacing: 0.4,
     ),
     labelLarge: TextStyle(
-      fontFamily: 'Inter',
+      fontFamily: 'SFPro',
       fontWeight: FontWeight.w500,
       letterSpacing: 0.1,
     ),
     labelSmall: TextStyle(
-      fontFamily: 'Inter',
+      fontFamily: 'SFPro',
       fontWeight: FontWeight.w500,
       letterSpacing: 0.5,
     ),
     displayLarge: TextStyle(
-      fontFamily: 'Inter',
+      fontFamily: 'SFPro',
       fontWeight: FontWeight.w700,
     ),
     displayMedium: TextStyle(
-      fontFamily: 'Inter',
+      fontFamily: 'SFPro',
       fontWeight: FontWeight.w600,
       letterSpacing: 0.4,
     ),
     displaySmall: TextStyle(
-      fontFamily: 'Inter',
+      fontFamily: 'SFPro',
       fontWeight: FontWeight.w600,
       letterSpacing: 0.4,
     ),
     headlineMedium: TextStyle(
-      fontFamily: 'Inter',
+      fontFamily: 'SFPro',
       fontWeight: FontWeight.w600,
     ),
     headlineSmall: TextStyle(
-      fontFamily: 'Inter',
+      fontFamily: 'SFPro',
       fontWeight: FontWeight.w600,
       letterSpacing: 0.4,
     ),
     headlineLarge: TextStyle(
-      fontFamily: 'Inter',
+      fontFamily: 'SFPro',
       fontWeight: FontWeight.w600,
       fontSize: 32,
     ),
     titleLarge: TextStyle(
-      fontFamily: 'Inter',
+      fontFamily: 'SFProDisplay',
       fontWeight: FontWeight.w600,
       letterSpacing: -0.15,
     ),
     titleMedium: TextStyle(
-      fontFamily: 'Inter',
+      fontFamily: 'SFProDisplay',
       fontWeight: FontWeight.w500,
-      letterSpacing: 0.15,
     ),
     titleSmall: TextStyle(
-      fontFamily: 'Inter',
+      fontFamily: 'SFProDisplay',
       fontWeight: FontWeight.w500,
       letterSpacing: 0.1,
     ),
@@ -104,7 +103,7 @@ abstract class TwakeThemes {
       ThemeData(
         visualDensity: VisualDensity.standard,
         useMaterial3: true,
-        fontFamily: 'Inter',
+        fontFamily: 'SFPro',
         textTheme: brightness == Brightness.light
             ? Typography.material2021().black.merge(fallbackTextTheme)
             : Typography.material2021().white.merge(fallbackTextTheme),
