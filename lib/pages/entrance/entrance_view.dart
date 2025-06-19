@@ -1,4 +1,5 @@
 import 'package:fluffychat/pages/entrance/entrance.dart';
+import 'package:fluffychat/pages/entrance/entrance_view_style.dart';
 import 'package:fluffychat/resource/image_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -30,9 +31,9 @@ class EntranceMainView extends StatelessWidget {
                 height: controller.sizeScreenHeight * 0.09,
               ),
               SvgPicture.asset(ImagePaths.multiWordLogo),
-              const SizedBox(height: 12),
+              const SizedBox(height: EntranceViewStyle.shortSpacing),
               SvgPicture.asset(ImagePaths.multiSlogan),
-              const SizedBox(height: 32),
+              const SizedBox(height: EntranceViewStyle.mediumSpacing),
               Image.asset(ImagePaths.multiAvatars),
             ],
           ),
@@ -40,38 +41,21 @@ class EntranceMainView extends StatelessWidget {
           Expanded(
             child: Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-              decoration: const ShapeDecoration(
-                color: Color(0xFF171718) /* Background-Page-Default */,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(24),
-                    topRight: Radius.circular(24),
-                  ),
-                ),
-              ),
+              padding: EntranceViewStyle.padding,
+              decoration: EntranceViewStyle.backgroundDecoration,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: EntranceViewStyle.logoPadding,
                 child: Column(
                   children: [
                     Text(
                       'Welcome to Multi',
-                      style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                            color: Colors.white.withAlpha(222),
-                            fontSize: 34,
-                            letterSpacing: 0.37,
-                          ),
+                      style: EntranceViewStyle().welcomeTextStyle(context),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: EntranceViewStyle.shortSpacing),
                     Text(
                       'Sign up to unlock your AI-powered space — secure, personal, and always with you.',
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                            color: Colors.white.withAlpha(153),
-                            fontSize: 17,
-                            letterSpacing: -0.41,
-                            fontWeight: FontWeight.w400,
-                          ),
+                      style: EntranceViewStyle().subtitleTextStyle(context),
                     ),
                     SizedBox(height: controller.sizeScreenHeight * 0.05),
                     Column(
@@ -87,17 +71,11 @@ class EntranceMainView extends StatelessWidget {
                             iconColor: Colors.black.withAlpha(222),
                             height: 48,
                             width: double.infinity,
-                            textStyle: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                  color: Colors.black.withAlpha(222),
-                                  /* Text-Reversed-Primary */
-                                  fontSize: 17,
-                                ),
+                            textStyle:
+                                EntranceViewStyle().buttonTextStyle(context),
                           ),
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: EntranceViewStyle.shortSpacing),
                         EmailAuthButton(
                           onPressed: controller.onContinueWithEmail,
                           text: 'Continue with Email',
@@ -109,17 +87,11 @@ class EntranceMainView extends StatelessWidget {
                             iconSize: 18,
                             height: 48,
                             width: double.infinity,
-                            textStyle: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                  color: Colors.white.withAlpha(222),
-                                  /* Text-Main-Primary_Default */
-                                  fontSize: 17,
-                                ),
+                            textStyle: EntranceViewStyle()
+                                .buttonGreyTextStyle(context),
                           ),
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: EntranceViewStyle.shortSpacing),
                         GoogleAuthButton(
                           onPressed: controller.onContinueWithGoogle,
                           text: 'Continue with Google',
@@ -131,50 +103,29 @@ class EntranceMainView extends StatelessWidget {
                             iconColor: Colors.white.withAlpha(222),
                             height: 48,
                             width: double.infinity,
-                            textStyle: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                  color: Colors.white.withAlpha(222),
-                                  fontSize: 17,
-                                ),
+                            textStyle: EntranceViewStyle()
+                                .buttonGreyTextStyle(context),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: EntranceViewStyle.shortSpacing),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: EntranceViewStyle.logoPadding,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
                             'Already have an account?',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge
-                                ?.copyWith(
-                                  color: Colors.white
-                                      .withAlpha(153) /* Text-Main-Secondary */,
-                                  fontSize: 17,
-                                  letterSpacing: -0.41,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                            style: EntranceViewStyle()
+                                .haveAccountTextStyle(context),
                           ),
                           TextButton(
                             onPressed: controller.onLogin,
                             child: Text(
                               'Log In',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.copyWith(
-                                    color: Colors.white.withAlpha(
-                                      222,
-                                    ) /* Text-Main-Primary_Default */,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                              style:
+                                  EntranceViewStyle().loginTextStyle(context),
                             ),
                           ),
                         ],

@@ -1,60 +1,66 @@
 import 'package:flutter/material.dart';
 
-class WelcomeStyle {
-  // Spacing constants
-  static const double topSpacing = 40.0;
-  static const double titleSpacing = 60.0;
-  static const double subtitleSpacing = 20.0;
-  static const double buttonsSpacing = 64.0;
-  static const double buttonSpacing = 20.0;
-  static const double loginTextSpacing = 32.0;
-  static const double bottomSpacing = 40.0;
+class EntranceViewStyle {
+  static const double shortSpacing = 12.0;
+  static const double mediumSpacing = 32.0;
 
-  // Button styling
-  static const double buttonHeight = 64.0;
-  static const double buttonBorderRadius = 32.0;
-  static const double buttonIconSize = 28.0;
-  static const double buttonIconSpacing = 16.0;
-  static const double buttonTextSize = 18.0;
+  static const EdgeInsetsGeometry padding =
+      EdgeInsets.symmetric(horizontal: 20, vertical: 40);
+  static const EdgeInsetsGeometry logoPadding =
+      EdgeInsets.symmetric(horizontal: 20);
 
-  // Layout constants
-  static const EdgeInsets contentPadding = EdgeInsets.symmetric(horizontal: 32.0);
-  static const double decorativeElementsHeight = 280.0;
-
-  // Text styles
-  static const TextStyle titleTextStyle = TextStyle(
-    fontSize: 36.0,
-    fontWeight: FontWeight.bold,
-    color: Colors.white,
-    fontFamily: 'SF Pro',
-    letterSpacing: -0.8,
-    height: 1.1,
+  static const Decoration backgroundDecoration = BoxDecoration(
+    color: Color(0xFF171718), // Background-Page-Default
+    shape: BoxShape.rectangle,
+    borderRadius: BorderRadius.only(
+      topLeft: Radius.circular(24),
+      topRight: Radius.circular(24),
+    ),
   );
 
-  static const TextStyle subtitleTextStyle = TextStyle(
-    fontSize: 18.0,
-    fontWeight: FontWeight.w400,
-    color: Color(0xFFB3B3B3),
-    fontFamily: 'SF Pro',
-    letterSpacing: -0.5,
-    height: 1.4,
-  );
+  TextStyle? welcomeTextStyle(BuildContext context) =>
+      Theme.of(context).textTheme.displayLarge?.copyWith(
+            color: Colors.white.withAlpha(222),
+            fontSize: 34,
+            letterSpacing: 0.37,
+          );
 
-  static const TextStyle loginTextStyle = TextStyle(
-    fontSize: 16.0,
-    fontWeight: FontWeight.w400,
-    color: Colors.white,
-    fontFamily: 'SF Pro',
-    letterSpacing: -0.41,
-    height: 1.25,
-  );
+  TextStyle? subtitleTextStyle(BuildContext context) =>
+      Theme.of(context).textTheme.titleMedium?.copyWith(
+            color: Colors.white.withAlpha(153),
+            fontSize: 17,
+            letterSpacing: -0.41,
+            fontWeight: FontWeight.w400,
+          );
 
-  static const TextStyle loginLinkTextStyle = TextStyle(
-    fontSize: 16.0,
-    fontWeight: FontWeight.w600,
-    color: Color(0xFF007AFF),
-    fontFamily: 'SF Pro',
-    letterSpacing: -0.41,
-    height: 1.25,
-  );
+  TextStyle? buttonTextStyle(BuildContext context) =>
+      Theme.of(context).textTheme.titleMedium?.copyWith(
+            color: Colors.black.withAlpha(222),
+            /* Text-Reversed-Primary */
+            fontSize: 17,
+          );
+
+  TextStyle? buttonGreyTextStyle(BuildContext context) =>
+      Theme.of(context).textTheme.titleMedium?.copyWith(
+            color: Colors.white.withAlpha(222),
+            /* Text-Main-Primary_Default */
+            fontSize: 17,
+          );
+
+  TextStyle? haveAccountTextStyle(BuildContext context) =>
+      Theme.of(context).textTheme.labelLarge?.copyWith(
+            color: Colors.white.withAlpha(153),
+            /* Text-Main-Secondary */
+            fontSize: 17,
+            letterSpacing: -0.41,
+            fontWeight: FontWeight.w400,
+          );
+
+  TextStyle? loginTextStyle(BuildContext context) =>
+      Theme.of(context).textTheme.labelLarge?.copyWith(
+            color: Colors.white.withAlpha(222),
+            /* Text-Main-Secondary */
+            fontSize: 17,
+            fontWeight: FontWeight.w400,
+          );
 }
