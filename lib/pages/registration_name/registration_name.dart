@@ -38,7 +38,7 @@ class RegistrationNameController extends State<RegistrationName> {
   }
 
   void onTapCreateAccount() {
-    //TODO: Implement onTapCreateAccount
+    context.push('/home/registrationNotification');
   }
 
   void onTapSignUp() {
