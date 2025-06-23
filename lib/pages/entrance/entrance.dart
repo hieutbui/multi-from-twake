@@ -16,6 +16,16 @@ class EntranceController extends State<Entrance> {
 
   double get sizeScreenHeight => responsive.getSizeScreenHeight(context);
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   void onContinueWithApple() {
     // TODO: Implement Apple Sign In
     context.push('/home');
@@ -23,7 +33,7 @@ class EntranceController extends State<Entrance> {
 
   void onContinueWithEmail() {
     // Navigate to email signup/login
-    context.push('/home');
+    context.go('/home/emailRegistration');
   }
 
   void onContinueWithGoogle() {
