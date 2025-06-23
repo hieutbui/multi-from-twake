@@ -43,7 +43,7 @@ class EntranceController extends State<Entrance> {
 
   void onLogin() {
     // Navigate to login screen
-    context.push('/home/login');
+    context.push('/home/multiLogin');
   }
 
   @override
