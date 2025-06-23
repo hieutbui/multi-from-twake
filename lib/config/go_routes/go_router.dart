@@ -15,6 +15,7 @@ import 'package:fluffychat/pages/error_page/error_page.dart';
 import 'package:fluffychat/pages/homeserver_picker/homeserver_picker.dart';
 import 'package:fluffychat/pages/login/on_auth_redirect.dart';
 import 'package:fluffychat/pages/new_group/new_group_chat_info.dart';
+import 'package:fluffychat/pages/registration_with_email/registration_with_email.dart';
 import 'package:fluffychat/pages/settings_dashboard/settings_app_language/settings_app_language.dart';
 import 'package:fluffychat/pages/settings_dashboard/settings_profile/settings_profile.dart';
 import 'package:fluffychat/pages/story/story_page.dart';
@@ -79,7 +80,7 @@ abstract class AppRoutes {
       pageBuilder: (context, state) => defaultPageBuilder(
         context,
         PlatformInfos.isMobile
-            ? const TwakeWelcome()
+            ? const Entrance()
             : AutoHomeserverPicker(
                 loggedOut: state.extra is bool ? state.extra as bool? : null,
               ),
@@ -91,6 +92,14 @@ abstract class AppRoutes {
           pageBuilder: (context, state) => defaultPageBuilder(
             context,
             const Entrance(),
+          ),
+          redirect: loggedInRedirect,
+        ),
+        GoRoute(
+          path: 'emailRegistration',
+          pageBuilder: (context, state) => defaultPageBuilder(
+            context,
+            const RegistrationWithEmail(),
           ),
           redirect: loggedInRedirect,
         ),
