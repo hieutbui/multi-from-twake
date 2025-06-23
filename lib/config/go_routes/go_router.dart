@@ -12,6 +12,7 @@ import 'package:fluffychat/pages/chat_blank/chat_blank.dart';
 import 'package:fluffychat/pages/chat_draft/draft_chat_adaptive_scaffold.dart';
 import 'package:fluffychat/pages/chat_encryption_settings/chat_encryption_settings.dart';
 import 'package:fluffychat/pages/error_page/error_page.dart';
+import 'package:fluffychat/pages/forgot_password/forgot_password.dart';
 import 'package:fluffychat/pages/homeserver_picker/homeserver_picker.dart';
 import 'package:fluffychat/pages/login/on_auth_redirect.dart';
 import 'package:fluffychat/pages/multi_login/multi_login.dart';
@@ -109,6 +110,14 @@ abstract class AppRoutes {
           pageBuilder: (context, state) => defaultPageBuilder(
             context,
             const MultiLogin(),
+          ),
+          redirect: loggedInRedirect,
+        ),
+        GoRoute(
+          path: 'forgotPassword',
+          pageBuilder: (context, state) => defaultPageBuilder(
+            context,
+            const ForgotPassword(),
           ),
           redirect: loggedInRedirect,
         ),

@@ -1,16 +1,16 @@
-import 'package:fluffychat/pages/multi_login/multi_login_view.dart';
+import 'package:fluffychat/pages/forgot_password/forgot_password_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
-class MultiLogin extends StatefulWidget {
-  const MultiLogin({super.key});
+class ForgotPassword extends StatefulWidget {
+  const ForgotPassword({super.key});
 
   @override
-  State<MultiLogin> createState() => MultiLoginController();
+  State<ForgotPassword> createState() => ForgotPasswordController();
 }
 
-class MultiLoginController extends State<MultiLogin> {
+class ForgotPasswordController extends State<ForgotPassword> {
   final GlobalKey<FormBuilderState> registrationFormKey =
       GlobalKey<FormBuilderState>();
   final GlobalKey<FormBuilderFieldState> emailFieldKey =
@@ -64,9 +64,9 @@ class MultiLoginController extends State<MultiLogin> {
   }
 
   void onTapForgotPassword() {
-    context.push('/home/forgotPassword');
+    //TODO: Implement onTapForgotPassword
   }
 
   @override
-  Widget build(BuildContext context) => MultiLoginView(controller: this);
+  Widget build(BuildContext context) => ForgotPasswordView(controller: this);
 }
