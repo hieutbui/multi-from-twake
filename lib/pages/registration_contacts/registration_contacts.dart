@@ -1,17 +1,15 @@
-import 'package:fluffychat/pages/registration_notification/registration_notification_view.dart';
+import 'package:fluffychat/pages/registration_contacts/registration_contacts_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class RegistrationNotification extends StatefulWidget {
-  const RegistrationNotification({super.key});
+class RegistrationContacts extends StatefulWidget {
+  const RegistrationContacts({super.key});
 
   @override
-  State<RegistrationNotification> createState() =>
-      RegistrationNotificationController();
+  State<RegistrationContacts> createState() => RegistrationContactsController();
 }
 
-class RegistrationNotificationController
-    extends State<RegistrationNotification> {
+class RegistrationContactsController extends State<RegistrationContacts> {
   @override
   void initState() {
     super.initState();
@@ -34,8 +32,8 @@ class RegistrationNotificationController
     // TODO: Implement onContinueWithGoogle
   }
 
-  void turnOnNotifications() {
-    context.push('/home/registrationContacts');
+  void onTapCreateAccount() {
+    //TODO: Implement onTapCreateAccount
   }
 
   void onTapSignUp() {
@@ -48,5 +46,5 @@ class RegistrationNotificationController
 
   @override
   Widget build(BuildContext context) =>
-      RegistrationNotificationView(controller: this);
+      RegistrationContactsView(controller: this);
 }

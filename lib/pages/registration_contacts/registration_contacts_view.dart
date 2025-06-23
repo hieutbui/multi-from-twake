@@ -1,13 +1,13 @@
-import 'package:fluffychat/pages/registration_notification/registration_notification.dart';
+import 'package:fluffychat/pages/registration_contacts/registration_contacts.dart';
 import 'package:fluffychat/resource/image_paths.dart';
 import 'package:fluffychat/widgets/app_bars/registration_app_bar.dart';
 import 'package:fluffychat/widgets/multi_registration_button.dart';
 import 'package:flutter/material.dart';
 
-class RegistrationNotificationView extends StatelessWidget {
-  final RegistrationNotificationController controller;
+class RegistrationContactsView extends StatelessWidget {
+  final RegistrationContactsController controller;
 
-  const RegistrationNotificationView({super.key, required this.controller});
+  const RegistrationContactsView({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class RegistrationNotificationView extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Text(
-                    'Don’t miss a beat',
+                    'Find your contacts',
                     maxLines: null,
                     softWrap: true,
                     style: Theme.of(context).textTheme.displayLarge?.copyWith(
@@ -60,14 +60,13 @@ class RegistrationNotificationView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 90.0),
-                Center(child: Image.asset(ImagePaths.imgNotificationRequest)),
+                Center(child: Image.asset(ImagePaths.imgRegistrationContacts)),
                 const SizedBox(height: 44.0),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
                   child: MultiRegistrationButton(
-                    label: 'Turn on notifications',
+                    label: 'Enable access',
                     type: MultiRegistrationButtonType.mainPrimaryDefault,
-                    onPressed: controller.turnOnNotifications,
                   ),
                 ),
                 const SizedBox(height: 12.0),
