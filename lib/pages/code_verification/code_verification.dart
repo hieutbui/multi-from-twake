@@ -46,7 +46,7 @@ class CodeVerificationController extends State<CodeVerification> {
   }
 
   void onTapCreateAccount() {
-    //TODO: Implement onTapCreateAccount
+    context.push('/home/setNewPassword');
   }
 
   void onTapSignUp() {

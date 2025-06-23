@@ -79,6 +79,7 @@ class ImagePaths {
   static String get entranceGoogleIcon =>
       _getImagePath('entrance_google_icon.svg');
   static String get imgMultiBlur => _getImagePath('img_multi_blur.svg');
+  static String get imgHello => _getImagePath('img_hello.png');
 
   static String _getImagePath(String imageName) {
     return AssetsPaths.images + imageName;
