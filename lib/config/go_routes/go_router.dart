@@ -18,6 +18,7 @@ import 'package:fluffychat/pages/homeserver_picker/homeserver_picker.dart';
 import 'package:fluffychat/pages/login/on_auth_redirect.dart';
 import 'package:fluffychat/pages/multi_login/multi_login.dart';
 import 'package:fluffychat/pages/new_group/new_group_chat_info.dart';
+import 'package:fluffychat/pages/registration_contacts/registration_contacts.dart';
 import 'package:fluffychat/pages/registration_name/registration_name.dart';
 import 'package:fluffychat/pages/registration_notification/registration_notification.dart';
 import 'package:fluffychat/pages/registration_with_email/registration_with_email.dart';
@@ -154,6 +155,14 @@ abstract class AppRoutes {
           pageBuilder: (context, state) => defaultPageBuilder(
             context,
             const RegistrationNotification(),
+          ),
+          redirect: loggedInRedirect,
+        ),
+        GoRoute(
+          path: 'registrationContacts',
+          pageBuilder: (context, state) => defaultPageBuilder(
+            context,
+            const RegistrationContacts(),
           ),
           redirect: loggedInRedirect,
         ),

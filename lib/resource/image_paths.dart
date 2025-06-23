@@ -82,6 +82,8 @@ class ImagePaths {
   static String get imgHello => _getImagePath('img_hello.png');
   static String get imgNotificationRequest =>
       _getImagePath('img_notification_request.png');
+  static String get imgRegistrationContacts =>
+      _getImagePath('img_registration_contacts.png');
 
   static String _getImagePath(String imageName) {
     return AssetsPaths.images + imageName;
