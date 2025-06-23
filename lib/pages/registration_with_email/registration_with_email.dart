@@ -1,6 +1,7 @@
 import 'package:fluffychat/pages/registration_with_email/registration_with_email_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:go_router/go_router.dart';
 
 class RegistrationWithEmail extends StatefulWidget {
   const RegistrationWithEmail({super.key});
@@ -56,7 +57,7 @@ class RegistrationWithEmailController extends State<RegistrationWithEmail> {
   }
 
   void onTapCreateAccount() {
-    //TODO: Implement onTapCreateAccount
+    context.push('/home/codeVerification');
   }
 
   void onTapLogin() {
