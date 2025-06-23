@@ -11,6 +11,7 @@ import 'package:fluffychat/pages/chat_adaptive_scaffold/chat_adaptive_scaffold.d
 import 'package:fluffychat/pages/chat_blank/chat_blank.dart';
 import 'package:fluffychat/pages/chat_draft/draft_chat_adaptive_scaffold.dart';
 import 'package:fluffychat/pages/chat_encryption_settings/chat_encryption_settings.dart';
+import 'package:fluffychat/pages/code_verification/code_verification.dart';
 import 'package:fluffychat/pages/error_page/error_page.dart';
 import 'package:fluffychat/pages/forgot_password/forgot_password.dart';
 import 'package:fluffychat/pages/homeserver_picker/homeserver_picker.dart';
@@ -118,6 +119,14 @@ abstract class AppRoutes {
           pageBuilder: (context, state) => defaultPageBuilder(
             context,
             const ForgotPassword(),
+          ),
+          redirect: loggedInRedirect,
+        ),
+        GoRoute(
+          path: 'codeVerification',
+          pageBuilder: (context, state) => defaultPageBuilder(
+            context,
+            const CodeVerification(),
           ),
           redirect: loggedInRedirect,
         ),
