@@ -9,6 +9,7 @@ class MultiRegistrationPasswordInputField extends StatefulWidget {
   final TextEditingController controller;
   final bool? isRequired;
   final bool isObscured;
+  final bool? isShowPasswordStrength;
 
   const MultiRegistrationPasswordInputField({
     super.key,
@@ -17,6 +18,7 @@ class MultiRegistrationPasswordInputField extends StatefulWidget {
     required this.controller,
     this.isRequired,
     this.isObscured = true,
+    this.isShowPasswordStrength = true,
   });
 
   @override
@@ -130,48 +132,52 @@ class _MultiRegistrationPasswordInputFieldState
           ),
         ),
         const SizedBox(height: 12.0),
-        SizedBox(
-          width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                flex: 3,
-                child: PasswordStrengthIndicator(
-                  password: _password,
-                  colors: const StrengthColors(
-                    weak: Color(0xFFEE9D41) /* State-Attention-Text-Main */,
-                    medium: Colors.yellow,
-                    strong: Color(0xFF70BC7E) /* State-Success-Text-Default */,
-                  ),
-                  duration: const Duration(milliseconds: 300),
-                  thickness: 4.0,
-                  callback: _updateStrength,
-                  curve: Curves.easeOut,
-                  style: StrengthBarStyle.dashed,
-                ),
-              ),
-              const SizedBox(width: 12.0),
-              ValueListenableBuilder(
-                valueListenable: _strength,
-                builder: (context, strength, child) {
-                  return Text(
-                    _generatePasswordStrengthText(strength),
-                    style: TextStyle(
-                      fontSize: 13.0,
-                      fontFamily: 'SF Pro',
-                      fontWeight: FontWeight.w500,
-                      height: 1.38,
-                      letterSpacing: -0.08,
-                      color: _getStrengthColor(strength),
+        if (widget.isShowPasswordStrength == true)
+          SizedBox(
+            width: double.infinity,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: PasswordStrengthIndicator(
+                    password: _password,
+                    colors: const StrengthColors(
+                      weak: Color(0xFFEE9D41) /* State-Attention-Text-Main */,
+                      medium: Colors.yellow,
+                      strong:
+                          Color(0xFF70BC7E) /* State-Success-Text-Default */,
                     ),
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
+                    duration: const Duration(milliseconds: 300),
+                    thickness: 4.0,
+                    callback: _updateStrength,
+                    curve: Curves.easeOut,
+                    style: StrengthBarStyle.dashed,
+                  ),
+                ),
+                const SizedBox(width: 12.0),
+                ValueListenableBuilder(
+                  valueListenable: _strength,
+                  builder: (context, strength, child) {
+                    return Text(
+                      _generatePasswordStrengthText(strength),
+                      style: TextStyle(
+                        fontSize: 13.0,
+                        fontFamily: 'SF Pro',
+                        fontWeight: FontWeight.w500,
+                        height: 1.38,
+                        letterSpacing: -0.08,
+                        color: _getStrengthColor(strength),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          )
+        else
+          const SizedBox.shrink(),
       ],
     );
   }
