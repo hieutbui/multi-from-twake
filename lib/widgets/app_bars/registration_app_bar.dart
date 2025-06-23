@@ -10,6 +10,8 @@ class RegistrationAppBar extends StatelessWidget
   final double? leadingWidth;
   final Widget? title;
   final List<Widget>? actions;
+  final String? rightButtonText;
+  final bool isShowLeading;
 
   const RegistrationAppBar({
     super.key,
@@ -19,6 +21,8 @@ class RegistrationAppBar extends StatelessWidget
     this.leadingWidth,
     this.title,
     this.actions,
+    this.rightButtonText,
+    this.isShowLeading = true,
   });
 
   @override
@@ -31,37 +35,39 @@ class RegistrationAppBar extends StatelessWidget
       backgroundColor: backgroundColor ?? Colors.transparent,
       toolbarHeight: 28.0,
       centerTitle: centerTitle ?? false,
-      leading: leading ??
-          Padding(
-            padding: const EdgeInsets.only(left: 14),
-            child: IconButton(
-              icon: const Icon(
-                Icons.arrow_back_rounded,
-                color: Colors.white,
-                size: 16,
-              ),
-              onPressed: () => context.pop(),
-              padding: const EdgeInsets.all(6),
-              constraints: const BoxConstraints(
-                minWidth: 28,
-                minHeight: 28,
-                maxWidth: 28,
-                maxHeight: 28,
-              ),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                  const Color(
-                    0xFF2A2A2A,
-                  ) /* Buttons-Main-Secondary-15-Opasity */,
-                ),
-                shape: MaterialStateProperty.all(
-                  const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
+      leading: isShowLeading == true
+          ? leading ??
+              Padding(
+                padding: const EdgeInsets.only(left: 14),
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back_rounded,
+                    color: Colors.white,
+                    size: 16,
+                  ),
+                  onPressed: () => context.pop(),
+                  padding: const EdgeInsets.all(6),
+                  constraints: const BoxConstraints(
+                    minWidth: 28,
+                    minHeight: 28,
+                    maxWidth: 28,
+                    maxHeight: 28,
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                      const Color(
+                        0xFF2A2A2A,
+                      ) /* Buttons-Main-Secondary-15-Opasity */,
+                    ),
+                    shape: MaterialStateProperty.all(
+                      const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
+              )
+          : null,
       leadingWidth: leadingWidth,
       title: title,
       actions: actions ??
@@ -77,7 +83,7 @@ class RegistrationAppBar extends StatelessWidget
               ),
               onPressed: () => {},
               child: Text(
-                'Help',
+                rightButtonText ?? 'Help',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       color: Colors.white.withAlpha(222),
                       fontSize: 13,

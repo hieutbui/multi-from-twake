@@ -1,16 +1,16 @@
-import 'package:fluffychat/pages/multi_login/multi_login_view.dart';
+import 'package:fluffychat/pages/set_new_password/set_new_password_view.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:go_router/go_router.dart';
 
-class MultiLogin extends StatefulWidget {
-  const MultiLogin({super.key});
+class SetNewPassword extends StatefulWidget {
+  const SetNewPassword({super.key});
 
   @override
-  State<MultiLogin> createState() => MultiLoginController();
+  State<SetNewPassword> createState() => SetNewPasswordController();
 }
 
-class MultiLoginController extends State<MultiLogin> {
+class SetNewPasswordController extends State<SetNewPassword> {
   final GlobalKey<FormBuilderState> registrationFormKey =
       GlobalKey<FormBuilderState>();
   final GlobalKey<FormBuilderFieldState> emailFieldKey =
@@ -56,17 +56,13 @@ class MultiLoginController extends State<MultiLogin> {
   }
 
   void onTapCreateAccount() {
-    context.push('/home/registrationName');
+    context.push('/home/codeVerification');
   }
 
-  void onTapSignUp() {
-    context.push('/home/multiRegistration');
-  }
-
-  void onTapForgotPassword() {
-    context.push('/home/forgotPassword');
+  void onTapLogin() {
+    //TODO: Implement onTapLogin
   }
 
   @override
-  Widget build(BuildContext context) => MultiLoginView(controller: this);
+  Widget build(BuildContext context) => SetNewPasswordView(controller: this);
 }

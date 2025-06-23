@@ -18,7 +18,9 @@ import 'package:fluffychat/pages/homeserver_picker/homeserver_picker.dart';
 import 'package:fluffychat/pages/login/on_auth_redirect.dart';
 import 'package:fluffychat/pages/multi_login/multi_login.dart';
 import 'package:fluffychat/pages/new_group/new_group_chat_info.dart';
+import 'package:fluffychat/pages/registration_name/registration_name.dart';
 import 'package:fluffychat/pages/registration_with_email/registration_with_email.dart';
+import 'package:fluffychat/pages/set_new_password/set_new_password.dart';
 import 'package:fluffychat/pages/settings_dashboard/settings_app_language/settings_app_language.dart';
 import 'package:fluffychat/pages/settings_dashboard/settings_profile/settings_profile.dart';
 import 'package:fluffychat/pages/story/story_page.dart';
@@ -127,6 +129,22 @@ abstract class AppRoutes {
           pageBuilder: (context, state) => defaultPageBuilder(
             context,
             const CodeVerification(),
+          ),
+          redirect: loggedInRedirect,
+        ),
+        GoRoute(
+          path: 'setNewPassword',
+          pageBuilder: (context, state) => defaultPageBuilder(
+            context,
+            const SetNewPassword(),
+          ),
+          redirect: loggedInRedirect,
+        ),
+        GoRoute(
+          path: 'registrationName',
+          pageBuilder: (context, state) => defaultPageBuilder(
+            context,
+            const RegistrationName(),
           ),
           redirect: loggedInRedirect,
         ),
