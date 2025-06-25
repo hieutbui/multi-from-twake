@@ -48,6 +48,9 @@ abstract class AppConfig {
   ///`HOME_SERVER`: Homeserver, sample is `https://example.com`
   static String homeserver = sampleValue;
 
+  ///`OMNI_BACKEND_URL`: Omni backend API URL, sample is `http://api.example.com`
+  static String omniBackendUrl = sampleValue;
+
   static String appParameter = 'chat';
 
   static String? platform;
@@ -185,11 +188,21 @@ abstract class AppConfig {
     defaultValue: ConfigurationSaas.homeserver,
   );
 
+  static const String _omniBackendUrlEnv = String.fromEnvironment(
+    'OMNI_BACKEND_URL',
+    defaultValue: ConfigurationSaas.omniBackendUrl,
+  );
+
   static void loadEnvironment() {
     twakeWorkplaceHomeserver = _twakeWorkplaceHomeserverEnv;
+    omniBackendUrl = _omniBackendUrlEnv;
 
     Logs().i(
       '[Public Platform] AppConfig():: TWAKE_WORKPLACE_HOMESERVER $_twakeWorkplaceHomeserverEnv',
+    );
+
+    Logs().i(
+      '[Public Platform] AppConfig():: OMNI_BACKEND_URL $_omniBackendUrlEnv',
     );
 
     registrationUrl = _registrationUrlEnv;

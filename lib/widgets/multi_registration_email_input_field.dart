@@ -5,12 +5,14 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 class MultiRegistrationEmailInputField extends StatefulWidget {
   final Key fieldKey;
   final FocusNode focusNode;
+  final TextEditingController controller;
   final bool? isRequired;
 
   const MultiRegistrationEmailInputField({
     super.key,
     required this.fieldKey,
     required this.focusNode,
+    required this.controller,
     this.isRequired,
   });
 
@@ -52,6 +54,7 @@ class _MultiRegistrationEmailInputFieldState
       child: FormBuilderTextField(
         key: widget.fieldKey,
         name: 'Email address',
+        controller: widget.controller,
         focusNode: widget.focusNode,
         validator: FormBuilderValidators.compose([
           FormBuilderValidators.email(

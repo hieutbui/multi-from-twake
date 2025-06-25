@@ -95,6 +95,7 @@ class RegistrationNameView extends StatelessWidget {
 
                       // Name Input Section
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'What is your name?',
@@ -108,36 +109,125 @@ class RegistrationNameView extends StatelessWidget {
                               letterSpacing: -0.41,
                             ),
                           ),
-                          const SizedBox(height: 16),
-                          TextField(
-                            controller: controller.nameController,
-                            onChanged: controller.handleNameInput,
-                            textAlign: TextAlign.center,
+                          const SizedBox(height: 24),
+
+                          // First Name Field
+                          Text(
+                            'First Name',
                             style: TextStyle(
-                              color: Colors.white.withAlpha(
-                                222,
-                              ) /* Text-Main-Primary_Default */,
-                              fontSize: 34,
+                              color: Colors.white.withAlpha(153),
+                              fontSize: 15,
                               fontFamily: 'SF Pro',
-                              fontWeight: FontWeight.w700,
-                              height: 1.24,
-                              letterSpacing: 0.37,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          TextField(
+                            controller: controller.firstNameController,
+                            focusNode: controller.firstNameFocusNode,
+                            onChanged: controller.handleFirstNameInput,
+                            style: TextStyle(
+                              color: Colors.white.withAlpha(222),
+                              fontSize: 22,
+                              fontFamily: 'SF Pro',
+                              fontWeight: FontWeight.w500,
                             ),
                             decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'Enter your name',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: Colors.white.withAlpha(60),
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: Colors.white.withAlpha(60),
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: Colors.white.withAlpha(120),
+                                ),
+                              ),
+                              hintText: 'Enter your first name',
                               hintStyle: TextStyle(
-                                color: Colors.white.withAlpha(
-                                  128,
-                                ) /* Text-Main-Primary_Default */,
-                                fontSize: 34,
-                                fontFamily: 'SF Pro',
-                                fontWeight: FontWeight.w700,
-                                height: 1.24,
-                                letterSpacing: 0.37,
+                                color: Colors.white.withAlpha(80),
+                                fontSize: 18,
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12,
                               ),
                             ),
                           ),
+                          const SizedBox(height: 20),
+
+                          // Last Name Field
+                          Text(
+                            'Last Name',
+                            style: TextStyle(
+                              color: Colors.white.withAlpha(153),
+                              fontSize: 15,
+                              fontFamily: 'SF Pro',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          TextField(
+                            controller: controller.lastNameController,
+                            focusNode: controller.lastNameFocusNode,
+                            onChanged: controller.handleLastNameInput,
+                            style: TextStyle(
+                              color: Colors.white.withAlpha(222),
+                              fontSize: 22,
+                              fontFamily: 'SF Pro',
+                              fontWeight: FontWeight.w500,
+                            ),
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: Colors.white.withAlpha(60),
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: Colors.white.withAlpha(60),
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: Colors.white.withAlpha(120),
+                                ),
+                              ),
+                              hintText: 'Enter your last name',
+                              hintStyle: TextStyle(
+                                color: Colors.white.withAlpha(80),
+                                fontSize: 18,
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12,
+                              ),
+                            ),
+                          ),
+
+                          // Error message display
+                          if (controller.errorMessage != null)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Text(
+                                controller.errorMessage!,
+                                style: TextStyle(
+                                  color: Colors.red.shade300,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
                         ],
                       ),
                     ],

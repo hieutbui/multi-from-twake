@@ -64,7 +64,29 @@ class ForgotPasswordController extends State<ForgotPassword> {
   }
 
   void onTapForgotPassword() {
-    //TODO: Implement onTapForgotPassword
+    // Validate form
+    if (!(registrationFormKey.currentState?.validate() ?? false)) {
+      return;
+    }
+
+    final email = emailController.text;
+
+    if (email.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please enter your email'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    // Navigate to code verification page with email
+    // The code verification should handle the verification for password reset
+    context.push(
+      '/home/codeVerification',
+      extra: email,
+    );
   }
 
   @override

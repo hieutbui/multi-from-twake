@@ -5,5 +5,7 @@ class ConfigurationSaas {
 
   static const String homeserver = 'https://matrix.twake.app';
 
+  static const String omniBackendUrl = 'http://api.omniagents.eu:8000';
+
   static const String platform = 'saas';
 }

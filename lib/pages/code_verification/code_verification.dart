@@ -3,16 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class CodeVerification extends StatefulWidget {
-  const CodeVerification({super.key});
+  final String email;
+
+  const CodeVerification({
+    super.key,
+    required this.email,
+  });
 
   @override
   State<CodeVerification> createState() => CodeVerificationController();
 }
 
 class CodeVerificationController extends State<CodeVerification> {
+  // OTP controllers and focus nodes
   List<TextEditingController> otpControllers =
       List.generate(6, (index) => TextEditingController());
   List<FocusNode> otpFocusNodes = List.generate(6, (index) => FocusNode());
+
+  // UI state
+  bool isLoading = false;
+  String? errorMessage;
 
   @override
   void initState() {
@@ -21,6 +31,7 @@ class CodeVerificationController extends State<CodeVerification> {
 
   @override
   void dispose() {
+    // Dispose controllers and focus nodes
     for (final controller in otpControllers) {
       controller.dispose();
     }
@@ -30,6 +41,7 @@ class CodeVerificationController extends State<CodeVerification> {
     for (final focusNode in otpFocusNodes) {
       focusNode.removeListener(() {});
     }
+
     super.dispose();
   }
 
@@ -45,9 +57,7 @@ class CodeVerificationController extends State<CodeVerification> {
     // TODO: Implement onContinueWithGoogle
   }
 
-  void onTapCreateAccount() {
-    context.push('/home/setNewPassword');
-  }
+  void onTapCreateAccount() {}
 
   void onTapSignUp() {
     context.push('/home/multiRegistration');
@@ -61,6 +71,9 @@ class CodeVerificationController extends State<CodeVerification> {
     if (value.isNotEmpty && value.length == 1) {
       if (index < 5) {
         otpFocusNodes[index + 1].requestFocus();
+      } else {
+        // If it's the last input, verify code automatically
+        onTapCreateAccount();
       }
     }
   }
