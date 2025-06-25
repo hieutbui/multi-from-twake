@@ -130,7 +130,9 @@ abstract class AppRoutes {
           path: 'codeVerification',
           pageBuilder: (context, state) => defaultPageBuilder(
             context,
-            const CodeVerification(),
+            CodeVerification(
+              email: state.extra as String,
+            ),
           ),
           redirect: loggedInRedirect,
         ),
@@ -138,7 +140,9 @@ abstract class AppRoutes {
           path: 'setNewPassword',
           pageBuilder: (context, state) => defaultPageBuilder(
             context,
-            const SetNewPassword(),
+            SetNewPassword(
+              email: state.extra as String? ?? '',
+            ),
           ),
           redirect: loggedInRedirect,
         ),
@@ -154,7 +158,9 @@ abstract class AppRoutes {
           path: 'registrationNotification',
           pageBuilder: (context, state) => defaultPageBuilder(
             context,
-            const RegistrationNotification(),
+            RegistrationNotification(
+              userInfo: state.extra as Map<String, dynamic>? ?? {},
+            ),
           ),
           redirect: loggedInRedirect,
         ),
@@ -162,7 +168,9 @@ abstract class AppRoutes {
           path: 'registrationContacts',
           pageBuilder: (context, state) => defaultPageBuilder(
             context,
-            const RegistrationContacts(),
+            RegistrationContacts(
+              userInfo: state.extra as Map<String, String>? ?? {},
+            ),
           ),
           redirect: loggedInRedirect,
         ),

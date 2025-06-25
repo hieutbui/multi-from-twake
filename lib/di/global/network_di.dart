@@ -19,6 +19,8 @@ class NetworkDI extends BaseDI {
   static const tomServerDioName = 'tomServerDioName';
   static const tomDioClientName = 'tomServerDioClientName';
 
+  static const omniDioClientName = 'omniDioClientName';
+
   static const identityServerUrlInterceptorName =
       'identityDynamicUrlInterceptor';
   static const identityServerDioName = 'identityServerName';
@@ -96,6 +98,7 @@ class NetworkDI extends BaseDI {
     _bindDioForTomServer(get);
     _bindDioForIdentityServer(get);
     _bindDioForHomeServer(get);
+    _bindDioForOmniServer(get);
   }
 
   void _bindDioForTomServer(GetIt get) {
@@ -170,6 +173,31 @@ class NetworkDI extends BaseDI {
     dio.interceptors.add(
       get.get<MatrixDioCacheInterceptor>(
         instanceName: hiveCacheDioInterceptorName,
+      ),
+    );
+  }
+
+  void _bindDioForOmniServer(GetIt get) {
+    final dio = Dio(get.get<BaseOptions>());
+    dio.interceptors.add(get.get<AuthorizationInterceptor>());
+
+    if (kDebugMode) {
+      dio.interceptors
+          .add(LogInterceptor(requestBody: true, responseBody: true));
+    }
+
+    get.registerLazySingleton<Dio>(
+      () => dio,
+      instanceName: 'omniServerDioName',
+    );
+    get.registerLazySingleton<DioClient>(
+      () => DioClient(get.get<Dio>(instanceName: 'omniServerDioName')),
+      instanceName: omniDioClientName,
+    );
+
+    dio.interceptors.add(
+      get.get<MatrixDioCacheInterceptor>(
+        instanceName: memCacheDioInterceptorName,
       ),
     );
   }

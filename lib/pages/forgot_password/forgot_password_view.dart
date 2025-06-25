@@ -60,6 +60,7 @@ class ForgotPasswordView extends StatelessWidget {
                           fieldKey: controller.emailFieldKey,
                           focusNode: controller.emailFocusNode,
                           isRequired: true,
+                          controller: controller.emailController,
                         ),
                         const SizedBox(height: 32.0),
                         MultiRegistrationButton(

@@ -87,6 +87,7 @@ class RegistrationWithEmailView extends StatelessWidget {
                           fieldKey: controller.emailFieldKey,
                           focusNode: controller.emailFocusNode,
                           isRequired: true,
+                          controller: controller.emailController,
                         ),
                         const SizedBox(height: 20.0),
                         MultiRegistrationPasswordInputField(
