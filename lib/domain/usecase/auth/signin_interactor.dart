@@ -17,27 +17,27 @@ class SigninInteractor {
     required String email,
     required String password,
   }) async* {
-    yield const Right(SigninLoadingState());
+    yield const Right(SigninLoading());
     try {
       final authResponse = await _authRepository.signin(
         email: email,
         password: password,
       );
-      yield Right(SigninSuccessState(authResponse: authResponse));
+      yield Right(SigninSuccess(authResponse: authResponse));
     } on DioException catch (error) {
       if (error.response?.statusCode == 400) {
         yield const Left(
-          SigninFailureState(exception: 'Invalid email or password format'),
+          SigninFailure(exception: 'Invalid email or password format'),
         );
       } else if (error.response?.statusCode == 401) {
-        yield const Left(SigninFailureState(exception: 'Invalid credentials'));
+        yield const Left(SigninFailure(exception: 'Invalid credentials'));
       } else if (error.response?.statusCode == 404) {
-        yield const Left(SigninFailureState(exception: 'User not found'));
+        yield const Left(SigninFailure(exception: 'User not found'));
       } else {
-        yield const Left(SigninFailureState(exception: 'Failed to sign in'));
+        yield const Left(SigninFailure(exception: 'Failed to sign in'));
       }
     } catch (error) {
-      yield Left(SigninFailureState(exception: error.toString()));
+      yield Left(SigninFailure(exception: error.toString()));
     }
   }
 }

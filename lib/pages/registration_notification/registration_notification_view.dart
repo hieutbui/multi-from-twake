@@ -1,4 +1,5 @@
 import 'package:fluffychat/pages/registration_notification/registration_notification.dart';
+import 'package:fluffychat/pages/registration_notification/registration_notification_view_style.dart';
 import 'package:fluffychat/resource/image_paths.dart';
 import 'package:fluffychat/widgets/app_bars/registration_app_bar.dart';
 import 'package:fluffychat/widgets/multi_registration_button.dart';
@@ -12,13 +13,7 @@ class RegistrationNotificationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment(0.50, -0.00),
-          end: Alignment(0.50, 1.00),
-          colors: [Color(0xFF0E0F13), Color(0xFF191B26)],
-        ),
-      ),
+      decoration: RegistrationNotificationViewStyle.decoration,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: const RegistrationAppBar(

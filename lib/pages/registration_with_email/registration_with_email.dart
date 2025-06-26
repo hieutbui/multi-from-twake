@@ -31,7 +31,7 @@ class RegistrationWithEmailController extends State<RegistrationWithEmail> {
 
   final ValueNotifier<Either<Failure, Success>> signinNotifier =
       ValueNotifier<Either<Failure, Success>>(
-    const Right(SigninInitialState()),
+    const Right(SigninInitial()),
   );
 
   final TextEditingController emailController = TextEditingController();

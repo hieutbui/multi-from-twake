@@ -15,25 +15,25 @@ class OAuthSignupInteractor {
     required String provider,
     required String idToken,
   }) async* {
-    yield const Right(SignupLoadingState());
+    yield const Right(SignupLoading());
     try {
       final response = await _authRepository.oauthSignup(
         provider: provider,
         idToken: idToken,
       );
-      yield Right(SignupSuccessState(authResponse: response));
+      yield Right(SignupSuccess(authResponse: response));
     } on DioException catch (error) {
       if (error.response?.statusCode == 400) {
-        yield const Left(SignupFailureState(exception: 'Invalid token'));
+        yield const Left(SignupFailure(exception: 'Invalid token'));
       } else {
         yield const Left(
-          SignupFailureState(
+          SignupFailure(
             exception: 'Failed to sign up. Please try again later.',
           ),
         );
       }
     } catch (error) {
-      yield Left(SignupFailureState(exception: error.toString()));
+      yield Left(SignupFailure(exception: error.toString()));
     }
   }
 }

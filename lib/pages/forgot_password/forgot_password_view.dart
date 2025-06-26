@@ -1,4 +1,5 @@
 import 'package:fluffychat/pages/forgot_password/forgot_password.dart';
+import 'package:fluffychat/pages/forgot_password/forgot_password_style.dart';
 import 'package:fluffychat/widgets/app_bars/registration_app_bar.dart';
 import 'package:fluffychat/widgets/multi_registration_button.dart';
 import 'package:fluffychat/widgets/multi_registration_email_input_field.dart';
@@ -14,13 +15,7 @@ class ForgotPasswordView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment(0.50, -0.00),
-          end: Alignment(0.50, 1.00),
-          colors: [Color(0xFF0E0F13), Color(0xFF191B26)],
-        ),
-      ),
+      decoration: ForgotPasswordStyle.decoration,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: const RegistrationAppBar(),
@@ -35,7 +30,7 @@ class ForgotPasswordView extends StatelessWidget {
                 ),
                 const SizedBox(height: 12.0),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  padding: ForgotPasswordStyle.padding,
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'Enter your email and we’ll send you a link to reset your password',
@@ -53,7 +48,7 @@ class ForgotPasswordView extends StatelessWidget {
                 FormBuilder(
                   key: controller.registrationFormKey,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    padding: ForgotPasswordStyle.padding,
                     child: Column(
                       children: [
                         MultiRegistrationEmailInputField(

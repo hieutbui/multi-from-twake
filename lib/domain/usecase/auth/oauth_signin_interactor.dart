@@ -16,36 +16,36 @@ class OAuthSigninInteractor {
     required String idToken,
     required String provider,
   }) async* {
-    yield const Right(SigninLoadingState());
+    yield const Right(SigninLoading());
     try {
       final response = await _authRepository.oauthSignin(
         idToken: idToken,
         provider: provider,
       );
-      yield Right(SigninSuccessState(authResponse: response));
+      yield Right(SigninSuccess(authResponse: response));
     } on DioException catch (error) {
       if (error.response?.statusCode == 400) {
         yield const Left(
-          SigninFailureState(
+          SigninFailure(
             exception: 'Invalid provider or token',
           ),
         );
       } else if (error.response?.statusCode == 404) {
         yield const Left(
-          SigninFailureState(
+          SigninFailure(
             exception: 'User not found',
           ),
         );
       } else {
         yield const Left(
-          SigninFailureState(
+          SigninFailure(
             exception: 'Failed to sign in. Please try again later.',
           ),
         );
       }
     } catch (error) {
       yield Left(
-        SigninFailureState(
+        SigninFailure(
           exception: error.toString(),
         ),
       );

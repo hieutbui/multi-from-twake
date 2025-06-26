@@ -1,6 +1,6 @@
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:fluffychat/pages/multi_login/multi_login.dart';
-import 'package:fluffychat/pages/registration_with_email/registration_with_email_view_style.dart';
+import 'package:fluffychat/pages/multi_login/multi_login_view_style.dart';
 import 'package:fluffychat/widgets/app_bars/registration_app_bar.dart';
 import 'package:fluffychat/widgets/multi_registraion_password_input_field.dart';
 import 'package:fluffychat/widgets/multi_registration_button.dart';
@@ -17,13 +17,7 @@ class MultiLoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment(0.50, -0.00),
-          end: Alignment(0.50, 1.00),
-          colors: [Color(0xFF0E0F13), Color(0xFF191B26)],
-        ),
-      ),
+      decoration: MultiLoginViewStyle.decoration,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: const RegistrationAppBar(),
@@ -38,7 +32,7 @@ class MultiLoginView extends StatelessWidget {
                 ),
                 const SizedBox(height: 12.0),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  padding: MultiLoginViewStyle.padding,
                   alignment: Alignment.centerLeft,
                   child: Text.rich(
                     TextSpan(
@@ -84,7 +78,7 @@ class MultiLoginView extends StatelessWidget {
                 FormBuilder(
                   key: controller.registrationFormKey,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    padding: MultiLoginViewStyle.padding,
                     child: Column(
                       children: [
                         MultiRegistrationEmailInputField(
@@ -130,7 +124,7 @@ class MultiLoginView extends StatelessWidget {
                 ),
                 const SizedBox(height: 32.0),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  padding: MultiLoginViewStyle.padding,
                   child: Row(
                     children: [
                       Expanded(
@@ -168,7 +162,7 @@ class MultiLoginView extends StatelessWidget {
                 ),
                 const SizedBox(height: 32.0),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  padding: MultiLoginViewStyle.padding,
                   child: AppleAuthButton(
                     onPressed: controller.onContinueWithApple,
                     text: 'Sign Up with Apple',
@@ -180,14 +174,14 @@ class MultiLoginView extends StatelessWidget {
                       iconColor: Colors.black.withAlpha(222),
                       height: 48,
                       width: double.infinity,
-                      textStyle: RegistrationWithEmailViewStyle()
-                          .buttonGreyTextStyle(context),
+                      textStyle:
+                          MultiLoginViewStyle.buttonGreyTextStyle(context),
                     ),
                   ),
                 ),
                 const SizedBox(height: 12.0),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  padding: MultiLoginViewStyle.padding,
                   child: GoogleAuthButton(
                     onPressed: controller.onContinueWithGoogle,
                     text: 'Sign Up with Google',
@@ -199,8 +193,8 @@ class MultiLoginView extends StatelessWidget {
                       iconColor: Colors.white.withAlpha(222),
                       height: 48,
                       width: double.infinity,
-                      textStyle: RegistrationWithEmailViewStyle()
-                          .buttonGreyTextStyle(context),
+                      textStyle:
+                          MultiLoginViewStyle.buttonGreyTextStyle(context),
                     ),
                   ),
                 ),
@@ -210,15 +204,13 @@ class MultiLoginView extends StatelessWidget {
                   children: [
                     Text(
                       'Don’t have an account?',
-                      style: RegistrationWithEmailViewStyle()
-                          .haveAccountTextStyle(context),
+                      style: MultiLoginViewStyle.haveAccountTextStyle(context),
                     ),
                     TextButton(
                       onPressed: controller.onTapSignUp,
                       child: Text(
                         'Sign Up',
-                        style: RegistrationWithEmailViewStyle()
-                            .loginTextStyle(context),
+                        style: MultiLoginViewStyle.loginTextStyle(context),
                       ),
                     ),
                   ],

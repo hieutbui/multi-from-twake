@@ -1,4 +1,5 @@
 import 'package:fluffychat/pages/code_verification/code_verification_view.dart';
+import 'package:fluffychat/pages/code_verification/widgets/custom_otp_input.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,10 +16,13 @@ class CodeVerification extends StatefulWidget {
 }
 
 class CodeVerificationController extends State<CodeVerification> {
+  static const int codeLength = 6;
+
   // OTP controllers and focus nodes
   List<TextEditingController> otpControllers =
-      List.generate(6, (index) => TextEditingController());
-  List<FocusNode> otpFocusNodes = List.generate(6, (index) => FocusNode());
+      List.generate(codeLength, (index) => TextEditingController());
+  List<FocusNode> otpFocusNodes =
+      List.generate(codeLength, (index) => FocusNode());
 
   // UI state
   bool isLoading = false;
@@ -76,6 +80,26 @@ class CodeVerificationController extends State<CodeVerification> {
         onTapCreateAccount();
       }
     }
+  }
+
+  List<Widget> generateCodeCells() {
+    return List.generate(codeLength, buildCodeInput);
+  }
+
+  Widget buildCodeInput(int index) {
+    return CustomOtpInput(
+      controller: otpControllers[index],
+      focusNode: otpFocusNodes[index],
+      autoFocus: index == 0,
+      onChanged: (value) {
+        handleOtpInput(value, index);
+      },
+      onSubmitted: (value) {
+        if (index < 5) {
+          otpFocusNodes[index + 1].requestFocus();
+        }
+      },
+    );
   }
 
   @override

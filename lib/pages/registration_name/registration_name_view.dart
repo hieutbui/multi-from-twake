@@ -1,4 +1,5 @@
 import 'package:fluffychat/pages/registration_name/registration_name.dart';
+import 'package:fluffychat/pages/registration_name/registration_name_view_style.dart';
 import 'package:fluffychat/resource/image_paths.dart';
 import 'package:fluffychat/widgets/app_bars/registration_app_bar.dart';
 import 'package:fluffychat/widgets/multi_registration_button.dart';
@@ -12,13 +13,7 @@ class RegistrationNameView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [Color(0xFF0E0F13), Color(0xFF191B26)],
-        ),
-      ),
+      decoration: RegistrationNameViewStyle.decoration,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: const RegistrationAppBar(),
@@ -38,12 +33,8 @@ class RegistrationNameView extends StatelessWidget {
                       Container(
                         width: double.infinity,
                         padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF374151).withAlpha(153),
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(20.0),
-                          ),
-                        ),
+                        decoration:
+                            RegistrationNameViewStyle.helloContainerDecoration,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -132,35 +123,8 @@ class RegistrationNameView extends StatelessWidget {
                               fontFamily: 'SF Pro',
                               fontWeight: FontWeight.w500,
                             ),
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(
-                                  color: Colors.white.withAlpha(60),
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(
-                                  color: Colors.white.withAlpha(60),
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(
-                                  color: Colors.white.withAlpha(120),
-                                ),
-                              ),
-                              hintText: 'Enter your first name',
-                              hintStyle: TextStyle(
-                                color: Colors.white.withAlpha(80),
-                                fontSize: 18,
-                              ),
-                              contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 12,
-                              ),
-                            ),
+                            decoration: RegistrationNameViewStyle
+                                .nameTextFieldDecoration,
                           ),
                           const SizedBox(height: 20),
 
@@ -185,35 +149,8 @@ class RegistrationNameView extends StatelessWidget {
                               fontFamily: 'SF Pro',
                               fontWeight: FontWeight.w500,
                             ),
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(
-                                  color: Colors.white.withAlpha(60),
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(
-                                  color: Colors.white.withAlpha(60),
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(
-                                  color: Colors.white.withAlpha(120),
-                                ),
-                              ),
-                              hintText: 'Enter your last name',
-                              hintStyle: TextStyle(
-                                color: Colors.white.withAlpha(80),
-                                fontSize: 18,
-                              ),
-                              contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 12,
-                              ),
-                            ),
+                            decoration: RegistrationNameViewStyle
+                                .nameTextFieldDecoration,
                           ),
 
                           // Error message display
