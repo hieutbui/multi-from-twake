@@ -19,7 +19,7 @@ class SignupInteractor {
     required String username,
   }) async* {
     try {
-      yield const Right(SignupLoadingState());
+      yield const Right(SignupLoading());
 
       final authResponse = await _authRepository.signup(
         email: email,
@@ -29,21 +29,21 @@ class SignupInteractor {
         username: username,
       );
 
-      yield Right(SignupSuccessState(authResponse: authResponse));
+      yield Right(SignupSuccess(authResponse: authResponse));
     } on DioException catch (e) {
       if (e.response?.statusCode == 400) {
         yield const Left(
-          SignupFailureState(exception: 'Invalid email or password format'),
+          SignupFailure(exception: 'Invalid email or password format'),
         );
       } else if (e.response?.statusCode == 409) {
-        yield const Left(SignupFailureState(exception: 'Email already exists'));
+        yield const Left(SignupFailure(exception: 'Email already exists'));
       } else {
         yield const Left(
-          SignupFailureState(exception: 'An error occurred during signup'),
+          SignupFailure(exception: 'An error occurred during signup'),
         );
       }
     } catch (e) {
-      yield Left(SignupFailureState(exception: e.toString()));
+      yield Left(SignupFailure(exception: e.toString()));
     }
   }
 }

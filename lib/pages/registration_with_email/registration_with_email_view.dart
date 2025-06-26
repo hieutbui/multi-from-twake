@@ -17,13 +17,7 @@ class RegistrationWithEmailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment(0.50, -0.00),
-          end: Alignment(0.50, 1.00),
-          colors: [Color(0xFF0E0F13), Color(0xFF191B26)],
-        ),
-      ),
+      decoration: RegistrationWithEmailViewStyle.decoration,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: const RegistrationAppBar(),
@@ -193,8 +187,10 @@ class RegistrationWithEmailView extends StatelessWidget {
                       iconColor: Colors.black.withAlpha(222),
                       height: 48,
                       width: double.infinity,
-                      textStyle: RegistrationWithEmailViewStyle()
-                          .buttonGreyTextStyle(context),
+                      textStyle:
+                          RegistrationWithEmailViewStyle.buttonGreyTextStyle(
+                        context,
+                      ),
                     ),
                   ),
                 ),
@@ -212,8 +208,10 @@ class RegistrationWithEmailView extends StatelessWidget {
                       iconColor: Colors.white.withAlpha(222),
                       height: 48,
                       width: double.infinity,
-                      textStyle: RegistrationWithEmailViewStyle()
-                          .buttonGreyTextStyle(context),
+                      textStyle:
+                          RegistrationWithEmailViewStyle.buttonGreyTextStyle(
+                        context,
+                      ),
                     ),
                   ),
                 ),
@@ -223,15 +221,18 @@ class RegistrationWithEmailView extends StatelessWidget {
                   children: [
                     Text(
                       'Already have an account?',
-                      style: RegistrationWithEmailViewStyle()
-                          .haveAccountTextStyle(context),
+                      style:
+                          RegistrationWithEmailViewStyle.haveAccountTextStyle(
+                        context,
+                      ),
                     ),
                     TextButton(
                       onPressed: controller.onTapLogin,
                       child: Text(
                         'Log In',
-                        style: RegistrationWithEmailViewStyle()
-                            .loginTextStyle(context),
+                        style: RegistrationWithEmailViewStyle.loginTextStyle(
+                          context,
+                        ),
                       ),
                     ),
                   ],

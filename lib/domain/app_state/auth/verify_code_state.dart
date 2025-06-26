@@ -3,33 +3,33 @@ import 'package:fluffychat/app_state/failure.dart';
 import 'package:fluffychat/app_state/success.dart';
 import 'package:fluffychat/data/model/auth/verify_code_response.dart';
 
-class VerifyCodeInitialState extends Initial {
-  const VerifyCodeInitialState() : super();
+class VerifyCodeInitial extends Initial {
+  const VerifyCodeInitial() : super();
 
   @override
   List<Object?> get props => [];
 }
 
-class VerifyCodeLoadingState extends Success {
-  const VerifyCodeLoadingState() : super();
+class VerifyCodeLoading extends Success {
+  const VerifyCodeLoading() : super();
 
   @override
   List<Object?> get props => [];
 }
 
-class VerifyCodeSuccessState extends Success {
+class VerifyCodeSuccess extends Success {
   final VerifyCodeResponse response;
 
-  const VerifyCodeSuccessState({required this.response});
+  const VerifyCodeSuccess({required this.response});
 
   @override
   List<Object?> get props => [response];
 }
 
-class VerifyCodeFailureState extends Failure {
+class VerifyCodeFailure extends Failure {
   final dynamic exception;
 
-  const VerifyCodeFailureState({required this.exception});
+  const VerifyCodeFailure({required this.exception});
 
   @override
   List<Object?> get props => [exception];

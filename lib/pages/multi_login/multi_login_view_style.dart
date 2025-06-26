@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
 
 class MultiLoginViewStyle {
-  TextStyle? buttonGreyTextStyle(BuildContext context) =>
+  static const EdgeInsetsGeometry padding =
+      EdgeInsets.symmetric(horizontal: 20.0);
+
+  static const BoxDecoration decoration = BoxDecoration(
+    gradient: LinearGradient(
+      begin: Alignment(0.50, -0.00),
+      end: Alignment(0.50, 1.00),
+      colors: [Color(0xFF0E0F13), Color(0xFF191B26)],
+    ),
+  );
+
+  static TextStyle? buttonGreyTextStyle(BuildContext context) =>
       Theme.of(context).textTheme.titleMedium?.copyWith(
             color: Colors.white.withAlpha(222),
             /* Text-Main-Primary_Default */
             fontSize: 17,
           );
 
-  TextStyle? haveAccountTextStyle(BuildContext context) =>
+  static TextStyle? haveAccountTextStyle(BuildContext context) =>
       Theme.of(context).textTheme.labelLarge?.copyWith(
             color: Colors.white.withAlpha(153),
             /* Text-Main-Secondary */
@@ -17,7 +28,7 @@ class MultiLoginViewStyle {
             fontWeight: FontWeight.w400,
           );
 
-  TextStyle? loginTextStyle(BuildContext context) =>
+  static TextStyle? loginTextStyle(BuildContext context) =>
       Theme.of(context).textTheme.labelLarge?.copyWith(
             color: Colors.white.withAlpha(222),
             /* Text-Main-Secondary */

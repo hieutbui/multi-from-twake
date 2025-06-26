@@ -15,32 +15,32 @@ class VerifyCodeInteractor {
     required String email,
     required String verificationCode,
   }) async* {
-    yield const Right(VerifyCodeLoadingState());
+    yield const Right(VerifyCodeLoading());
     try {
       final response = await _authRepository.verifyCode(
         email: email,
         verificationCode: verificationCode,
       );
-      yield Right(VerifyCodeSuccessState(response: response));
+      yield Right(VerifyCodeSuccess(response: response));
     } on DioException catch (error) {
       if (error.response?.statusCode == 400) {
         yield const Left(
-          VerifyCodeFailureState(exception: 'Invalid verification code'),
+          VerifyCodeFailure(exception: 'Invalid verification code'),
         );
       } else if (error.response?.statusCode == 404) {
-        yield const Left(VerifyCodeFailureState(exception: 'Email not found'));
+        yield const Left(VerifyCodeFailure(exception: 'Email not found'));
       } else if (error.response?.statusCode == 409) {
         yield const Left(
-          VerifyCodeFailureState(exception: 'Email already verified'),
+          VerifyCodeFailure(exception: 'Email already verified'),
         );
       } else {
         yield const Left(
-          VerifyCodeFailureState(exception: 'Failed to verify code'),
+          VerifyCodeFailure(exception: 'Failed to verify code'),
         );
       }
     } catch (error) {
       yield Left(
-        VerifyCodeFailureState(
+        VerifyCodeFailure(
           exception: error.toString(),
         ),
       );

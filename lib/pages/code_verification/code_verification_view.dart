@@ -1,5 +1,5 @@
 import 'package:fluffychat/pages/code_verification/code_verification.dart';
-import 'package:fluffychat/pages/code_verification/widgets/custom_otp_input.dart';
+import 'package:fluffychat/pages/code_verification/code_verification_style.dart';
 import 'package:fluffychat/widgets/app_bars/registration_app_bar.dart';
 import 'package:fluffychat/widgets/multi_registration_button.dart';
 import 'package:fluffychat/widgets/multi_registration_title_with_background.dart';
@@ -13,13 +13,7 @@ class CodeVerificationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment(0.50, -0.00),
-          end: Alignment(0.50, 1.00),
-          colors: [Color(0xFF0E0F13), Color(0xFF191B26)],
-        ),
-      ),
+      decoration: CodeVerificationStyle.decoration,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: const RegistrationAppBar(),
@@ -34,7 +28,7 @@ class CodeVerificationView extends StatelessWidget {
                 ),
                 const SizedBox(height: 12.0),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  padding: CodeVerificationStyle.padding,
                   alignment: Alignment.centerLeft,
                   child: Text(
                     "We've sent the code to the test@gmail.com.",
@@ -50,25 +44,11 @@ class CodeVerificationView extends StatelessWidget {
                 ),
                 const SizedBox(height: 48.0),
                 Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  margin: CodeVerificationStyle.padding,
                   width: 350,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: List.generate(6, (index) {
-                      return CustomOtpInput(
-                        controller: controller.otpControllers[index],
-                        focusNode: controller.otpFocusNodes[index],
-                        autoFocus: index == 0,
-                        onChanged: (value) {
-                          controller.handleOtpInput(value, index);
-                        },
-                        onSubmitted: (value) {
-                          if (index < 5) {
-                            controller.otpFocusNodes[index + 1].requestFocus();
-                          }
-                        },
-                      );
-                    }),
+                    children: controller.generateCodeCells(),
                   ),
                 ),
                 const SizedBox(height: 32.0),

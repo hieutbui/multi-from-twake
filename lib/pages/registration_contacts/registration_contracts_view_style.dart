@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CodeVerificationStyle {
+class RegistrationContractsViewStyle {
   static const BoxDecoration decoration = BoxDecoration(
     gradient: LinearGradient(
       begin: Alignment(0.50, -0.00),
