@@ -1,11 +1,10 @@
 import 'dart:async';
-
 import 'package:dartz/dartz.dart' hide State;
 import 'package:fluffychat/app_state/failure.dart';
 import 'package:fluffychat/app_state/success.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
-import 'package:fluffychat/domain/app_state/auth/signin_state.dart';
-import 'package:fluffychat/domain/usecase/auth/signin_interactor.dart';
+import 'package:fluffychat/domain/app_state/auth/signup_state.dart';
+import 'package:fluffychat/domain/usecase/auth/signup_interactor.dart';
 import 'package:fluffychat/pages/registration_with_email/registration_with_email_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -20,7 +19,7 @@ class RegistrationWithEmail extends StatefulWidget {
 }
 
 class RegistrationWithEmailController extends State<RegistrationWithEmail> {
-  final _signinInteractor = getIt.get<SigninInteractor>();
+  final _signupInteractor = getIt.get<SignupInteractor>();
 
   final GlobalKey<FormBuilderState> registrationFormKey =
       GlobalKey<FormBuilderState>();
@@ -31,7 +30,7 @@ class RegistrationWithEmailController extends State<RegistrationWithEmail> {
 
   final ValueNotifier<Either<Failure, Success>> signinNotifier =
       ValueNotifier<Either<Failure, Success>>(
-    const Right(SigninInitial()),
+    const Right(SignupInitial()),
   );
 
   final TextEditingController emailController = TextEditingController();
@@ -40,7 +39,7 @@ class RegistrationWithEmailController extends State<RegistrationWithEmail> {
   final FocusNode emailFocusNode = FocusNode();
   final FocusNode passwordFocusNode = FocusNode();
 
-  StreamSubscription? signinSubscription;
+  StreamSubscription? signupSubscription;
 
   @override
   void initState() {
@@ -92,8 +91,11 @@ class RegistrationWithEmailController extends State<RegistrationWithEmail> {
       return;
     }
 
-    signinSubscription = _signinInteractor
+    signupSubscription = _signupInteractor
         .execute(
+          firstName: 'Test123122',
+          lastName: 'User',
+          username: 'test123122',
           email: email,
           password: password,
         )
