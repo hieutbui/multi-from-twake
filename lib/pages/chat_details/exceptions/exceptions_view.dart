@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/chat_details/exceptions/exceptions.dart';
 import 'package:fluffychat/pages/chat_details/exceptions/exceptions_search_state.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_header_style.dart';
@@ -22,7 +23,7 @@ class ExceptionsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: LinagoraSysColors.material().onPrimary,
+      backgroundColor: MultiSysColors.material().onPrimary,
       resizeToAvoidBottomInset: false,
       appBar: TwakeAppBar(
         title: L10n.of(context)!.exceptions,
@@ -53,10 +54,10 @@ class ExceptionsView extends StatelessWidget {
                 autofocus: true,
                 decoration: ChatListHeaderStyle.searchInputDecoration(
                   context,
-                  prefixIconColor: LinagoraSysColors.material().tertiary,
+                  prefixIconColor: MultiSysColors.material().tertiary,
                 ).copyWith(
                   hintStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: LinagoraSysColors.material().tertiary,
+                        color: MultiSysColors.material().tertiary,
                       ),
                   hintText: L10n.of(context)!.enterAnEmailAddress,
                   suffixIcon: ValueListenableBuilder(
@@ -147,7 +148,7 @@ class ExceptionsView extends StatelessWidget {
                                       style: LinagoraTextStyle.material()
                                           .bodyMedium2
                                           .copyWith(
-                                            color: LinagoraSysColors.material()
+                                            color: MultiSysColors.material()
                                                 .onSurface,
                                           ),
                                       overflow: TextOverflow.ellipsis,
@@ -256,7 +257,7 @@ class ExceptionsView extends StatelessWidget {
                                       style: LinagoraTextStyle.material()
                                           .bodyMedium2
                                           .copyWith(
-                                            color: LinagoraSysColors.material()
+                                            color: MultiSysColors.material()
                                                 .onSurface,
                                           ),
                                       overflow: TextOverflow.ellipsis,

@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:fluffychat/app_state/success.dart';
 import 'package:fluffychat/config/app_config.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/domain/app_state/room/timeline_search_event_state.dart';
 import 'package:fluffychat/pages/chat/chat_view_style.dart';
 import 'package:fluffychat/pages/chat/events/message_download_content.dart';
@@ -41,10 +42,10 @@ class ChatSearchView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: LinagoraSysColors.material().onPrimary,
+      backgroundColor: MultiSysColors.material().onPrimary,
       appBar: AppBar(
         toolbarHeight: AppConfig.toolbarHeight(context),
-        backgroundColor: LinagoraSysColors.material().onPrimary,
+        backgroundColor: MultiSysColors.material().onPrimary,
         automaticallyImplyLeading: false,
         title: _ChatSearchAppBar(controller),
       ),
@@ -300,7 +301,7 @@ class _MessageContent extends StatelessWidget {
           maxLines: 2,
           style: LinagoraTextStyle.material()
               .bodyMedium3
-              .copyWith(color: LinagoraSysColors.material().onSurface),
+              .copyWith(color: MultiSysColors.material().onSurface),
         );
     }
   }

@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/config/themes.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/pages/chat/chat_horizontal_action_menu.dart';
@@ -300,7 +301,7 @@ class _MessageState extends State<Message> with MessageAvatarMixin {
                 child: Divider(
                   height: MessageStyle.heightDivider,
                   color: LinagoraStateLayer(
-                    LinagoraSysColors.material().surfaceTint,
+                    MultiSysColors.material().surfaceTint,
                   ).opacityLayer3,
                 ),
               ),
@@ -384,7 +385,7 @@ class _MessageState extends State<Message> with MessageAvatarMixin {
         left: Message.responsiveUtils.isMobile(context) ? 8.0 : 0,
       ),
       color: widget.selected
-          ? LinagoraSysColors.material().secondaryContainer
+          ? MultiSysColors.material().secondaryContainer
           : Theme.of(context).primaryColor.withAlpha(0),
       constraints:
           const BoxConstraints(maxWidth: TwakeThemes.columnWidth * 2.5),
@@ -399,7 +400,7 @@ class _MessageState extends State<Message> with MessageAvatarMixin {
                     ? Icons.check_circle_rounded
                     : Icons.circle_outlined,
                 color: widget.selected
-                    ? LinagoraSysColors.material().primary
+                    ? MultiSysColors.material().primary
                     : Colors.black,
                 size: 20,
               ),

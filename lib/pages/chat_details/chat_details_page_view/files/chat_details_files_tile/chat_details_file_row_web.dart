@@ -4,7 +4,7 @@ import 'package:fluffychat/utils/date_time_extension.dart';
 import 'package:fluffychat/utils/extension/mime_type_extension.dart';
 import 'package:fluffychat/widgets/file_widget/file_tile_widget_style.dart';
 import 'package:flutter/material.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 
 class ChatDetailsFileTileRowWeb extends StatelessWidget {
   const ChatDetailsFileTileRowWeb({
@@ -29,7 +29,7 @@ class ChatDetailsFileTileRowWeb extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      hoverColor: LinagoraSysColors.material().surfaceVariant,
+      hoverColor: MultiSysColors.material().surfaceVariant,
       onTap: onTap,
       child: ChatDetailsFileRowWrapper(
         mimeType: mimeType,

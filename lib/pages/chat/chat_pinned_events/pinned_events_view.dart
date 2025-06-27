@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/domain/app_state/room/chat_get_pinned_events_state.dart';
 import 'package:fluffychat/pages/chat/chat_pinned_events/pinned_events_argument.dart';
 import 'package:fluffychat/pages/chat/chat_pinned_events/pinned_events_style.dart';
@@ -40,7 +41,7 @@ class PinnedEventsView extends StatelessWidget {
               case const (ChatGetPinnedEventsSuccess):
                 final data = success as ChatGetPinnedEventsSuccess;
                 return Material(
-                  color: LinagoraSysColors.material().onPrimary,
+                  color: MultiSysColors.material().onPrimary,
                   child: InkWell(
                     onTap: () => controller.pinnedEventsController
                         .jumpToPinnedMessageAction(
@@ -92,14 +93,13 @@ class PinnedEventsView extends StatelessWidget {
                                               currentEvent: currentEvent,
                                               scrollController: controller
                                                   .pinnedMessageScrollController,
-                                              color:
-                                                  LinagoraSysColors.material()
-                                                      .secondary
-                                                      .withOpacity(
-                                                        isCurrentPinnedEvent
-                                                            ? 1
-                                                            : 0.48,
-                                                      ),
+                                              color: MultiSysColors.material()
+                                                  .secondary
+                                                  .withOpacity(
+                                                    isCurrentPinnedEvent
+                                                        ? 1
+                                                        : 0.48,
+                                                  ),
                                               index: index,
                                               height: PinnedEventsStyle
                                                   .calcHeightIndicator(
@@ -222,7 +222,7 @@ class _PinnedEventsContentWidget extends StatelessWidget {
             Text(
               L10n.of(context)!.countPinnedMessage(countPinnedEvents),
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: LinagoraSysColors.material().secondary,
+                    color: MultiSysColors.material().secondary,
                   ),
             ),
             FutureBuilder<String>(

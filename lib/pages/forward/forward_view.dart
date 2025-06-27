@@ -15,7 +15,7 @@ import 'package:fluffychat/resource/image_paths.dart';
 import 'package:fluffychat/widgets/twake_components/twake_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:linagora_design_flutter/colors/linagora_state_layer.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:matrix/matrix.dart';
 
 class ForwardView extends StatelessWidget {
@@ -157,7 +157,7 @@ class _WebActionsButton extends StatelessWidget {
                   ),
                   styleMessage:
                       Theme.of(context).textTheme.labelLarge?.copyWith(
-                            color: LinagoraSysColors.material().primary,
+                            color: MultiSysColors.material().primary,
                           ),
                 ),
                 const SizedBox(width: 8.0),
@@ -168,9 +168,9 @@ class _WebActionsButton extends StatelessWidget {
                   borderHover: ForwardViewStyle.webActionsButtonBorder,
                   buttonDecoration: BoxDecoration(
                     color: selectedChat.isNotEmpty
-                        ? LinagoraSysColors.material().primary
+                        ? MultiSysColors.material().primary
                         : LinagoraStateLayer(
-                            LinagoraSysColors.material().onSurface,
+                            MultiSysColors.material().onSurface,
                           ).opacityLayer2,
                     borderRadius: BorderRadius.circular(
                       ForwardViewStyle.webActionsButtonBorder,
@@ -179,8 +179,8 @@ class _WebActionsButton extends StatelessWidget {
                   styleMessage:
                       Theme.of(context).textTheme.labelLarge?.copyWith(
                             color: selectedChat.isNotEmpty
-                                ? LinagoraSysColors.material().onPrimary
-                                : LinagoraSysColors.material()
+                                ? MultiSysColors.material().onPrimary
+                                : MultiSysColors.material()
                                     .inverseSurface
                                     .withOpacity(0.6),
                           ),

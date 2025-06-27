@@ -5,7 +5,7 @@ import 'package:fluffychat/utils/url_launcher.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
@@ -123,7 +123,7 @@ class _ChatQrCodeState extends State<ChatQrCode> {
             child: Text(
               L10n.of(context)!.scanQrCodeToJoin,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: LinagoraSysColors.material().onSurface,
+                    color: MultiSysColors.material().onSurface,
                   ),
               textAlign: TextAlign.center,
             ),

@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/chat/events/images_builder/image_placeholder.dart';
 import 'package:fluffychat/presentation/decorators/chat_list/subtitle_image_preview_style.dart';
 import 'package:fluffychat/presentation/decorators/chat_list/subtitle_text_style_decorator/subtitle_text_style_view.dart';
@@ -137,7 +138,7 @@ mixin ChatListItemMixin {
           style: ListItemStyle.subtitleTextStyle(
             fontFamily: 'Inter',
           ).copyWith(
-            color: LinagoraSysColors.material().onSurface,
+            color: MultiSysColors.material().onSurface,
           ),
         ),
         event.messageType == MessageTypes.Image ||

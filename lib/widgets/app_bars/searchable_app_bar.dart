@@ -1,4 +1,5 @@
 import 'package:fluffychat/config/first_column_inner_routes.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/dialer/pip/dismiss_keyboard.dart';
 import 'package:fluffychat/widgets/context_menu_builder_ios_paste_without_permission.dart';
 import 'package:fluffychat/widgets/twake_components/twake_icon_button.dart';
@@ -43,12 +44,12 @@ class SearchableAppBar extends StatelessWidget {
         preferredSize: const Size(double.infinity, 4),
         child: Container(
           color: LinagoraStateLayer(
-            LinagoraSysColors.material().surfaceTint,
+            MultiSysColors.material().surfaceTint,
           ).opacityLayer1,
           height: 1,
         ),
       ),
-      backgroundColor: LinagoraSysColors.material().onPrimary,
+      backgroundColor: MultiSysColors.material().onPrimary,
       title: Align(
         alignment: Alignment.centerLeft,
         child: Column(
@@ -164,7 +165,7 @@ class SearchableAppBar extends StatelessWidget {
               Divider(
                 height: 1,
                 color: LinagoraStateLayer(
-                  LinagoraSysColors.material().surfaceTint,
+                  MultiSysColors.material().surfaceTint,
                 ).opacityLayer3,
               ),
             if (!isFullScreen)

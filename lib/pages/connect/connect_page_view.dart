@@ -1,8 +1,8 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/connect/connect_page_view_style.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/l10n.dart';
-import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 import 'package:matrix/matrix.dart';
 
 import 'package:fluffychat/pages/connect/connect_page.dart';
@@ -30,8 +30,7 @@ class ConnectPageView extends StatelessWidget {
       body: Center(
         child: identityProviders == null
             ? CircularProgressIndicator.adaptive(
-                backgroundColor:
-                    LinagoraSysColors.material().onTertiaryContainer,
+                backgroundColor: MultiSysColors.material().onTertiaryContainer,
               )
             : identityProviders.length == 1
                 ? Container(

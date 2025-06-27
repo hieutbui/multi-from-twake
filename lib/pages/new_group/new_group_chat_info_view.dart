@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:fluffychat/app_state/failure.dart';
 import 'package:fluffychat/app_state/success.dart';
 import 'package:fluffychat/config/app_config.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/new_group/new_group_chat_info.dart';
 import 'package:fluffychat/pages/new_group/new_group_chat_info_style.dart';
 import 'package:fluffychat/pages/new_group/new_group_info_controller.dart';
@@ -30,7 +31,7 @@ class NewGroupChatInfoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: LinagoraSysColors.material().onPrimary,
+      backgroundColor: MultiSysColors.material().onPrimary,
       appBar: _buildAppBar(context),
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) {
@@ -122,7 +123,7 @@ class NewGroupChatInfoView extends StatelessWidget {
         NewGroupChatInfoStyle.toolbarHeight,
       ),
       child: AppBar(
-        backgroundColor: LinagoraSysColors.material().onPrimary,
+        backgroundColor: MultiSysColors.material().onPrimary,
         automaticallyImplyLeading: false,
         toolbarHeight: NewGroupChatInfoStyle.toolbarHeight,
         title: Row(
@@ -213,7 +214,7 @@ class NewGroupChatInfoView extends StatelessWidget {
                 decoration: InputDecoration(
                   errorBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: LinagoraSysColors.material().error,
+                      color: MultiSysColors.material().error,
                     ),
                   ),
                   border: OutlineInputBorder(
@@ -223,8 +224,7 @@ class NewGroupChatInfoView extends StatelessWidget {
                   errorText: newGroupInfoController.getErrorMessage(
                     newGroupInfoController.groupNameTextEditingController.text,
                   ),
-                  errorStyle:
-                      TextStyle(color: LinagoraSysColors.material().error),
+                  errorStyle: TextStyle(color: MultiSysColors.material().error),
                   labelText: L10n.of(context)!.widgetName,
                   labelStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: Theme.of(context).colorScheme.onSurface,

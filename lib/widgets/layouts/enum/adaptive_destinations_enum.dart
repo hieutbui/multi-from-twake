@@ -4,7 +4,7 @@ import 'package:fluffychat/widgets/twake_components/twake_navigation_icon/twake_
 import 'package:fluffychat/widgets/unread_rooms_badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:matrix/matrix.dart';
 
 enum AdaptiveDestinationEnum {
@@ -20,7 +20,7 @@ enum AdaptiveDestinationEnum {
       case AdaptiveDestinationEnum.contacts:
         return NavigationDestination(
           icon: TwakeNavigationIcon(
-            color: LinagoraSysColors.material().onBackground,
+            color: MultiSysColors.material().onBackground,
             icon: Icons.supervised_user_circle_outlined,
           ),
           label: L10n.of(context)!.contacts,
@@ -32,7 +32,7 @@ enum AdaptiveDestinationEnum {
       case AdaptiveDestinationEnum.rooms:
         return NavigationDestination(
           icon: UnreadRoomsBadge(
-            color: LinagoraSysColors.material().onBackground,
+            color: MultiSysColors.material().onBackground,
             filter: (room) => !room.isSpace && !room.isStoryRoom,
           ),
           selectedIcon: UnreadRoomsBadge(
@@ -44,7 +44,7 @@ enum AdaptiveDestinationEnum {
       case AdaptiveDestinationEnum.settings:
         return NavigationDestination(
           icon: TwakeNavigationIcon(
-            color: LinagoraSysColors.material().onBackground,
+            color: MultiSysColors.material().onBackground,
             icon: Icons.settings_outlined,
           ),
           selectedIcon: const TwakeNavigationIcon(
@@ -71,7 +71,7 @@ enum AdaptiveDestinationEnum {
       case AdaptiveDestinationEnum.contacts:
         return BottomNavigationBarItem(
           icon: TwakeNavigationIcon(
-            color: LinagoraSysColors.material().tertiary,
+            color: MultiSysColors.material().tertiary,
             icon: Icons.supervised_user_circle_outlined,
           ),
           label: L10n.of(context)!.contacts,
@@ -83,7 +83,7 @@ enum AdaptiveDestinationEnum {
       case AdaptiveDestinationEnum.rooms:
         return BottomNavigationBarItem(
           icon: UnreadRoomsBadge(
-            color: LinagoraSysColors.material().tertiary,
+            color: MultiSysColors.material().tertiary,
             filter: (room) => !room.isSpace && !room.isStoryRoom,
           ),
           activeIcon: UnreadRoomsBadge(

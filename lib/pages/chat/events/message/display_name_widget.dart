@@ -1,7 +1,7 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/chat/events/message/message_style.dart';
 import 'package:fluffychat/utils/string_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 import 'package:matrix/matrix.dart';
 
 class DisplayNameWidget extends StatelessWidget {
@@ -29,7 +29,7 @@ class DisplayNameWidget extends StatelessWidget {
             ),
             style: Theme.of(context).textTheme.labelMedium?.copyWith(
                   fontFamily: 'Inter',
-                  color: LinagoraSysColors.material().secondary,
+                  color: MultiSysColors.material().secondary,
                 ),
             maxLines: 2,
             overflow: TextOverflow.clip,

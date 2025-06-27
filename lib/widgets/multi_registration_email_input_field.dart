@@ -68,7 +68,7 @@ class _MultiRegistrationEmailInputFieldState
         style: TextStyle(
           fontSize: 17.0,
           color: Colors.white.withAlpha(222) /* Text-Main-Primary_Default */,
-          fontFamily: 'SF Pro',
+          fontFamily: 'SFPro',
           fontWeight: FontWeight.w400,
           letterSpacing: -0.41,
           height: 1.18,
@@ -80,7 +80,7 @@ class _MultiRegistrationEmailInputFieldState
               fontSize: 17.0,
               color:
                   Colors.white.withAlpha(97) /* Text-Main-Tertiary-disabled */,
-              fontFamily: 'SF Pro',
+              fontFamily: 'SFPro',
               fontWeight: FontWeight.w400,
               height: 1.27,
               letterSpacing: 0.06,
@@ -90,7 +90,7 @@ class _MultiRegistrationEmailInputFieldState
           hintStyle: TextStyle(
             fontSize: 17.0,
             color: Colors.white.withAlpha(97) /* Text-Main-Tertiary-disabled */,
-            fontFamily: 'SF Pro',
+            fontFamily: 'SFPro',
             fontWeight: FontWeight.w400,
             letterSpacing: -0.41,
             height: 1.18,

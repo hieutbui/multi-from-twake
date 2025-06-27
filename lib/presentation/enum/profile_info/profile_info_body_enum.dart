@@ -1,6 +1,6 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
-import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 
 enum ProfileInfoActions {
   sendMessage,
@@ -19,11 +19,11 @@ enum ProfileInfoActions {
     switch (this) {
       case ProfileInfoActions.sendMessage:
         return Theme.of(context).textTheme.titleMedium!.copyWith(
-              color: LinagoraSysColors.material().primary,
+              color: MultiSysColors.material().primary,
             );
       case ProfileInfoActions.removeFromGroup:
         return Theme.of(context).textTheme.titleMedium!.copyWith(
-              color: LinagoraSysColors.material().error,
+              color: MultiSysColors.material().error,
             );
     }
   }
@@ -35,7 +35,7 @@ enum ProfileInfoActions {
       case ProfileInfoActions.removeFromGroup:
         return Icon(
           Icons.logout_outlined,
-          color: LinagoraSysColors.material().error,
+          color: MultiSysColors.material().error,
         );
     }
   }

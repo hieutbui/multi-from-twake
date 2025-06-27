@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:fluffychat/config/app_config.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/domain/repository/federation_configurations_repository.dart';
 import 'package:fluffychat/domain/repository/tom_configurations_repository.dart';
@@ -22,7 +23,6 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
 import 'package:go_router/go_router.dart';
-import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 import 'package:matrix/matrix.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -286,10 +286,10 @@ class SettingsController extends State<Settings> with ConnectPageMixin {
               message: L10n.of(context)!.deleteAccountMessage,
               okLabel: L10n.of(context)!.continueProcess,
               okLabelButtonColor: Colors.transparent,
-              okTextColor: LinagoraSysColors.material().primary,
+              okTextColor: MultiSysColors.material().primary,
               cancelLabel: L10n.of(context)!.deleteLater,
-              cancelLabelButtonColor: LinagoraSysColors.material().primary,
-              cancelTextColor: LinagoraSysColors.material().onPrimary,
+              cancelLabelButtonColor: MultiSysColors.material().primary,
+              cancelTextColor: MultiSysColors.material().onPrimary,
               maxWidthCancelButton: SettingsViewStyle.maxWidthCancelButton,
               maxLinesMessage: 7,
             ) ==

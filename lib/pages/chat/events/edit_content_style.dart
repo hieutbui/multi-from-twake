@@ -1,7 +1,7 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/utils/responsive/responsive_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 
 class EditContentStyle {
   static final responsive = getIt.get<ResponsiveUtils>();
@@ -31,7 +31,7 @@ class EditContentStyle {
       );
     }
     return BoxDecoration(
-      color: LinagoraSysColors.material().primaryContainer,
+      color: MultiSysColors.material().primaryContainer,
       borderRadius: BorderRadius.circular(16.0),
     );
   }
@@ -49,7 +49,7 @@ class EditContentStyle {
 
   static TextStyle? editTitleDefaultStyle(BuildContext context) {
     return Theme.of(context).textTheme.labelMedium?.copyWith(
-          color: LinagoraSysColors.material().secondary,
+          color: MultiSysColors.material().secondary,
         );
   }
 }

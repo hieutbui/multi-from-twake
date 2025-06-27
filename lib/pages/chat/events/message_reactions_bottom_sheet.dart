@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/chat/events/message_reactions.dart';
 import 'package:fluffychat/widgets/avatar/avatar.dart';
 import 'package:flutter/material.dart';
@@ -101,7 +102,7 @@ class _MessageReactionsBottomSheetState
                                   .textTheme
                                   .titleMedium
                                   ?.copyWith(
-                                    color: LinagoraSysColors.material()
+                                    color: MultiSysColors.material()
                                         .onSurfaceVariant,
                                   ),
                             ),
@@ -115,8 +116,8 @@ class _MessageReactionsBottomSheetState
                                 margin: const EdgeInsets.only(top: 11),
                                 decoration: selectedReactionKey == null
                                     ? BoxDecoration(
-                                        color: LinagoraSysColors.material()
-                                            .primary,
+                                        color:
+                                            MultiSysColors.material().primary,
                                         borderRadius: const BorderRadius.only(
                                           topLeft: Radius.circular(100),
                                           topRight: Radius.circular(100),
@@ -152,7 +153,7 @@ class _MessageReactionsBottomSheetState
                                   .textTheme
                                   .titleMedium
                                   ?.copyWith(
-                                    color: LinagoraSysColors.material()
+                                    color: MultiSysColors.material()
                                         .onSurfaceVariant,
                                   ),
                             ),
@@ -167,8 +168,8 @@ class _MessageReactionsBottomSheetState
                                 decoration: selectedReactionKey != null &&
                                         selectedReactionKey == r.key
                                     ? BoxDecoration(
-                                        color: LinagoraSysColors.material()
-                                            .primary,
+                                        color:
+                                            MultiSysColors.material().primary,
                                         borderRadius: const BorderRadius.only(
                                           topLeft: Radius.circular(100),
                                           topRight: Radius.circular(100),
@@ -217,7 +218,7 @@ class _MessageReactionsBottomSheetState
                                       style: LinagoraTextStyle.material()
                                           .bodyMedium2
                                           .copyWith(
-                                            color: LinagoraSysColors.material()
+                                            color: MultiSysColors.material()
                                                 .onSurface,
                                           ),
                                       maxLines: 1,

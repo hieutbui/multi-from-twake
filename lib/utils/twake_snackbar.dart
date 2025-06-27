@@ -1,7 +1,7 @@
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/utils/responsive/responsive_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 
 const Duration _snackBarDefaultDisplayDuration = Duration(milliseconds: 4000);
 
@@ -58,7 +58,7 @@ class TwakeSnackBar {
               },
               child: Icon(
                 Icons.close,
-                color: LinagoraSysColors.material().onInverseSurface,
+                color: MultiSysColors.material().onInverseSurface,
               ),
             ),
           ],

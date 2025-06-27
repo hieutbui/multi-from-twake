@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dartz/dartz.dart' hide State;
 import 'package:fluffychat/app_state/failure.dart';
 import 'package:fluffychat/app_state/success.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/domain/app_state/contact/lookup_match_contact_state.dart';
 import 'package:fluffychat/domain/usecase/contacts/lookup_match_contact_interactor.dart';
@@ -19,7 +20,6 @@ import 'package:fluffychat/widgets/matrix.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
-import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 import 'package:matrix/matrix.dart';
 
 class ProfileInfoBody extends StatefulWidget {
@@ -125,7 +125,7 @@ class ProfileInfoBodyController extends State<ProfileInfoBody> {
       title: L10n.of(context)!.removeUser,
       acceptText: L10n.of(context)!.remove,
       cancelText: L10n.of(context)!.cancel,
-      acceptTextColor: LinagoraSysColors.material().error,
+      acceptTextColor: MultiSysColors.material().error,
       onAccept: () async {
         WarningDialog.hideWarningDialog(context);
         final result = await TwakeDialog.showFutureLoadingDialogFullScreen(
@@ -170,7 +170,7 @@ class ProfileInfoBodyController extends State<ProfileInfoBody> {
           children: [
             Divider(
               thickness: ProfileInfoBodyViewStyle.bigDividerThickness,
-              color: LinagoraSysColors.material().surface,
+              color: MultiSysColors.material().surface,
             ),
             Padding(
               padding: ProfileInfoBodyViewStyle.actionItemPadding,

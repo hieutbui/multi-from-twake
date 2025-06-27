@@ -7,6 +7,7 @@ import 'package:debounce_throttle/debounce_throttle.dart';
 import 'package:desktop_drop/desktop_drop.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:fluffychat/config/app_config.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/domain/usecase/reactions/get_recent_reactions_interactor.dart';
 import 'package:fluffychat/domain/usecase/reactions/store_recent_reactions_interactor.dart';
@@ -1519,7 +1520,7 @@ class ChatController extends State<Chat>
         styleName: action == ChatContextMenuActions.delete
             ? PopupMenuWidgetStyle.defaultItemTextStyle(context)?.merge(
                 TextStyle(
-                  color: LinagoraSysColors.material().error,
+                  color: MultiSysColors.material().error,
                 ),
               )
             : null,

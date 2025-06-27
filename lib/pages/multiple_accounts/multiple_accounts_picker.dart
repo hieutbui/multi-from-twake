@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/twake_welcome/twake_welcome.dart';
 import 'package:fluffychat/presentation/multiple_account/twake_chat_presentation_account.dart';
 import 'package:fluffychat/widgets/layouts/agruments/switch_active_account_body_args.dart';
@@ -51,17 +52,17 @@ class MultipleAccountsPickerController {
         ),
       ),
       accountNameStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
-            color: LinagoraSysColors.material().onSurface,
+            color: MultiSysColors.material().onSurface,
           ),
       accountIdStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
             color: LinagoraRefColors.material().tertiary[20],
           ),
       addAnotherAccountStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
-            color: LinagoraSysColors.material().onPrimary,
+            color: MultiSysColors.material().onPrimary,
           ),
       titleAccountSettingsStyle:
           Theme.of(context).textTheme.labelLarge!.copyWith(
-                color: LinagoraSysColors.material().primary,
+                color: MultiSysColors.material().primary,
               ),
     );
   }

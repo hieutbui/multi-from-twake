@@ -1,4 +1,5 @@
 import 'package:desktop_drop/desktop_drop.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/chat/chat.dart';
 import 'package:fluffychat/pages/chat/chat_app_bar_title_style.dart';
 import 'package:fluffychat/pages/chat/chat_view_body_style.dart';
@@ -42,12 +43,12 @@ class DraftChatView extends StatelessWidget {
       child: KeyboardDismissOnTap(
         child: Scaffold(
           backgroundColor: DraftChatViewStyle.responsive.isMobile(context)
-              ? LinagoraSysColors.material().background
-              : LinagoraSysColors.material().onPrimary,
+              ? MultiSysColors.material().background
+              : MultiSysColors.material().onPrimary,
           appBar: AppBar(
             backgroundColor: DraftChatViewStyle.responsive.isMobile(context)
-                ? LinagoraSysColors.material().surface
-                : LinagoraSysColors.material().onPrimary,
+                ? MultiSysColors.material().surface
+                : MultiSysColors.material().onPrimary,
             automaticallyImplyLeading: false,
             toolbarHeight: ChatViewStyle.appBarHeight(context),
             title: Padding(
@@ -80,7 +81,7 @@ class DraftChatView extends StatelessWidget {
               preferredSize: const Size(double.infinity, 1),
               child: Container(
                 color: LinagoraStateLayer(
-                  LinagoraSysColors.material().surfaceTint,
+                  MultiSysColors.material().surfaceTint,
                 ).opacityLayer1,
                 height: 1,
               ),
@@ -88,7 +89,7 @@ class DraftChatView extends StatelessWidget {
           ),
           body: Container(
             color: DraftChatViewStyle.responsive.isMobile(context)
-                ? LinagoraSysColors.material().surface
+                ? MultiSysColors.material().surface
                 : Colors.transparent,
             child: SafeArea(
               child: Center(
@@ -119,12 +120,11 @@ class DraftChatView extends StatelessWidget {
                           decoration: DraftChatViewStyle.responsive
                                   .isMobile(context)
                               ? BoxDecoration(
-                                  color: LinagoraSysColors.material().surface,
+                                  color: MultiSysColors.material().surface,
                                   border: Border(
                                     top: BorderSide(
                                       color: LinagoraStateLayer(
-                                        LinagoraSysColors.material()
-                                            .surfaceTint,
+                                        MultiSysColors.material().surfaceTint,
                                       ).opacityLayer3,
                                     ),
                                   ),

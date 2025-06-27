@@ -88,7 +88,7 @@ class _MultiRegistrationPasswordInputFieldState
               fontSize: 17.0,
               color:
                   Colors.white.withAlpha(222) /* Text-Main-Primary_Default */,
-              fontFamily: 'SF Pro',
+              fontFamily: 'SFPro',
               fontWeight: FontWeight.w400,
               letterSpacing: -0.41,
               height: 1.18,
@@ -100,7 +100,7 @@ class _MultiRegistrationPasswordInputFieldState
                   fontSize: 17.0,
                   color: Colors.white
                       .withAlpha(97) /* Text-Main-Tertiary-disabled */,
-                  fontFamily: 'SF Pro',
+                  fontFamily: 'SFPro',
                   fontWeight: FontWeight.w400,
                   height: 1.27,
                   letterSpacing: 0.06,
@@ -111,7 +111,7 @@ class _MultiRegistrationPasswordInputFieldState
                 fontSize: 17.0,
                 color: Colors.white
                     .withAlpha(97) /* Text-Main-Tertiary-disabled */,
-                fontFamily: 'SF Pro',
+                fontFamily: 'SFPro',
                 fontWeight: FontWeight.w400,
                 letterSpacing: -0.41,
                 height: 1.18,
@@ -164,7 +164,7 @@ class _MultiRegistrationPasswordInputFieldState
                       _generatePasswordStrengthText(strength),
                       style: TextStyle(
                         fontSize: 13.0,
-                        fontFamily: 'SF Pro',
+                        fontFamily: 'SFPro',
                         fontWeight: FontWeight.w500,
                         height: 1.38,
                         letterSpacing: -0.08,

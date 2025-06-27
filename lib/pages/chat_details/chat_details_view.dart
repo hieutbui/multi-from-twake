@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/chat_details/chat_details_view_style.dart';
 import 'package:fluffychat/presentation/extensions/room_summary_extension.dart';
 import 'package:fluffychat/widgets/app_bars/twake_app_bar.dart';
@@ -23,9 +24,9 @@ class ChatDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     if (controller.room == null) {
       return Scaffold(
-        backgroundColor: LinagoraSysColors.material().onPrimary,
+        backgroundColor: MultiSysColors.material().onPrimary,
         appBar: AppBar(
-          backgroundColor: LinagoraSysColors.material().onPrimary,
+          backgroundColor: MultiSysColors.material().onPrimary,
           title: Text(L10n.of(context)!.oopsSomethingWentWrong),
         ),
         body: Center(
@@ -38,7 +39,7 @@ class ChatDetailsView extends StatelessWidget {
       builder: (context, snapshot) {
         return Scaffold(
           floatingActionButton: _AddMembersButton(controller: controller),
-          backgroundColor: LinagoraSysColors.material().onPrimary,
+          backgroundColor: MultiSysColors.material().onPrimary,
           appBar: TwakeAppBar(
             title: L10n.of(context)!.groupInformation,
             leading: TwakeIconButton(
@@ -78,7 +79,7 @@ class ChatDetailsView extends StatelessWidget {
                   handle:
                       NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                   sliver: SliverAppBar(
-                    backgroundColor: LinagoraSysColors.material().onPrimary,
+                    backgroundColor: MultiSysColors.material().onPrimary,
                     toolbarHeight:
                         ChatDetailViewStyle.groupToolbarHeightSliverAppBar,
                     title: Column(
@@ -381,7 +382,7 @@ class _GroupInformation extends StatelessWidget {
               Text(
                 displayName ?? '',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      color: LinagoraSysColors.material().onSurface,
+                      color: MultiSysColors.material().onSurface,
                     ),
                 maxLines: 2,
                 textAlign: TextAlign.center,

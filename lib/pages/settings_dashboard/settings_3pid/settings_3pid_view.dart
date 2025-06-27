@@ -1,9 +1,9 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/settings_dashboard/settings_3pid/settings_3pid.dart';
 import 'package:fluffychat/widgets/app_bars/twake_app_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/l10n.dart';
-import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 import 'package:matrix/matrix.dart';
 
 import 'package:fluffychat/widgets/layouts/max_width_body.dart';
@@ -18,7 +18,7 @@ class Settings3PidView extends StatelessWidget {
   Widget build(BuildContext context) {
     controller.request ??= Matrix.of(context).client.getAccount3PIDs();
     return Scaffold(
-      backgroundColor: LinagoraSysColors.material().onPrimary,
+      backgroundColor: MultiSysColors.material().onPrimary,
       appBar: TwakeAppBar(
         title: L10n.of(context)!.passwordRecovery,
         actions: [

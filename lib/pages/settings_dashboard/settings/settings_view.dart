@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/pages/settings_dashboard/settings/settings_item_builder.dart';
 import 'package:fluffychat/pages/settings_dashboard/settings/settings_view_style.dart';
@@ -27,7 +28,7 @@ class SettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: LinagoraSysColors.material().onPrimary,
+      backgroundColor: MultiSysColors.material().onPrimary,
       appBar: TwakeAppBar(
         title: L10n.of(context)!.settings,
         withDivider: responsiveUtils.isMobile(context),
@@ -50,7 +51,7 @@ class SettingsView extends StatelessWidget {
                 color: controller.optionsSelectNotifier.value ==
                         SettingEnum.profile
                     ? Theme.of(context).colorScheme.secondaryContainer
-                    : LinagoraSysColors.material().onPrimary,
+                    : MultiSysColors.material().onPrimary,
                 child: InkWell(
                   onTap: () => controller.goToSettingsProfile(),
                   child: Padding(
@@ -149,7 +150,7 @@ class SettingsView extends StatelessWidget {
               padding: SettingsViewStyle.profileItemDividerPadding(context),
               child: Divider(
                 color: LinagoraStateLayer(
-                  LinagoraSysColors.material().surfaceTint,
+                  MultiSysColors.material().surfaceTint,
                 ).opacityLayer3,
                 thickness: SettingsViewStyle.settingsItemDividerThikness,
                 height: SettingsViewStyle.settingsItemDividerHeight,
@@ -199,7 +200,7 @@ class SettingsView extends StatelessWidget {
                             ),
                             child: Divider(
                               color: LinagoraStateLayer(
-                                LinagoraSysColors.material().surfaceTint,
+                                MultiSysColors.material().surfaceTint,
                               ).opacityLayer3,
                               thickness:
                                   SettingsViewStyle.settingsItemDividerThikness,

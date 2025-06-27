@@ -8,7 +8,7 @@ import 'package:fluffychat/widgets/layouts/agruments/logged_in_body_args.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:matrix/matrix.dart';
 import 'package:flutter/material.dart';
 
@@ -123,7 +123,7 @@ class _OnAuthRedirectState extends State<OnAuthRedirect> with ConnectPageMixin {
       body: Center(
         child: CupertinoActivityIndicator(
           animating: true,
-          color: LinagoraSysColors.material().onSurfaceVariant,
+          color: MultiSysColors.material().onSurfaceVariant,
         ),
       ),
     );

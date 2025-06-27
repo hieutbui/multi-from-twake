@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/domain/app_state/contact/get_contacts_state.dart';
 import 'package:fluffychat/pages/contacts_tab/empty_contacts_body.dart';
 import 'package:fluffychat/pages/new_group/contacts_selection.dart';
@@ -30,7 +31,7 @@ class ContactsSelectionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: LinagoraSysColors.material().onPrimary,
+      backgroundColor: MultiSysColors.material().onPrimary,
       appBar: PreferredSize(
         preferredSize: controller.isFullScreen
             ? ContactsSelectionViewStyle.preferredSize(context)
@@ -548,7 +549,7 @@ class ContactsSelectionView extends StatelessWidget {
               ),
             ),
             styleMessage: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: LinagoraSysColors.material().primary,
+                  color: MultiSysColors.material().primary,
                 ),
           ),
           const SizedBox(width: 8.0),
@@ -564,9 +565,9 @@ class ContactsSelectionView extends StatelessWidget {
                 borderHover: ContactsSelectionViewStyle.webActionsButtonBorder,
                 buttonDecoration: BoxDecoration(
                   color: haveSelectedContacts
-                      ? LinagoraSysColors.material().primary
+                      ? MultiSysColors.material().primary
                       : LinagoraStateLayer(
-                          LinagoraSysColors.material().onSurface,
+                          MultiSysColors.material().onSurface,
                         ).opacityLayer2,
                   borderRadius: BorderRadius.circular(
                     ContactsSelectionViewStyle.webActionsButtonBorder,
@@ -574,8 +575,8 @@ class ContactsSelectionView extends StatelessWidget {
                 ),
                 styleMessage: Theme.of(context).textTheme.labelLarge?.copyWith(
                       color: haveSelectedContacts
-                          ? LinagoraSysColors.material().onPrimary
-                          : LinagoraSysColors.material()
+                          ? MultiSysColors.material().onPrimary
+                          : MultiSysColors.material()
                               .inverseSurface
                               .withOpacity(0.6),
                     ),

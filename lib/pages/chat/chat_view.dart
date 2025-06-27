@@ -11,7 +11,7 @@ import 'package:fluffychat/widgets/twake_components/twake_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:linagora_design_flutter/colors/linagora_state_layer.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:matrix/matrix.dart';
 
 class ChatView extends StatelessWidget with MessageContentMixin {
@@ -113,12 +113,12 @@ class ChatView extends StatelessWidget with MessageContentMixin {
             builder: (BuildContext context, snapshot) {
               return Scaffold(
                 backgroundColor: controller.responsive.isMobile(context)
-                    ? LinagoraSysColors.material().background
-                    : LinagoraSysColors.material().onPrimary,
+                    ? MultiSysColors.material().background
+                    : MultiSysColors.material().onPrimary,
                 appBar: AppBar(
                   backgroundColor: controller.responsive.isMobile(context)
-                      ? LinagoraSysColors.material().surface
-                      : LinagoraSysColors.material().onPrimary,
+                      ? MultiSysColors.material().surface
+                      : MultiSysColors.material().onPrimary,
                   automaticallyImplyLeading: false,
                   toolbarHeight: ChatViewStyle.appBarHeight(context),
                   title: Padding(
@@ -182,7 +182,7 @@ class ChatView extends StatelessWidget with MessageContentMixin {
                     preferredSize: const Size(double.infinity, 1),
                     child: Container(
                       color: LinagoraStateLayer(
-                        LinagoraSysColors.material().surfaceTint,
+                        MultiSysColors.material().surfaceTint,
                       ).opacityLayer1,
                       height: 1,
                     ),

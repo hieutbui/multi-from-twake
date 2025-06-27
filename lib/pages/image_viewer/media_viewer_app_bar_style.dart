@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 
 class MediaViewewAppbarStyle {
   static const opacityAnimationDuration = Duration(milliseconds: 200);
 
   static final appBarBackgroundColor =
-      LinagoraSysColors.material().onTertiaryContainer.withOpacity(0.5);
+      MultiSysColors.material().onTertiaryContainer.withOpacity(0.5);
 
   static EdgeInsets paddingRightMenu = const EdgeInsets.only(right: 8.0);
 

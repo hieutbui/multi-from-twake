@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:fluffychat/app_state/failure.dart';
 import 'package:fluffychat/app_state/success.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/domain/app_state/contact/lookup_match_contact_state.dart';
 import 'package:fluffychat/pages/chat_details/chat_details_view_style.dart';
 import 'package:fluffychat/resource/image_paths.dart';
@@ -33,9 +34,9 @@ class ChatProfileInfoView extends StatelessWidget {
     final user = controller.user;
     final contact = controller.widget.contact;
     return Scaffold(
-      backgroundColor: LinagoraSysColors.material().onPrimary,
+      backgroundColor: MultiSysColors.material().onPrimary,
       appBar: AppBar(
-        backgroundColor: LinagoraSysColors.material().onPrimary,
+        backgroundColor: MultiSysColors.material().onPrimary,
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: Row(
@@ -69,7 +70,7 @@ class ChatProfileInfoView extends StatelessWidget {
                 valueListenable: controller.lookupContactNotifier,
                 builder: (context, lookupContact, child) {
                   return SliverAppBar(
-                    backgroundColor: LinagoraSysColors.material().onPrimary,
+                    backgroundColor: MultiSysColors.material().onPrimary,
                     toolbarHeight: getToolbarHeight(lookupContact),
                     title: ConstrainedBox(
                       constraints: BoxConstraints(
@@ -269,7 +270,7 @@ class _Information extends StatelessWidget {
               Text(
                 displayName ?? '',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      color: LinagoraSysColors.material().onSurface,
+                      color: MultiSysColors.material().onSurface,
                     ),
                 maxLines: 2,
               ),
@@ -361,7 +362,7 @@ class _CopiableRowWithMaterialIcon extends StatelessWidget {
           child: Icon(
             icon,
             size: ChatProfileInfoStyle.iconSize,
-            color: LinagoraSysColors.material().onSurface,
+            color: MultiSysColors.material().onSurface,
           ),
         ),
         Expanded(
@@ -370,7 +371,7 @@ class _CopiableRowWithMaterialIcon extends StatelessWidget {
             child: Text(
               text,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: LinagoraSysColors.material().onSurface,
+                    color: MultiSysColors.material().onSurface,
                   ),
               overflow: TextOverflow.ellipsis,
             ),
@@ -413,7 +414,7 @@ class _CopiableRowWithSvgIcon extends StatelessWidget {
             width: ChatProfileInfoStyle.iconSize,
             height: ChatProfileInfoStyle.iconSize,
             colorFilter: ColorFilter.mode(
-              LinagoraSysColors.material().onSurface,
+              MultiSysColors.material().onSurface,
               BlendMode.srcIn,
             ),
           ),
@@ -424,7 +425,7 @@ class _CopiableRowWithSvgIcon extends StatelessWidget {
             child: Text(
               text,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: LinagoraSysColors.material().onSurface,
+                    color: MultiSysColors.material().onSurface,
                   ),
               overflow: TextOverflow.ellipsis,
             ),

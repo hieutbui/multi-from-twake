@@ -1,7 +1,7 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/domain/model/room/room_extension.dart';
 import 'package:fluffychat/presentation/decorators/chat_list/subtitle_text_style_decorator/subtitle_text_style_component.dart';
 import 'package:flutter/material.dart';
-import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 import 'package:matrix/matrix.dart';
 
 abstract class ChatListSubtitleTextStyleDecorator
@@ -31,7 +31,7 @@ class ReadChatListSubtitleTextStyleDecorator
   @override
   TextStyle textStyle(Room room, BuildContext context) {
     return Theme.of(context).textTheme.bodyMedium!.copyWith(
-          color: LinagoraSysColors.material().onSurface,
+          color: MultiSysColors.material().onSurface,
           fontFamily: 'Inter',
         );
   }
@@ -48,7 +48,7 @@ class UnreadChatListSubtitleTextStyleDecorator
     if (room.isUnreadOrInvited) {
       return _interfaceTextStyleComponent.textStyle(room, context).merge(
             Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: LinagoraSysColors.material().onSurface,
+                  color: MultiSysColors.material().onSurface,
                 ),
           );
     } else {
@@ -71,7 +71,7 @@ class MuteChatListSubtitleTextStyleDecorator
   TextStyle textStyle(Room room, BuildContext context) {
     if (room.isMuted) {
       return _interfaceTextStyleComponent.textStyle(room, context).copyWith(
-            color: LinagoraSysColors.material().onSurface,
+            color: MultiSysColors.material().onSurface,
           );
     } else {
       return _interfaceTextStyleComponent.textStyle(room, context);

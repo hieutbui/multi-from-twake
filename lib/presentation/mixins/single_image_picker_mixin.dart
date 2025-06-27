@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linagora_design_flutter/colors/linagora_ref_colors.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:linagora_design_flutter/images_picker/asset_counter.dart';
 import 'package:linagora_design_flutter/images_picker/images_picker.dart'
     as linagora_image_picker;
@@ -34,7 +34,7 @@ mixin SingleImagePickerMixin on CommonMediaPickerMixin {
         backgroundImageCamera: const AssetImage("assets/verification.png"),
         initialChildSize: MediaPickerStyle.initialChildSize,
         permissionStatus: permissionStatusPhotos,
-        assetBackgroundColor: LinagoraSysColors.material().background,
+        assetBackgroundColor: MultiSysColors.material().background,
         expandedWidget:
             const SizedBox(height: MediaPickerStyle.expandedWidgetHeight),
         counterImageBuilder: (_) => const SizedBox.shrink(),

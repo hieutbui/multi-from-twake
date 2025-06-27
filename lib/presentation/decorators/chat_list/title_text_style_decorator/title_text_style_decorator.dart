@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/presentation/decorators/chat_list/title_text_style_decorator/title_text_style_component.dart';
 import 'package:flutter/material.dart';
 import 'package:linagora_design_flutter/linagora_design_flutter.dart';
@@ -30,7 +31,7 @@ class ReadChatListTitleTextStyleDecorator
   @override
   TextStyle textStyle(Room room) {
     return LinagoraTextStyle.material().bodyMedium2.copyWith(
-          color: LinagoraSysColors.material().onSurface,
+          color: MultiSysColors.material().onSurface,
         );
   }
 }
@@ -46,7 +47,7 @@ class UnreadChatListTitleTextStyleDecorator
     if (room.isUnreadOrInvited) {
       return _interfaceTextStyleComponent.textStyle(room).merge(
             LinagoraTextStyle.material().bodyMedium2.copyWith(
-                  color: LinagoraSysColors.material().onSurface,
+                  color: MultiSysColors.material().onSurface,
                 ),
           );
     } else {
@@ -70,7 +71,7 @@ class MuteChatListTitleTextStyleDecorator
     final isMuted = room.pushRuleState != PushRuleState.notify;
     if (isMuted) {
       return _interfaceTextStyleComponent.textStyle(room).copyWith(
-            color: LinagoraSysColors.material().onSurface,
+            color: MultiSysColors.material().onSurface,
           );
     } else {
       return _interfaceTextStyleComponent.textStyle(room);

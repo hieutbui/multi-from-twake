@@ -1,4 +1,5 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/presentation/mixins/chat_list_item_mixin.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_item_style.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_item_subtitle.dart';
@@ -127,8 +128,7 @@ class ChatListItem extends StatelessWidget with ChatListItemMixin {
                               Icons.group,
                               size: ChatListItemStyle.groupIconSize,
                               color: room.isUnreadOrInvited
-                                  ? LinagoraSysColors.material()
-                                      .onSurfaceVariant
+                                  ? MultiSysColors.material().onSurfaceVariant
                                   : LinagoraRefColors.material().tertiary[30],
                             ),
                           ),

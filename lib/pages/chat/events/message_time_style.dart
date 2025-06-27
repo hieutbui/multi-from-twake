@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 
@@ -17,7 +18,7 @@ class MessageTimeStyle {
   ) =>
       timelineOverlayMessage
           ? Colors.white
-          : LinagoraSysColors.material().secondary;
+          : MultiSysColors.material().secondary;
   static Color? seenByRowIconSecondaryColor(
     bool timelineOverlayMessage,
     BuildContext context,

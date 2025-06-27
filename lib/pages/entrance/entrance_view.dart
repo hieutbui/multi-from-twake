@@ -58,56 +58,51 @@ class EntranceMainView extends StatelessWidget {
                       style: EntranceViewStyle().subtitleTextStyle(context),
                     ),
                     SizedBox(height: controller.sizeScreenHeight * 0.05),
-                    Column(
-                      children: [
-                        AppleAuthButton(
-                          onPressed: controller.onContinueWithApple,
-                          text: 'Continue with Apple',
-                          style: AuthButtonStyle(
-                            buttonColor: const Color(
-                              0xFFEAECF5,
-                            ) /* Buttons-Main-Primary-Default */,
-                            iconSize: 18,
-                            iconColor: Colors.black.withAlpha(222),
-                            height: 48,
-                            width: double.infinity,
-                            textStyle:
-                                EntranceViewStyle().buttonTextStyle(context),
-                          ),
-                        ),
-                        const SizedBox(height: EntranceViewStyle.shortSpacing),
-                        EmailAuthButton(
-                          onPressed: controller.onContinueWithEmail,
-                          text: 'Continue with Email',
-                          style: AuthButtonStyle(
-                            buttonColor: const Color(
-                              0x26EAECF5,
-                            ) /* Buttons-Main-Secondary-Default */,
-                            iconColor: Colors.white.withAlpha(222),
-                            iconSize: 18,
-                            height: 48,
-                            width: double.infinity,
-                            textStyle: EntranceViewStyle()
-                                .buttonGreyTextStyle(context),
-                          ),
-                        ),
-                        const SizedBox(height: EntranceViewStyle.shortSpacing),
-                        GoogleAuthButton(
-                          onPressed: controller.onContinueWithGoogle,
-                          text: 'Continue with Google',
-                          style: AuthButtonStyle(
-                            buttonColor: const Color(
-                              0x26EAECF5,
-                            ) /* Buttons-Main-Secondary-Default */,
-                            iconSize: 18,
-                            iconColor: Colors.white.withAlpha(222),
-                            height: 48,
-                            width: double.infinity,
-                            textStyle: EntranceViewStyle()
-                                .buttonGreyTextStyle(context),
-                          ),
-                        ),
-                      ],
+                    AppleAuthButton(
+                      onPressed: controller.onContinueWithApple,
+                      text: 'Continue with Apple',
+                      style: AuthButtonStyle(
+                        buttonColor: const Color(
+                          0xFFEAECF5,
+                        ) /* Buttons-Main-Primary-Default */,
+                        iconSize: 18,
+                        iconColor: Colors.black.withAlpha(222),
+                        height: 48,
+                        width: double.infinity,
+                        textStyle: EntranceViewStyle().buttonTextStyle(context),
+                      ),
+                    ),
+                    const SizedBox(height: EntranceViewStyle.shortSpacing),
+                    EmailAuthButton(
+                      onPressed: controller.onContinueWithEmail,
+                      text: 'Continue with Email',
+                      style: AuthButtonStyle(
+                        buttonColor: const Color(
+                          0x26EAECF5,
+                        ) /* Buttons-Main-Secondary-Default */,
+                        iconColor: Colors.white.withAlpha(222),
+                        iconSize: 18,
+                        height: 48,
+                        width: double.infinity,
+                        textStyle:
+                            EntranceViewStyle().buttonGreyTextStyle(context),
+                      ),
+                    ),
+                    const SizedBox(height: EntranceViewStyle.shortSpacing),
+                    GoogleAuthButton(
+                      onPressed: controller.onContinueWithGoogle,
+                      text: 'Continue with Google',
+                      style: AuthButtonStyle(
+                        buttonColor: const Color(
+                          0x26EAECF5,
+                        ) /* Buttons-Main-Secondary-Default */,
+                        iconSize: 18,
+                        iconColor: Colors.white.withAlpha(222),
+                        height: 48,
+                        width: double.infinity,
+                        textStyle:
+                            EntranceViewStyle().buttonGreyTextStyle(context),
+                      ),
                     ),
                     const SizedBox(height: EntranceViewStyle.shortSpacing),
                     Padding(

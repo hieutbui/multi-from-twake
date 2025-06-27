@@ -1,6 +1,6 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/widgets/twake_components/twake_navigation_icon/twake_navigation_icon_style.dart';
 import 'package:flutter/material.dart';
-import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 
 class TwakeNavigationIcon extends StatelessWidget {
   final IconData icon;
@@ -31,7 +31,7 @@ class TwakeNavigationIcon extends StatelessWidget {
       child: Icon(
         icon,
         color: isSelected
-            ? LinagoraSysColors.material().primary
+            ? MultiSysColors.material().primary
             : color ?? Theme.of(context).iconTheme.color,
       ),
     );

@@ -1,7 +1,7 @@
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/utils/responsive/responsive_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:linagora_design_flutter/style/linagora_text_style.dart';
 
 class TwakeAppBarStyle {
@@ -11,8 +11,8 @@ class TwakeAppBarStyle {
 
   static Color appBarBackgroundColor(BuildContext context) =>
       responsiveUtils.isMobile(context)
-          ? LinagoraSysColors.material().background
-          : LinagoraSysColors.material().onPrimary;
+          ? MultiSysColors.material().background
+          : MultiSysColors.material().onPrimary;
 
   static TextStyle? titleTextStyle(BuildContext context) =>
       responsiveUtils.isMobile(context)

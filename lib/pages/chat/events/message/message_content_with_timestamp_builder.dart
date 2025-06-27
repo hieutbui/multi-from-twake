@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:fluffychat/config/app_config.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/domain/model/room/room_extension.dart';
 import 'package:fluffychat/pages/chat/events/message/display_name_widget.dart';
@@ -263,7 +264,7 @@ class _MessageContentWithTimestampBuilderState
                                               : MessageContentWithTimestampBuilder
                                                       .responsiveUtils
                                                       .isMobile(context)
-                                                  ? LinagoraSysColors.material()
+                                                  ? MultiSysColors.material()
                                                       .onPrimary
                                                   : Theme.of(context)
                                                       .colorScheme
@@ -590,7 +591,7 @@ class _MessageContentWithTimestampBuilderState
                             ? LinagoraRefColors.material().primary[95]
                             : MessageContentWithTimestampBuilder.responsiveUtils
                                     .isMobile(context)
-                                ? LinagoraSysColors.material().onPrimary
+                                ? MultiSysColors.material().onPrimary
                                 : Theme.of(context)
                                     .colorScheme
                                     .surfaceContainerHighest,
@@ -771,7 +772,7 @@ class _MessageContentWithTimestampBuilderState
 
   Color? _textContextMenuColor(MessageContextMenuAction action) {
     return action == MessageContextMenuAction.delete
-        ? LinagoraSysColors.material().error
+        ? MultiSysColors.material().error
         : LinagoraRefColors.material().neutral[30];
   }
 

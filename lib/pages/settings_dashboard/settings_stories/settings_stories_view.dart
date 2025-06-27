@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/l10n.dart';
@@ -5,7 +6,6 @@ import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:fluffychat/pages/settings_dashboard/settings_stories/settings_stories.dart';
 import 'package:fluffychat/utils/localized_exception_extension.dart';
 import 'package:fluffychat/widgets/avatar/avatar.dart';
-import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 
 class SettingsStoriesView extends StatelessWidget {
   final SettingsStoriesController controller;
@@ -14,9 +14,9 @@ class SettingsStoriesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: LinagoraSysColors.material().onPrimary,
+      backgroundColor: MultiSysColors.material().onPrimary,
       appBar: AppBar(
-        backgroundColor: LinagoraSysColors.material().onPrimary,
+        backgroundColor: MultiSysColors.material().onPrimary,
         title: Text(L10n.of(context)!.whoCanSeeMyStories),
         elevation: 0,
       ),

@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/domain/app_state/preview_url/get_preview_url_success.dart';
 import 'package:fluffychat/pages/chat/events/formatted_text_widget.dart';
 import 'package:fluffychat/presentation/extensions/media/url_preview_extension.dart';
@@ -114,7 +115,7 @@ class TwakeLinkPreviewController extends State<TwakeLinkPreview>
               color: widget.ownMessage
                   ? LinagoraRefColors.material().primary[95]
                   : LinagoraStateLayer(
-                      LinagoraSysColors.material().surfaceTint,
+                      MultiSysColors.material().surfaceTint,
                     ).opacityLayer1,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(

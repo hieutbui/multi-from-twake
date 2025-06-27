@@ -4,7 +4,7 @@ import 'package:fluffychat/pages/image_viewer/media_viewer_app_bar_style.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
 import 'package:fluffychat/widgets/mixins/popup_menu_widget_style.dart';
 import 'package:flutter/material.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:fluffychat/widgets/twake_components/twake_icon_button.dart';
 import 'package:fluffychat/resource/image_paths.dart';
@@ -42,12 +42,12 @@ class MediaViewerAppbarView extends StatelessWidget {
                           MediaViewerAppBar.responsiveUtils.isMobile(context)
                               ? Icons.chevron_left_outlined
                               : Icons.close,
-                          color: LinagoraSysColors.material().onPrimary,
+                          color: MultiSysColors.material().onPrimary,
                         ),
                         onPressed: () => controller.onClose(
                           context,
                         ),
-                        color: LinagoraSysColors.material().onPrimary,
+                        color: MultiSysColors.material().onPrimary,
                         tooltip: L10n.of(context)!.back,
                       ),
                       Row(
@@ -60,10 +60,10 @@ class MediaViewerAppbarView extends StatelessWidget {
                                   controller.widget.event,
                                 ),
                                 tooltip: L10n.of(context)!.share,
-                                color: LinagoraSysColors.material().onPrimary,
+                                color: MultiSysColors.material().onPrimary,
                                 icon: Icon(
                                   Icons.share,
-                                  color: LinagoraSysColors.material().onPrimary,
+                                  color: MultiSysColors.material().onPrimary,
                                 ),
                               ),
                             ),
@@ -71,13 +71,13 @@ class MediaViewerAppbarView extends StatelessWidget {
                             IconButton(
                               icon: Icon(
                                 Icons.shortcut,
-                                color: LinagoraSysColors.material().onPrimary,
+                                color: MultiSysColors.material().onPrimary,
                               ),
                               onPressed: () => controller.forwardAction(
                                 context,
                                 controller.widget.event,
                               ),
-                              color: LinagoraSysColors.material().onPrimary,
+                              color: MultiSysColors.material().onPrimary,
                               tooltip: L10n.of(context)!.share,
                             ),
                           if (controller.widget.event != null)
@@ -144,8 +144,8 @@ class MediaViewerAppbarView extends StatelessWidget {
                                         paddingAll: MediaViewewAppbarStyle
                                             .paddingAllShowMoreIcon,
                                         icon: Icons.more_vert,
-                                        iconColor: LinagoraSysColors.material()
-                                            .onPrimary,
+                                        iconColor:
+                                            MultiSysColors.material().onPrimary,
                                       ),
                                     ),
                                   ),

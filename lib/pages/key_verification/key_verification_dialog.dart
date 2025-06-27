@@ -10,7 +10,7 @@ import 'package:flutter/services.dart';
 
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 
 import 'package:matrix/encryption.dart';
 import 'package:matrix/matrix.dart';
@@ -161,7 +161,7 @@ class KeyVerificationPageState extends State<KeyVerificationDialog> {
                 ),
             margin: KeyVerificationStyles.marginButtonWarningBanner,
             buttonDecoration: BoxDecoration(
-              color: LinagoraSysColors.material().onPrimary,
+              color: MultiSysColors.material().onPrimary,
               borderRadius: const BorderRadius.all(
                 Radius.circular(100),
               ),
@@ -178,7 +178,7 @@ class KeyVerificationPageState extends State<KeyVerificationDialog> {
                 ),
             margin: KeyVerificationStyles.marginButtonWarningBanner,
             buttonDecoration: BoxDecoration(
-              color: LinagoraSysColors.material().onPrimary,
+              color: MultiSysColors.material().onPrimary,
               borderRadius: const BorderRadius.all(
                 Radius.circular(100),
               ),
@@ -215,7 +215,7 @@ class KeyVerificationPageState extends State<KeyVerificationDialog> {
                 ),
             margin: KeyVerificationStyles.marginButtonWarningBanner,
             buttonDecoration: BoxDecoration(
-              color: LinagoraSysColors.material().onPrimary,
+              color: MultiSysColors.material().onPrimary,
               borderRadius: const BorderRadius.all(
                 Radius.circular(100),
               ),
@@ -228,7 +228,7 @@ class KeyVerificationPageState extends State<KeyVerificationDialog> {
             message: L10n.of(context)!.accept,
             borderHover: KeyVerificationStyles.borderHoverButtonWaningBanner,
             styleMessage: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: LinagoraSysColors.material().onPrimary,
+                  color: MultiSysColors.material().onPrimary,
                 ),
             margin: KeyVerificationStyles.marginButtonWarningBanner,
             buttonDecoration: BoxDecoration(
@@ -309,7 +309,7 @@ class KeyVerificationPageState extends State<KeyVerificationDialog> {
                 ),
             margin: KeyVerificationStyles.marginButtonWarningBanner,
             buttonDecoration: BoxDecoration(
-              color: LinagoraSysColors.material().onPrimary,
+              color: MultiSysColors.material().onPrimary,
               borderRadius: const BorderRadius.all(
                 Radius.circular(100),
               ),
@@ -325,7 +325,7 @@ class KeyVerificationPageState extends State<KeyVerificationDialog> {
             message: L10n.of(context)!.theyMatch,
             borderHover: KeyVerificationStyles.borderHoverButtonWaningBanner,
             styleMessage: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: LinagoraSysColors.material().onPrimary,
+                  color: MultiSysColors.material().onPrimary,
                 ),
             margin: KeyVerificationStyles.marginButtonWarningBanner,
             buttonDecoration: BoxDecoration(
@@ -380,7 +380,7 @@ class KeyVerificationPageState extends State<KeyVerificationDialog> {
                 ),
             margin: KeyVerificationStyles.marginButtonWarningBanner,
             buttonDecoration: BoxDecoration(
-              color: LinagoraSysColors.material().onPrimary,
+              color: MultiSysColors.material().onPrimary,
               borderRadius: const BorderRadius.all(
                 Radius.circular(100),
               ),
@@ -410,7 +410,7 @@ class KeyVerificationPageState extends State<KeyVerificationDialog> {
                 ),
             margin: KeyVerificationStyles.marginButtonWarningBanner,
             buttonDecoration: BoxDecoration(
-              color: LinagoraSysColors.material().onPrimary,
+              color: MultiSysColors.material().onPrimary,
               borderRadius: const BorderRadius.all(
                 Radius.circular(100),
               ),

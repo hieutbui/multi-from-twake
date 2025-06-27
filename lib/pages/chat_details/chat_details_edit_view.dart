@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:fluffychat/app_state/failure.dart';
 import 'package:fluffychat/app_state/success.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/domain/model/room/room_extension.dart';
 import 'package:fluffychat/pages/chat_details/chat_details_edit.dart';
 import 'package:fluffychat/pages/chat_details/chat_details_edit_option.dart';
@@ -35,9 +36,9 @@ class ChatDetailsEditView extends StatelessWidget {
   Widget build(BuildContext context) {
     if (controller.room == null) {
       return Scaffold(
-        backgroundColor: LinagoraSysColors.material().onPrimary,
+        backgroundColor: MultiSysColors.material().onPrimary,
         appBar: AppBar(
-          backgroundColor: LinagoraSysColors.material().onPrimary,
+          backgroundColor: MultiSysColors.material().onPrimary,
           title: Text(L10n.of(context)!.oopsSomethingWentWrong),
         ),
         body: Center(
@@ -47,7 +48,7 @@ class ChatDetailsEditView extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: LinagoraSysColors.material().onPrimary,
+      backgroundColor: MultiSysColors.material().onPrimary,
       resizeToAvoidBottomInset: false,
       appBar: TwakeAppBar(
         title: L10n.of(context)!.edit,
@@ -237,12 +238,10 @@ class ChatDetailsEditView extends StatelessWidget {
                         ),
                         subtitle: Text(
                           L10n.of(context)!.yourDataIsEncryptedForSecurity,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(
-                                color: LinagoraSysColors.material().tertiary,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: MultiSysColors.material().tertiary,
+                                  ),
                         ),
                         trailing: SizedBox(
                           width: 38,
@@ -250,14 +249,14 @@ class ChatDetailsEditView extends StatelessWidget {
                           child: FittedBox(
                             fit: BoxFit.fill,
                             child: Switch(
-                              activeTrackColor: controller
-                                              .room?.canEnableEncryption !=
-                                          true ||
-                                      controller.room?.encrypted == true
-                                  ? LinagoraStateLayer(
-                                      LinagoraSysColors.material().onSurface,
-                                    ).opacityLayer3
-                                  : Theme.of(context).colorScheme.primary,
+                              activeTrackColor:
+                                  controller.room?.canEnableEncryption !=
+                                              true ||
+                                          controller.room?.encrypted == true
+                                      ? LinagoraStateLayer(
+                                          MultiSysColors.material().onSurface,
+                                        ).opacityLayer3
+                                      : Theme.of(context).colorScheme.primary,
                               value: isRoomEnabledEncryption,
                               onChanged: controller.room?.encrypted == false &&
                                       controller.room?.canEnableEncryption ==
