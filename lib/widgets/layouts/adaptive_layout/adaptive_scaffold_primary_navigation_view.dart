@@ -4,7 +4,7 @@ import 'package:fluffychat/widgets/layouts/adaptive_layout/adaptive_scaffold_pri
 import 'package:fluffychat/widgets/matrix.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:matrix/matrix.dart';
 
 class AdaptiveScaffoldPrimaryNavigationView extends StatelessWidget {
@@ -48,7 +48,7 @@ class AdaptiveScaffoldPrimaryNavigationView extends StatelessWidget {
                     AdaptiveScaffoldPrimaryNavigationStyle.labelTextStyle(
                   context,
                 ),
-                indicatorColor: LinagoraSysColors.material().secondaryContainer,
+                indicatorColor: MultiSysColors.material().secondaryContainer,
               ),
             ),
             Column(

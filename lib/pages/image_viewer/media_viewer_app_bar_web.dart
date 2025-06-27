@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/presentation/mixins/media_viewer_app_bar_mixin.dart';
 import 'package:fluffychat/presentation/mixins/save_file_to_twake_downloads_folder_mixin.dart';
 import 'package:fluffychat/presentation/mixins/save_media_to_gallery_android_mixin.dart';
@@ -9,7 +10,6 @@ import 'package:fluffychat/pages/image_viewer/image_viewer_style.dart';
 import 'package:fluffychat/pages/image_viewer/media_viewer_app_bar.dart';
 import 'package:fluffychat/pages/image_viewer/media_viewer_app_bar_style.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 import 'package:matrix/matrix.dart';
 
 class MediaViewerAppBarWeb extends StatelessWidget
@@ -40,12 +40,12 @@ class MediaViewerAppBarWeb extends StatelessWidget
                 MediaViewerAppBar.responsiveUtils.isMobile(context)
                     ? Icons.chevron_left_outlined
                     : Icons.close,
-                color: LinagoraSysColors.material().onPrimary,
+                color: MultiSysColors.material().onPrimary,
               ),
               onPressed: () => onClose(
                 context,
               ),
-              color: LinagoraSysColors.material().onPrimary,
+              color: MultiSysColors.material().onPrimary,
               tooltip: L10n.of(context)!.back,
             ),
             Row(
@@ -54,20 +54,20 @@ class MediaViewerAppBarWeb extends StatelessWidget
                   IconButton(
                     icon: Icon(
                       Icons.shortcut,
-                      color: LinagoraSysColors.material().onPrimary,
+                      color: MultiSysColors.material().onPrimary,
                     ),
                     onPressed: () => forwardAction(
                       context,
                       event,
                     ),
-                    color: LinagoraSysColors.material().onPrimary,
+                    color: MultiSysColors.material().onPrimary,
                     tooltip: L10n.of(context)!.share,
                   ),
                 if (event != null) ...[
                   IconButton(
                     icon: Icon(
                       Icons.file_download_outlined,
-                      color: LinagoraSysColors.material().onPrimary,
+                      color: MultiSysColors.material().onPrimary,
                     ),
                     tooltip: L10n.of(context)!.saveFile,
                     onPressed: () => saveFileAction(
@@ -80,7 +80,7 @@ class MediaViewerAppBarWeb extends StatelessWidget
                     icon: SvgPicture.asset(
                       ImagePaths.icShowInChat,
                       colorFilter: ColorFilter.mode(
-                        LinagoraSysColors.material().onPrimary,
+                        MultiSysColors.material().onPrimary,
                         BlendMode.srcIn,
                       ),
                     ),

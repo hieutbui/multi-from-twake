@@ -1,10 +1,10 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/auto_homeserver_picker/auto_homeserver_picker.dart';
 import 'package:fluffychat/pages/auto_homeserver_picker/auto_homeserver_picker_state.dart';
 import 'package:fluffychat/pages/auto_homeserver_picker/auto_homeserver_picker_view_style.dart';
 import 'package:fluffychat/resource/image_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
 class AutoHomeserverPickerView extends StatelessWidget {
@@ -27,7 +27,7 @@ class AutoHomeserverPickerView extends StatelessWidget {
                 Text(
                   L10n.of(context)!.welcomeTo,
                   style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                        color: LinagoraSysColors.material().onSurfaceVariant,
+                        color: MultiSysColors.material().onSurfaceVariant,
                       ),
                 ),
                 SvgPicture.asset(
@@ -41,7 +41,7 @@ class AutoHomeserverPickerView extends StatelessWidget {
                     L10n.of(context)!.descriptionWelcomeTo,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: LinagoraSysColors.material().onSurfaceVariant,
+                          color: MultiSysColors.material().onSurfaceVariant,
                         ),
                   ),
                 ),
@@ -98,8 +98,8 @@ class AutoHomeserverPickerView extends StatelessWidget {
                                       .textTheme
                                       .bodyLarge
                                       ?.copyWith(
-                                        color: LinagoraSysColors.material()
-                                            .onPrimary,
+                                        color:
+                                            MultiSysColors.material().onPrimary,
                                       ),
                                 ),
                               ),
@@ -113,7 +113,7 @@ class AutoHomeserverPickerView extends StatelessWidget {
                                 .textTheme
                                 .titleMedium
                                 ?.copyWith(
-                                  color: LinagoraSysColors.material().error,
+                                  color: MultiSysColors.material().error,
                                 ),
                           ),
                         ],
@@ -153,8 +153,7 @@ class AutoHomeserverPickerView extends StatelessWidget {
                                   .textTheme
                                   .bodyLarge
                                   ?.copyWith(
-                                    color:
-                                        LinagoraSysColors.material().onPrimary,
+                                    color: MultiSysColors.material().onPrimary,
                                   ),
                             ),
                           ),

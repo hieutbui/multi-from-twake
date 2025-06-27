@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/domain/app_state/invitation/send_invitation_state.dart';
 import 'package:fluffychat/pages/contacts_tab/contacts_invitation.dart';
 import 'package:fluffychat/pages/contacts_tab/contacts_invitation_style.dart';
@@ -31,7 +32,7 @@ class ContactsInvitationView extends StatelessWidget {
                   height: 4,
                   margin: ContactsInvitationStyle.verticalPadding,
                   decoration: BoxDecoration(
-                    color: LinagoraSysColors.material().outline,
+                    color: MultiSysColors.material().outline,
                     borderRadius: ContactsInvitationStyle.borderRadius,
                   ),
                 ),
@@ -39,7 +40,7 @@ class ContactsInvitationView extends StatelessWidget {
                   L10n.of(context)!
                       .selectAnEmailOrPhoneYouWantSendTheInvitationTo,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: LinagoraSysColors.material().onSurface,
+                        color: MultiSysColors.material().onSurface,
                       ),
                   textAlign: TextAlign.center,
                 ),
@@ -60,14 +61,14 @@ class ContactsInvitationView extends StatelessWidget {
                           L10n.of(context)!.shareInvitationLink,
                           style:
                               Theme.of(context).textTheme.labelLarge?.copyWith(
-                                    color: LinagoraSysColors.material().primary,
+                                    color: MultiSysColors.material().primary,
                                   ),
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(width: 8),
                         Icon(
                           Icons.share_outlined,
-                          color: LinagoraSysColors.material().primary,
+                          color: MultiSysColors.material().primary,
                         ),
                       ],
                     ),
@@ -110,7 +111,7 @@ class ContactsInvitationView extends StatelessWidget {
                                           child: Icon(
                                             Icons.call_outlined,
                                             size: 24,
-                                            color: LinagoraSysColors.material()
+                                            color: MultiSysColors.material()
                                                 .tertiary,
                                           ),
                                         ),
@@ -150,9 +151,9 @@ class ContactsInvitationView extends StatelessWidget {
                                                                   .bodyLarge
                                                                   ?.copyWith(
                                                                     color: isSelectedContact
-                                                                        ? LinagoraSysColors.material()
+                                                                        ? MultiSysColors.material()
                                                                             .primary
-                                                                        : LinagoraSysColors.material()
+                                                                        : MultiSysColors.material()
                                                                             .onSurface,
                                                                   ),
                                                         ),
@@ -162,7 +163,7 @@ class ContactsInvitationView extends StatelessWidget {
                                                   if (isSelectedContact)
                                                     Icon(
                                                       Icons.check_circle,
-                                                      color: LinagoraSysColors
+                                                      color: MultiSysColors
                                                               .material()
                                                           .primary,
                                                     ),
@@ -190,7 +191,7 @@ class ContactsInvitationView extends StatelessWidget {
                                               const SizedBox(height: 12),
                                               Divider(
                                                 color: LinagoraStateLayer(
-                                                  LinagoraSysColors.material()
+                                                  MultiSysColors.material()
                                                       .surfaceTint,
                                                 ).opacityLayer3,
                                               ),
@@ -232,7 +233,7 @@ class ContactsInvitationView extends StatelessWidget {
                                               const EdgeInsets.only(top: 8),
                                           child: Icon(
                                             Icons.email_outlined,
-                                            color: LinagoraSysColors.material()
+                                            color: MultiSysColors.material()
                                                 .tertiary,
                                           ),
                                         ),
@@ -271,9 +272,9 @@ class ContactsInvitationView extends StatelessWidget {
                                                                   .bodyLarge
                                                                   ?.copyWith(
                                                                     color: isSelectedContact
-                                                                        ? LinagoraSysColors.material()
+                                                                        ? MultiSysColors.material()
                                                                             .primary
-                                                                        : LinagoraSysColors.material()
+                                                                        : MultiSysColors.material()
                                                                             .onSurface,
                                                                   ),
                                                         ),
@@ -283,7 +284,7 @@ class ContactsInvitationView extends StatelessWidget {
                                                   if (isSelectedContact)
                                                     Icon(
                                                       Icons.check_circle,
-                                                      color: LinagoraSysColors
+                                                      color: MultiSysColors
                                                               .material()
                                                           .primary,
                                                     ),
@@ -311,7 +312,7 @@ class ContactsInvitationView extends StatelessWidget {
                                               const SizedBox(height: 12),
                                               Divider(
                                                 color: LinagoraStateLayer(
-                                                  LinagoraSysColors.material()
+                                                  MultiSysColors.material()
                                                       .surfaceTint,
                                                 ).opacityLayer3,
                                               ),
@@ -348,7 +349,7 @@ class ContactsInvitationView extends StatelessWidget {
                           width: double.infinity,
                           height: ContactsInvitationStyle.heightSendButton,
                           decoration: BoxDecoration(
-                            color: LinagoraSysColors.material().primary,
+                            color: MultiSysColors.material().primary,
                             borderRadius: ContactsInvitationStyle.borderRadius,
                           ),
                           child: ValueListenableBuilder(
@@ -367,7 +368,7 @@ class ContactsInvitationView extends StatelessWidget {
                                             CircularProgressIndicator.adaptive(
                                           strokeWidth: 2,
                                           backgroundColor:
-                                              LinagoraSysColors.material()
+                                              MultiSysColors.material()
                                                   .onPrimary,
                                         ),
                                       ),
@@ -386,14 +387,14 @@ class ContactsInvitationView extends StatelessWidget {
                                       .textTheme
                                       .labelLarge
                                       ?.copyWith(
-                                        color: LinagoraSysColors.material()
-                                            .onPrimary,
+                                        color:
+                                            MultiSysColors.material().onPrimary,
                                       ),
                                 ),
                                 const SizedBox(width: 8),
                                 Icon(
                                   Icons.send_outlined,
-                                  color: LinagoraSysColors.material().onPrimary,
+                                  color: MultiSysColors.material().onPrimary,
                                 ),
                               ],
                             ),

@@ -4,7 +4,7 @@ import 'package:fluffychat/pages/profile_info/profile_info_view_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:linagora_design_flutter/colors/linagora_state_layer.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 
 class ProfileInfoView extends StatelessWidget {
   const ProfileInfoView(
@@ -21,13 +21,13 @@ class ProfileInfoView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: LinagoraSysColors.material().onPrimary,
+        backgroundColor: MultiSysColors.material().onPrimary,
         automaticallyImplyLeading: false,
         bottom: PreferredSize(
           preferredSize: const Size(double.infinity, 1),
           child: Container(
             color: LinagoraStateLayer(
-              LinagoraSysColors.material().surfaceTint,
+              MultiSysColors.material().surfaceTint,
             ).opacityLayer1,
             height: 1,
           ),

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:linagora_design_flutter/colors/linagora_ref_colors.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:matrix/matrix.dart';
 
 import 'package:fluffychat/config/app_config.dart';
@@ -329,7 +329,7 @@ class ReactionsList extends StatelessWidget {
                     width: 32,
                     margin: const EdgeInsets.symmetric(vertical: 16),
                     decoration: BoxDecoration(
-                      color: LinagoraSysColors.material().outline,
+                      color: MultiSysColors.material().outline,
                       borderRadius: BorderRadius.circular(100),
                     ),
                   ),
@@ -374,7 +374,7 @@ class Reaction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = LinagoraSysColors.material().surface;
+    final color = MultiSysColors.material().surface;
     final fontSize = DefaultTextStyle.of(context).style.fontSize;
     Widget content;
     if (reactionKey!.startsWith('mxc://')) {

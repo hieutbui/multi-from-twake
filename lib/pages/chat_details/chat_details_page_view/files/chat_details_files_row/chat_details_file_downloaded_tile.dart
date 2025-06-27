@@ -2,7 +2,7 @@ import 'package:fluffychat/pages/chat_details/chat_details_page_view/files/chat_
 import 'package:fluffychat/pages/chat_details/chat_details_page_view/files/chat_details_files_row/chat_details_file_row_body.dart';
 import 'package:fluffychat/pages/chat_details/chat_details_page_view/files/chat_details_files_row/chat_details_row_wrapper.dart';
 import 'package:flutter/material.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 
 class ChatDetailsDownloadedFileTile extends StatelessWidget {
   const ChatDetailsDownloadedFileTile({
@@ -25,7 +25,7 @@ class ChatDetailsDownloadedFileTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      hoverColor: LinagoraSysColors.material().surfaceVariant,
+      hoverColor: MultiSysColors.material().surfaceVariant,
       onTap: onTap,
       child: ChatDetailsFileRowWrapper(
         mimeType: mimeType,

@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/widgets/mxc_image.dart';
 import 'package:fluffychat/widgets/twake_components/twake_preview_link/twake_link_preview.dart';
 import 'package:fluffychat/widgets/twake_components/twake_preview_link/twake_link_preview_item_style.dart';
@@ -5,7 +6,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import 'package:fluffychat/presentation/model/media/url_preview_presentation.dart';
 import 'package:fluffychat/widgets/twake_components/twake_preview_link/twake_link_preview_item.dart';
-import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 
 void main() {
   group(
@@ -58,7 +58,7 @@ void main() {
 
           expect(
             twakeLinkPreviewItemBodyDecoration.color,
-            LinagoraSysColors.material().primaryContainer,
+            MultiSysColors.material().primaryContainer,
           );
 
           expect(twakeLinkPreviewItemBodyDecoration.shape, isNotNull);

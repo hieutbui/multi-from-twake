@@ -54,7 +54,7 @@ class CustomOtpInput extends StatelessWidget {
           fontSize: 24,
           color: Colors.white,
           fontWeight: FontWeight.w600,
-          fontFamily: 'SF Pro',
+          fontFamily: 'SFPro',
         ),
         inputFormatters: [
           FilteringTextInputFormatter.digitsOnly,

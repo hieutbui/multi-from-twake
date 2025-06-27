@@ -1,10 +1,10 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/widgets/file_widget/file_tile_widget_style.dart';
 import 'package:flutter/material.dart';
-import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 
 class FileErrorTileWidgetStyle extends FileTileWidgetStyle {
   @override
-  Color? get fileInfoColor => LinagoraSysColors.material().error;
+  Color? get fileInfoColor => MultiSysColors.material().error;
 
   @override
   TextStyle textInformationStyle(BuildContext context) {

@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linagora_design_flutter/colors/linagora_ref_colors.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:linagora_design_flutter/images_picker/images_picker.dart'
     as linagora_image_picker;
 import 'package:linagora_design_flutter/images_picker/images_picker_grid.dart';
@@ -103,7 +103,7 @@ mixin MediaPickerMixin on CommonMediaPickerMixin {
       minChildSize: MediaPickerStyle.initialChildSize,
       permissionStatus: permissionStatusPhotos,
       gridPadding: MediaPickerStyle.gridPadding,
-      assetBackgroundColor: LinagoraSysColors.material().background,
+      assetBackgroundColor: MultiSysColors.material().background,
       counterImageBuilder: (counterImage) {
         if (counterImage == 0) {
           return const SizedBox.shrink();
@@ -139,7 +139,7 @@ mixin MediaPickerMixin on CommonMediaPickerMixin {
             return Container(
               padding: MediaPickerStyle.itemPickerPadding,
               decoration: BoxDecoration(
-                color: LinagoraSysColors.material().surface,
+                color: MultiSysColors.material().surface,
                 border: Border(
                   top: BorderSide(
                     color: Theme.of(context)
@@ -165,7 +165,7 @@ mixin MediaPickerMixin on CommonMediaPickerMixin {
           return child!;
         },
         child: Container(
-          color: LinagoraSysColors.material().background,
+          color: MultiSysColors.material().background,
           child: Column(
             children: [
               Stack(

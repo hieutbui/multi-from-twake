@@ -1,4 +1,5 @@
 import 'package:desktop_drop/desktop_drop.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/chat/chat.dart';
 import 'package:fluffychat/pages/chat/chat_event_list.dart';
 import 'package:fluffychat/pages/chat/chat_loading_view.dart';
@@ -36,7 +37,7 @@ class ChatViewBody extends StatelessWidget with MessageContentMixin {
       onDragExited: controller.onDragExited,
       child: Container(
         color: controller.responsive.isMobile(context)
-            ? LinagoraSysColors.material().surface
+            ? MultiSysColors.material().surface
             : null,
         child: Stack(
           children: <Widget>[
@@ -296,11 +297,11 @@ class ChatViewBody extends StatelessWidget with MessageContentMixin {
     return Container(
       decoration: controller.responsive.isMobile(context)
           ? BoxDecoration(
-              color: LinagoraSysColors.material().surface,
+              color: MultiSysColors.material().surface,
               border: Border(
                 top: BorderSide(
                   color: LinagoraStateLayer(
-                    LinagoraSysColors.material().surfaceTint,
+                    MultiSysColors.material().surfaceTint,
                   ).opacityLayer3,
                 ),
               ),

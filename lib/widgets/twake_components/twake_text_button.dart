@@ -1,7 +1,7 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/widgets/twake_components/twake_icon_button.dart';
 import 'package:fluffychat/widgets/twake_components/twake_text_button_style.dart';
 import 'package:flutter/material.dart';
-import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 
 class TwakeTextButton extends StatelessWidget {
   final BoxDecoration? buttonDecoration;
@@ -75,7 +75,7 @@ class TwakeTextButton extends StatelessWidget {
                 message,
                 style: styleMessage ??
                     Theme.of(context).textTheme.labelLarge?.copyWith(
-                          color: LinagoraSysColors.material().onPrimary,
+                          color: MultiSysColors.material().onPrimary,
                         ),
                 overflow: TextOverflow.ellipsis,
               ),

@@ -1,4 +1,5 @@
 import 'package:fluffychat/config/app_config.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/utils/responsive/responsive_utils.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +24,8 @@ class ReplyContentStyle {
   ) {
     return BoxDecoration(
       color: ownMessage
-          ? LinagoraSysColors.material().primaryContainer
-          : LinagoraSysColors.material().onSurface.withOpacity(0.08),
+          ? MultiSysColors.material().primaryContainer
+          : MultiSysColors.material().onSurface.withOpacity(0.08),
       borderRadius: BorderRadius.circular(8.0),
     );
   }

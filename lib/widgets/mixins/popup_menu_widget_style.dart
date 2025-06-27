@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/utils/extension/build_context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:linagora_design_flutter/linagora_design_flutter.dart';
@@ -15,7 +16,7 @@ class PopupMenuWidgetStyle {
   static const double dividerThickness = 1.0;
 
   static Color? defaultDividerColor(BuildContext context) {
-    return LinagoraStateLayer(LinagoraSysColors.material().surfaceTint)
+    return LinagoraStateLayer(MultiSysColors.material().surfaceTint)
         .opacityLayer3;
   }
 

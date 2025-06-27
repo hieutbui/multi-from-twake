@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:fluffychat/app_state/failure.dart';
 import 'package:fluffychat/app_state/success.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/settings_dashboard/settings_profile/settings_profile_item_style.dart';
 import 'package:fluffychat/presentation/enum/settings/settings_profile_enum.dart';
 import 'package:fluffychat/presentation/model/settings/settings_profile_presentation.dart';
@@ -97,7 +98,7 @@ class SettingsProfileItemBuilder extends StatelessWidget {
                     Divider(
                       height: SettingsProfileItemStyle.dividerSize,
                       color: LinagoraStateLayer(
-                        LinagoraSysColors.material().surfaceTint,
+                        MultiSysColors.material().surfaceTint,
                       ).opacityLayer3,
                     ),
                   ],

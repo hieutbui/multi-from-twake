@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/bootstrap/tom_bootstrap_dialog_mobile_style.dart';
 import 'package:fluffychat/pages/bootstrap/tom_bootstrap_dialog_style.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_header_style.dart';
@@ -69,7 +70,7 @@ class TomBootstrapDialogMobileView extends StatelessWidget {
             child: Divider(
               height: 1,
               color: LinagoraStateLayer(
-                LinagoraSysColors.material().surfaceTintDark,
+                MultiSysColors.material().surfaceTintDark,
               ).opacityLayer3,
             ),
           ),
@@ -84,7 +85,7 @@ class TomBootstrapDialogMobileView extends StatelessWidget {
                   Text(
                     L10n.of(context)!.settingUpYourTwake,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color: LinagoraSysColors.material().onBackground,
+                          color: MultiSysColors.material().onBackground,
                         ),
                     textAlign: TextAlign.center,
                   ),
@@ -99,7 +100,7 @@ class TomBootstrapDialogMobileView extends StatelessWidget {
                   Text(
                     description,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: LinagoraSysColors.material().tertiary,
+                          color: MultiSysColors.material().tertiary,
                         ),
                     textAlign: TextAlign.center,
                   ),

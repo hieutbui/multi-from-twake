@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:animations/animations.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/pages/bootstrap/init_client_dialog.dart';
 import 'package:fluffychat/resource/image_paths.dart';
@@ -12,7 +13,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:future_loading_dialog/future_loading_dialog.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
-import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:matrix/matrix.dart';
 
@@ -45,7 +45,7 @@ class TwakeDialog {
 
   static void showLoadingTwakeWelcomeDialog(BuildContext context) {
     showGeneralDialog(
-      barrierColor: LinagoraSysColors.material().onPrimary,
+      barrierColor: MultiSysColors.material().onPrimary,
       useRootNavigator: false,
       transitionDuration: const Duration(milliseconds: 700),
       transitionBuilder: (context, animation, secondaryAnimation, child) {
@@ -68,7 +68,7 @@ class TwakeDialog {
 
   static void showLoadingDialog(BuildContext context) {
     showGeneralDialog(
-      barrierColor: LinagoraSysColors.material().onPrimary.withOpacity(0.75),
+      barrierColor: MultiSysColors.material().onPrimary.withOpacity(0.75),
       useRootNavigator: PlatformInfos.isWeb,
       transitionDuration: const Duration(milliseconds: 700),
       transitionBuilder: (context, animation, secondaryAnimation, child) {
@@ -123,16 +123,16 @@ class TwakeDialog {
         width: lottieSizeWeb,
         height: lottieSizeWeb,
       ),
-      barrierColor: LinagoraSysColors.material().onPrimary.withOpacity(0.75),
+      barrierColor: MultiSysColors.material().onPrimary.withOpacity(0.75),
       loadingTitle: L10n.of(context)!.loading,
       loadingTitleStyle: Theme.of(context).textTheme.titleLarge,
       maxWidth: maxWidthLoadingDialogWeb,
       errorTitle: L10n.of(context)!.errorDialogTitle,
       errorTitleStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
-            color: LinagoraSysColors.material().onSurfaceVariant,
+            color: MultiSysColors.material().onSurfaceVariant,
           ),
       errorDescriptionStyle: Theme.of(context).textTheme.titleSmall?.copyWith(
-            color: LinagoraSysColors.material().onSurfaceVariant,
+            color: MultiSysColors.material().onSurfaceVariant,
           ),
       errorBackLabel: L10n.of(context)!.cancel,
       errorBackLabelStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
@@ -140,9 +140,9 @@ class TwakeDialog {
           ),
       errorNextLabel: L10n.of(context)!.next,
       errorNextLabelStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
-            color: LinagoraSysColors.material().onPrimary,
+            color: MultiSysColors.material().onPrimary,
           ),
-      backgroundErrorDialog: LinagoraSysColors.material().onPrimary,
+      backgroundErrorDialog: MultiSysColors.material().onPrimary,
       backgroundNextLabel: Theme.of(context).colorScheme.primary,
       maxWidthButton: maxWidthDialogButtonMobile,
     );
@@ -161,15 +161,15 @@ class TwakeDialog {
         width: lottieSizeMobile,
         height: lottieSizeMobile,
       ),
-      barrierColor: LinagoraSysColors.material().onPrimary.withOpacity(0.75),
+      barrierColor: MultiSysColors.material().onPrimary.withOpacity(0.75),
       loadingTitle: L10n.of(context)!.loading,
       loadingTitleStyle: Theme.of(context).textTheme.titleMedium,
       errorTitle: L10n.of(context)!.errorDialogTitle,
       errorTitleStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(
-            color: LinagoraSysColors.material().onSurfaceVariant,
+            color: MultiSysColors.material().onSurfaceVariant,
           ),
       errorDescriptionStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: LinagoraSysColors.material().onSurfaceVariant,
+            color: MultiSysColors.material().onSurfaceVariant,
           ),
       errorBackLabel: L10n.of(context)!.cancel,
       errorBackLabelStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
@@ -177,10 +177,10 @@ class TwakeDialog {
           ),
       errorNextLabel: L10n.of(context)!.next,
       errorNextLabelStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
-            color: LinagoraSysColors.material().onPrimary,
+            color: MultiSysColors.material().onPrimary,
           ),
       backgroundNextLabel: Theme.of(context).colorScheme.primary,
-      backgroundErrorDialog: LinagoraSysColors.material().onPrimary,
+      backgroundErrorDialog: MultiSysColors.material().onPrimary,
       isMobileResponsive: true,
       maxWidthButton: maxWidthDialogButtonMobile,
     );
@@ -361,7 +361,7 @@ Future<ConfirmResult> showConfirmAlertDialog({
                             icon: Icons.close,
                             iconColor: isDestructiveAction
                                 ? CupertinoColors.destructiveRed
-                                : LinagoraSysColors.material().onSurfaceVariant,
+                                : MultiSysColors.material().onSurfaceVariant,
                             onTap: () {
                               Navigator.of(context).pop(ConfirmResult.cancel);
                               onClose?.call();
@@ -387,7 +387,7 @@ Future<ConfirmResult> showConfirmAlertDialog({
                                       .headlineSmall
                                       ?.copyWith(
                                         color: titleColor ??
-                                            LinagoraSysColors.material()
+                                            MultiSysColors.material()
                                                 .onSurfaceVariant,
                                       )
                                   : Theme.of(context)
@@ -395,7 +395,7 @@ Future<ConfirmResult> showConfirmAlertDialog({
                                       .titleLarge
                                       ?.copyWith(
                                         color: titleColor ??
-                                            LinagoraSysColors.material()
+                                            MultiSysColors.material()
                                                 .onSurfaceVariant,
                                       ),
                               maxLines: 2,
@@ -412,14 +412,14 @@ Future<ConfirmResult> showConfirmAlertDialog({
                                       .textTheme
                                       .bodyMedium
                                       ?.copyWith(
-                                        color: LinagoraSysColors.material()
+                                        color: MultiSysColors.material()
                                             .onSurfaceVariant,
                                       )
                                   : Theme.of(context)
                                       .textTheme
                                       .titleSmall
                                       ?.copyWith(
-                                        color: LinagoraSysColors.material()
+                                        color: MultiSysColors.material()
                                             .onSurfaceVariant,
                                       ),
                               maxLines: maxLinesMessage ??
@@ -438,7 +438,7 @@ Future<ConfirmResult> showConfirmAlertDialog({
                                 ),
                                 buttonDecoration: BoxDecoration(
                                   color: cancelLabelButtonColor ??
-                                      LinagoraSysColors.material().onPrimary,
+                                      MultiSysColors.material().onPrimary,
                                   borderRadius: const BorderRadius.all(
                                     Radius.circular(100),
                                   ),
@@ -471,7 +471,7 @@ Future<ConfirmResult> showConfirmAlertDialog({
                               TwakeTextButton(
                                 buttonDecoration: BoxDecoration(
                                   color: okLabelButtonColor ??
-                                      LinagoraSysColors.material().primary,
+                                      MultiSysColors.material().primary,
                                   borderRadius: const BorderRadius.all(
                                     Radius.circular(100),
                                   ),
@@ -493,8 +493,7 @@ Future<ConfirmResult> showConfirmAlertDialog({
                                     .labelLarge
                                     ?.copyWith(
                                       color: okTextColor ??
-                                          LinagoraSysColors.material()
-                                              .onPrimary,
+                                          MultiSysColors.material().onPrimary,
                                     ),
                                 hoverColor: Colors.transparent,
                                 onTap: () {

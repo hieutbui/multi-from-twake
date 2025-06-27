@@ -10,7 +10,7 @@ import 'package:fluffychat/widgets/matrix.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:linagora_design_flutter/colors/linagora_ref_colors.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:matrix/matrix.dart';
 
 class ChatListItemSubtitle extends StatelessWidget with ChatListItemMixin {
@@ -71,7 +71,7 @@ class ChatListItemSubtitle extends StatelessWidget with ChatListItemMixin {
                         Icons.done_all,
                         color: lastEvent.receipts.isEmpty
                             ? LinagoraRefColors.material().tertiary[30]
-                            : LinagoraSysColors.material().secondary,
+                            : MultiSysColors.material().secondary,
                         size: 20,
                       )
                     : AnimatedContainer(

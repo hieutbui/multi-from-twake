@@ -1,6 +1,6 @@
 import 'package:fluffychat/widgets/file_widget/file_tile_widget_style.dart';
 import 'package:flutter/material.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 
 class ChatDetailsFileTileStyle extends FileTileWidgetStyle {
   ChatDetailsFileTileStyle();
@@ -28,7 +28,7 @@ class ChatDetailsFileTileStyle extends FileTileWidgetStyle {
 
   static TextStyle? downloadedFileTextStyle(BuildContext context) =>
       Theme.of(context).textTheme.titleMedium?.copyWith(
-            color: LinagoraSysColors.material().primary,
+            color: MultiSysColors.material().primary,
           );
   static const int downloadedFilenameMaxLines = 3;
 

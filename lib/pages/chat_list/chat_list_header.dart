@@ -7,7 +7,7 @@ import 'package:fluffychat/widgets/swipe_to_dismiss_wrap.dart';
 import 'package:fluffychat/widgets/twake_components/twake_header.dart';
 import 'package:flutter/material.dart';
 import 'package:linagora_design_flutter/colors/linagora_state_layer.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 
 class ChatListHeader extends StatelessWidget {
   final ChatListController controller;
@@ -33,7 +33,7 @@ class ChatListHeader extends StatelessWidget {
         ),
         Container(
           color: ChatListHeaderStyle.responsive.isMobile(context)
-              ? LinagoraSysColors.material().background
+              ? MultiSysColors.material().background
               : Colors.transparent,
           height: ChatListHeaderStyle.searchBarContainerHeight,
           padding: ChatListHeaderStyle.searchInputPadding,
@@ -45,7 +45,7 @@ class ChatListHeader extends StatelessWidget {
           Divider(
             height: ChatListHeaderStyle.dividerHeight,
             thickness: ChatListHeaderStyle.dividerThickness,
-            color: LinagoraStateLayer(LinagoraSysColors.material().surfaceTint)
+            color: LinagoraStateLayer(MultiSysColors.material().surfaceTint)
                 .opacityLayer3,
           ),
       ],

@@ -1,5 +1,6 @@
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/config/first_column_inner_routes.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/chat_blank/chat_blank_style.dart';
 import 'package:fluffychat/pages/chat_blank/chat_qr_code.dart';
 import 'package:fluffychat/presentation/mixins/go_to_group_chat_mixin.dart';
@@ -12,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
-import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 
 class ChatBlank extends StatelessWidget {
   const ChatBlank({super.key});
@@ -21,11 +21,11 @@ class ChatBlank extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // Add invisible appbar to make status bar on Android tablets bright.
-      backgroundColor: LinagoraSysColors.material().onPrimary,
+      backgroundColor: MultiSysColors.material().onPrimary,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
-        backgroundColor: LinagoraSysColors.material().onPrimary,
+        backgroundColor: MultiSysColors.material().onPrimary,
       ),
       extendBodyBehindAppBar: true,
       body: ValueListenableBuilder(

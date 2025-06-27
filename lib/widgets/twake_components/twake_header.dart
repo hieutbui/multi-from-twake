@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/presentation/enum/chat_list/chat_list_enum.dart';
 import 'package:fluffychat/presentation/model/chat_list/chat_selection_actions.dart';
@@ -9,7 +10,6 @@ import 'package:fluffychat/widgets/mixins/show_dialog_mixin.dart';
 import 'package:fluffychat/widgets/twake_components/twake_header_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
-import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 import 'package:matrix/matrix.dart';
 
 class TwakeHeader extends StatefulWidget implements PreferredSizeWidget {
@@ -108,8 +108,8 @@ class _TwakeHeaderState extends State<TwakeHeader>
               )
             : AppBar(
                 backgroundColor: responsive.isMobile(context)
-                    ? LinagoraSysColors.material().background
-                    : LinagoraSysColors.material().onPrimary,
+                    ? MultiSysColors.material().background
+                    : MultiSysColors.material().onPrimary,
                 toolbarHeight: TwakeHeaderStyle.toolbarHeight,
                 automaticallyImplyLeading: false,
                 leadingWidth: TwakeHeaderStyle.leadingWidth,

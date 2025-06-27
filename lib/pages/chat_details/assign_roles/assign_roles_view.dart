@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/chat_details/assign_roles/assign_roles.dart';
 import 'package:fluffychat/pages/chat_details/assign_roles/assign_roles_search_state.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_header_style.dart';
@@ -19,7 +20,7 @@ class AssignRolesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: LinagoraSysColors.material().onPrimary,
+      backgroundColor: MultiSysColors.material().onPrimary,
       resizeToAvoidBottomInset: false,
       appBar: TwakeAppBar(
         title: L10n.of(context)!.permissions,
@@ -45,7 +46,7 @@ class AssignRolesView extends StatelessWidget {
       //     vertical: 12.0,
       //   ),
       //   decoration: BoxDecoration(
-      //     color: LinagoraSysColors.material().secondaryContainer,
+      //     color: MultiSysColors.material().secondaryContainer,
       //     borderRadius: BorderRadius.circular(100),
       //   ),
       //   child: Row(
@@ -54,13 +55,13 @@ class AssignRolesView extends StatelessWidget {
       //       Icon(
       //         Icons.person_add_outlined,
       //         size: 18.0,
-      //         color: LinagoraSysColors.material().onSecondaryContainer,
+      //         color: MultiSysColors.material().onSecondaryContainer,
       //       ),
       //       const SizedBox(width: 8.0),
       //       Text(
       //         L10n.of(context)!.addAdminsOrModerators,
       //         style: Theme.of(context).textTheme.labelLarge?.copyWith(
-      //               color: LinagoraSysColors.material().onSecondaryContainer,
+      //               color: MultiSysColors.material().onSecondaryContainer,
       //             ),
       //       ),
       //     ],
@@ -79,10 +80,10 @@ class AssignRolesView extends StatelessWidget {
                 autofocus: true,
                 decoration: ChatListHeaderStyle.searchInputDecoration(
                   context,
-                  prefixIconColor: LinagoraSysColors.material().tertiary,
+                  prefixIconColor: MultiSysColors.material().tertiary,
                 ).copyWith(
                   hintStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: LinagoraSysColors.material().tertiary,
+                        color: MultiSysColors.material().tertiary,
                       ),
                   hintText: L10n.of(context)!.enterAnEmailAddress,
                   suffixIcon: ValueListenableBuilder(
@@ -172,7 +173,7 @@ class AssignRolesView extends StatelessWidget {
                                       style: LinagoraTextStyle.material()
                                           .bodyMedium2
                                           .copyWith(
-                                            color: LinagoraSysColors.material()
+                                            color: MultiSysColors.material()
                                                 .onSurface,
                                           ),
                                       overflow: TextOverflow.ellipsis,
@@ -281,7 +282,7 @@ class AssignRolesView extends StatelessWidget {
                                       style: LinagoraTextStyle.material()
                                           .bodyMedium2
                                           .copyWith(
-                                            color: LinagoraSysColors.material()
+                                            color: MultiSysColors.material()
                                                 .onSurface,
                                           ),
                                       overflow: TextOverflow.ellipsis,

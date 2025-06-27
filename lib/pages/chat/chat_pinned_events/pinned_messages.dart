@@ -33,7 +33,7 @@ import 'package:fluffychat/widgets/mixins/twake_context_menu_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:matrix/matrix.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
@@ -240,7 +240,7 @@ class PinnedMessagesController extends State<PinnedMessages>
               styleName: action == ChatContextMenuActions.delete
                   ? PopupMenuWidgetStyle.defaultItemTextStyle(context)?.merge(
                       TextStyle(
-                        color: LinagoraSysColors.material().error,
+                        color: MultiSysColors.material().error,
                       ),
                     )
                   : null,
@@ -336,7 +336,7 @@ class PinnedMessagesController extends State<PinnedMessages>
         styleName: action == ChatContextMenuActions.delete
             ? PopupMenuWidgetStyle.defaultItemTextStyle(context)?.merge(
                 TextStyle(
-                  color: LinagoraSysColors.material().error,
+                  color: MultiSysColors.material().error,
                 ),
               )
             : null,
@@ -375,7 +375,7 @@ class PinnedMessagesController extends State<PinnedMessages>
         styleName: action == ChatContextMenuActions.delete
             ? PopupMenuWidgetStyle.defaultItemTextStyle(context)?.merge(
                 TextStyle(
-                  color: LinagoraSysColors.material().error,
+                  color: MultiSysColors.material().error,
                 ),
               )
             : null,

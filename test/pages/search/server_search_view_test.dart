@@ -1,4 +1,5 @@
 import 'package:fluffychat/config/localizations/localization_service.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/config/themes.dart';
 import 'package:fluffychat/pages/search/search.dart';
 import 'package:fluffychat/pages/search/search_contacts_and_chats_controller.dart';
@@ -16,7 +17,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
-import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 import 'package:mockito/annotations.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:mockito/mockito.dart';
@@ -65,7 +65,7 @@ void main() {
             primaryColor,
           ),
           home: Scaffold(
-            backgroundColor: LinagoraSysColors.material().onPrimary,
+            backgroundColor: MultiSysColors.material().onPrimary,
             body: CustomScrollView(
               physics: const ClampingScrollPhysics(),
               slivers: [

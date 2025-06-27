@@ -36,7 +36,7 @@ class CodeVerificationView extends StatelessWidget {
                       color:
                           Colors.white.withAlpha(153) /* Text-Main-Secondary */,
                       fontSize: 17,
-                      fontFamily: 'SF Pro',
+                      fontFamily: 'SFPro',
                       fontWeight: FontWeight.w400,
                       letterSpacing: -0.41,
                     ),

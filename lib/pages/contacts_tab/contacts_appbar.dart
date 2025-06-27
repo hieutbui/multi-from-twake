@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/pages/contacts_tab/contacts_appbar_style.dart';
 import 'package:fluffychat/pages/search/search_text_field.dart';
@@ -36,8 +37,8 @@ class ContactsAppBar extends StatelessWidget {
             return Container(
               decoration: BoxDecoration(
                 color: responsiveUtils.isMobile(context)
-                    ? LinagoraSysColors.material().background
-                    : LinagoraSysColors.material().onPrimary,
+                    ? MultiSysColors.material().background
+                    : MultiSysColors.material().onPrimary,
               ),
               height: ContactsAppbarStyle.textFieldHeight,
               child: Padding(
@@ -62,7 +63,7 @@ class ContactsAppBar extends StatelessWidget {
           Divider(
             height: ContactsAppbarStyle.dividerHeight,
             thickness: ContactsAppbarStyle.dividerThickness,
-            color: LinagoraStateLayer(LinagoraSysColors.material().surfaceTint)
+            color: LinagoraStateLayer(MultiSysColors.material().surfaceTint)
                 .opacityLayer3,
           ),
       ],

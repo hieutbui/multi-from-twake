@@ -1,7 +1,7 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/chat_details/chat_details_page_view/chat_details_page_view_style.dart';
 import 'package:fluffychat/presentation/model/chat_details/chat_details_page_model.dart';
 import 'package:flutter/material.dart';
-import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 
 typedef OnTapGoToPage = void Function(int);
 
@@ -86,7 +86,7 @@ class ChatDetailsPageViewBuilder extends StatelessWidget {
       decoration: ShapeDecoration(
         color: currentIndexPageSelected != index
             ? Colors.transparent
-            : LinagoraSysColors.material().primary,
+            : MultiSysColors.material().primary,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(
@@ -111,8 +111,8 @@ class ChatDetailsPageViewBuilder extends StatelessWidget {
       textAlign: TextAlign.center,
       style: Theme.of(context).textTheme.titleSmall?.copyWith(
             color: currentIndexPageSelected == index
-                ? LinagoraSysColors.material().primary
-                : LinagoraSysColors.material().onSurface,
+                ? MultiSysColors.material().primary
+                : MultiSysColors.material().onSurface,
           ),
     );
   }
@@ -125,7 +125,7 @@ class ChatDetailsPageViewBuilder extends StatelessWidget {
       text: TextSpan(
         text: title,
         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              color: LinagoraSysColors.material().primary,
+              color: MultiSysColors.material().primary,
             ),
       ),
       maxLines: 1,

@@ -1,4 +1,5 @@
 import 'package:fluffychat/config/default_power_level_member.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/pages/chat_details/participant_list_item/participant_list_item_style.dart';
 import 'package:fluffychat/pages/profile_info/profile_info_body/profile_info_body.dart';
@@ -56,7 +57,7 @@ class ParticipantListItem extends StatelessWidget {
                             style: LinagoraTextStyle.material()
                                 .bodyMedium2
                                 .copyWith(
-                                  color: LinagoraSysColors.material().onSurface,
+                                  color: MultiSysColors.material().onSurface,
                                 ),
                           ),
                         ),

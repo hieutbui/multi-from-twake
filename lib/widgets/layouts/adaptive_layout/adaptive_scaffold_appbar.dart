@@ -1,4 +1,5 @@
 import 'package:fluffychat/config/app_config.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/app_grid/app_grid_dashboard_controller.dart';
 import 'package:fluffychat/resource/image_paths.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
@@ -39,7 +40,7 @@ class _AdaptiveScaffoldAppBarState extends State<AdaptiveScaffoldAppBar> {
             return Container(
               height: AppScaffoldViewStyle.appBarSize,
               decoration: BoxDecoration(
-                color: LinagoraSysColors.material().onPrimary,
+                color: MultiSysColors.material().onPrimary,
               ),
               child: Padding(
                 padding: AdaptiveScaffoldAppBarStyle.appBarPadding,

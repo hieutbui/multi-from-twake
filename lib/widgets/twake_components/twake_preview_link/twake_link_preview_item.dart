@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/presentation/model/media/url_preview_presentation.dart';
 import 'package:fluffychat/utils/url_launcher.dart';
 import 'package:fluffychat/widgets/mxc_image.dart';
@@ -32,8 +33,8 @@ class TwakeLinkPreviewItem extends StatelessWidget {
       height: TwakeLinkPreviewItemStyle.maxHeightPreviewItem,
       decoration: ShapeDecoration(
         color: ownMessage
-            ? LinagoraSysColors.material().primaryContainer
-            : LinagoraSysColors.material().onSurface.withOpacity(0.08),
+            ? MultiSysColors.material().primaryContainer
+            : MultiSysColors.material().onSurface.withOpacity(0.08),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(
             TwakeLinkPreviewItemStyle.radiusBorder,

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:linagora_design_flutter/colors/linagora_state_layer.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 
 class AppAdaptiveScaffoldBodyViewStyle {
   static const double elevation = 0.0;
@@ -10,11 +10,11 @@ class AppAdaptiveScaffoldBodyViewStyle {
   );
 
   static BoxDecoration navBarBorder = BoxDecoration(
-    color: LinagoraSysColors.material().surface,
+    color: MultiSysColors.material().surface,
     border: Border(
       top: BorderSide(
         color: LinagoraStateLayer(
-          LinagoraSysColors.material().surfaceTint,
+          MultiSysColors.material().surfaceTint,
         ).opacityLayer3,
       ),
     ),

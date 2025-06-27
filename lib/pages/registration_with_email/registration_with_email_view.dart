@@ -40,7 +40,7 @@ class RegistrationWithEmailView extends StatelessWidget {
                           color: Colors.white
                               .withAlpha(153) /* Text-Main-Secondary */,
                           fontSize: 17,
-                          fontFamily: 'SF Pro',
+                          fontFamily: 'SFPro',
                           fontWeight: FontWeight.w400,
                           letterSpacing: -0.41,
                         ),
@@ -51,7 +51,7 @@ class RegistrationWithEmailView extends StatelessWidget {
                           color: Colors.white
                               .withAlpha(222) /* Text-Main-Primary_Default */,
                           fontSize: 17,
-                          fontFamily: 'SF Pro',
+                          fontFamily: 'SFPro',
                           fontWeight: FontWeight.w600,
                           letterSpacing: -0.41,
                         ),
@@ -62,7 +62,7 @@ class RegistrationWithEmailView extends StatelessWidget {
                           color: Colors.white
                               .withAlpha(153) /* Text-Main-Secondary */,
                           fontSize: 17,
-                          fontFamily: 'SF Pro',
+                          fontFamily: 'SFPro',
                           fontWeight: FontWeight.w400,
                           letterSpacing: -0.41,
                         ),

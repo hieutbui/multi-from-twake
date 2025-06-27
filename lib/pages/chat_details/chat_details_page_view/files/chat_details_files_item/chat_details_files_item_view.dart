@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/chat_details/chat_details_page_view/files/chat_details_files_item/chat_details_files_item.dart';
 import 'package:fluffychat/pages/chat_details/chat_details_page_view/files/chat_details_files_row/chat_details_file_download_tile.dart';
 import 'package:fluffychat/pages/chat_details/chat_details_page_view/files/chat_details_files_row/chat_details_file_downloaded_tile.dart';
@@ -5,7 +6,6 @@ import 'package:fluffychat/pages/chat_details/chat_details_page_view/files/chat_
 import 'package:fluffychat/presentation/model/chat/downloading_state_presentation_model.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions/event_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 
 class ChatDetailsFilesView extends StatelessWidget {
   const ChatDetailsFilesView({
@@ -47,7 +47,7 @@ class ChatDetailsFilesView extends StatelessWidget {
               );
             },
             trailingIcon: Icons.folder_outlined,
-            iconColor: LinagoraSysColors.material().primary,
+            iconColor: MultiSysColors.material().primary,
             filename: filename,
             mimeType: controller.event.mimeType,
             fileType: filetype,
@@ -62,7 +62,7 @@ class ChatDetailsFilesView extends StatelessWidget {
           sizeString: sizeString,
           sentDate: controller.event.originServerTs,
           trailingIcon: Icons.download_outlined,
-          iconColor: LinagoraSysColors.material().tertiary,
+          iconColor: MultiSysColors.material().tertiary,
         );
       },
     );

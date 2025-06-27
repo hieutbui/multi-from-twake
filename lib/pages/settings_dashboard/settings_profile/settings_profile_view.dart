@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 
 class SettingsProfileView extends StatelessWidget {
   final SettingsProfileController controller;
@@ -74,7 +74,7 @@ class SettingsProfileView extends StatelessWidget {
       ),
       backgroundColor: responsive.isWebDesktop(context)
           ? Theme.of(context).colorScheme.surface
-          : LinagoraSysColors.material().onPrimary,
+          : MultiSysColors.material().onPrimary,
       body: Padding(
         padding: SettingsProfileViewStyle.paddingBody,
         child: SlotLayout(

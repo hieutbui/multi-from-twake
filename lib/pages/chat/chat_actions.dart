@@ -1,7 +1,7 @@
 import 'package:fluffychat/pages/chat/chat_actions_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 
 enum PickerType {
   gallery,
@@ -63,12 +63,12 @@ enum PickerType {
   Color? getTextColor(BuildContext context) {
     switch (this) {
       case PickerType.gallery:
-        return LinagoraSysColors.material().primary;
+        return MultiSysColors.material().primary;
       case PickerType.documents:
-        return LinagoraSysColors.material().tertiary;
+        return MultiSysColors.material().tertiary;
       case PickerType.location:
       case PickerType.contact:
-        return LinagoraSysColors.material().onBackground;
+        return MultiSysColors.material().onBackground;
     }
   }
 }
@@ -129,7 +129,7 @@ enum ChatAppBarActions {
       case ChatAppBarActions.saveToGallery:
         return Theme.of(context).colorScheme.onSurface;
       case ChatAppBarActions.report:
-        return LinagoraSysColors.material().errorDark;
+        return MultiSysColors.material().errorDark;
       case ChatAppBarActions.leaveGroup:
         return Theme.of(context).colorScheme.error;
     }

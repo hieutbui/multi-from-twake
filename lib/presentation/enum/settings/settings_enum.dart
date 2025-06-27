@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:linagora_design_flutter/linagora_design_flutter.dart';
@@ -84,7 +85,7 @@ enum SettingEnum {
       case SettingEnum.deleteAccount:
         return Theme.of(context).colorScheme.error;
       default:
-        return LinagoraSysColors.material().onSurface;
+        return MultiSysColors.material().onSurface;
     }
   }
 

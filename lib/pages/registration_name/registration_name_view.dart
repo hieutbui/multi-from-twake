@@ -55,7 +55,7 @@ class RegistrationNameView extends StatelessWidget {
                                         222,
                                       ) /* Text-Reversed-Primary */,
                                       fontSize: 17,
-                                      fontFamily: 'SF Pro',
+                                      fontFamily: 'SFPro',
                                       fontWeight: FontWeight.w500,
                                       height: 1.29,
                                       letterSpacing: -0.41,
@@ -69,7 +69,7 @@ class RegistrationNameView extends StatelessWidget {
                                         153,
                                       ) /* Text-Reversed-Secondary */,
                                       fontSize: 15,
-                                      fontFamily: 'SF Pro',
+                                      fontFamily: 'SFPro',
                                       fontWeight: FontWeight.w400,
                                       height: 1.20,
                                       letterSpacing: -0.24,
@@ -94,7 +94,7 @@ class RegistrationNameView extends StatelessWidget {
                               color: Colors.white
                                   .withAlpha(153) /* Text-Main-Secondary */,
                               fontSize: 17,
-                              fontFamily: 'SF Pro',
+                              fontFamily: 'SFPro',
                               fontWeight: FontWeight.w400,
                               height: 1.18,
                               letterSpacing: -0.41,
@@ -108,7 +108,7 @@ class RegistrationNameView extends StatelessWidget {
                             style: TextStyle(
                               color: Colors.white.withAlpha(153),
                               fontSize: 15,
-                              fontFamily: 'SF Pro',
+                              fontFamily: 'SFPro',
                               fontWeight: FontWeight.w400,
                             ),
                           ),
@@ -120,7 +120,7 @@ class RegistrationNameView extends StatelessWidget {
                             style: TextStyle(
                               color: Colors.white.withAlpha(222),
                               fontSize: 22,
-                              fontFamily: 'SF Pro',
+                              fontFamily: 'SFPro',
                               fontWeight: FontWeight.w500,
                             ),
                             decoration: RegistrationNameViewStyle
@@ -134,7 +134,7 @@ class RegistrationNameView extends StatelessWidget {
                             style: TextStyle(
                               color: Colors.white.withAlpha(153),
                               fontSize: 15,
-                              fontFamily: 'SF Pro',
+                              fontFamily: 'SFPro',
                               fontWeight: FontWeight.w400,
                             ),
                           ),
@@ -146,7 +146,7 @@ class RegistrationNameView extends StatelessWidget {
                             style: TextStyle(
                               color: Colors.white.withAlpha(222),
                               fontSize: 22,
-                              fontFamily: 'SF Pro',
+                              fontFamily: 'SFPro',
                               fontWeight: FontWeight.w500,
                             ),
                             decoration: RegistrationNameViewStyle

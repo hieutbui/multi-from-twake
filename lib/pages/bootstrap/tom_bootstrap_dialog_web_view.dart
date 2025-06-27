@@ -1,8 +1,8 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/bootstrap/tom_bootstrap_dialog_style.dart';
 import 'package:fluffychat/resource/image_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
-import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 import 'package:lottie/lottie.dart';
 
 class TomBootstrapDialogWebView extends StatelessWidget {
@@ -28,7 +28,7 @@ class TomBootstrapDialogWebView extends StatelessWidget {
                 Text(
                   L10n.of(context)!.settingUpYourTwake,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: LinagoraSysColors.material().onBackground,
+                        color: MultiSysColors.material().onBackground,
                       ),
                   textAlign: TextAlign.center,
                 ),
@@ -43,7 +43,7 @@ class TomBootstrapDialogWebView extends StatelessWidget {
                 Text(
                   description,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: LinagoraSysColors.material().onBackground,
+                        color: MultiSysColors.material().onBackground,
                       ),
                   textAlign: TextAlign.center,
                 ),

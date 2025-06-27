@@ -7,7 +7,7 @@ import 'package:fluffychat/widgets/twake_components/twake_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:linagora_design_flutter/colors/linagora_ref_colors.dart';
-import 'package:linagora_design_flutter/colors/linagora_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:matrix/matrix.dart';
 
 typedef OnTapMoreBtnAction = void Function();
@@ -39,7 +39,7 @@ class ChatInputRowWeb extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         borderRadius: ChatInputRowStyle.chatInputRowBorderRadius,
-        color: LinagoraSysColors.material().onPrimary,
+        color: MultiSysColors.material().onPrimary,
         border: Border.all(
           color: LinagoraRefColors.material().tertiary,
           width: 1,
@@ -84,7 +84,7 @@ class ChatInputRowWeb extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 8),
                         child: TwakeIconButton(
-                          iconColor: LinagoraSysColors.material().primary,
+                          iconColor: MultiSysColors.material().primary,
                           paddingAll:
                               ChatInputRowStyle.chatInputRowPaddingBtnWeb,
                           tooltip: L10n.of(context)!.close,
@@ -104,7 +104,7 @@ class ChatInputRowWeb extends StatelessWidget {
                     tooltip: L10n.of(context)!.more,
                     paddingAll: 0.0,
                     margin: const EdgeInsets.all(10.0),
-                    iconColor: LinagoraSysColors.material().tertiary,
+                    iconColor: MultiSysColors.material().tertiary,
                     icon: Icons.add_circle_outline,
                     size: ChatInputRowStyle.chatInputRowMoreBtnSize,
                     onTap: onTapMoreBtn,
@@ -130,7 +130,7 @@ class ChatInputRowWeb extends StatelessWidget {
                         );
                       },
                       child: TwakeIconButton(
-                        iconColor: LinagoraSysColors.material().tertiary,
+                        iconColor: MultiSysColors.material().tertiary,
                         paddingAll: ChatInputRowStyle.chatInputRowPaddingBtnWeb,
                         tooltip: L10n.of(context)!.emojis,
                         onTapDown: (details) => onEmojiAction.call(details),

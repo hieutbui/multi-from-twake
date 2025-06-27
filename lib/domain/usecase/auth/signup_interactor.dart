@@ -32,18 +32,16 @@ class SignupInteractor {
       yield Right(SignupSuccess(authResponse: authResponse));
     } on DioException catch (e) {
       if (e.response?.statusCode == 400) {
-        yield const Left(
-          SignupFailure(exception: 'Invalid email or password format'),
-        );
-      } else if (e.response?.statusCode == 409) {
-        yield const Left(SignupFailure(exception: 'Email already exists'));
+        yield const Left(SignupFailure(exception: 'Email already registered'));
+      } else if (e.response?.statusCode == 500) {
+        yield const Left(SignupFailure(exception: 'Failed to sign up'));
       } else {
-        yield const Left(
-          SignupFailure(exception: 'An error occurred during signup'),
+        yield Left(
+          SignupFailure(exception: e),
         );
       }
     } catch (e) {
-      yield Left(SignupFailure(exception: e.toString()));
+      yield Left(SignupFailure(exception: e));
     }
   }
 }

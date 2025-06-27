@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/chat/chat_input_row_style.dart';
 import 'package:flutter/material.dart';
 import 'package:linagora_design_flutter/linagora_design_flutter.dart';
@@ -23,7 +24,7 @@ class ChatInputRowMobile extends StatelessWidget {
         padding: ChatInputRowStyle.chatInputRowPaddingMobile,
         decoration: BoxDecoration(
           borderRadius: ChatInputRowStyle.chatInputRowBorderRadius,
-          color: LinagoraSysColors.material().onPrimary,
+          color: MultiSysColors.material().onPrimary,
           border: Border.all(
             color: LinagoraRefColors.material().tertiary,
             width: 1,
