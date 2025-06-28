@@ -1,7 +1,9 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/config/multi_sys_variables/multi_typography.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/utils/responsive/responsive_utils.dart';
+import 'package:fluffychat/widgets/multi_custom_border_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
@@ -149,21 +151,97 @@ abstract class TwakeThemes {
         dividerColor: brightness == Brightness.light
             ? Colors.blueGrey.shade50
             : Colors.blueGrey.shade900,
-        popupMenuTheme: PopupMenuThemeData(
+        popupMenuTheme: const PopupMenuThemeData(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppConfig.borderRadius),
+            borderRadius: BorderRadius.all(Radius.circular(12)),
           ),
         ),
         inputDecorationTheme: InputDecorationTheme(
-          border: UnderlineInputBorder(
+          isDense: true,
+          contentPadding: const EdgeInsets.all(12.0),
+          fillColor: brightness == Brightness.light
+              ? MultiLightColors.backgroundInputsDefault
+              : MultiDarkColors.backgroundInputsDefault,
+          border: const MultiCustomBorderInput(
             borderSide: BorderSide.none,
-            borderRadius: BorderRadius.circular(AppConfig.borderRadius / 2),
+            borderRadius: BorderRadius.all(Radius.circular(12)),
           ),
-          hintStyle: fallbackTextTheme.bodyLarge?.merge(
+          focusColor: brightness == Brightness.light
+              ? MultiLightColors.backgroundInputsActive
+              : MultiDarkColors.backgroundInputsActive,
+          focusedBorder: MultiCustomBorderInput(
+            shadow: const BoxShadow(
+              color: Color(0x3F4C64BA),
+              blurRadius: 4,
+              offset: Offset(0, 0),
+              spreadRadius: 2,
+            ),
+            borderSide: BorderSide(
+              width: 1.0,
+              color: brightness == Brightness.light
+                  ? MultiLightColors.bordersMainActive
+                  : MultiDarkColors.bordersMainActive,
+            ),
+            borderRadius: const BorderRadius.all(Radius.circular(12)),
+          ),
+          errorBorder: MultiCustomBorderInput(
+            shadow: const BoxShadow(
+              color: Color(0x3FEB7C62),
+              blurRadius: 4,
+              offset: Offset(0, 0),
+              spreadRadius: 2,
+            ),
+            borderSide: BorderSide(
+              width: 1.0,
+              color: brightness == Brightness.light
+                  ? MultiLightColors.bordersErrorDefault
+                  : MultiDarkColors.bordersErrorDefault,
+            ),
+            borderRadius: const BorderRadius.all(Radius.circular(12)),
+          ),
+          focusedErrorBorder: MultiCustomBorderInput(
+            shadow: const BoxShadow(
+              color: Color(0x3FEB7C62),
+              blurRadius: 4,
+              offset: Offset(0, 0),
+              spreadRadius: 2,
+            ),
+            borderSide: BorderSide(
+              width: 1.0,
+              color: brightness == Brightness.light
+                  ? MultiLightColors.bordersErrorDefault
+                  : MultiDarkColors.bordersErrorDefault,
+            ),
+            borderRadius: const BorderRadius.all(Radius.circular(12)),
+          ),
+          labelStyle: fallbackTextTheme.headlineSmall?.merge(
             TextStyle(
-              fontSize: MultiMobileTypography.bodyFontBody,
-              color: LinagoraRefColors.material().neutralVariant[60],
+              color: brightness == Brightness.light
+                  ? MultiLightColors.textMainTertiaryDisabled
+                  : MultiDarkColors.textMainTertiaryDisabled,
               overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          floatingLabelStyle: fallbackTextTheme.labelSmall?.merge(
+            TextStyle(
+              color: brightness == Brightness.light
+                  ? MultiLightColors.textMainTertiaryDisabled
+                  : MultiDarkColors.textMainTertiaryDisabled,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          filled: true,
+          hintStyle: fallbackTextTheme.headlineSmall?.merge(
+            TextStyle(
+              color: brightness == Brightness.light
+                  ? MultiLightColors.textMainTertiaryDisabled
+                  : MultiDarkColors.textMainTertiaryDisabled,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          errorStyle: fallbackTextTheme.labelLarge?.merge(
+            TextStyle(
+              color: MultiSysColors.material().error,
             ),
           ),
         ),
@@ -185,9 +263,7 @@ abstract class TwakeThemes {
           style: TextButton.styleFrom(
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
-                Radius.circular(
-                  MultiMobileRoundnessAndPaddings.roundnessMainSurfaces / 2,
-                ),
+                Radius.circular(12),
               ),
             ),
           ),
@@ -196,9 +272,7 @@ abstract class TwakeThemes {
           style: OutlinedButton.styleFrom(
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
-                Radius.circular(
-                  MultiMobileRoundnessAndPaddings.roundnessMainSurfaces / 2,
-                ),
+                Radius.circular(12),
               ),
             ),
           ),
@@ -206,9 +280,7 @@ abstract class TwakeThemes {
         dialogTheme: const DialogTheme(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
-              Radius.circular(
-                MultiMobileRoundnessAndPaddings.roundnessMainSurfaces / 2,
-              ),
+              Radius.circular(12),
             ),
           ),
         ),
@@ -218,9 +290,7 @@ abstract class TwakeThemes {
             textStyle: const TextStyle(fontSize: 16),
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
-                Radius.circular(
-                  MultiMobileRoundnessAndPaddings.roundnessMainSurfaces / 2,
-                ),
+                Radius.circular(12),
               ),
             ),
           ),

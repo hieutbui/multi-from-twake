@@ -1,7 +1,7 @@
 import 'package:fluffychat/app_state/failure.dart';
 import 'package:fluffychat/app_state/initial.dart';
 import 'package:fluffychat/app_state/success.dart';
-import 'package:fluffychat/data/model/auth/auth_response.dart';
+import 'package:fluffychat/data/model/auth/sign_up_response.dart';
 
 class SignupInitial extends Initial {
   const SignupInitial() : super();
@@ -18,12 +18,12 @@ class SignupLoading extends Success {
 }
 
 class SignupSuccess extends Success {
-  final AuthResponse authResponse;
+  final SignupResponse signupResponse;
 
-  const SignupSuccess({required this.authResponse});
+  const SignupSuccess({required this.signupResponse});
 
   @override
-  List<Object?> get props => [authResponse];
+  List<Object?> get props => [signupResponse];
 }
 
 class SignupFailure extends Failure {

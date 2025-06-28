@@ -21,15 +21,14 @@ class SignupInteractor {
     try {
       yield const Right(SignupLoading());
 
-      final authResponse = await _authRepository.signup(
+      final signupResponse = await _authRepository.signup(
         email: email,
         password: password,
         firstName: firstName,
         lastName: lastName,
         username: username,
       );
-
-      yield Right(SignupSuccess(authResponse: authResponse));
+      yield Right(SignupSuccess(signupResponse: signupResponse));
     } on DioException catch (e) {
       if (e.response?.statusCode == 400) {
         yield const Left(SignupFailure(exception: 'Email already registered'));

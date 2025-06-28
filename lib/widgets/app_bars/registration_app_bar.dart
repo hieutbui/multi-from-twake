@@ -67,7 +67,7 @@ class RegistrationAppBar extends StatelessWidget
                   ),
                 ),
               )
-          : null,
+          : const SizedBox.shrink(),
       leadingWidth: leadingWidth,
       title: title,
       actions: actions ??

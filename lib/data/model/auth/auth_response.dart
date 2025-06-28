@@ -5,14 +5,10 @@ part 'auth_response.g.dart';
 
 @JsonSerializable()
 class AuthResponse with EquatableMixin {
-  @JsonKey(name: 'user_id')
-  final int userId;
   @JsonKey(name: 'username')
   final String username;
-  @JsonKey(name: 'first_name')
-  final String firstName;
-  @JsonKey(name: 'last_name')
-  final String lastName;
+  @JsonKey(name: 'display_name', nullable: true)
+  final String? displayName;
   @JsonKey(name: 'email')
   final String email;
   @JsonKey(name: 'matrix_user_id')
@@ -21,13 +17,11 @@ class AuthResponse with EquatableMixin {
   final String matrixAccessToken;
 
   AuthResponse({
-    required this.userId,
     required this.username,
-    required this.firstName,
-    required this.lastName,
     required this.email,
     required this.matrixUserId,
     required this.matrixAccessToken,
+    this.displayName,
   });
 
   factory AuthResponse.fromJson(Map<String, dynamic> json) =>
@@ -37,10 +31,8 @@ class AuthResponse with EquatableMixin {
 
   @override
   List<Object?> get props => [
-        userId,
         username,
-        firstName,
-        lastName,
+        displayName,
         email,
         matrixUserId,
         matrixAccessToken,

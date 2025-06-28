@@ -3,9 +3,11 @@ import 'package:dartz/dartz.dart' hide State;
 import 'package:fluffychat/app_state/failure.dart';
 import 'package:fluffychat/app_state/success.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
+import 'package:fluffychat/domain/app_state/auth/signin_state.dart';
 import 'package:fluffychat/domain/app_state/auth/signup_state.dart';
 import 'package:fluffychat/domain/usecase/auth/signup_interactor.dart';
 import 'package:fluffychat/pages/registration_with_email/registration_with_email_view.dart';
+import 'package:fluffychat/utils/twake_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:go_router/go_router.dart';
@@ -57,6 +59,8 @@ class RegistrationWithEmailController extends State<RegistrationWithEmail> {
     passwordFocusNode.removeListener(() {});
     emailController.dispose();
     passwordController.dispose();
+    signupSubscription?.cancel();
+    signinNotifier.dispose();
     super.dispose();
   }
 
@@ -82,35 +86,53 @@ class RegistrationWithEmailController extends State<RegistrationWithEmail> {
     final password = passwordController.text;
 
     if (email.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please enter both email and password'),
-          backgroundColor: Colors.red,
-        ),
+      TwakeSnackBar.show(
+        context,
+        'Please enter both email and password',
+        isError: true,
       );
       return;
     }
 
     signupSubscription = _signupInteractor
         .execute(
-          firstName: 'Test123122',
-          lastName: 'User',
-          username: 'test123122',
-          email: email,
-          password: password,
-        )
+      firstName: 'Test123122',
+      lastName: 'User',
+      username: 'test123122',
+      email: email,
+      password: password,
+    )
         .listen(
-          (event) => signinNotifier.value = event,
+      (event) {
+        signinNotifier.value = event;
+
+        event.fold(
+          (failure) => _handleSigninFailureState(failure),
+          (success) => _handleSigninSuccessState(success),
         );
-
-    // Store password securely for later use in registration flow
-    // TODO: Consider storing password in a more secure way
-
-    // Navigate to code verification page with email
-    context.push(
-      '/home/codeVerification',
-      extra: email, // Pass email as extra parameter
+      },
     );
+  }
+
+  void _handleSigninFailureState(Failure failure) {
+    if (failure is SigninFailure) {
+      if (failure.exception == 'Email already registered') {
+        TwakeSnackBar.show(context, 'Email already registered', isError: true);
+      }
+      TwakeSnackBar.show(context, failure.exception, isError: true);
+    } else {
+      TwakeSnackBar.show(context, 'Failed to sign in', isError: true);
+    }
+  }
+
+  void _handleSigninSuccessState(Success success) {
+    if (success is SignupSuccess) {
+      // Navigate to code verification page with email
+      context.push(
+        '/home/codeVerification',
+        extra: emailController.text, // Pass email as extra parameter
+      );
+    }
   }
 
   void onTapLogin() {

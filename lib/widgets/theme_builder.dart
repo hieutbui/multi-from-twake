@@ -31,7 +31,8 @@ class ThemeController extends State<ThemeBuilder> {
   ThemeMode? _themeMode;
   Color? _primaryColor;
 
-  ThemeMode get themeMode => _themeMode ?? ThemeMode.system;
+  // TODO: Currently, Multi only have dark theme
+  ThemeMode get themeMode => _themeMode ?? ThemeMode.dark;
 
   Color? get primaryColor => _primaryColor;
 

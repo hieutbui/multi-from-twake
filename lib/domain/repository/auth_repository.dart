@@ -1,9 +1,10 @@
 import 'package:fluffychat/data/model/auth/auth_response.dart';
 import 'package:fluffychat/data/model/auth/sign_out_response.dart';
+import 'package:fluffychat/data/model/auth/sign_up_response.dart';
 import 'package:fluffychat/data/model/auth/verify_code_response.dart';
 
 abstract class AuthRepository {
-  Future<AuthResponse> signup({
+  Future<SignupResponse> signup({
     required String firstName,
     required String lastName,
     required String email,

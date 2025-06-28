@@ -55,7 +55,7 @@ class CodeVerificationView extends StatelessWidget {
                 MultiRegistrationButton(
                   label: 'Continue',
                   type: MultiRegistrationButtonType.mainSecondaryDisabled,
-                  onPressed: controller.onTapCreateAccount,
+                  onPressed: controller.onTapContinue,
                 ),
               ],
             ),

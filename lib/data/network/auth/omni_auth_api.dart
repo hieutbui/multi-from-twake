@@ -3,6 +3,7 @@ import 'package:fluffychat/data/model/auth/o_auth_request.dart';
 import 'package:fluffychat/data/model/auth/sign_in_request.dart';
 import 'package:fluffychat/data/model/auth/sign_out_response.dart';
 import 'package:fluffychat/data/model/auth/sign_up_request.dart';
+import 'package:fluffychat/data/model/auth/sign_up_response.dart';
 import 'package:fluffychat/data/model/auth/verify_code_request.dart';
 import 'package:fluffychat/data/model/auth/verify_code_response.dart';
 import 'package:fluffychat/data/network/auth/omni_endpoint.dart';
@@ -16,12 +17,12 @@ class OmniAuthAPI {
 
   OmniAuthAPI();
 
-  Future<AuthResponse> signup(SignupRequest request) async {
+  Future<SignupResponse> signup(SignupRequest request) async {
     final response = await _dioClient.post(
       OmniEndpoint.signupServicePath.generateOmniEndpoint(),
       data: request.toJson(),
     );
-    return AuthResponse.fromJson(response.data);
+    return SignupResponse.fromJson(response.data);
   }
 
   Future<AuthResponse> signin(SigninRequest request) async {

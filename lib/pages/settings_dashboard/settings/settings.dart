@@ -276,6 +276,7 @@ class SettingsController extends State<Settings> with ConnectPageMixin {
         PlatformInfos.showAboutDialogFullScreen();
       case SettingEnum.logout:
         logoutAction();
+        await context.push('/home');
         break;
       case SettingEnum.deleteAccount:
         if (await showConfirmAlertDialog(

@@ -93,7 +93,7 @@ class TwakeAppState extends State<TwakeApp> {
             ),
             darkTheme: TwakeThemes.buildTheme(
               context,
-              Brightness.light,
+              Brightness.dark,
               primaryColor,
             ),
             scrollBehavior: CustomScrollBehavior(),
