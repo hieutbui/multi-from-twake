@@ -52,84 +52,42 @@ class _MultiRegistrationPasswordInputFieldState
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 12.0,
-          ),
-          decoration: BoxDecoration(
-            color: const Color(0xFF1D1F26) /* Background-Inputs-Default */,
-            borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-            border: Border.all(
-              color: widget.focusNode.hasFocus
-                  ? const Color(0xFF5F87B4) /* Borders-Main-Active */
-                  : Colors.transparent,
-              width: 1.0,
+        FormBuilderTextField(
+          key: widget.fieldKey,
+          controller: widget.controller,
+          onChanged: _onPasswordChanged,
+          name: 'Password',
+          focusNode: widget.focusNode,
+          obscureText: _isObscured,
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.password(
+              minLength: 8,
+              errorText: 'Password must be at least 8 characters long',
+              checkNullOrEmpty: true,
+            ),
+            if (widget.isRequired ?? false)
+              FormBuilderValidators.required(
+                errorText: 'Password is required',
+              ),
+          ]),
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                color: Theme.of(context).colorScheme.onBackground,
+              ),
+          decoration: InputDecoration(
+            labelText: 'Password',
+            hintText: 'Password',
+            suffixIcon: IconButton(
+              onPressed: _toggleObscured,
+              icon: Icon(
+                _isObscured
+                    ? Icons.visibility_off_outlined
+                    : Icons.visibility_outlined,
+                color: Colors.white.withAlpha(97),
+                size: 24.0,
+              ),
             ),
           ),
-          child: FormBuilderTextField(
-            key: widget.fieldKey,
-            controller: widget.controller,
-            onChanged: _onPasswordChanged,
-            name: 'Password',
-            focusNode: widget.focusNode,
-            obscureText: _isObscured,
-            validator: FormBuilderValidators.compose([
-              FormBuilderValidators.password(
-                minLength: 8,
-                errorText: 'Password must be at least 8 characters long',
-                checkNullOrEmpty: true,
-              ),
-              if (widget.isRequired ?? false)
-                FormBuilderValidators.required(
-                  errorText: 'Password is required',
-                ),
-            ]),
-            style: TextStyle(
-              fontSize: 17.0,
-              color:
-                  Colors.white.withAlpha(222) /* Text-Main-Primary_Default */,
-              fontFamily: 'SFPro',
-              fontWeight: FontWeight.w400,
-              letterSpacing: -0.41,
-              height: 1.18,
-            ),
-            decoration: InputDecoration(
-              label: Text(
-                'Password',
-                style: TextStyle(
-                  fontSize: 17.0,
-                  color: Colors.white
-                      .withAlpha(97) /* Text-Main-Tertiary-disabled */,
-                  fontFamily: 'SFPro',
-                  fontWeight: FontWeight.w400,
-                  height: 1.27,
-                  letterSpacing: 0.06,
-                ),
-              ),
-              hintText: 'Password',
-              hintStyle: TextStyle(
-                fontSize: 17.0,
-                color: Colors.white
-                    .withAlpha(97) /* Text-Main-Tertiary-disabled */,
-                fontFamily: 'SFPro',
-                fontWeight: FontWeight.w400,
-                letterSpacing: -0.41,
-                height: 1.18,
-              ),
-              border: InputBorder.none,
-              suffixIcon: IconButton(
-                onPressed: _toggleObscured,
-                icon: Icon(
-                  _isObscured
-                      ? Icons.visibility_off_outlined
-                      : Icons.visibility_outlined,
-                  color: Colors.white.withAlpha(97),
-                  size: 24.0,
-                ),
-              ),
-            ),
-            keyboardType: TextInputType.visiblePassword,
-          ),
+          keyboardType: TextInputType.visiblePassword,
         ),
         const SizedBox(height: 12.0),
         if (widget.isShowPasswordStrength == true)

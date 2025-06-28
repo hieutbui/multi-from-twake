@@ -25,7 +25,7 @@ abstract class AppConfig {
   static String? _applicationWelcomeMessage;
 
   static String? get applicationWelcomeMessage => _applicationWelcomeMessage;
-  static String _defaultHomeserver = 'matrix.linagora.com';
+  static String _defaultHomeserver = '91.134.55.245:8008';
 
   static String get defaultHomeserver => _defaultHomeserver;
   static double bubbleSizeFactor = 1;
@@ -37,7 +37,7 @@ abstract class AppConfig {
 
   static const double defaultMaxHeightReactionsView = 400;
 
-  static String sampleValue = 'sampleValue';
+  static String sampleValue = 'http://91.134.55.245:8008';
 
   ///`REGISTRATION_URL`: Registration URL for public platform, sample is `https://example.com`
   static String registrationUrl = sampleValue;

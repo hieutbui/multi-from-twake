@@ -1,7 +1,6 @@
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/utils/responsive/responsive_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 
 const Duration _snackBarDefaultDisplayDuration = Duration(milliseconds: 4000);
 
@@ -28,6 +27,7 @@ class TwakeSnackBar {
     BuildContext context,
     String message, {
     Duration duration = _snackBarDefaultDisplayDuration,
+    bool isError = false,
   }) {
     ScaffoldMessenger.of(context).clearSnackBars();
 
@@ -44,7 +44,9 @@ class TwakeSnackBar {
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       // TODO: change to colorSurface when its approved
                       // ignore: deprecated_member_use
-                      color: Theme.of(context).colorScheme.background,
+                      color: isError == false
+                          ? Theme.of(context).colorScheme.secondary
+                          : Theme.of(context).colorScheme.error,
                     ),
               ),
             ),
@@ -58,7 +60,9 @@ class TwakeSnackBar {
               },
               child: Icon(
                 Icons.close,
-                color: MultiSysColors.material().onInverseSurface,
+                color: isError == false
+                    ? Theme.of(context).colorScheme.secondary
+                    : Theme.of(context).colorScheme.error,
               ),
             ),
           ],

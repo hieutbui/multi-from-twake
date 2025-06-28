@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:flutter/material.dart';
 
 class MultiRegistrationButton extends StatelessWidget {
@@ -20,55 +21,80 @@ class MultiRegistrationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: backgroundColor ?? getBackgroundColor(),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      alignment: Alignment.center,
-      width: double.infinity,
-      height: 48,
-      child: InkWell(
-        onTap: isDisabled == true ? null : onPressed,
+    return InkWell(
+      onTap: isDisabled == true ? null : onPressed,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        decoration: BoxDecoration(
+          color: backgroundColor ?? getBackgroundColor(context),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        alignment: Alignment.center,
+        width: double.infinity,
+        height: 48,
         child: Text(
           label,
-          style: Theme.of(context).textTheme.titleMedium!.copyWith(
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontSize: 17,
                 height: 1.29,
-                color: foregroundColor ?? getForegroundColor(),
+                color: foregroundColor ?? getForegroundColor(context),
               ),
         ),
       ),
     );
   }
 
-  Color? getBackgroundColor() {
+  Color? getBackgroundColor(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+
     switch (type) {
       case MultiRegistrationButtonType.mainSecondaryDefault:
-        return const Color(0x26EAECF5) /* Buttons-Main-Secondary-Default */;
+        return brightness == Brightness.light
+            ? MultiLightColors.buttonsMainSecondaryDefault
+            : MultiDarkColors.buttonsMainSecondaryDefault;
       case MultiRegistrationButtonType.mainSecondaryDisabled:
-        return const Color(0x33EAECF5) /* Buttons-Main-Secondary-Disabled */;
+        return brightness == Brightness.light
+            ? MultiLightColors.buttonsMainSecondaryDisabled
+            : MultiDarkColors.buttonsMainSecondaryDisabled;
       case MultiRegistrationButtonType.mainPrimaryDefault:
-        return const Color(0xFFEAECF5) /* Buttons-Main-Primary-Default */;
+        return brightness == Brightness.light
+            ? MultiLightColors.buttonsMainPrimaryDefault
+            : MultiDarkColors.buttonsMainPrimaryDefault;
       case MultiRegistrationButtonType.mainSecondary15Opacity:
-        return const Color(0x26EAECF5) /* Buttons-Main-Secondary-15-Opasity */;
+        return brightness == Brightness.light
+            ? MultiLightColors.buttonsMainSecondary15Opasity
+            : MultiDarkColors.buttonsMainSecondary15Opasity;
       case MultiRegistrationButtonType.mainError:
-        return const Color(0x26EAECF5) /* Buttons-Main-Secondary-Default */;
+        return brightness == Brightness.light
+            ? MultiLightColors.buttonsMainSecondaryDefault
+            : MultiDarkColors.buttonsMainSecondaryDefault;
     }
   }
 
-  Color? getForegroundColor() {
+  Color? getForegroundColor(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+
     switch (type) {
       case MultiRegistrationButtonType.mainSecondaryDefault:
-        return Colors.white.withAlpha(222) /* Text-Main-Primary_Default */;
+        return brightness == Brightness.light
+            ? MultiLightColors.textMainPrimaryDefault
+            : MultiDarkColors.textMainPrimaryDefault;
       case MultiRegistrationButtonType.mainSecondaryDisabled:
-        return Colors.white.withAlpha(97) /* Text-Main-Tertiary_Disabled */;
+        return brightness == Brightness.light
+            ? MultiLightColors.textMainTertiaryDisabled
+            : MultiDarkColors.textMainTertiaryDisabled;
       case MultiRegistrationButtonType.mainPrimaryDefault:
-        return Colors.black.withAlpha(222) /* Text-Reversed-Primary */;
+        return brightness == Brightness.light
+            ? MultiLightColors.textReversedPrimary
+            : MultiDarkColors.textReversedPrimary;
       case MultiRegistrationButtonType.mainSecondary15Opacity:
-        return Colors.black.withAlpha(222) /* Text-Reversed-Primary */;
+        return brightness == Brightness.light
+            ? MultiLightColors.textReversedPrimary
+            : MultiDarkColors.textReversedPrimary;
       case MultiRegistrationButtonType.mainError:
-        return const Color(0xFFF57F8D) /* Text-Main-Error */;
+        return brightness == Brightness.light
+            ? MultiLightColors.textMainError
+            : MultiDarkColors.textMainError;
     }
   }
 }

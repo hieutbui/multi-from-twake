@@ -1,6 +1,8 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:fluffychat/pages/entrance/entrance.dart';
 import 'package:fluffychat/pages/entrance/entrance_view_style.dart';
 import 'package:fluffychat/resource/image_paths.dart';
+import 'package:fluffychat/utils/platform_infos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:auth_buttons/auth_buttons.dart'
@@ -49,43 +51,45 @@ class EntranceMainView extends StatelessWidget {
                   children: [
                     Text(
                       'Welcome to Multi',
-                      style: EntranceViewStyle().welcomeTextStyle(context),
+                      style: EntranceViewStyle.welcomeTextStyle(context),
                     ),
                     const SizedBox(height: EntranceViewStyle.shortSpacing),
                     Text(
                       'Sign up to unlock your AI-powered space — secure, personal, and always with you.',
                       textAlign: TextAlign.center,
-                      style: EntranceViewStyle().subtitleTextStyle(context),
+                      style: EntranceViewStyle.subtitleTextStyle(context),
                     ),
                     SizedBox(height: controller.sizeScreenHeight * 0.05),
-                    AppleAuthButton(
-                      onPressed: controller.onContinueWithApple,
-                      text: 'Continue with Apple',
-                      style: AuthButtonStyle(
-                        buttonColor: const Color(
-                          0xFFEAECF5,
-                        ) /* Buttons-Main-Primary-Default */,
-                        iconSize: 18,
-                        iconColor: Colors.black.withAlpha(222),
-                        height: 48,
-                        width: double.infinity,
-                        textStyle: EntranceViewStyle().buttonTextStyle(context),
+                    if (PlatformInfos.isIOS)
+                      AppleAuthButton(
+                        onPressed: controller.onContinueWithApple,
+                        text: 'Continue with Apple',
+                        style: AuthButtonStyle(
+                          separator: 8.0,
+                          buttonColor: const Color(
+                            0xFFEAECF5,
+                          ) /* Buttons-Main-Primary-Default */,
+                          iconSize: 18,
+                          iconColor: Colors.black.withAlpha(222),
+                          height: 48,
+                          width: double.infinity,
+                          textStyle: EntranceViewStyle.buttonTextStyle(context),
+                        ),
                       ),
-                    ),
                     const SizedBox(height: EntranceViewStyle.shortSpacing),
                     EmailAuthButton(
                       onPressed: controller.onContinueWithEmail,
                       text: 'Continue with Email',
                       style: AuthButtonStyle(
-                        buttonColor: const Color(
-                          0x26EAECF5,
-                        ) /* Buttons-Main-Secondary-Default */,
+                        separator: 8.0,
+                        buttonColor:
+                            MultiLightColors.buttonsMainSecondaryDefault,
                         iconColor: Colors.white.withAlpha(222),
                         iconSize: 18,
                         height: 48,
                         width: double.infinity,
                         textStyle:
-                            EntranceViewStyle().buttonGreyTextStyle(context),
+                            EntranceViewStyle.buttonGreyTextStyle(context),
                       ),
                     ),
                     const SizedBox(height: EntranceViewStyle.shortSpacing),
@@ -93,15 +97,15 @@ class EntranceMainView extends StatelessWidget {
                       onPressed: controller.onContinueWithGoogle,
                       text: 'Continue with Google',
                       style: AuthButtonStyle(
-                        buttonColor: const Color(
-                          0x26EAECF5,
-                        ) /* Buttons-Main-Secondary-Default */,
+                        separator: 8.0,
+                        buttonColor:
+                            MultiLightColors.buttonsMainSecondaryDefault,
                         iconSize: 18,
                         iconColor: Colors.white.withAlpha(222),
                         height: 48,
                         width: double.infinity,
                         textStyle:
-                            EntranceViewStyle().buttonGreyTextStyle(context),
+                            EntranceViewStyle.buttonGreyTextStyle(context),
                       ),
                     ),
                     const SizedBox(height: EntranceViewStyle.shortSpacing),
@@ -112,15 +116,14 @@ class EntranceMainView extends StatelessWidget {
                         children: [
                           Text(
                             'Already have an account?',
-                            style: EntranceViewStyle()
-                                .haveAccountTextStyle(context),
+                            style:
+                                EntranceViewStyle.haveAccountTextStyle(context),
                           ),
                           TextButton(
                             onPressed: controller.onLogin,
                             child: Text(
                               'Log In',
-                              style:
-                                  EntranceViewStyle().loginTextStyle(context),
+                              style: EntranceViewStyle.loginTextStyle(context),
                             ),
                           ),
                         ],

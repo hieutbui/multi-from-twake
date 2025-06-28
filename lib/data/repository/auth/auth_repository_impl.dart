@@ -4,6 +4,7 @@ import 'package:fluffychat/data/model/auth/o_auth_request.dart';
 import 'package:fluffychat/data/model/auth/sign_in_request.dart';
 import 'package:fluffychat/data/model/auth/sign_out_response.dart';
 import 'package:fluffychat/data/model/auth/sign_up_request.dart';
+import 'package:fluffychat/data/model/auth/sign_up_response.dart';
 import 'package:fluffychat/data/model/auth/verify_code_request.dart';
 import 'package:fluffychat/data/model/auth/verify_code_response.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
@@ -13,7 +14,7 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthDatasource _authDatasource = getIt.get<AuthDatasource>();
 
   @override
-  Future<AuthResponse> signup({
+  Future<SignupResponse> signup({
     required String firstName,
     required String lastName,
     required String email,

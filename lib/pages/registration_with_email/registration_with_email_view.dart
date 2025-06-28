@@ -180,11 +180,12 @@ class RegistrationWithEmailView extends StatelessWidget {
                     onPressed: controller.onContinueWithApple,
                     text: 'Continue with Apple',
                     style: AuthButtonStyle(
+                      separator: 8.0,
                       buttonColor: const Color(
                         0x26EAECF5,
                       ),
                       iconSize: 18,
-                      iconColor: Colors.black.withAlpha(222),
+                      iconColor: Colors.white.withAlpha(222),
                       height: 48,
                       width: double.infinity,
                       textStyle:
@@ -201,6 +202,7 @@ class RegistrationWithEmailView extends StatelessWidget {
                     onPressed: controller.onContinueWithGoogle,
                     text: 'Continue with Google',
                     style: AuthButtonStyle(
+                      separator: 8.0,
                       buttonColor: const Color(
                         0x26EAECF5,
                       ) /* Buttons-Main-Secondary-Default */,

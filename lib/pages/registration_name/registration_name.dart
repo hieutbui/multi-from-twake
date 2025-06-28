@@ -10,11 +10,9 @@ class RegistrationName extends StatefulWidget {
 }
 
 class RegistrationNameController extends State<RegistrationName> {
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
 
-  final FocusNode firstNameFocusNode = FocusNode();
-  final FocusNode lastNameFocusNode = FocusNode();
+  final FocusNode nameFocusNode = FocusNode();
 
   // UI state
   bool isLoading = false;
@@ -24,18 +22,13 @@ class RegistrationNameController extends State<RegistrationName> {
   void initState() {
     super.initState();
     // Default values can be removed for production
-    firstNameController.text = '';
-    lastNameController.text = '';
+    nameController.text = '';
   }
 
   @override
   void dispose() {
-    firstNameController.dispose();
-    lastNameController.dispose();
-    firstNameFocusNode.dispose();
-    lastNameFocusNode.dispose();
-    firstNameFocusNode.removeListener(() {});
-    lastNameFocusNode.removeListener(() {});
+    nameController.dispose();
+    nameFocusNode.dispose();
     super.dispose();
   }
 
@@ -52,19 +45,11 @@ class RegistrationNameController extends State<RegistrationName> {
   }
 
   void onTapCreateAccount() {
-    final firstName = firstNameController.text.trim();
-    final lastName = lastNameController.text.trim();
+    final name = nameController.text.trim();
 
-    if (firstName.isEmpty) {
+    if (name.isEmpty) {
       setState(() {
-        errorMessage = 'First name is required';
-      });
-      return;
-    }
-
-    if (lastName.isEmpty) {
-      setState(() {
-        errorMessage = 'Last name is required';
+        errorMessage = 'Name is required';
       });
       return;
     }
@@ -77,8 +62,18 @@ class RegistrationNameController extends State<RegistrationName> {
     context.push(
       '/home/registrationContacts',
       // We should pass both names for the final registration step
-      extra: {'firstName': firstName, 'lastName': lastName},
+      extra: {'name': name},
     );
+  }
+
+  void handleNameInput(String value) {
+    setState(() {
+      errorMessage = null; // Clear error when user starts typing
+    });
+    // Auto-focus on last name field if first name is complete
+    if (value.isNotEmpty && value.length > 2) {
+      nameFocusNode.requestFocus();
+    }
   }
 
   void onTapSignUp() {
@@ -87,22 +82,6 @@ class RegistrationNameController extends State<RegistrationName> {
 
   void onTapForgotPassword() {
     //TODO: Implement onTapForgotPassword
-  }
-
-  void handleFirstNameInput(String value) {
-    setState(() {
-      errorMessage = null; // Clear error when user starts typing
-    });
-    // Auto-focus on last name field if first name is complete
-    if (value.isNotEmpty && value.length > 2) {
-      lastNameFocusNode.requestFocus();
-    }
-  }
-
-  void handleLastNameInput(String value) {
-    setState(() {
-      errorMessage = null; // Clear error when user starts typing
-    });
   }
 
   @override

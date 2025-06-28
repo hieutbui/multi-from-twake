@@ -973,7 +973,7 @@ class MatrixState extends State<Matrix>
     await matrixState.cancelListenSynchronizeContacts();
     if (PlatformInfos.isMobile) {
       await _deletePersistActiveAccount();
-      TwakeApp.router.go('/home/twakeWelcome');
+      TwakeApp.router.go('/home/welcome');
     } else {
       TwakeApp.router.go('/home', extra: true);
     }

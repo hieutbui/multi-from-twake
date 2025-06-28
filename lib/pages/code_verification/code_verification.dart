@@ -1,5 +1,14 @@
+import 'dart:async';
+
+import 'package:dartz/dartz.dart' hide State;
+import 'package:fluffychat/app_state/failure.dart';
+import 'package:fluffychat/app_state/success.dart';
+import 'package:fluffychat/di/global/get_it_initializer.dart';
+import 'package:fluffychat/domain/app_state/auth/verify_code_state.dart';
+import 'package:fluffychat/domain/usecase/auth/verify_code_interactor.dart';
 import 'package:fluffychat/pages/code_verification/code_verification_view.dart';
 import 'package:fluffychat/pages/code_verification/widgets/custom_otp_input.dart';
+import 'package:fluffychat/utils/twake_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,6 +25,14 @@ class CodeVerification extends StatefulWidget {
 }
 
 class CodeVerificationController extends State<CodeVerification> {
+  final VerifyCodeInteractor _verifyCodeInteractor =
+      getIt.get<VerifyCodeInteractor>();
+
+  final ValueNotifier<Either<Failure, Success>> codeVerificationNotifier =
+      ValueNotifier<Either<Failure, Success>>(
+    const Right(VerifyCodeInitial()),
+  );
+
   static const int codeLength = 6;
 
   // OTP controllers and focus nodes
@@ -27,6 +44,7 @@ class CodeVerificationController extends State<CodeVerification> {
   // UI state
   bool isLoading = false;
   String? errorMessage;
+  StreamSubscription? verifyCodeSubscription;
 
   @override
   void initState() {
@@ -45,6 +63,8 @@ class CodeVerificationController extends State<CodeVerification> {
     for (final focusNode in otpFocusNodes) {
       focusNode.removeListener(() {});
     }
+    verifyCodeSubscription?.cancel();
+    codeVerificationNotifier.dispose();
 
     super.dispose();
   }
@@ -63,8 +83,30 @@ class CodeVerificationController extends State<CodeVerification> {
 
   void onTapCreateAccount() {}
 
-  void onTapSignUp() {
-    context.push('/home/multiRegistration');
+  void onTapContinue() {
+    final verificationCode =
+        otpControllers.map((controller) => controller.text).join();
+
+    if (verificationCode.length != 6) {
+      TwakeSnackBar.show(context, 'Please enter a valid verification code');
+      return;
+    }
+
+    verifyCodeSubscription = _verifyCodeInteractor
+        .execute(
+      email: widget.email,
+      verificationCode: verificationCode,
+    )
+        .listen(
+      (event) {
+        codeVerificationNotifier.value = event;
+
+        event.fold(
+          (failure) => _handleVerifyCodeFailureState(failure),
+          (success) => _handleVerifyCodeSuccessState(success),
+        );
+      },
+    );
   }
 
   void onTapForgotPassword() {
@@ -75,9 +117,6 @@ class CodeVerificationController extends State<CodeVerification> {
     if (value.isNotEmpty && value.length == 1) {
       if (index < 5) {
         otpFocusNodes[index + 1].requestFocus();
-      } else {
-        // If it's the last input, verify code automatically
-        onTapCreateAccount();
       }
     }
   }
@@ -100,6 +139,21 @@ class CodeVerificationController extends State<CodeVerification> {
         }
       },
     );
+  }
+
+  void _handleVerifyCodeFailureState(Failure failure) {
+    if (failure is VerifyCodeFailure) {
+      TwakeSnackBar.show(context, failure.exception, isError: true);
+    } else {
+      TwakeSnackBar.show(context, 'Failed to verify code', isError: true);
+    }
+  }
+
+  void _handleVerifyCodeSuccessState(Success success) {
+    if (success is VerifyCodeSuccess) {
+      // Navigate to multi registration page
+      context.push('/home/registrationName');
+    }
   }
 
   @override

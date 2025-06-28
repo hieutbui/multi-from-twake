@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:flutter/material.dart';
 
 class EntranceViewStyle {
@@ -10,7 +11,7 @@ class EntranceViewStyle {
       EdgeInsets.symmetric(horizontal: 20);
 
   static const Decoration backgroundDecoration = BoxDecoration(
-    color: Color(0xFF171718), // Background-Page-Default
+    color: MultiDarkColors.backgroundPageDefault,
     shape: BoxShape.rectangle,
     borderRadius: BorderRadius.only(
       topLeft: Radius.circular(24),
@@ -18,14 +19,12 @@ class EntranceViewStyle {
     ),
   );
 
-  TextStyle? welcomeTextStyle(BuildContext context) =>
-      Theme.of(context).textTheme.displayLarge?.copyWith(
+  static TextStyle? welcomeTextStyle(BuildContext context) =>
+      Theme.of(context).textTheme.headlineLarge?.copyWith(
             color: Colors.white.withAlpha(222),
-            fontSize: 34,
-            letterSpacing: 0.37,
           );
 
-  TextStyle? subtitleTextStyle(BuildContext context) =>
+  static TextStyle? subtitleTextStyle(BuildContext context) =>
       Theme.of(context).textTheme.titleMedium?.copyWith(
             color: Colors.white.withAlpha(153),
             fontSize: 17,
@@ -33,21 +32,21 @@ class EntranceViewStyle {
             fontWeight: FontWeight.w400,
           );
 
-  TextStyle? buttonTextStyle(BuildContext context) =>
+  static TextStyle? buttonTextStyle(BuildContext context) =>
       Theme.of(context).textTheme.titleMedium?.copyWith(
             color: Colors.black.withAlpha(222),
             /* Text-Reversed-Primary */
             fontSize: 17,
           );
 
-  TextStyle? buttonGreyTextStyle(BuildContext context) =>
+  static TextStyle? buttonGreyTextStyle(BuildContext context) =>
       Theme.of(context).textTheme.titleMedium?.copyWith(
             color: Colors.white.withAlpha(222),
             /* Text-Main-Primary_Default */
             fontSize: 17,
           );
 
-  TextStyle? haveAccountTextStyle(BuildContext context) =>
+  static TextStyle? haveAccountTextStyle(BuildContext context) =>
       Theme.of(context).textTheme.labelLarge?.copyWith(
             color: Colors.white.withAlpha(153),
             /* Text-Main-Secondary */
@@ -56,7 +55,7 @@ class EntranceViewStyle {
             fontWeight: FontWeight.w400,
           );
 
-  TextStyle? loginTextStyle(BuildContext context) =>
+  static TextStyle? loginTextStyle(BuildContext context) =>
       Theme.of(context).textTheme.labelLarge?.copyWith(
             color: Colors.white.withAlpha(222),
             /* Text-Main-Secondary */

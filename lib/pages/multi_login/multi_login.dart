@@ -3,12 +3,18 @@ import 'dart:async';
 import 'package:dartz/dartz.dart' hide State;
 import 'package:fluffychat/app_state/failure.dart';
 import 'package:fluffychat/app_state/success.dart';
+import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
+import 'package:fluffychat/domain/app_state/auth/signin_state.dart';
 import 'package:fluffychat/domain/usecase/auth/signin_interactor.dart';
 import 'package:fluffychat/pages/multi_login/multi_login_view.dart';
+import 'package:fluffychat/utils/platform_infos.dart';
+import 'package:fluffychat/utils/twake_snackbar.dart';
+import 'package:fluffychat/widgets/matrix.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:matrix/matrix.dart';
 
 class MultiLogin extends StatefulWidget {
   const MultiLogin({super.key});
@@ -61,6 +67,7 @@ class MultiLoginController extends State<MultiLogin> {
     passwordFocusNode.removeListener(() {});
     emailController.dispose();
     passwordController.dispose();
+    _signinSubscription?.cancel();
     super.dispose();
   }
 
@@ -76,7 +83,7 @@ class MultiLoginController extends State<MultiLogin> {
     // TODO: Implement onContinueWithGoogle
   }
 
-  void onTapCreateAccount() {
+  Future<void> onTapCreateAccount() async {
     final email = emailController.text;
     final password = passwordController.text;
 
@@ -97,9 +104,6 @@ class MultiLoginController extends State<MultiLogin> {
       errorMessage = null;
     });
 
-    // Cancel previous subscription if exists
-    _signinSubscription?.cancel();
-
     // Execute interactor and listen for state changes
     _signinSubscription = _signinInteractor
         .execute(
@@ -114,7 +118,109 @@ class MultiLoginController extends State<MultiLogin> {
   }
 
   // Handle state changes from the interactor stream
-  void _handleSigninState(Either<Failure, Success> state) {}
+  void _handleSigninState(Either<Failure, Success> state) {
+    state.fold(
+      (failure) => _handleSigninFailureState(failure),
+      (success) => _handleSigninSuccessState(success),
+    );
+  }
+
+  void _handleSigninFailureState(Failure failure) {
+    if (failure is SigninFailure) {
+      TwakeSnackBar.show(context, failure.exception, isError: true);
+    } else {
+      TwakeSnackBar.show(context, 'Failed to sign in', isError: true);
+    }
+  }
+
+  Future<void> _handleSigninSuccessState(Success success) async {
+    if (success is SigninSuccess) {
+      try {
+        var homeserver = Uri.parse(AppConfig.sampleValue);
+        Logs().d('Homeserver URL: ${homeserver.toString()}');
+
+        if (homeserver.scheme.isEmpty) {
+          homeserver = Uri.http(AppConfig.defaultHomeserver, '');
+        }
+
+        Logs().d('Homeserver URL: ${homeserver.toString()}');
+
+        final matrix = Matrix.of(context);
+
+        matrix.loginHomeserverSummary =
+            await matrix.getLoginClient().checkHomeserver(homeserver);
+
+        Logs().d('Homeserver summary: ${matrix.loginHomeserverSummary}');
+
+        final ssoSupported = matrix.loginHomeserverSummary!.loginFlows
+            .any((flow) => flow.type == 'm.login.sso');
+
+        try {
+          final test = await matrix.getLoginClient().register(
+                username: success.authResponse.username,
+                password: passwordController.text,
+              );
+
+          Logs().d('Registration response: $test');
+          matrix.loginRegistrationSupported = true;
+        } on MatrixException catch (e) {
+          matrix.loginRegistrationSupported = e.requireAdditionalAuthentication;
+        }
+
+        if (ssoSupported && matrix.loginRegistrationSupported == true) {
+          TwakeSnackBar.show(context, 'SSO supported');
+
+          return;
+        }
+
+        final AuthenticationIdentifier identifier =
+            AuthenticationThirdPartyIdentifier(
+          medium: 'email',
+          address: emailController.text,
+        );
+
+        Matrix.of(context).loginType = LoginType.mLoginPassword;
+
+        await matrix
+            .getLoginClient()
+            .login(
+              LoginType.mLoginPassword,
+              identifier: identifier,
+              password: passwordController.text,
+              user: success.authResponse.matrixUserId,
+              initialDeviceDisplayName: PlatformInfos.clientName,
+            )
+            .then(
+              (onValue) => {
+                Logs().d('Login response: $onValue'),
+                context.push('/rooms'),
+              },
+            )
+            .catchError(
+              (onError) => {
+                Logs().e('Login error: $onError'),
+              },
+            );
+      } on MatrixException catch (exception) {
+        Logs().e('Login error: $exception');
+        setState(() {
+          errorMessage = exception.errorMessage;
+          isLoading = false;
+        });
+
+        return;
+      } catch (exception) {
+        Logs().e('Exception: $exception');
+        setState(() {
+          errorMessage = exception.toString();
+          isLoading = false;
+        });
+        return;
+      }
+
+      if (mounted) setState(() => isLoading = false);
+    }
+  }
 
   void onTapForgotPassword() {
     context.push('/home/forgotPassword');

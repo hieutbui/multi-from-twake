@@ -37,68 +37,28 @@ class _MultiRegistrationEmailInputFieldState
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 12.0,
-      ),
-      decoration: BoxDecoration(
-        color: const Color(0xFF1D1F26) /* Background-Inputs-Default */,
-        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-        border: Border.all(
-          color: widget.focusNode.hasFocus
-              ? const Color(0xFF5F87B4) /* Borders-Main-Active */
-              : Colors.transparent,
-          width: 1.0,
+    return FormBuilderTextField(
+      key: widget.fieldKey,
+      name: 'Email address',
+      controller: widget.controller,
+      focusNode: widget.focusNode,
+      validator: FormBuilderValidators.compose([
+        FormBuilderValidators.email(
+          errorText: 'Please enter a valid email address',
         ),
+        if (widget.isRequired ?? false)
+          FormBuilderValidators.required(
+            errorText: 'Email address is required',
+          ),
+      ]),
+      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
+      decoration: const InputDecoration(
+        labelText: 'Email address',
+        hintText: 'Email address',
       ),
-      child: FormBuilderTextField(
-        key: widget.fieldKey,
-        name: 'Email address',
-        controller: widget.controller,
-        focusNode: widget.focusNode,
-        validator: FormBuilderValidators.compose([
-          FormBuilderValidators.email(
-            errorText: 'Please enter a valid email address',
-          ),
-          if (widget.isRequired ?? false)
-            FormBuilderValidators.required(
-              errorText: 'Email address is required',
-            ),
-        ]),
-        style: TextStyle(
-          fontSize: 17.0,
-          color: Colors.white.withAlpha(222) /* Text-Main-Primary_Default */,
-          fontFamily: 'SFPro',
-          fontWeight: FontWeight.w400,
-          letterSpacing: -0.41,
-          height: 1.18,
-        ),
-        decoration: InputDecoration(
-          label: Text(
-            'Email address',
-            style: TextStyle(
-              fontSize: 17.0,
-              color:
-                  Colors.white.withAlpha(97) /* Text-Main-Tertiary-disabled */,
-              fontFamily: 'SFPro',
-              fontWeight: FontWeight.w400,
-              height: 1.27,
-              letterSpacing: 0.06,
-            ),
-          ),
-          hintText: 'Email address',
-          hintStyle: TextStyle(
-            fontSize: 17.0,
-            color: Colors.white.withAlpha(97) /* Text-Main-Tertiary-disabled */,
-            fontFamily: 'SFPro',
-            fontWeight: FontWeight.w400,
-            letterSpacing: -0.41,
-            height: 1.18,
-          ),
-          border: InputBorder.none,
-        ),
-        keyboardType: TextInputType.emailAddress,
-      ),
+      keyboardType: TextInputType.emailAddress,
     );
   }
 
