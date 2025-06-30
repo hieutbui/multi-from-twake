@@ -2,6 +2,7 @@ import 'package:auth_buttons/auth_buttons.dart';
 import 'package:dartz/dartz.dart';
 import 'package:fluffychat/app_state/failure.dart';
 import 'package:fluffychat/app_state/success.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:fluffychat/domain/app_state/auth/signin_state.dart';
 import 'package:fluffychat/pages/multi_login/multi_login.dart';
 import 'package:fluffychat/pages/multi_login/multi_login_view_style.dart';
@@ -43,36 +44,30 @@ class MultiLoginView extends StatelessWidget {
                       children: [
                         TextSpan(
                           text: 'Welcome back to ',
-                          style: TextStyle(
-                            color: Colors.white
-                                .withAlpha(153) /* Text-Main-Secondary */,
-                            fontSize: 17,
-                            fontFamily: 'SFPro',
-                            fontWeight: FontWeight.w400,
-                            letterSpacing: -0.41,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(
+                                color: Theme.of(context).colorScheme.tertiary,
+                              ),
                         ),
                         TextSpan(
                           text: 'Multi. ',
-                          style: TextStyle(
-                            color: Colors.white
-                                .withAlpha(222) /* Text-Main-Primary_Default */,
-                            fontSize: 17,
-                            fontFamily: 'SFPro',
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: -0.41,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
                         ),
                         TextSpan(
                           text: '\nPlease choose any option to login',
-                          style: TextStyle(
-                            color: Colors.white
-                                .withAlpha(153) /* Text-Main-Secondary */,
-                            fontSize: 17,
-                            fontFamily: 'SFPro',
-                            fontWeight: FontWeight.w400,
-                            letterSpacing: -0.41,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(
+                                color: Theme.of(context).colorScheme.tertiary,
+                              ),
                         ),
                       ],
                     ),
@@ -103,15 +98,15 @@ class MultiLoginView extends StatelessWidget {
                           alignment: Alignment.centerRight,
                           child: TextButton(
                             onPressed: controller.onTapForgotPassword,
-                            child: const Text(
+                            child: Text(
                               'Forgot Password?',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 17.0,
-                                fontFamily: 'SFPro',
-                                fontWeight: FontWeight.w400,
-                                letterSpacing: -0.41,
-                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.onSurface,
+                                  ),
                             ),
                           ),
                         ),
@@ -155,8 +150,7 @@ class MultiLoginView extends StatelessWidget {
                       Expanded(
                         child: Container(
                           height: 1,
-                          color: Colors.white
-                              .withAlpha(38) /* Additional-Divider */,
+                          color: Theme.of(context).colorScheme.inverseSurface,
                         ),
                       ),
                       Padding(
@@ -164,22 +158,18 @@ class MultiLoginView extends StatelessWidget {
                         child: Text(
                           'or',
                           style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w400,
-                                    height: 1.20,
-                                    letterSpacing: -0.24,
-                                    color: Colors.white.withAlpha(
-                                      153,
-                                    ) /* Text-Reversed-Secondary */,
+                              Theme.of(context).textTheme.bodySmall!.copyWith(
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.light
+                                        ? MultiLightColors.additionalDivider
+                                        : MultiDarkColors.additionalDivider,
                                   ),
                         ),
                       ),
                       Expanded(
                         child: Container(
                           height: 1,
-                          color: Colors.white
-                              .withAlpha(38) /* Additional-Divider */,
+                          color: Theme.of(context).colorScheme.inverseSurface,
                         ),
                       ),
                     ],
@@ -192,15 +182,19 @@ class MultiLoginView extends StatelessWidget {
                     onPressed: controller.onContinueWithApple,
                     text: 'Sign Up with Apple',
                     style: AuthButtonStyle(
-                      buttonColor: const Color(
-                        0x26EAECF5,
-                      ),
+                      separator: 8.0,
+                      buttonColor:
+                          Theme.of(context).brightness == Brightness.light
+                              ? MultiLightColors.buttonsMainSecondaryDefault
+                              : MultiDarkColors.buttonsMainSecondaryDefault,
                       iconSize: 18,
-                      iconColor: Colors.black.withAlpha(222),
+                      iconColor: Theme.of(context).colorScheme.onSurface,
                       height: 48,
                       width: double.infinity,
                       textStyle:
-                          MultiLoginViewStyle.buttonGreyTextStyle(context),
+                          Theme.of(context).textTheme.titleLarge?.copyWith(
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
                     ),
                   ),
                 ),
@@ -211,15 +205,19 @@ class MultiLoginView extends StatelessWidget {
                     onPressed: controller.onContinueWithGoogle,
                     text: 'Sign Up with Google',
                     style: AuthButtonStyle(
-                      buttonColor: const Color(
-                        0x26EAECF5,
-                      ) /* Buttons-Main-Secondary-Default */,
+                      separator: 8.0,
+                      buttonColor:
+                          Theme.of(context).brightness == Brightness.light
+                              ? MultiLightColors.buttonsMainSecondaryDefault
+                              : MultiDarkColors.buttonsMainSecondaryDefault,
                       iconSize: 18,
-                      iconColor: Colors.white.withAlpha(222),
+                      iconColor: Theme.of(context).colorScheme.onSurface,
                       height: 48,
                       width: double.infinity,
                       textStyle:
-                          MultiLoginViewStyle.buttonGreyTextStyle(context),
+                          Theme.of(context).textTheme.titleLarge?.copyWith(
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
                     ),
                   ),
                 ),
@@ -228,14 +226,25 @@ class MultiLoginView extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Don’t have an account?',
-                      style: MultiLoginViewStyle.haveAccountTextStyle(context),
+                      'Don’t have an account? ',
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            color: Theme.of(context).colorScheme.tertiary,
+                          ),
                     ),
                     TextButton(
                       onPressed: controller.onTapSignUp,
+                      style: TextButton.styleFrom(
+                        minimumSize: Size.zero,
+                        padding: EdgeInsets.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
                       child: Text(
                         'Sign Up',
-                        style: MultiLoginViewStyle.loginTextStyle(context),
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer,
+                            ),
                       ),
                     ),
                   ],

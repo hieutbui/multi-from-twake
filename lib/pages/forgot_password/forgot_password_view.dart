@@ -34,14 +34,9 @@ class ForgotPasswordView extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'Enter your email and we’ll send you a link to reset your password',
-                    style: TextStyle(
-                      color:
-                          Colors.white.withAlpha(153) /* Text-Main-Secondary */,
-                      fontSize: 17,
-                      fontFamily: 'SFPro',
-                      fontWeight: FontWeight.w400,
-                      letterSpacing: -0.41,
-                    ),
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: Theme.of(context).colorScheme.tertiary,
+                        ),
                   ),
                 ),
                 const SizedBox(height: 48.0),

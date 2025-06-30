@@ -16,6 +16,7 @@ import 'package:fluffychat/domain/usecase/auth/signin_interactor.dart';
 import 'package:fluffychat/pages/registration_nickname/models/registration_nickname_args.dart';
 import 'package:fluffychat/pages/registration_nickname/registration_nickname_view.dart';
 import 'package:fluffychat/pages/search/search_debouncer_mixin.dart';
+import 'package:fluffychat/utils/dialog/twake_dialog.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
 import 'package:fluffychat/utils/twake_snackbar.dart';
 import 'package:fluffychat/widgets/matrix.dart';
@@ -298,26 +299,15 @@ class RegistrationNicknameController extends State<RegistrationNickname>
 
         Matrix.of(context).loginType = LoginType.mLoginPassword;
 
-        await matrix
-            .getLoginClient()
-            .login(
-              LoginType.mLoginPassword,
-              identifier: identifier,
-              password: widget.args?.password,
-              user: success.authResponse.matrixUserId,
-              initialDeviceDisplayName: PlatformInfos.clientName,
-            )
-            .then(
-              (onValue) => {
-                Logs().d('Login response: $onValue'),
-                context.push('/rooms'),
-              },
-            )
-            .catchError(
-              (onError) => {
-                Logs().e('Login error: $onError'),
-              },
-            );
+        await TwakeDialog.showStreamDialogFullScreen(
+          future: () => matrix.getLoginClient().login(
+                LoginType.mLoginPassword,
+                identifier: identifier,
+                password: widget.args?.password,
+                user: success.authResponse.matrixUserId,
+                initialDeviceDisplayName: PlatformInfos.clientName,
+              ),
+        );
       } on MatrixException catch (exception) {
         Logs().e('Login error: $exception');
         setState(() {

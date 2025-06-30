@@ -57,8 +57,6 @@ class CodeVerificationView extends StatelessWidget {
                     fieldWidth: 48,
                     autoFocus: true,
                     clearText: false,
-                    handleControllers: (controllers) =>
-                        controller.setOtpControllers(controllers),
                     hasCustomInputDecoration: false,
                     keyboardType: TextInputType.number,
                     enabled: true,

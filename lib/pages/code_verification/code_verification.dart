@@ -42,9 +42,6 @@ class CodeVerificationController extends State<CodeVerification> {
   // Store the verification code
   String _verificationCode = '';
 
-  // Store the OTP controllers from the OtpTextField
-  List<TextEditingController> _otpControllers = [];
-
   // UI state
   bool isLoading = false;
   String? errorMessage;
@@ -57,20 +54,10 @@ class CodeVerificationController extends State<CodeVerification> {
 
   @override
   void dispose() {
-    // Dispose of any controllers
-    for (final controller in _otpControllers) {
-      controller.dispose();
-    }
-
     verifyCodeSubscription?.cancel();
     codeVerificationNotifier.dispose();
     isButtonEnabledNotifier.dispose();
     super.dispose();
-  }
-
-  // Method to receive controllers from OtpTextField
-  void setOtpControllers(List<TextEditingController?> controllers) {
-    _otpControllers = controllers.whereType<TextEditingController>().toList();
   }
 
   // Called when any digit changes
