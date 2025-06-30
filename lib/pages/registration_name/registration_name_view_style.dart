@@ -8,10 +8,12 @@ class RegistrationNameViewStyle {
     gradient: LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
-      colors: [Color(0xFF0E0F13), Color(0xFF191B26)],
+      colors: [
+        Color(0xFF0E0F13),
+        Color(0xFF191B26),
+      ],
     ),
   );
-
   static BoxDecoration helloContainerDecoration = BoxDecoration(
     color: const Color(0xFF374151).withAlpha(153),
     borderRadius: const BorderRadius.all(
