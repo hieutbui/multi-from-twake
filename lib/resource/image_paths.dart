@@ -85,6 +85,10 @@ class ImagePaths {
   static String get imgRegistrationContacts =>
       _getImagePath('img_registration_contacts.png');
   static String get icPlusCircle => _getImagePath('ic_plus_circle.svg');
+  static String get imgEllipse232 => _getImagePath('img_ellipse_232.svg');
+  static String get imgEllipse235 => _getImagePath('img_ellipse_235.svg');
+  static String get imgEllipse236 => _getImagePath('img_ellipse_236.svg');
+  static String get imgEllipse238 => _getImagePath('img_ellipse_238.svg');
 
   static String _getImagePath(String imageName) {
     return AssetsPaths.images + imageName;
