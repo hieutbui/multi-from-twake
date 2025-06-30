@@ -1,4 +1,5 @@
 import 'package:auth_buttons/auth_buttons.dart';
+import 'package:fluffychat/domain/app_state/auth/signin_state.dart';
 import 'package:fluffychat/pages/registration_with_email/registration_with_email.dart';
 import 'package:fluffychat/pages/registration_with_email/registration_with_email_view_style.dart';
 import 'package:fluffychat/widgets/app_bars/registration_app_bar.dart';
@@ -72,6 +73,7 @@ class RegistrationWithEmailView extends StatelessWidget {
                 ),
                 const SizedBox(height: 78.0),
                 FormBuilder(
+                  autovalidateMode: AutovalidateMode.disabled,
                   key: controller.registrationFormKey,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -91,11 +93,29 @@ class RegistrationWithEmailView extends StatelessWidget {
                           controller: controller.passwordController,
                         ),
                         const SizedBox(height: 32.0),
-                        MultiRegistrationButton(
-                          label: 'Create an account',
-                          type:
-                              MultiRegistrationButtonType.mainSecondaryDisabled,
-                          onPressed: controller.onTapCreateAccount,
+                        ValueListenableBuilder(
+                          valueListenable: controller.formValidNotifier,
+                          builder: (context, formValid, child) {
+                            return ValueListenableBuilder(
+                              valueListenable: controller.signinNotifier,
+                              builder: (context, value, child) {
+                                return MultiRegistrationButton(
+                                  label: 'Create an account',
+                                  type: formValid
+                                      ? MultiRegistrationButtonType
+                                          .mainPrimaryDefault
+                                      : MultiRegistrationButtonType
+                                          .mainSecondaryDisabled,
+                                  onPressed: formValid
+                                      ? controller.onTapCreateAccount
+                                      : null,
+                                  isLoading:
+                                      value.isRight() && value is SigninLoading,
+                                  isDisabled: !formValid,
+                                );
+                              },
+                            );
+                          },
                         ),
                       ],
                     ),

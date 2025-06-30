@@ -55,15 +55,23 @@ class _MultiRegistrationPasswordInputFieldState
         FormBuilderTextField(
           key: widget.fieldKey,
           controller: widget.controller,
-          onChanged: _onPasswordChanged,
+          autocorrect: false,
+          onChanged: (value) {
+            // Update strength indicator
+            _onPasswordChanged(value);
+
+            // Force the form to rebuild to update validation errors
+            setState(() {});
+          },
           name: 'Password',
           focusNode: widget.focusNode,
           obscureText: _isObscured,
+          // Keep autovalidateMode to clear errors as you type
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          // Use simpler minLength validator that just checks length
           validator: FormBuilderValidators.compose([
             FormBuilderValidators.password(
-              minLength: 8,
-              errorText: 'Password must be at least 8 characters long',
-              checkNullOrEmpty: true,
+              errorText: 'Your password is not strong enough',
             ),
             if (widget.isRequired ?? false)
               FormBuilderValidators.required(

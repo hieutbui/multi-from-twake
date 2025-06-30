@@ -84,6 +84,7 @@ class ImagePaths {
       _getImagePath('img_notification_request.png');
   static String get imgRegistrationContacts =>
       _getImagePath('img_registration_contacts.png');
+  static String get icPlusCircle => _getImagePath('ic_plus_circle.svg');
 
   static String _getImagePath(String imageName) {
     return AssetsPaths.images + imageName;

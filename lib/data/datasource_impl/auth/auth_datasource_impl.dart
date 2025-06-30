@@ -1,6 +1,12 @@
 import 'package:fluffychat/data/datasource/auth_datasource.dart';
 import 'package:fluffychat/data/model/auth/auth_response.dart';
+import 'package:fluffychat/data/model/auth/get_username_suggestion_request.dart';
+import 'package:fluffychat/data/model/auth/get_username_suggestion_response.dart';
 import 'package:fluffychat/data/model/auth/o_auth_request.dart';
+import 'package:fluffychat/data/model/auth/set_display_name_request.dart';
+import 'package:fluffychat/data/model/auth/set_display_name_response.dart';
+import 'package:fluffychat/data/model/auth/set_username_request.dart';
+import 'package:fluffychat/data/model/auth/set_username_response.dart';
 import 'package:fluffychat/data/model/auth/sign_in_request.dart';
 import 'package:fluffychat/data/model/auth/sign_out_response.dart';
 import 'package:fluffychat/data/model/auth/sign_up_request.dart';
@@ -26,6 +32,27 @@ class AuthDatasourceImpl implements AuthDatasource {
   @override
   Future<VerifyCodeResponse> verifyCode(VerifyCodeRequest request) async {
     return await _omniAuthAPI.checkVerificationCode(request);
+  }
+
+  @override
+  Future<SetDisplayNameResponse> setDisplayName(
+    SetDisplayNameRequest request,
+  ) async {
+    return await _omniAuthAPI.setDisplayName(request);
+  }
+
+  @override
+  Future<SetUsernameResponse> setUsername(
+    SetUsernameRequest request,
+  ) async {
+    return await _omniAuthAPI.setUsername(request);
+  }
+
+  @override
+  Future<GetUsernameSuggestionResponse> getUsernameSuggestion(
+    GetUsernameSuggestionRequest request,
+  ) async {
+    return await _omniAuthAPI.getUsernameSuggestion(request);
   }
 
   @override

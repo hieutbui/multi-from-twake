@@ -4,6 +4,7 @@ import 'package:fluffychat/widgets/app_bars/registration_app_bar.dart';
 import 'package:fluffychat/widgets/multi_registration_button.dart';
 import 'package:fluffychat/widgets/multi_registration_title_with_background.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 
 class CodeVerificationView extends StatelessWidget {
   final CodeVerificationController controller;
@@ -31,7 +32,7 @@ class CodeVerificationView extends StatelessWidget {
                   padding: CodeVerificationStyle.padding,
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "We've sent the code to the test@gmail.com.",
+                    "We've sent the code to the ${controller.widget.signupRequest?.email}.",
                     style: TextStyle(
                       color:
                           Colors.white.withAlpha(153) /* Text-Main-Secondary */,
@@ -46,16 +47,49 @@ class CodeVerificationView extends StatelessWidget {
                 Container(
                   margin: CodeVerificationStyle.padding,
                   width: 350,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: controller.generateCodeCells(),
+                  child: OtpTextField(
+                    numberOfFields: CodeVerificationController.codeLength,
+                    focusedBorderColor: const Color(0xFF3B82F6),
+                    enabledBorderColor: Colors.transparent,
+                    borderColor: Colors.transparent,
+                    showFieldAsBox: true,
+                    borderWidth: 2.0,
+                    fieldWidth: 48,
+                    autoFocus: true,
+                    clearText: false,
+                    handleControllers: (controllers) =>
+                        controller.setOtpControllers(controllers),
+                    hasCustomInputDecoration: false,
+                    keyboardType: TextInputType.number,
+                    enabled: true,
+                    textStyle: const TextStyle(
+                      fontSize: 24,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'SFPro',
+                    ),
+                    filled: true,
+                    fillColor: const Color(0xFF1D1F26),
+                    borderRadius: BorderRadius.circular(12),
+                    onCodeChanged: controller.onCodeChanged,
+                    onSubmit: controller.onCodeSubmit,
                   ),
                 ),
                 const SizedBox(height: 32.0),
-                MultiRegistrationButton(
-                  label: 'Continue',
-                  type: MultiRegistrationButtonType.mainSecondaryDisabled,
-                  onPressed: controller.onTapContinue,
+                ValueListenableBuilder(
+                  valueListenable: controller.isButtonEnabledNotifier,
+                  builder: (context, isEnabled, child) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: MultiRegistrationButton(
+                        label: 'Continue',
+                        type: isEnabled
+                            ? MultiRegistrationButtonType.mainPrimaryDefault
+                            : MultiRegistrationButtonType.mainSecondaryDisabled,
+                        onPressed: isEnabled ? controller.onTapContinue : null,
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

@@ -14,6 +14,14 @@ class OmniEndpoint {
     '/api/auth/check-code',
   );
 
+  static final ServicePath setDisplayNameServicePath = ServicePath(
+    '/api/auth/set-display-name',
+  );
+
+  static final ServicePath setUsernameServicePath = ServicePath(
+    '/api/auth/set-username',
+  );
+
   static final ServicePath oauthSignupServicePath = ServicePath(
     '/api/auth/oauth/signup',
   );
@@ -24,6 +32,10 @@ class OmniEndpoint {
 
   static final ServicePath signoutServicePath = ServicePath(
     '/api/auth/signout',
+  );
+
+  static final ServicePath getUsernameSuggestion = ServicePath(
+    '/api/auth/suggest-usernames',
   );
 
   static const String omniRootPath = '';

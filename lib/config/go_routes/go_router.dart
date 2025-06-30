@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:fluffychat/config/first_column_inner_routes.dart';
+import 'package:fluffychat/data/model/auth/sign_up_request.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/pages/add_story/add_story.dart';
 import 'package:fluffychat/pages/archive/archive.dart';
@@ -20,6 +21,8 @@ import 'package:fluffychat/pages/multi_login/multi_login.dart';
 import 'package:fluffychat/pages/new_group/new_group_chat_info.dart';
 import 'package:fluffychat/pages/registration_contacts/registration_contacts.dart';
 import 'package:fluffychat/pages/registration_name/registration_name.dart';
+import 'package:fluffychat/pages/registration_nickname/models/registration_nickname_args.dart';
+import 'package:fluffychat/pages/registration_nickname/registration_nickname.dart';
 import 'package:fluffychat/pages/registration_notification/registration_notification.dart';
 import 'package:fluffychat/pages/registration_with_email/registration_with_email.dart';
 import 'package:fluffychat/pages/set_new_password/set_new_password.dart';
@@ -131,7 +134,9 @@ abstract class AppRoutes {
           pageBuilder: (context, state) => defaultPageBuilder(
             context,
             CodeVerification(
-              email: state.extra as String,
+              signupRequest: state.extra is SignupRequest
+                  ? state.extra as SignupRequest
+                  : null,
             ),
           ),
           redirect: loggedInRedirect,
@@ -150,7 +155,23 @@ abstract class AppRoutes {
           path: 'registrationName',
           pageBuilder: (context, state) => defaultPageBuilder(
             context,
-            const RegistrationName(),
+            RegistrationName(
+              signupRequest: state.extra is SignupRequest
+                  ? state.extra as SignupRequest
+                  : null,
+            ),
+          ),
+          redirect: loggedInRedirect,
+        ),
+        GoRoute(
+          path: 'registrationNickname',
+          pageBuilder: (context, state) => defaultPageBuilder(
+            context,
+            RegistrationNickname(
+              args: state.extra is RegistrationNicknameArgs
+                  ? state.extra as RegistrationNicknameArgs
+                  : null,
+            ),
           ),
           redirect: loggedInRedirect,
         ),

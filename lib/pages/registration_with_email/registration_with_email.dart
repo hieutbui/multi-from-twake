@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:dartz/dartz.dart' hide State;
 import 'package:fluffychat/app_state/failure.dart';
 import 'package:fluffychat/app_state/success.dart';
+import 'package:fluffychat/data/model/auth/sign_up_request.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
-import 'package:fluffychat/domain/app_state/auth/signin_state.dart';
 import 'package:fluffychat/domain/app_state/auth/signup_state.dart';
 import 'package:fluffychat/domain/usecase/auth/signup_interactor.dart';
 import 'package:fluffychat/pages/registration_with_email/registration_with_email_view.dart';
@@ -30,6 +30,7 @@ class RegistrationWithEmailController extends State<RegistrationWithEmail> {
   final GlobalKey<FormBuilderFieldState> passwordFieldKey =
       GlobalKey<FormBuilderFieldState>();
 
+  final ValueNotifier<bool> formValidNotifier = ValueNotifier(false);
   final ValueNotifier<Either<Failure, Success>> signinNotifier =
       ValueNotifier<Either<Failure, Success>>(
     const Right(SignupInitial()),
@@ -43,41 +44,100 @@ class RegistrationWithEmailController extends State<RegistrationWithEmail> {
 
   StreamSubscription? signupSubscription;
 
+  // Track which fields have been touched by the user
+  bool _emailTouched = false;
+  bool _passwordTouched = false;
+  bool _formTouched = false;
+
   @override
   void initState() {
     super.initState();
+
+    // Listen for focus changes to determine which fields are touched
+    emailFocusNode.addListener(() {
+      if (emailFocusNode.hasFocus && !_emailTouched) {
+        setState(() {
+          _emailTouched = true;
+          _formTouched = true;
+        });
+      }
+    });
+
+    passwordFocusNode.addListener(() {
+      if (passwordFocusNode.hasFocus && !_passwordTouched) {
+        setState(() {
+          _passwordTouched = true;
+          _formTouched = true;
+        });
+      }
+    });
+
+    emailController.addListener(_validateForm);
+    passwordController.addListener(_validateForm);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => _validateForm());
   }
 
   @override
   void dispose() {
-    emailFocusNode.dispose();
+    emailFocusNode.removeListener(() {});
+    passwordFocusNode.removeListener(() {});
+    emailController.removeListener(_validateForm);
+    passwordController.removeListener(_validateForm);
     registrationFormKey.currentState?.dispose();
     emailFieldKey.currentState?.dispose();
     passwordFieldKey.currentState?.dispose();
+    emailFocusNode.dispose();
     passwordFocusNode.dispose();
-    emailFocusNode.removeListener(() {});
-    passwordFocusNode.removeListener(() {});
     emailController.dispose();
     passwordController.dispose();
     signupSubscription?.cancel();
     signinNotifier.dispose();
+    formValidNotifier.dispose();
     super.dispose();
   }
 
-  void onTapRule() {
-    // TODO: Implement onTapRule
-  }
+  void _validateForm() {
+    // Don't show validation errors before user interaction with any fields
+    if (!_formTouched) {
+      formValidNotifier.value = false;
+      return;
+    }
 
-  void onContinueWithApple() {
-    // TODO: Implement onContinueWithApple
-  }
+    // Check if fields have content (needed for button enable/disable)
+    final hasEmail = emailController.text.isNotEmpty;
+    final hasPassword = passwordController.text.isNotEmpty;
 
-  void onContinueWithGoogle() {
-    // TODO: Implement onContinueWithGoogle
+    // For form validation, we only use basic checks here for enabling the button
+    // Full validation will happen on submit
+    bool emailValid = true;
+    bool passwordValid = true;
+
+    if (_emailTouched) {
+      // Simple email check for enabling button
+      emailValid = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+          .hasMatch(emailController.text);
+    }
+
+    if (_passwordTouched) {
+      // Simple password check for enabling button (minimum 8 chars)
+      passwordValid = passwordController.text.length >= 8;
+    }
+
+    // Update button state based on field content and basic validation
+    formValidNotifier.value =
+        hasEmail && hasPassword && emailValid && passwordValid;
   }
 
   void onTapCreateAccount() {
-    // Validate form
+    // Mark all fields as touched to show validation errors if any
+    setState(() {
+      _emailTouched = true;
+      _passwordTouched = true;
+      _formTouched = true;
+    });
+
+    // Now validate the entire form
     if (!(registrationFormKey.currentState?.validate() ?? false)) {
       return;
     }
@@ -96,9 +156,6 @@ class RegistrationWithEmailController extends State<RegistrationWithEmail> {
 
     signupSubscription = _signupInteractor
         .execute(
-      firstName: 'Test123122',
-      lastName: 'User',
-      username: 'test123122',
       email: email,
       password: password,
     )
@@ -115,7 +172,7 @@ class RegistrationWithEmailController extends State<RegistrationWithEmail> {
   }
 
   void _handleSigninFailureState(Failure failure) {
-    if (failure is SigninFailure) {
+    if (failure is SignupFailure) {
       if (failure.exception == 'Email already registered') {
         TwakeSnackBar.show(context, 'Email already registered', isError: true);
       }
@@ -130,13 +187,28 @@ class RegistrationWithEmailController extends State<RegistrationWithEmail> {
       // Navigate to code verification page with email
       context.push(
         '/home/codeVerification',
-        extra: emailController.text, // Pass email as extra parameter
+        extra: SignupRequest(
+          email: emailController.text,
+          password: passwordController.text,
+        ),
       );
     }
   }
 
   void onTapLogin() {
-    //TODO: Implement onTapLogin
+    context.push('/home/multiLogin');
+  }
+
+  void onTapRule() {
+    // TODO: Implement onTapRule
+  }
+
+  void onContinueWithApple() {
+    // TODO: Implement onContinueWithApple
+  }
+
+  void onContinueWithGoogle() {
+    // TODO: Implement onContinueWithGoogle
   }
 
   @override
