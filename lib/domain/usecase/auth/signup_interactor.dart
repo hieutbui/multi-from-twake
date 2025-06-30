@@ -14,9 +14,6 @@ class SignupInteractor {
   Stream<Either<Failure, Success>> execute({
     required String email,
     required String password,
-    required String firstName,
-    required String lastName,
-    required String username,
   }) async* {
     try {
       yield const Right(SignupLoading());
@@ -24,14 +21,15 @@ class SignupInteractor {
       final signupResponse = await _authRepository.signup(
         email: email,
         password: password,
-        firstName: firstName,
-        lastName: lastName,
-        username: username,
       );
       yield Right(SignupSuccess(signupResponse: signupResponse));
     } on DioException catch (e) {
       if (e.response?.statusCode == 400) {
-        yield const Left(SignupFailure(exception: 'Email already registered'));
+        yield Left(
+          SignupFailure(
+            exception: e.response?.data['detail'] ?? 'Email already registered',
+          ),
+        );
       } else if (e.response?.statusCode == 500) {
         yield const Left(SignupFailure(exception: 'Failed to sign up'));
       } else {

@@ -3,21 +3,21 @@ import 'dart:async';
 import 'package:dartz/dartz.dart' hide State;
 import 'package:fluffychat/app_state/failure.dart';
 import 'package:fluffychat/app_state/success.dart';
+import 'package:fluffychat/data/model/auth/sign_up_request.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/domain/app_state/auth/verify_code_state.dart';
 import 'package:fluffychat/domain/usecase/auth/verify_code_interactor.dart';
 import 'package:fluffychat/pages/code_verification/code_verification_view.dart';
-import 'package:fluffychat/pages/code_verification/widgets/custom_otp_input.dart';
 import 'package:fluffychat/utils/twake_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class CodeVerification extends StatefulWidget {
-  final String email;
+  final SignupRequest? signupRequest;
 
   const CodeVerification({
     super.key,
-    required this.email,
+    this.signupRequest,
   });
 
   @override
@@ -33,13 +33,17 @@ class CodeVerificationController extends State<CodeVerification> {
     const Right(VerifyCodeInitial()),
   );
 
+  // ValueNotifier to track if the button should be enabled
+  final ValueNotifier<bool> isButtonEnabledNotifier =
+      ValueNotifier<bool>(false);
+
   static const int codeLength = 6;
 
-  // OTP controllers and focus nodes
-  List<TextEditingController> otpControllers =
-      List.generate(codeLength, (index) => TextEditingController());
-  List<FocusNode> otpFocusNodes =
-      List.generate(codeLength, (index) => FocusNode());
+  // Store the verification code
+  String _verificationCode = '';
+
+  // Store the OTP controllers from the OtpTextField
+  List<TextEditingController> _otpControllers = [];
 
   // UI state
   bool isLoading = false;
@@ -53,49 +57,57 @@ class CodeVerificationController extends State<CodeVerification> {
 
   @override
   void dispose() {
-    // Dispose controllers and focus nodes
-    for (final controller in otpControllers) {
+    // Dispose of any controllers
+    for (final controller in _otpControllers) {
       controller.dispose();
     }
-    for (final focusNode in otpFocusNodes) {
-      focusNode.dispose();
-    }
-    for (final focusNode in otpFocusNodes) {
-      focusNode.removeListener(() {});
-    }
+
     verifyCodeSubscription?.cancel();
     codeVerificationNotifier.dispose();
-
+    isButtonEnabledNotifier.dispose();
     super.dispose();
   }
 
-  void onTapRule() {
-    // TODO: Implement onTapRule
+  // Method to receive controllers from OtpTextField
+  void setOtpControllers(List<TextEditingController?> controllers) {
+    _otpControllers = controllers.whereType<TextEditingController>().toList();
   }
 
-  void onContinueWithApple() {
-    // TODO: Implement onContinueWithApple
+  // Called when any digit changes
+  void onCodeChanged(String code) {
+    _verificationCode = code;
+    isButtonEnabledNotifier.value = code.length == codeLength;
   }
 
-  void onContinueWithGoogle() {
-    // TODO: Implement onContinueWithGoogle
+  // Called when the full code is entered
+  void onCodeSubmit(String verificationCode) {
+    _verificationCode = verificationCode;
+    isButtonEnabledNotifier.value = true;
+
+    // Auto-submit when code is complete
+    if (verificationCode.length == codeLength) {
+      onTapContinue();
+    }
   }
 
   void onTapCreateAccount() {}
 
   void onTapContinue() {
-    final verificationCode =
-        otpControllers.map((controller) => controller.text).join();
-
-    if (verificationCode.length != 6) {
+    if (_verificationCode.length != codeLength) {
       TwakeSnackBar.show(context, 'Please enter a valid verification code');
+      return;
+    }
+
+    if (widget.signupRequest == null) {
+      TwakeSnackBar.show(context, 'Failed to verify code', isError: true);
+      context.pop();
       return;
     }
 
     verifyCodeSubscription = _verifyCodeInteractor
         .execute(
-      email: widget.email,
-      verificationCode: verificationCode,
+      email: widget.signupRequest!.email,
+      verificationCode: _verificationCode,
     )
         .listen(
       (event) {
@@ -105,38 +117,6 @@ class CodeVerificationController extends State<CodeVerification> {
           (failure) => _handleVerifyCodeFailureState(failure),
           (success) => _handleVerifyCodeSuccessState(success),
         );
-      },
-    );
-  }
-
-  void onTapForgotPassword() {
-    //TODO: Implement onTapForgotPassword
-  }
-
-  void handleOtpInput(String value, int index) {
-    if (value.isNotEmpty && value.length == 1) {
-      if (index < 5) {
-        otpFocusNodes[index + 1].requestFocus();
-      }
-    }
-  }
-
-  List<Widget> generateCodeCells() {
-    return List.generate(codeLength, buildCodeInput);
-  }
-
-  Widget buildCodeInput(int index) {
-    return CustomOtpInput(
-      controller: otpControllers[index],
-      focusNode: otpFocusNodes[index],
-      autoFocus: index == 0,
-      onChanged: (value) {
-        handleOtpInput(value, index);
-      },
-      onSubmitted: (value) {
-        if (index < 5) {
-          otpFocusNodes[index + 1].requestFocus();
-        }
       },
     );
   }
@@ -152,7 +132,10 @@ class CodeVerificationController extends State<CodeVerification> {
   void _handleVerifyCodeSuccessState(Success success) {
     if (success is VerifyCodeSuccess) {
       // Navigate to multi registration page
-      context.push('/home/registrationName');
+      context.push(
+        '/home/registrationName',
+        extra: widget.signupRequest,
+      );
     }
   }
 

@@ -1,5 +1,11 @@
 import 'package:fluffychat/data/model/auth/auth_response.dart';
+import 'package:fluffychat/data/model/auth/get_username_suggestion_request.dart';
+import 'package:fluffychat/data/model/auth/get_username_suggestion_response.dart';
 import 'package:fluffychat/data/model/auth/o_auth_request.dart';
+import 'package:fluffychat/data/model/auth/set_display_name_request.dart';
+import 'package:fluffychat/data/model/auth/set_display_name_response.dart';
+import 'package:fluffychat/data/model/auth/set_username_request.dart';
+import 'package:fluffychat/data/model/auth/set_username_response.dart';
 import 'package:fluffychat/data/model/auth/sign_in_request.dart';
 import 'package:fluffychat/data/model/auth/sign_out_response.dart';
 import 'package:fluffychat/data/model/auth/sign_up_request.dart';
@@ -41,6 +47,36 @@ class OmniAuthAPI {
       data: request.toJson(),
     );
     return VerifyCodeResponse.fromJson(response.data);
+  }
+
+  Future<SetDisplayNameResponse> setDisplayName(
+    SetDisplayNameRequest request,
+  ) async {
+    final response = await _dioClient.post(
+      OmniEndpoint.setDisplayNameServicePath.generateOmniEndpoint(),
+      data: request.toJson(),
+    );
+    return SetDisplayNameResponse.fromJson(response.data);
+  }
+
+  Future<SetUsernameResponse> setUsername(
+    SetUsernameRequest request,
+  ) async {
+    final response = await _dioClient.post(
+      OmniEndpoint.setUsernameServicePath.generateOmniEndpoint(),
+      data: request.toJson(),
+    );
+    return SetUsernameResponse.fromJson(response.data);
+  }
+
+  Future<GetUsernameSuggestionResponse> getUsernameSuggestion(
+    GetUsernameSuggestionRequest request,
+  ) async {
+    final response = await _dioClient.get(
+      OmniEndpoint.getUsernameSuggestion.generateOmniEndpoint(),
+      queryParameters: {'display_name': request.displayName},
+    );
+    return GetUsernameSuggestionResponse.fromJson(response);
   }
 
   Future<AuthResponse> oauthSignup(OAuthRequest request) async {

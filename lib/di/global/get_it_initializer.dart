@@ -82,6 +82,9 @@ import 'package:fluffychat/domain/repository/server_config_repository.dart';
 import 'package:fluffychat/domain/repository/server_search_repository.dart';
 import 'package:fluffychat/domain/repository/tom_configurations_repository.dart';
 import 'package:fluffychat/domain/usecase/app_grid/get_app_grid_configuration_interactor.dart';
+import 'package:fluffychat/domain/usecase/auth/get_username_suggestion_interactor.dart';
+import 'package:fluffychat/domain/usecase/auth/set_display_name_interactor.dart';
+import 'package:fluffychat/domain/usecase/auth/set_username_interactor.dart';
 import 'package:fluffychat/domain/usecase/auth/signin_interactor.dart';
 import 'package:fluffychat/domain/usecase/auth/signup_interactor.dart';
 import 'package:fluffychat/domain/usecase/auth/verify_code_interactor.dart';
@@ -501,6 +504,15 @@ class GetItInitializer {
     );
     getIt.registerFactory<VerifyCodeInteractor>(
       () => VerifyCodeInteractor(),
+    );
+    getIt.registerFactory<GetUsernameSuggestionInteractor>(
+      () => GetUsernameSuggestionInteractor(),
+    );
+    getIt.registerFactory<SetDisplayNameInteractor>(
+      () => SetDisplayNameInteractor(),
+    );
+    getIt.registerFactory<SetUsernameInteractor>(
+      () => SetUsernameInteractor(),
     );
   }
 

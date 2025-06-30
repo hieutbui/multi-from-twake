@@ -8,6 +8,7 @@ class MultiRegistrationButton extends StatelessWidget {
   final bool? isDisabled;
   final Color? backgroundColor;
   final Color? foregroundColor;
+  final bool? isLoading;
 
   const MultiRegistrationButton({
     super.key,
@@ -17,12 +18,14 @@ class MultiRegistrationButton extends StatelessWidget {
     this.isDisabled,
     this.backgroundColor,
     this.foregroundColor,
+    this.isLoading,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: isDisabled == true ? null : onPressed,
+      enableFeedback: (isDisabled == true || isLoading == true) ? false : true,
+      onTap: (isDisabled == true || isLoading == true) ? null : onPressed,
       borderRadius: BorderRadius.circular(12),
       child: Container(
         decoration: BoxDecoration(
@@ -32,14 +35,20 @@ class MultiRegistrationButton extends StatelessWidget {
         alignment: Alignment.center,
         width: double.infinity,
         height: 48,
-        child: Text(
-          label,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontSize: 17,
-                height: 1.29,
-                color: foregroundColor ?? getForegroundColor(context),
+        child: isLoading == true
+            ? CircularProgressIndicator(
+                color: Theme.of(context).brightness == Brightness.light
+                    ? MultiLightColors.textMainTertiaryDisabled
+                    : MultiDarkColors.textMainTertiaryDisabled,
+              )
+            : Text(
+                label,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontSize: 17,
+                      height: 1.29,
+                      color: foregroundColor ?? getForegroundColor(context),
+                    ),
               ),
-        ),
       ),
     );
   }

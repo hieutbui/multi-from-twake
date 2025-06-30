@@ -46,6 +46,14 @@ class MultiLoginController extends State<MultiLogin> {
   // Stream subscription
   StreamSubscription? _signinSubscription;
 
+  // ValueNotifiers for UI state
+  final ValueNotifier<bool> isButtonEnabledNotifier =
+      ValueNotifier<bool>(false);
+  final ValueNotifier<Either<Failure, Success>> signinNotifier =
+      ValueNotifier<Either<Failure, Success>>(
+    const Right(SigninInitial()),
+  );
+
   // UI state
   bool isLoading = false;
   String? errorMessage;
@@ -53,11 +61,16 @@ class MultiLoginController extends State<MultiLogin> {
   @override
   void initState() {
     super.initState();
+    // Listen to text changes to update button state
+    emailController.addListener(_updateButtonState);
+    passwordController.addListener(_updateButtonState);
   }
 
   @override
   void dispose() {
     _signinSubscription?.cancel();
+    emailController.removeListener(_updateButtonState);
+    passwordController.removeListener(_updateButtonState);
     emailFocusNode.dispose();
     registrationFormKey.currentState?.dispose();
     emailFieldKey.currentState?.dispose();
@@ -68,6 +81,8 @@ class MultiLoginController extends State<MultiLogin> {
     emailController.dispose();
     passwordController.dispose();
     _signinSubscription?.cancel();
+    isButtonEnabledNotifier.dispose();
+    signinNotifier.dispose();
     super.dispose();
   }
 
@@ -83,7 +98,7 @@ class MultiLoginController extends State<MultiLogin> {
     // TODO: Implement onContinueWithGoogle
   }
 
-  Future<void> onTapCreateAccount() async {
+  Future<void> onTapContinue() async {
     final email = emailController.text;
     final password = passwordController.text;
 
@@ -104,6 +119,9 @@ class MultiLoginController extends State<MultiLogin> {
       errorMessage = null;
     });
 
+    // Update the signin notifier to indicate loading
+    signinNotifier.value = const Right(SigninLoading());
+
     // Execute interactor and listen for state changes
     _signinSubscription = _signinInteractor
         .execute(
@@ -119,6 +137,7 @@ class MultiLoginController extends State<MultiLogin> {
 
   // Handle state changes from the interactor stream
   void _handleSigninState(Either<Failure, Success> state) {
+    signinNotifier.value = state;
     state.fold(
       (failure) => _handleSigninFailureState(failure),
       (success) => _handleSigninSuccessState(success),
@@ -224,6 +243,16 @@ class MultiLoginController extends State<MultiLogin> {
 
   void onTapForgotPassword() {
     context.push('/home/forgotPassword');
+  }
+
+  // Update button enabled state based on valid input
+  void _updateButtonState() {
+    final email = emailController.text.trim();
+    final password = passwordController.text.trim();
+    isButtonEnabledNotifier.value = email.isNotEmpty &&
+        password.isNotEmpty &&
+        RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+            .hasMatch(email);
   }
 
   @override

@@ -1,3 +1,5 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
+import 'package:fluffychat/domain/app_state/auth/set_display_name_state.dart';
 import 'package:fluffychat/pages/registration_name/registration_name.dart';
 import 'package:fluffychat/pages/registration_name/registration_name_view_style.dart';
 import 'package:fluffychat/resource/image_paths.dart';
@@ -20,134 +22,153 @@ class RegistrationNameView extends StatelessWidget {
           isShowLeading: false,
         ),
         body: SafeArea(
-          child: SingleChildScrollView(
-            physics: const ClampingScrollPhysics(),
-            child: Column(
-              children: [
-                // Main Content
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const ClampingScrollPhysics(),
                   child: Column(
                     children: [
-                      const SizedBox(height: 60),
-
-                      // AI Assistant Introduction Card
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(20),
-                        decoration:
-                            RegistrationNameViewStyle.helloContainerDecoration,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                      // Main Content
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
                           children: [
-                            Image.asset(
-                              ImagePaths.imgHello,
-                              width: 62,
-                              height: 62,
-                            ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: Column(
+                            const SizedBox(height: 60),
+
+                            // AI Assistant Introduction Card
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(20),
+                              decoration: RegistrationNameViewStyle
+                                  .helloContainerDecoration,
+                              child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    'Hey, I\'m MULTI 👋',
-                                    style: TextStyle(
-                                      color: Colors.white.withAlpha(
-                                        222,
-                                      ) /* Text-Reversed-Primary */,
-                                      fontSize: 17,
-                                      fontFamily: 'SFPro',
-                                      fontWeight: FontWeight.w500,
-                                      height: 1.29,
-                                      letterSpacing: -0.41,
-                                    ),
+                                  Image.asset(
+                                    ImagePaths.imgHello,
+                                    width: 62,
+                                    height: 62,
                                   ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    'I\'m here to help you plan smarter and stay organized',
-                                    style: TextStyle(
-                                      color: Colors.white.withAlpha(
-                                        153,
-                                      ) /* Text-Reversed-Secondary */,
-                                      fontSize: 15,
-                                      fontFamily: 'SFPro',
-                                      fontWeight: FontWeight.w400,
-                                      height: 1.20,
-                                      letterSpacing: -0.24,
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Hey, I\'m MULTI 👋',
+                                          style: TextStyle(
+                                            color: Colors.white.withAlpha(
+                                              222,
+                                            ) /* Text-Reversed-Primary */,
+                                            fontSize: 17,
+                                            fontFamily: 'SFPro',
+                                            fontWeight: FontWeight.w500,
+                                            height: 1.29,
+                                            letterSpacing: -0.41,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          'I\'m here to help you plan smarter and stay organized',
+                                          style: TextStyle(
+                                            color: Colors.white.withAlpha(
+                                              153,
+                                            ) /* Text-Reversed-Secondary */,
+                                            fontSize: 15,
+                                            fontFamily: 'SFPro',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.20,
+                                            letterSpacing: -0.24,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
                               ),
                             ),
+
+                            const SizedBox(height: 48),
+
+                            Text(
+                              'What is your name?',
+                              style: TextStyle(
+                                color: Colors.white
+                                    .withAlpha(153) /* Text-Main-Secondary */,
+                                fontSize: 17,
+                                fontFamily: 'SFPro',
+                                fontWeight: FontWeight.w400,
+                                height: 1.18,
+                                letterSpacing: -0.41,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            TextField(
+                              controller: controller.nameController,
+                              onChanged: controller.handleNameInput,
+                              autocorrect: false,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineLarge
+                                  ?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryContainer,
+                                  ),
+                              decoration: InputDecoration(
+                                hintText: 'Enter your name',
+                                hintStyle: Theme.of(context)
+                                    .textTheme
+                                    .headlineLarge
+                                    ?.copyWith(
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.light
+                                          ? MultiLightColors
+                                              .textMainTertiaryDisabled
+                                          : MultiDarkColors
+                                              .textMainTertiaryDisabled,
+                                    ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
-
-                      const SizedBox(height: 48),
                     ],
                   ),
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: ValueListenableBuilder(
+                  valueListenable: controller.isButtonEnabledNotifier,
+                  builder: (context, isEnabled, _) {
+                    return ValueListenableBuilder(
+                      valueListenable: controller.setDisplayNameNotifier,
+                      builder: (context, state, _) {
+                        final bool isLoading = state.isRight() &&
+                            state.getOrElse(() => const SetDisplayNameInitial())
+                                is SetDisplayNameLoading;
 
-                // Name Input Section
-                Column(
-                  children: [
-                    Text(
-                      'What is your name?',
-                      style: TextStyle(
-                        color: Colors.white
-                            .withAlpha(153) /* Text-Main-Secondary */,
-                        fontSize: 17,
-                        fontFamily: 'SFPro',
-                        fontWeight: FontWeight.w400,
-                        height: 1.18,
-                        letterSpacing: -0.41,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    TextField(
-                      controller: controller.nameController,
-                      onChanged: controller.handleNameInput,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white.withAlpha(
-                          222,
-                        ) /* Text-Main-Primary_Default */,
-                        fontSize: 34,
-                        fontFamily: 'SFPro',
-                        fontWeight: FontWeight.w700,
-                        height: 1.24,
-                        letterSpacing: 0.37,
-                      ),
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Enter your name',
-                        hintStyle: TextStyle(
-                          color: Colors.white.withAlpha(
-                            128,
-                          ) /* Text-Main-Primary_Default */,
-                          fontSize: 34,
-                          fontFamily: 'SFPro',
-                          fontWeight: FontWeight.w700,
-                          height: 1.24,
-                          letterSpacing: 0.37,
-                        ),
-                      ),
-                    ),
-                  ],
+                        return MultiRegistrationButton(
+                          label: 'Continue',
+                          type: isEnabled
+                              ? MultiRegistrationButtonType.mainPrimaryDefault
+                              : MultiRegistrationButtonType
+                                  .mainSecondaryDisabled,
+                          onPressed:
+                              isEnabled ? controller.onTapContinue : null,
+                          isLoading: isLoading,
+                          isDisabled: !isEnabled,
+                        );
+                      },
+                    );
+                  },
                 ),
-
-                // Continue Button
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: MultiRegistrationButton(
-                    label: 'Continue',
-                    type: MultiRegistrationButtonType.mainSecondaryDisabled,
-                    onPressed: controller.onTapCreateAccount,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

@@ -1,6 +1,12 @@
 import 'package:fluffychat/data/datasource/auth_datasource.dart';
 import 'package:fluffychat/data/model/auth/auth_response.dart';
+import 'package:fluffychat/data/model/auth/get_username_suggestion_request.dart';
+import 'package:fluffychat/data/model/auth/get_username_suggestion_response.dart';
 import 'package:fluffychat/data/model/auth/o_auth_request.dart';
+import 'package:fluffychat/data/model/auth/set_display_name_request.dart';
+import 'package:fluffychat/data/model/auth/set_display_name_response.dart';
+import 'package:fluffychat/data/model/auth/set_username_request.dart';
+import 'package:fluffychat/data/model/auth/set_username_response.dart';
 import 'package:fluffychat/data/model/auth/sign_in_request.dart';
 import 'package:fluffychat/data/model/auth/sign_out_response.dart';
 import 'package:fluffychat/data/model/auth/sign_up_request.dart';
@@ -15,17 +21,11 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<SignupResponse> signup({
-    required String firstName,
-    required String lastName,
     required String email,
-    required String username,
     required String password,
   }) async {
     final request = SignupRequest(
-      firstName: firstName,
-      lastName: lastName,
       email: email,
-      username: username,
       password: password,
     );
     return await _authDatasource.signup(request);
@@ -53,6 +53,27 @@ class AuthRepositoryImpl implements AuthRepository {
       verificationCode: verificationCode,
     );
     return await _authDatasource.verifyCode(request);
+  }
+
+  @override
+  Future<SetDisplayNameResponse> setDisplayName(
+    SetDisplayNameRequest request,
+  ) async {
+    return await _authDatasource.setDisplayName(request);
+  }
+
+  @override
+  Future<SetUsernameResponse> setUsername(
+    SetUsernameRequest request,
+  ) async {
+    return await _authDatasource.setUsername(request);
+  }
+
+  @override
+  Future<GetUsernameSuggestionResponse> getUsernameSuggestion(
+    GetUsernameSuggestionRequest request,
+  ) async {
+    return await _authDatasource.getUsernameSuggestion(request);
   }
 
   @override

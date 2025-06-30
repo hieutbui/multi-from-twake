@@ -1,4 +1,8 @@
 import 'package:auth_buttons/auth_buttons.dart';
+import 'package:dartz/dartz.dart';
+import 'package:fluffychat/app_state/failure.dart';
+import 'package:fluffychat/app_state/success.dart';
+import 'package:fluffychat/domain/app_state/auth/signin_state.dart';
 import 'package:fluffychat/pages/multi_login/multi_login.dart';
 import 'package:fluffychat/pages/multi_login/multi_login_view_style.dart';
 import 'package:fluffychat/widgets/app_bars/registration_app_bar.dart';
@@ -112,11 +116,32 @@ class MultiLoginView extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 32.0),
-                        MultiRegistrationButton(
-                          label: 'Continue',
-                          type:
-                              MultiRegistrationButtonType.mainSecondaryDisabled,
-                          onPressed: controller.onTapCreateAccount,
+                        ValueListenableBuilder<bool>(
+                          valueListenable: controller.isButtonEnabledNotifier,
+                          builder: (context, isEnabled, _) {
+                            return ValueListenableBuilder<
+                                Either<Failure, Success>>(
+                              valueListenable: controller.signinNotifier,
+                              builder: (context, state, _) {
+                                final isLoading = state.fold(
+                                  (failure) => false,
+                                  (success) => success is SigninLoading,
+                                );
+                                return MultiRegistrationButton(
+                                  label: 'Continue',
+                                  type: isEnabled
+                                      ? MultiRegistrationButtonType
+                                          .mainPrimaryDefault
+                                      : MultiRegistrationButtonType
+                                          .mainSecondaryDisabled,
+                                  onPressed: isEnabled && !isLoading
+                                      ? controller.onTapContinue
+                                      : null,
+                                  isLoading: isLoading,
+                                );
+                              },
+                            );
+                          },
                         ),
                       ],
                     ),
