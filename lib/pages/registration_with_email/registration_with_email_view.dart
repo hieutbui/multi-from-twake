@@ -1,4 +1,5 @@
 import 'package:auth_buttons/auth_buttons.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:fluffychat/domain/app_state/auth/signin_state.dart';
 import 'package:fluffychat/pages/registration_with_email/registration_with_email.dart';
 import 'package:fluffychat/pages/registration_with_email/registration_with_email_view_style.dart';
@@ -37,36 +38,21 @@ class RegistrationWithEmailView extends StatelessWidget {
                     children: [
                       TextSpan(
                         text: 'Let’s set things up to make ',
-                        style: TextStyle(
-                          color: Colors.white
-                              .withAlpha(153) /* Text-Main-Secondary */,
-                          fontSize: 17,
-                          fontFamily: 'SFPro',
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: -0.41,
-                        ),
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              color: Theme.of(context).colorScheme.tertiary,
+                            ),
                       ),
                       TextSpan(
                         text: 'Multi',
-                        style: TextStyle(
-                          color: Colors.white
-                              .withAlpha(222) /* Text-Main-Primary_Default */,
-                          fontSize: 17,
-                          fontFamily: 'SFPro',
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.41,
-                        ),
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
                       ),
                       TextSpan(
                         text: ' truly yours',
-                        style: TextStyle(
-                          color: Colors.white
-                              .withAlpha(153) /* Text-Main-Secondary */,
-                          fontSize: 17,
-                          fontFamily: 'SFPro',
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: -0.41,
-                        ),
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              color: Theme.of(context).colorScheme.tertiary,
+                            ),
                       ),
                     ],
                   ),
@@ -130,26 +116,24 @@ class RegistrationWithEmailView extends StatelessWidget {
                       Text(
                         'By continuing, you agree to our ',
                         style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                              color: Colors.white
-                                  .withAlpha(153) /* Text-Main-Secondary */,
-                              fontSize: 13,
-                              letterSpacing: -0.08,
-                              height: 1.38,
+                              color: Theme.of(context).colorScheme.tertiary,
                             ),
                       ),
                       TextButton(
                         onPressed: controller.onTapRule,
+                        style: TextButton.styleFrom(
+                          minimumSize: Size.zero,
+                          padding: EdgeInsets.zero,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
                         child: Text(
                           'Rules',
-                          style:
-                              Theme.of(context).textTheme.labelSmall!.copyWith(
-                                    color: Colors.white.withAlpha(
-                                      222,
-                                    ) /* Text-Main-Primary_Default */,
-                                    fontSize: 13,
-                                    letterSpacing: -0.08,
-                                    height: 1.38,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelLarge!
+                              .copyWith(
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
                         ),
                       ),
                     ],
@@ -201,17 +185,18 @@ class RegistrationWithEmailView extends StatelessWidget {
                     text: 'Continue with Apple',
                     style: AuthButtonStyle(
                       separator: 8.0,
-                      buttonColor: const Color(
-                        0x26EAECF5,
-                      ),
+                      buttonColor:
+                          Theme.of(context).brightness == Brightness.light
+                              ? MultiLightColors.buttonsMainSecondaryDefault
+                              : MultiDarkColors.buttonsMainSecondaryDefault,
                       iconSize: 18,
-                      iconColor: Colors.white.withAlpha(222),
+                      iconColor: Theme.of(context).colorScheme.onSurface,
                       height: 48,
                       width: double.infinity,
                       textStyle:
-                          RegistrationWithEmailViewStyle.buttonGreyTextStyle(
-                        context,
-                      ),
+                          Theme.of(context).textTheme.titleLarge?.copyWith(
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
                     ),
                   ),
                 ),
@@ -223,17 +208,18 @@ class RegistrationWithEmailView extends StatelessWidget {
                     text: 'Continue with Google',
                     style: AuthButtonStyle(
                       separator: 8.0,
-                      buttonColor: const Color(
-                        0x26EAECF5,
-                      ) /* Buttons-Main-Secondary-Default */,
+                      buttonColor:
+                          Theme.of(context).brightness == Brightness.light
+                              ? MultiLightColors.buttonsMainSecondaryDefault
+                              : MultiDarkColors.buttonsMainSecondaryDefault,
                       iconSize: 18,
-                      iconColor: Colors.white.withAlpha(222),
+                      iconColor: Theme.of(context).colorScheme.onSurface,
                       height: 48,
                       width: double.infinity,
                       textStyle:
-                          RegistrationWithEmailViewStyle.buttonGreyTextStyle(
-                        context,
-                      ),
+                          Theme.of(context).textTheme.titleLarge?.copyWith(
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
                     ),
                   ),
                 ),
@@ -242,19 +228,23 @@ class RegistrationWithEmailView extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Already have an account?',
-                      style:
-                          RegistrationWithEmailViewStyle.haveAccountTextStyle(
-                        context,
-                      ),
+                      'Already have an account? ',
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            color: Theme.of(context).colorScheme.tertiary,
+                          ),
                     ),
                     TextButton(
                       onPressed: controller.onTapLogin,
+                      style: TextButton.styleFrom(
+                        minimumSize: Size.zero,
+                        padding: EdgeInsets.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
                       child: Text(
                         'Log In',
-                        style: RegistrationWithEmailViewStyle.loginTextStyle(
-                          context,
-                        ),
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
                       ),
                     ),
                   ],

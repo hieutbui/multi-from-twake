@@ -51,13 +51,18 @@ class EntranceMainView extends StatelessWidget {
                   children: [
                     Text(
                       'Welcome to Multi',
-                      style: EntranceViewStyle.welcomeTextStyle(context),
+                      style:
+                          Theme.of(context).textTheme.headlineLarge?.copyWith(
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
                     ),
                     const SizedBox(height: EntranceViewStyle.shortSpacing),
                     Text(
                       'Sign up to unlock your AI-powered space — secure, personal, and always with you.',
                       textAlign: TextAlign.center,
-                      style: EntranceViewStyle.subtitleTextStyle(context),
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            color: Theme.of(context).colorScheme.tertiary,
+                          ),
                     ),
                     SizedBox(height: controller.sizeScreenHeight * 0.05),
                     if (PlatformInfos.isIOS)
@@ -65,15 +70,22 @@ class EntranceMainView extends StatelessWidget {
                         onPressed: controller.onContinueWithApple,
                         text: 'Continue with Apple',
                         style: AuthButtonStyle(
-                          separator: 8.0,
-                          buttonColor: const Color(
-                            0xFFEAECF5,
-                          ) /* Buttons-Main-Primary-Default */,
-                          iconSize: 18,
-                          iconColor: Colors.black.withAlpha(222),
-                          height: 48,
+                          separator: EntranceViewStyle.oauthButtonSeparator,
+                          buttonColor:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? MultiLightColors.buttonsMainPrimaryDefault
+                                  : MultiDarkColors.buttonsMainPrimaryDefault,
+                          iconSize: EntranceViewStyle.oauthButtonIconSize,
+                          iconColor:
+                              Theme.of(context).colorScheme.onInverseSurface,
+                          height: EntranceViewStyle.oauthButtonHeight,
                           width: double.infinity,
-                          textStyle: EntranceViewStyle.buttonTextStyle(context),
+                          textStyle:
+                              Theme.of(context).textTheme.titleLarge?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onInverseSurface,
+                                  ),
                         ),
                       ),
                     const SizedBox(height: EntranceViewStyle.shortSpacing),
@@ -81,15 +93,21 @@ class EntranceMainView extends StatelessWidget {
                       onPressed: controller.onContinueWithEmail,
                       text: 'Continue with Email',
                       style: AuthButtonStyle(
-                        separator: 8.0,
+                        separator: EntranceViewStyle.oauthButtonSeparator,
                         buttonColor:
-                            MultiLightColors.buttonsMainSecondaryDefault,
-                        iconColor: Colors.white.withAlpha(222),
-                        iconSize: 18,
-                        height: 48,
+                            Theme.of(context).brightness == Brightness.light
+                                ? MultiLightColors.buttonsMainSecondaryDefault
+                                : MultiDarkColors.buttonsMainSecondaryDefault,
+                        iconColor: Theme.of(context).colorScheme.onSurface,
+                        iconSize: EntranceViewStyle.oauthButtonIconSize,
+                        height: EntranceViewStyle.oauthButtonHeight,
                         width: double.infinity,
-                        textStyle:
-                            EntranceViewStyle.buttonGreyTextStyle(context),
+                        textStyle: Theme.of(context)
+                            .textTheme
+                            .titleLarge
+                            ?.copyWith(
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
                       ),
                     ),
                     const SizedBox(height: EntranceViewStyle.shortSpacing),
@@ -97,33 +115,56 @@ class EntranceMainView extends StatelessWidget {
                       onPressed: controller.onContinueWithGoogle,
                       text: 'Continue with Google',
                       style: AuthButtonStyle(
-                        separator: 8.0,
+                        separator: EntranceViewStyle.oauthButtonSeparator,
                         buttonColor:
-                            MultiLightColors.buttonsMainSecondaryDefault,
-                        iconSize: 18,
-                        iconColor: Colors.white.withAlpha(222),
-                        height: 48,
+                            Theme.of(context).brightness == Brightness.light
+                                ? MultiLightColors.buttonsMainSecondaryDefault
+                                : MultiDarkColors.buttonsMainSecondaryDefault,
+                        iconSize: EntranceViewStyle.oauthButtonIconSize,
+                        iconColor: Theme.of(context).colorScheme.onSurface,
+                        height: EntranceViewStyle.oauthButtonHeight,
                         width: double.infinity,
-                        textStyle:
-                            EntranceViewStyle.buttonGreyTextStyle(context),
+                        textStyle: Theme.of(context)
+                            .textTheme
+                            .titleLarge
+                            ?.copyWith(
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
                       ),
                     ),
                     const SizedBox(height: EntranceViewStyle.shortSpacing),
                     Padding(
                       padding: EntranceViewStyle.logoPadding,
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            'Already have an account?',
-                            style:
-                                EntranceViewStyle.haveAccountTextStyle(context),
+                            'Already have an account? ',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.copyWith(
+                                  color: Theme.of(context).colorScheme.tertiary,
+                                ),
                           ),
                           TextButton(
                             onPressed: controller.onLogin,
+                            style: TextButton.styleFrom(
+                              minimumSize: Size.zero,
+                              padding: EdgeInsets.zero,
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            ),
                             child: Text(
                               'Log In',
-                              style: EntranceViewStyle.loginTextStyle(context),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryContainer,
+                                  ),
                             ),
                           ),
                         ],

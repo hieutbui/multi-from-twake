@@ -37,9 +37,8 @@ class MultiRegistrationTitleWithBackground extends StatelessWidget {
                 title,
                 maxLines: null,
                 softWrap: true,
-                style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                      color: Colors.white.withAlpha(222),
-                      fontSize: 34,
+                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
               ),
             ),
@@ -50,9 +49,8 @@ class MultiRegistrationTitleWithBackground extends StatelessWidget {
   }
 
   TextStyle _getTextStyle(BuildContext context) {
-    return Theme.of(context).textTheme.displayLarge?.copyWith(
-              color: Colors.white.withAlpha(222),
-              fontSize: 34,
+    return Theme.of(context).textTheme.headlineLarge?.copyWith(
+              color: Theme.of(context).colorScheme.onSurface,
             ) ??
         const TextStyle(fontSize: 34);
   }

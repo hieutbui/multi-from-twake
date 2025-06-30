@@ -8,6 +8,7 @@ import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/domain/app_state/auth/signin_state.dart';
 import 'package:fluffychat/domain/usecase/auth/signin_interactor.dart';
 import 'package:fluffychat/pages/multi_login/multi_login_view.dart';
+import 'package:fluffychat/utils/dialog/twake_dialog.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
 import 'package:fluffychat/utils/twake_snackbar.dart';
 import 'package:fluffychat/widgets/matrix.dart';
@@ -200,26 +201,15 @@ class MultiLoginController extends State<MultiLogin> {
 
         Matrix.of(context).loginType = LoginType.mLoginPassword;
 
-        await matrix
-            .getLoginClient()
-            .login(
-              LoginType.mLoginPassword,
-              identifier: identifier,
-              password: passwordController.text,
-              user: success.authResponse.matrixUserId,
-              initialDeviceDisplayName: PlatformInfos.clientName,
-            )
-            .then(
-              (onValue) => {
-                Logs().d('Login response: $onValue'),
-                context.push('/rooms'),
-              },
-            )
-            .catchError(
-              (onError) => {
-                Logs().e('Login error: $onError'),
-              },
-            );
+        await TwakeDialog.showStreamDialogFullScreen(
+          future: () => matrix.getLoginClient().login(
+                LoginType.mLoginPassword,
+                identifier: identifier,
+                password: passwordController.text,
+                user: success.authResponse.matrixUserId,
+                initialDeviceDisplayName: PlatformInfos.clientName,
+              ),
+        );
       } on MatrixException catch (exception) {
         Logs().e('Login error: $exception');
         setState(() {
