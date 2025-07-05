@@ -17,9 +17,9 @@ class HiveCollectionMultiDatabase {
 
   late BoxCollection _collection;
 
-  String get _contactRequestBoxName => 'contact_request_box';
+  String get _userRelationBoxName => 'user_relation_box';
 
-  late CollectionBox<Map> contactRequestBox;
+  late CollectionBox<Map> userRelationBox;
 
   HiveCollectionMultiDatabase(this.name, this.path, {this.key});
 
@@ -124,19 +124,19 @@ class HiveCollectionMultiDatabase {
     _collection = await BoxCollection.open(
       name,
       {
-        _contactRequestBoxName,
+        _userRelationBoxName,
       },
       path: path,
       key: key,
     );
-    contactRequestBox = await _collection.openBox(
-      _contactRequestBoxName,
+    userRelationBox = await _collection.openBox(
+      _userRelationBoxName,
       preload: true,
     );
   }
 
   Future<void> clear() async {
-    await contactRequestBox.clear();
+    await userRelationBox.clear();
 
     if (PlatformInfos.isMobile) {
       await _collection.deleteFromDisk();

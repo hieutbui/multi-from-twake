@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-enum ContactRequestStatus {
+enum UserRelationStatus {
   pending,
   accepted,
   reported,
@@ -9,27 +9,27 @@ enum ContactRequestStatus {
   @override
   String toString() {
     switch (this) {
-      case ContactRequestStatus.pending:
+      case UserRelationStatus.pending:
         return 'pending';
-      case ContactRequestStatus.accepted:
+      case UserRelationStatus.accepted:
         return 'accepted';
-      case ContactRequestStatus.reported:
+      case UserRelationStatus.reported:
         return 'reported';
-      case ContactRequestStatus.blocked:
+      case UserRelationStatus.blocked:
         return 'blocked';
     }
   }
 }
 
-class ContactRequest extends Equatable {
+class UserRelation extends Equatable {
   final String id;
-  final ContactRequestStatus status;
+  final UserRelationStatus status;
   final String peerId;
   final String roomId;
-  final ContactRequestLastEvent lastEvent;
+  final UserRelationLastEvent lastEvent;
   final int unreadCount;
 
-  const ContactRequest({
+  const UserRelation({
     required this.id,
     required this.status,
     required this.peerId,
@@ -48,15 +48,15 @@ class ContactRequest extends Equatable {
         unreadCount,
       ];
 
-  ContactRequest copyWith({
+  UserRelation copyWith({
     String? id,
-    ContactRequestStatus? status,
+    UserRelationStatus? status,
     String? peerId,
     String? roomId,
-    ContactRequestLastEvent? lastEvent,
+    UserRelationLastEvent? lastEvent,
     int? unreadCount,
   }) {
-    return ContactRequest(
+    return UserRelation(
       id: id ?? this.id,
       status: status ?? this.status,
       peerId: peerId ?? this.peerId,
@@ -67,12 +67,12 @@ class ContactRequest extends Equatable {
   }
 }
 
-class ContactRequestLastEvent extends Equatable {
+class UserRelationLastEvent extends Equatable {
   final String id;
   final DateTime originServerTs;
   final String type;
 
-  const ContactRequestLastEvent({
+  const UserRelationLastEvent({
     required this.id,
     required this.originServerTs,
     required this.type,
@@ -81,11 +81,11 @@ class ContactRequestLastEvent extends Equatable {
   @override
   List<Object?> get props => [id, originServerTs, type];
 
-  ContactRequestLastEvent copyWith({
+  UserRelationLastEvent copyWith({
     DateTime? originServerTs,
     String? type,
   }) {
-    return ContactRequestLastEvent(
+    return UserRelationLastEvent(
       id: id,
       originServerTs: originServerTs ?? this.originServerTs,
       type: type ?? this.type,

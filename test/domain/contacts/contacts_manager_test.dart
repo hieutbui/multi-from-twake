@@ -20,7 +20,7 @@ import 'package:fluffychat/domain/app_state/contact/try_get_synced_phone_book_co
 import 'package:fluffychat/domain/contact_manager/contacts_manager.dart';
 import 'package:fluffychat/domain/model/extensions/contact/contact_extension.dart';
 import 'package:fluffychat/domain/repository/contact/hive_contact_repository.dart';
-import 'package:fluffychat/domain/repository/contact/hive_contact_request_repository.dart';
+import 'package:fluffychat/domain/repository/user_relation/hive_user_relation_repository.dart';
 import 'package:fluffychat/domain/repository/federation_configurations_repository.dart';
 import 'package:fluffychat/domain/usecase/contacts/federation_look_up_argument.dart';
 import 'package:fluffychat/domain/usecase/contacts/get_address_book_interactor.dart';
@@ -51,7 +51,7 @@ import 'contacts_manager_test.mocks.dart';
   GetAddressBookInteractor,
   SharedPreferencesContactCacheManager,
   HiveContactRepository,
-  HiveContactRequestRepository,
+  HiveUserRelationRepository,
 ])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

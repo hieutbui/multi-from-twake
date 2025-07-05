@@ -7,7 +7,7 @@ import 'package:fluffychat/domain/app_state/contact/get_phonebook_contact_state.
 import 'package:fluffychat/domain/exception/contacts/twake_lookup_exceptions.dart';
 import 'package:fluffychat/domain/model/contact/contact.dart';
 import 'package:fluffychat/domain/repository/contact/hive_contact_repository.dart';
-import 'package:fluffychat/domain/repository/contact/hive_contact_request_repository.dart';
+import 'package:fluffychat/domain/repository/user_relation/hive_user_relation_repository.dart';
 import 'package:fluffychat/domain/repository/phonebook_contact_repository.dart';
 import 'package:fluffychat/domain/usecase/contacts/twake_look_up_argument.dart';
 import 'package:fluffychat/domain/usecase/contacts/twake_look_up_phonebook_contact_interactor.dart';
@@ -27,7 +27,7 @@ import 'twake_look_up_phonebook_contact_interactor_test.mocks.dart';
   IdentityLookupManager,
   HiveContactRepository,
   SharedPreferencesContactCacheManager,
-  HiveContactRequestRepository,
+  HiveUserRelationRepository,
 ])
 void main() {
   late MockPhonebookContactRepository mockRepository;
