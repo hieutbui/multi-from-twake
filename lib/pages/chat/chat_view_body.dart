@@ -26,8 +26,13 @@ import 'chat_input_row.dart';
 
 class ChatViewBody extends StatelessWidget with MessageContentMixin {
   final ChatController controller;
+  final List<Event>? events;
 
-  const ChatViewBody(this.controller, {super.key});
+  const ChatViewBody(
+    this.controller, {
+    this.events,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -91,58 +96,100 @@ class ChatViewBody extends StatelessWidget with MessageContentMixin {
                       Center(
                         child: Container(
                           alignment: Alignment.center,
-                          child: controller.room?.isAbandonedDMRoom == true
-                              ? Padding(
-                                  padding: EdgeInsets.only(
-                                    bottom:
-                                        ChatViewBodyStyle.bottomSheetPadding(
-                                      context,
-                                    ),
-                                    left: ChatViewBodyStyle.bottomSheetPadding(
-                                      context,
-                                    ),
-                                    right: ChatViewBodyStyle.bottomSheetPadding(
-                                      context,
+                          child: ValueListenableBuilder(
+                            valueListenable: controller.isPendingChatNotifier,
+                            builder: (context, isPending, _) {
+                              if (isPending) {
+                                return Container(
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                    color:
+                                        Theme.of(context).colorScheme.surface,
+                                    border: Border(
+                                      top: BorderSide(
+                                        color: LinagoraStateLayer(
+                                          MultiSysColors.material().surfaceTint,
+                                        ).opacityLayer3,
+                                      ),
                                     ),
                                   ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      TextButton.icon(
-                                        style: TextButton.styleFrom(
-                                          padding: const EdgeInsets.all(16),
-                                          foregroundColor: Theme.of(context)
-                                              .colorScheme
-                                              .error,
-                                        ),
-                                        icon: const Icon(
-                                          Icons.archive_outlined,
-                                        ),
-                                        onPressed: () => controller.leaveChat(
-                                          context,
-                                          controller.room,
-                                        ),
-                                        label: Text(
-                                          L10n.of(context)!.leave,
-                                        ),
+                                  child: Center(
+                                    child: Text(
+                                      'Waiting for partner to accept the request...',
+                                      style: TextStyle(
+                                        fontStyle: FontStyle.italic,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface
+                                            .withOpacity(0.7),
                                       ),
-                                      TextButton.icon(
-                                        style: TextButton.styleFrom(
-                                          padding: const EdgeInsets.all(16),
-                                        ),
-                                        icon: const Icon(
-                                          Icons.chat_outlined,
-                                        ),
-                                        onPressed: controller.recreateChat,
-                                        label: Text(
-                                          L10n.of(context)!.reopenChat,
-                                        ),
-                                      ),
-                                    ],
+                                    ),
                                   ),
-                                )
-                              : _inputMessageWidget(context),
+                                );
+                              } else {
+                                return controller.room?.isAbandonedDMRoom ==
+                                        true
+                                    ? Padding(
+                                        padding: EdgeInsets.only(
+                                          bottom: ChatViewBodyStyle
+                                              .bottomSheetPadding(
+                                            context,
+                                          ),
+                                          left: ChatViewBodyStyle
+                                              .bottomSheetPadding(
+                                            context,
+                                          ),
+                                          right: ChatViewBodyStyle
+                                              .bottomSheetPadding(
+                                            context,
+                                          ),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            TextButton.icon(
+                                              style: TextButton.styleFrom(
+                                                padding:
+                                                    const EdgeInsets.all(16),
+                                                foregroundColor:
+                                                    Theme.of(context)
+                                                        .colorScheme
+                                                        .error,
+                                              ),
+                                              icon: const Icon(
+                                                Icons.archive_outlined,
+                                              ),
+                                              onPressed: () =>
+                                                  controller.leaveChat(
+                                                context,
+                                                controller.room,
+                                              ),
+                                              label: Text(
+                                                L10n.of(context)!.leave,
+                                              ),
+                                            ),
+                                            TextButton.icon(
+                                              style: TextButton.styleFrom(
+                                                padding:
+                                                    const EdgeInsets.all(16),
+                                              ),
+                                              icon: const Icon(
+                                                Icons.chat_outlined,
+                                              ),
+                                              onPressed:
+                                                  controller.recreateChat,
+                                              label: Text(
+                                                L10n.of(context)!.reopenChat,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    : _inputMessageWidget(context);
+                              }
+                            },
+                          ),
                         ),
                       ),
                     ] else ...[

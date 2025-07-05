@@ -18,17 +18,21 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 
 class ChatEventList extends StatelessWidget {
   final ChatController controller;
+  final List<Event>? listEvents;
 
   const ChatEventList({
     super.key,
     required this.controller,
+    this.listEvents,
   });
 
   @override
   Widget build(BuildContext context) {
     final horizontalPadding = TwakeThemes.isColumnMode(context) ? 16.0 : 0.0;
 
-    final events = controller.timeline!.events;
+    final events = listEvents != null && listEvents!.isNotEmpty
+        ? listEvents!
+        : controller.timeline!.events;
     // create a map of eventId --> index to greatly improve performance of
     // ListView's findChildIndexCallback
     final thisEventsKeyMap = <String, int>{};
