@@ -1,25 +1,25 @@
 import 'package:equatable/equatable.dart';
-import 'package:fluffychat/data/hive/dto/contact/contact_request_last_event_hive_obj.dart';
-import 'package:fluffychat/domain/model/contact/contact_request.dart';
+import 'package:fluffychat/data/hive/dto/user_relation/user_relation_last_event_hive_obj.dart';
+import 'package:fluffychat/domain/model/user_relation/user_relation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'contact_request_hive_obj.g.dart';
+part 'user_relation_hive_obj.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class ContactRequestHiveObj with EquatableMixin {
+class UserRelationHiveObj with EquatableMixin {
   final String id;
 
-  final ContactRequestStatus status;
+  final UserRelationStatus status;
 
   final String peerId;
 
   final String roomId;
 
-  final ContactRequestLastEventHiveObj lastEvent;
+  final UserRelationLastEventHiveObj lastEvent;
 
   final int unreadCount;
 
-  ContactRequestHiveObj({
+  UserRelationHiveObj({
     required this.id,
     required this.status,
     required this.peerId,
@@ -28,10 +28,10 @@ class ContactRequestHiveObj with EquatableMixin {
     required this.unreadCount,
   });
 
-  factory ContactRequestHiveObj.fromJson(Map<String, dynamic> json) =>
-      _$ContactRequestHiveObjFromJson(json);
+  factory UserRelationHiveObj.fromJson(Map<String, dynamic> json) =>
+      _$UserRelationHiveObjFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ContactRequestHiveObjToJson(this);
+  Map<String, dynamic> toJson() => _$UserRelationHiveObjToJson(this);
 
   @override
   List<Object?> get props => [
