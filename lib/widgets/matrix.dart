@@ -4,7 +4,10 @@ import 'package:fluffychat/data/model/federation_server/federation_configuration
 import 'package:fluffychat/data/model/federation_server/federation_server_information.dart';
 import 'package:fluffychat/domain/contact_manager/contacts_manager.dart';
 import 'package:fluffychat/domain/exception/federation_configuration_not_found.dart';
+import 'package:fluffychat/domain/model/user_relation/user_relation.dart';
 import 'package:fluffychat/domain/repository/federation_configurations_repository.dart';
+import 'package:fluffychat/domain/repository/user_relation/hive_user_relation_repository.dart';
+import 'package:fluffychat/event/multi_event_types.dart';
 import 'package:fluffychat/event/twake_event_types.dart';
 import 'package:fluffychat/presentation/mixins/init_config_mixin.dart';
 import 'package:fluffychat/presentation/model/client_login_state_event.dart';
@@ -338,6 +341,9 @@ class MatrixState extends State<Matrix>
       );
       return;
     }
+
+    listenToInvites(currentClient);
+
     if (PlatformInfos.isMobile) {
       await HiveCollectionToMDatabase.databaseBuilder();
     }
@@ -1005,6 +1011,233 @@ class MatrixState extends State<Matrix>
     showToMBootstrap.addListener(() {
       handleShowQrCodeDownload(firstLogin);
     });
+  }
+
+  void listenToInvites(Client client) {
+    if (client.userID == null) {
+      Logs().w('MatrixState::listenToInvites: Client userID is null');
+      return;
+    }
+
+    client.onSync.stream.listen((sync) {
+      if (sync.rooms != null &&
+          sync.rooms?.invite != null &&
+          sync.rooms!.invite!.isNotEmpty) {
+        sync.rooms!.invite!.forEach((roomId, roomSync) async {
+          Logs().d(
+            'MatrixState::listenToInvites: Auto-accept invite for room $roomId',
+          );
+
+          try {
+            final inviterId = _getInviterId(roomId, roomSync);
+
+            await client.joinRoom(roomId);
+
+            if (inviterId != null) {
+              final room = client.getRoomById(roomId);
+
+              final lastEvent = await _getLastEventForUserRelation(
+                room,
+                inviterId,
+              );
+
+              await _storeUserRelationToHiveForReceiver(
+                roomId,
+                inviterId,
+                lastEvent,
+              );
+
+              await room?.sendEvent(
+                {
+                  'status': UserRelationStatus.pending.toString(),
+                  'sender_id': client.userID,
+                  'receiver_id': inviterId,
+                  'timestamp': DateTime.now().millisecondsSinceEpoch,
+                },
+                type: MultiEventTypes.contactAccepted,
+              );
+
+              Logs().d(
+                'MatrixState::listenToInvites: Created pending user relation for $inviterId in room $roomId',
+              );
+            }
+          } catch (e) {
+            Logs()
+                .e('MatrixState::listenToInvites: Error auto-joining room: $e');
+          }
+        });
+      }
+    });
+  }
+
+  String? _getInviterId(
+    String roomId,
+    InvitedRoomUpdate roomSync,
+  ) {
+    String? inviterId;
+    if (roomSync.inviteState != null) {
+      final memberEvent = roomSync.inviteState!.firstWhereOrNull(
+        (event) =>
+            event.type == EventTypes.RoomMember &&
+            event.stateKey == client.userID,
+      );
+
+      if (memberEvent != null) {
+        inviterId = memberEvent.senderId;
+      }
+    }
+
+    return inviterId;
+  }
+
+  Future<UserRelationLastEvent> _getLastEventForUserRelation(
+    Room? room,
+    String? inviterId,
+  ) async {
+    UserRelationLastEvent? lastEvent;
+
+    if (room != null) {
+      final timeline = await room.getTimeline();
+      final senderEvents = timeline.events
+          .where(
+            (event) =>
+                event.senderId == inviterId &&
+                (event.type == EventTypes.Message ||
+                    event.type == EventTypes.Sticker ||
+                    event.type == EventTypes.Encrypted ||
+                    event.type == EventTypes.CallInvite),
+          )
+          .toList();
+
+      if (senderEvents.isNotEmpty) {
+        final latestEvent = senderEvents.reduce(
+          (a, b) => a.originServerTs.isAfter(b.originServerTs) ? a : b,
+        );
+
+        lastEvent = UserRelationLastEvent(
+          id: latestEvent.eventId,
+          originServerTs: latestEvent.originServerTs,
+          type: latestEvent.type,
+        );
+      }
+    }
+
+    return lastEvent ??
+        UserRelationLastEvent(
+          id: '',
+          originServerTs: DateTime.now(),
+          type: EventTypes.Unknown,
+        );
+  }
+
+  Future<void> _storeUserRelationToHiveForReceiver(
+    String roomId,
+    String inviterId,
+    UserRelationLastEvent lastEvent,
+  ) async {
+    final userRelation = UserRelation(
+      id: '${client.userID}_${roomId}_$inviterId',
+      status: UserRelationStatus.pending,
+      peerId: inviterId,
+      roomId: roomId,
+      lastEvent: lastEvent,
+      unreadCount: 1,
+    );
+
+    final userRelationRepository =
+        await getIt.getAsync<HiveUserRelationRepository>();
+
+    final currentUserRelations =
+        await userRelationRepository.getUserRelationByUserId(
+      client.userID!,
+    );
+
+    final existingRelationIndex = currentUserRelations.indexWhere(
+      (ur) => ur.peerId == inviterId && ur.roomId == roomId,
+    );
+
+    if (existingRelationIndex >= 0) {
+      final existingRelation = currentUserRelations[existingRelationIndex];
+
+      if (existingRelation.status != UserRelationStatus.pending) {
+        currentUserRelations[existingRelationIndex] = userRelation;
+
+        Logs().d(
+          'MatrixState::listenToInvites: Updated existing user relation with status ${userRelation.status} for $inviterId in room $roomId',
+        );
+      } else {
+        Logs().d(
+          'MatrixState::listenToInvites: User relation already exists with pending status for $inviterId in room $roomId',
+        );
+        return;
+      }
+    } else {
+      currentUserRelations.add(userRelation);
+
+      Logs().d(
+        'MatrixState::listenToInvites: Created new pending user relation for $inviterId in room $roomId',
+      );
+    }
+
+    await userRelationRepository.saveUserRelationForUser(
+      client.userID!,
+      currentUserRelations,
+    );
+  }
+
+  Future<void> storeUserRelationToHiveForSender(
+    String currentClientId,
+    String roomId,
+    String inviterId,
+    UserRelationLastEvent lastEvent,
+  ) async {
+    final userRelation = UserRelation(
+      id: '${currentClientId}_${roomId}_$inviterId',
+      status: UserRelationStatus.pending,
+      peerId: inviterId,
+      roomId: roomId,
+      lastEvent: lastEvent,
+      unreadCount: 1,
+    );
+
+    final userRelationRepository =
+        await getIt.getAsync<HiveUserRelationRepository>();
+
+    final currentUserRelations =
+        await userRelationRepository.getUserRelationByUserId(
+      currentClientId,
+    );
+
+    final existingRelationIndex = currentUserRelations.indexWhere(
+      (ur) => ur.peerId == inviterId && ur.roomId == roomId,
+    );
+
+    if (existingRelationIndex >= 0) {
+      final existingRelation = currentUserRelations[existingRelationIndex];
+
+      if (existingRelation.status != UserRelationStatus.pending) {
+        currentUserRelations[existingRelationIndex] = userRelation;
+
+        Logs().d(
+          'MatrixState::storeUserRelationToHiveForSender: Updated existing user relation with status ${userRelation.status} for $inviterId in room $roomId',
+        );
+      } else {
+        Logs().d(
+          'MatrixState::storeUserRelationToHiveForSender: User relation already exists with pending status for $inviterId in room $roomId',
+        );
+        return;
+      }
+    } else {
+      currentUserRelations.add(userRelation);
+      Logs().d(
+        'MatrixState::storeUserRelationToHiveForSender: Created new pending user relation for $inviterId in room $roomId',
+      );
+    }
+
+    await userRelationRepository.saveUserRelationForUser(
+      currentClientId,
+      currentUserRelations,
+    );
   }
 
   @override

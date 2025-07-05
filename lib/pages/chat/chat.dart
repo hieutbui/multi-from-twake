@@ -9,9 +9,12 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
+import 'package:fluffychat/domain/model/user_relation/user_relation.dart';
+import 'package:fluffychat/domain/repository/user_relation/hive_user_relation_repository.dart';
 import 'package:fluffychat/domain/usecase/reactions/get_recent_reactions_interactor.dart';
 import 'package:fluffychat/domain/usecase/reactions/store_recent_reactions_interactor.dart';
 import 'package:fluffychat/domain/usecase/room/chat_get_pinned_events_interactor.dart';
+import 'package:fluffychat/event/multi_event_types.dart';
 import 'package:fluffychat/pages/chat/chat_actions.dart';
 import 'package:fluffychat/pages/chat/chat_context_menu_actions.dart';
 import 'package:fluffychat/pages/chat/chat_horizontal_action_menu.dart';
@@ -35,6 +38,7 @@ import 'package:fluffychat/presentation/mixins/save_file_to_twake_downloads_fold
 import 'package:fluffychat/presentation/mixins/save_media_to_gallery_android_mixin.dart';
 import 'package:fluffychat/presentation/mixins/send_files_mixin.dart';
 import 'package:fluffychat/presentation/mixins/send_files_with_caption_web_mixin.dart';
+import 'package:fluffychat/presentation/model/chat/pending_room_action.dart';
 import 'package:fluffychat/presentation/model/chat/view_event_list_ui_state.dart';
 import 'package:fluffychat/presentation/model/forward/forward_argument.dart';
 import 'package:fluffychat/resource/image_paths.dart';
@@ -221,6 +225,8 @@ class ChatController extends State<Chat>
 
   final ValueNotifier<ViewEventListUIState> openingChatViewStateNotifier =
       ValueNotifier(ViewEventListInitial());
+
+  final ValueNotifier<bool> isPendingChatNotifier = ValueNotifier(false);
 
   final FocusSuggestionController _focusSuggestionController =
       FocusSuggestionController();
@@ -477,6 +483,187 @@ class ChatController extends State<Chat>
             .toList(),
       );
     }
+  }
+
+  Future<void> _checkPendingStatus() async {
+    if (room == null || roomId == null) return;
+    final otherUserId = room!.directChatMatrixID;
+    if (otherUserId == null) return;
+
+    try {
+      final userRelationRepo =
+          await getIt.getAsync<HiveUserRelationRepository>();
+      final currentUserRelation =
+          await userRelationRepo.getUserRelationByUserId(otherUserId);
+
+      UserRelation? targetRelation;
+
+      for (final relation in currentUserRelation) {
+        if (relation.peerId == otherUserId) {
+          targetRelation = relation;
+          break;
+        }
+      }
+
+      if (targetRelation == null) return;
+
+      if (targetRelation.status == UserRelationStatus.pending) {
+        isPendingChatNotifier.value = true;
+
+        final action = await _showPendingChatBottomSheet();
+
+        if (action != null) {
+          await _handlePendingChatAction(action, targetRelation);
+        }
+      }
+    } catch (e) {
+      Logs().e('Failed to check pending status', e);
+    }
+  }
+
+  Future<PendingRoomAction?> _showPendingChatBottomSheet() async {
+    if (!mounted) return null;
+
+    return showAdaptiveBottomSheet<PendingRoomAction>(
+      context: context,
+      showDragHandle: false,
+      builder: (context) {
+        return Column(
+          children: [
+            const Text('Need action'),
+            const Divider(),
+            ListTile(
+              title: const Text('Accept'),
+              onTap: () {
+                context.pop(PendingRoomAction.accept);
+              },
+            ),
+            ListTile(
+              title: const Text('Block'),
+              onTap: () {
+                context.pop(PendingRoomAction.block);
+              },
+            ),
+            ListTile(
+              title: const Text('Report'),
+              onTap: () {
+                context.pop(PendingRoomAction.report);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _handlePendingChatAction(
+    PendingRoomAction action,
+    UserRelation relation,
+  ) async {
+    if (room == null) return;
+
+    if (client.userID == null) return;
+
+    final userRelationRepo = await getIt.getAsync<HiveUserRelationRepository>();
+
+    switch (action) {
+      case PendingRoomAction.accept:
+        final lastEvent = await room!.sendEvent(
+          {
+            'msgtype': MessageTypes.Text,
+            'body': 'app.multi.user_relation.accepted',
+          },
+          type: MultiEventTypes.contactAccepted,
+        );
+
+        final updatedRelation = relation.copyWith(
+          status: UserRelationStatus.accepted,
+          lastEvent: UserRelationLastEvent(
+            id: lastEvent ?? '',
+            originServerTs: DateTime.now(),
+            type: MultiEventTypes.contactAccepted,
+          ),
+        );
+
+        final currentUserRelation =
+            await userRelationRepo.getUserRelationByUserId(client.userID!);
+
+        final existingRelationIndex = currentUserRelation.indexWhere(
+          (ur) => ur.peerId == relation.peerId && ur.roomId == relation.roomId,
+        );
+
+        if (existingRelationIndex >= 0) {
+          currentUserRelation[existingRelationIndex] = updatedRelation;
+        } else {
+          currentUserRelation.add(updatedRelation);
+        }
+
+        await userRelationRepo.saveUserRelationForUser(
+          client.userID!,
+          currentUserRelation,
+        );
+
+        isPendingChatNotifier.value = false;
+
+        await requestHistory();
+        break;
+      case PendingRoomAction.block:
+      case PendingRoomAction.report:
+        final updatedRelation = relation.copyWith(
+          status: UserRelationStatus.blocked,
+        );
+
+        final currentUserRelation =
+            await userRelationRepo.getUserRelationByUserId(client.userID!);
+
+        final existingRelationIndex = currentUserRelation.indexWhere(
+          (ur) => ur.peerId == relation.peerId && ur.roomId == relation.roomId,
+        );
+
+        if (existingRelationIndex >= 0) {
+          currentUserRelation[existingRelationIndex] = updatedRelation;
+        } else {
+          currentUserRelation.add(updatedRelation);
+        }
+
+        await userRelationRepo.saveUserRelationForUser(
+          client.userID!,
+          currentUserRelation,
+        );
+
+        await room!.ban(relation.peerId);
+        await room!.leave();
+
+        Navigator.of(context).pop();
+        break;
+    }
+  }
+
+  List<Event> getTimelineEvents() {
+    if (timeline == null) {
+      return [];
+    }
+
+    // If not pending, return all events
+    if (!isPendingChatNotifier.value) {
+      return timeline!.events;
+    }
+
+    // For pending chats, only show the first message from the sender
+    final events = timeline!.events;
+    final filteredEvents = <Event>[];
+
+    // Find the first message from the sender (not system events)
+    for (final event in events) {
+      if (event.senderId != client.userID &&
+          event.type == EventTypes.Message &&
+          !event.redacted) {
+        filteredEvents.add(event);
+        break; // Only add the first message
+      }
+    }
+
+    return filteredEvents;
   }
 
   void _initUnreadLocation(String fullyRead) {
@@ -2142,6 +2329,34 @@ class ChatController extends State<Chat>
     }
   }
 
+  Future<void> _storeUserRelationForNewChat() async {
+    if (room == null) return;
+
+    final currentTimeline = timeline;
+
+    if (currentTimeline == null || currentTimeline.events.isEmpty) {
+      await _tryRequestHistory();
+    } else {
+      final lastEvent = currentTimeline.events.last;
+      final peerId = room!.directChatMatrixID;
+
+      if (peerId != null) {
+        final userRelationLastEvent = UserRelationLastEvent(
+          id: lastEvent.eventId,
+          originServerTs: lastEvent.originServerTs,
+          type: lastEvent.type,
+        );
+
+        await matrix?.storeUserRelationToHiveForSender(
+          client.id.toString(),
+          room!.id,
+          peerId,
+          userRelationLastEvent,
+        );
+      }
+    }
+  }
+
   void handleAppbarMenuAction(
     BuildContext context,
     TapDownDetails tapDownDetails,
@@ -2589,6 +2804,9 @@ class ChatController extends State<Chat>
       _listenRoomUpdateEvent();
       initCachedPresence();
       await _requestParticipants();
+
+      await _storeUserRelationForNewChat();
+      await _checkPendingStatus();
     });
   }
 

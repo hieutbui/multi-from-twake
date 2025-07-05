@@ -227,7 +227,10 @@ class ChatView extends StatelessWidget with MessageContentMixin {
     return ValueListenableBuilder(
       valueListenable: controller.replyEventNotifier,
       builder: (context, _, __) {
-        return ChatViewBody(controller);
+        return ChatViewBody(
+          controller,
+          events: controller.getTimelineEvents(),
+        );
       },
     );
   }
