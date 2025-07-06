@@ -11,6 +11,8 @@ class UserRelationHiveObj with EquatableMixin {
 
   final UserRelationStatus status;
 
+  final String creatorId;
+
   final String peerId;
 
   final String roomId;
@@ -22,6 +24,7 @@ class UserRelationHiveObj with EquatableMixin {
   UserRelationHiveObj({
     required this.id,
     required this.status,
+    required this.creatorId,
     required this.peerId,
     required this.roomId,
     required this.lastEvent,
@@ -37,6 +40,7 @@ class UserRelationHiveObj with EquatableMixin {
   List<Object?> get props => [
         id,
         status,
+        creatorId,
         peerId,
         roomId,
         lastEvent,

@@ -462,7 +462,7 @@ class _InputBarState extends State<InputBar> with PasteImageMixin {
             textCapitalization: TextCapitalization.sentences,
           ),
           suggestionsCallback: (text) {
-            if (widget.room!.isDirectChat) return [];
+            if (widget.room?.isDirectChat ?? false) return [];
             final suggestions = getSuggestions(text);
             if (PlatformInfos.isMobile) {
               _handleSuggestionsCallbackMobile();

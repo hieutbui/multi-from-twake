@@ -486,38 +486,67 @@ class ChatController extends State<Chat>
   }
 
   Future<void> _checkPendingStatus() async {
-    if (room == null || roomId == null) return;
+    Logs().d('_checkPendingStatus: Checking pending status for room: $roomId');
+    if (room == null || roomId == null) {
+      Logs().d('Room or room ID is null');
+      return;
+    }
+
     final otherUserId = room!.directChatMatrixID;
-    if (otherUserId == null) return;
+    if (otherUserId == null) {
+      Logs().d('_checkPendingStatus: Other user ID is null');
+      return;
+    }
+
+    final currentUserId = client.userID;
+    if (currentUserId == null) {
+      Logs().d('_checkPendingStatus: Current user ID is null');
+      return;
+    }
 
     try {
-      final userRelationRepo =
-          await getIt.getAsync<HiveUserRelationRepository>();
+      final userRelationRepo = getIt.get<HiveUserRelationRepository>();
       final currentUserRelation =
-          await userRelationRepo.getUserRelationByUserId(otherUserId);
+          await userRelationRepo.getUserRelationByUserId(currentUserId);
 
       UserRelation? targetRelation;
 
+      // First try to find the exact relation for this room
       for (final relation in currentUserRelation) {
-        if (relation.peerId == otherUserId) {
-          targetRelation = relation;
-          break;
+        if (relation.roomId == roomId) {
+          // Ensure this relation involves the other user
+          if (relation.peerId == otherUserId ||
+              relation.creatorId == otherUserId) {
+            targetRelation = relation;
+            break;
+          }
         }
       }
 
-      if (targetRelation == null) return;
+      if (targetRelation == null) {
+        Logs().d('_checkPendingStatus: No relation found for this room');
+        return;
+      }
+
+      // Only check pending status based on UserRelation status, not membership
+      isPendingChatNotifier.value =
+          (targetRelation.status == UserRelationStatus.pending);
 
       if (targetRelation.status == UserRelationStatus.pending) {
-        isPendingChatNotifier.value = true;
+        final isCreator = currentUserId == targetRelation.creatorId;
 
-        final action = await _showPendingChatBottomSheet();
-
-        if (action != null) {
-          await _handlePendingChatAction(action, targetRelation);
+        if (!isCreator) {
+          // This is the receiver side, show the pending action UI
+          final action = await _showPendingChatBottomSheet();
+          if (action != null) {
+            await _handlePendingChatAction(action, targetRelation);
+          } else {
+            onBackPress();
+          }
         }
       }
     } catch (e) {
-      Logs().e('Failed to check pending status', e);
+      Logs().e('_checkPendingStatus: Failed to check pending status', e);
     }
   }
 
@@ -564,78 +593,164 @@ class ChatController extends State<Chat>
 
     if (client.userID == null) return;
 
-    final userRelationRepo = await getIt.getAsync<HiveUserRelationRepository>();
+    try {
+      final userRelationRepo = getIt.get<HiveUserRelationRepository>();
 
-    switch (action) {
-      case PendingRoomAction.accept:
-        final lastEvent = await room!.sendEvent(
-          {
-            'msgtype': MessageTypes.Text,
-            'body': 'app.multi.user_relation.accepted',
-          },
-          type: MultiEventTypes.contactAccepted,
-        );
-
-        final updatedRelation = relation.copyWith(
-          status: UserRelationStatus.accepted,
-          lastEvent: UserRelationLastEvent(
-            id: lastEvent ?? '',
-            originServerTs: DateTime.now(),
+      switch (action) {
+        case PendingRoomAction.accept:
+          final lastEvent = await room!.sendEvent(
+            {
+              'msgtype': MessageTypes.Text,
+              'body': 'app.multi.user_relation.accepted',
+            },
             type: MultiEventTypes.contactAccepted,
-          ),
-        );
+          );
 
-        final currentUserRelation =
-            await userRelationRepo.getUserRelationByUserId(client.userID!);
+          final updatedRelation = relation.copyWith(
+            status: UserRelationStatus.accepted,
+            lastEvent: UserRelationLastEvent(
+              id: lastEvent ?? '',
+              originServerTs: DateTime.now(),
+              type: MultiEventTypes.contactAccepted,
+            ),
+          );
 
-        final existingRelationIndex = currentUserRelation.indexWhere(
-          (ur) => ur.peerId == relation.peerId && ur.roomId == relation.roomId,
-        );
+          final currentUserRelation =
+              await userRelationRepo.getUserRelationByUserId(client.userID!);
 
-        if (existingRelationIndex >= 0) {
-          currentUserRelation[existingRelationIndex] = updatedRelation;
-        } else {
-          currentUserRelation.add(updatedRelation);
+          final existingRelationIndex = currentUserRelation.indexWhere(
+            (ur) =>
+                ur.peerId == relation.peerId && ur.roomId == relation.roomId,
+          );
+
+          if (existingRelationIndex >= 0) {
+            currentUserRelation[existingRelationIndex] = updatedRelation;
+          } else {
+            currentUserRelation.add(updatedRelation);
+          }
+
+          await userRelationRepo.saveUserRelationForUser(
+            client.userID!,
+            currentUserRelation,
+          );
+
+          isPendingChatNotifier.value = false;
+
+          await requestHistory();
+          break;
+        case PendingRoomAction.block:
+        case PendingRoomAction.report:
+          final updatedRelation = relation.copyWith(
+            status: UserRelationStatus.blocked,
+          );
+
+          final currentUserRelation =
+              await userRelationRepo.getUserRelationByUserId(client.userID!);
+
+          final existingRelationIndex = currentUserRelation.indexWhere(
+            (ur) =>
+                ur.peerId == relation.peerId && ur.roomId == relation.roomId,
+          );
+
+          if (existingRelationIndex >= 0) {
+            currentUserRelation[existingRelationIndex] = updatedRelation;
+          } else {
+            currentUserRelation.add(updatedRelation);
+          }
+
+          await userRelationRepo.saveUserRelationForUser(
+            client.userID!,
+            currentUserRelation,
+          );
+
+          // await room!.ban(relation.peerId);
+          await room!.leave();
+
+          Navigator.of(context).pop();
+          break;
+        default:
+          onBackPress();
+          break;
+      }
+    } catch (e) {
+      Logs().e('Failed to handle pending chat action', e);
+    }
+  }
+
+  void _listenForContactAcceptance() {
+    if (room == null || client.userID == null) return;
+
+    room!.client.onEvent.stream.listen((eventUpdate) {
+      if (eventUpdate.type == EventUpdateType.timeline &&
+          eventUpdate.roomID == room!.id) {
+        // Get the actual event
+        final event = eventUpdate.content;
+
+        // Check if the event's type is the contact accepted type
+        if (event['type'] == MultiEventTypes.contactAccepted) {
+          final statusValue = event['status']?.toString();
+
+          // Only process genuine acceptance events (not auto-join events with pending status)
+          if (statusValue == null ||
+              statusValue != UserRelationStatus.pending.toString()) {
+            _updateUserRelationToAccepted();
+          } else {
+            Logs().d('Ignoring event with pending status: $statusValue');
+          }
         }
+      }
+    });
+  }
 
+  Future<void> _updateUserRelationToAccepted() async {
+    if (client.userID == null || room == null) return;
+
+    try {
+      final userRelationRepo = getIt.get<HiveUserRelationRepository>();
+      final currentUserRelations =
+          await userRelationRepo.getUserRelationByUserId(client.userID!);
+      final otherUserId = room!.directChatMatrixID;
+
+      if (otherUserId == null) return;
+
+      // Find the relation with this room and other user
+      final relationIndex = currentUserRelations.indexWhere(
+        (relation) =>
+            (relation.peerId == otherUserId ||
+                relation.creatorId == otherUserId) &&
+            relation.roomId == room!.id &&
+            relation.status == UserRelationStatus.pending,
+      );
+
+      if (relationIndex >= 0) {
+        // Update the relation status to accepted
+        final updatedRelation = currentUserRelations[relationIndex].copyWith(
+          status: UserRelationStatus.accepted,
+        );
+
+        currentUserRelations[relationIndex] = updatedRelation;
+
+        // Save the updated relations
         await userRelationRepo.saveUserRelationForUser(
           client.userID!,
-          currentUserRelation,
+          currentUserRelations,
         );
 
+        // Update the UI to show the full chat
         isPendingChatNotifier.value = false;
 
-        await requestHistory();
-        break;
-      case PendingRoomAction.block:
-      case PendingRoomAction.report:
-        final updatedRelation = relation.copyWith(
-          status: UserRelationStatus.blocked,
+        // Refresh the timeline to show all messages
+        requestHistory();
+      } else {
+        Logs().d(
+          'ChatController::_updateUserRelationToAccepted: No pending relation found for room ${room!.id}',
         );
-
-        final currentUserRelation =
-            await userRelationRepo.getUserRelationByUserId(client.userID!);
-
-        final existingRelationIndex = currentUserRelation.indexWhere(
-          (ur) => ur.peerId == relation.peerId && ur.roomId == relation.roomId,
-        );
-
-        if (existingRelationIndex >= 0) {
-          currentUserRelation[existingRelationIndex] = updatedRelation;
-        } else {
-          currentUserRelation.add(updatedRelation);
-        }
-
-        await userRelationRepo.saveUserRelationForUser(
-          client.userID!,
-          currentUserRelation,
-        );
-
-        await room!.ban(relation.peerId);
-        await room!.leave();
-
-        Navigator.of(context).pop();
-        break;
+      }
+    } catch (e) {
+      Logs().e(
+        'ChatController::_updateUserRelationToAccepted: Error updating relation',
+        e,
+      );
     }
   }
 
@@ -1167,6 +1282,9 @@ class ChatController extends State<Chat>
     }
     timeline!.requestKeys(onlineKeyBackupOnly: false);
     if (room!.markedUnread) room?.markUnread(false);
+
+    _listenForContactAcceptance();
+
     // when the scroll controller is attached we want to scroll to an event id, if specified
     // and update the scroll controller...which will trigger a request history, if the
     // "load more" button is visible on the screen
@@ -2784,6 +2902,10 @@ class ChatController extends State<Chat>
 
   @override
   void initState() {
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      await _storeUserRelationForNewChat();
+      await _checkPendingStatus();
+    });
     _initializePinnedEvents();
     registerPasteShortcutListeners(
       onSendFileCallback: scrollDown,
@@ -2804,9 +2926,6 @@ class ChatController extends State<Chat>
       _listenRoomUpdateEvent();
       initCachedPresence();
       await _requestParticipants();
-
-      await _storeUserRelationForNewChat();
-      await _checkPendingStatus();
     });
   }
 

@@ -7,7 +7,6 @@ import 'package:fluffychat/domain/exception/federation_configuration_not_found.d
 import 'package:fluffychat/domain/model/user_relation/user_relation.dart';
 import 'package:fluffychat/domain/repository/federation_configurations_repository.dart';
 import 'package:fluffychat/domain/repository/user_relation/hive_user_relation_repository.dart';
-import 'package:fluffychat/event/multi_event_types.dart';
 import 'package:fluffychat/event/twake_event_types.dart';
 import 'package:fluffychat/presentation/mixins/init_config_mixin.dart';
 import 'package:fluffychat/presentation/model/client_login_state_event.dart';
@@ -1014,14 +1013,14 @@ class MatrixState extends State<Matrix>
   }
 
   void listenToInvites(Client client) {
-    if (client.userID == null) {
-      Logs().w('MatrixState::listenToInvites: Client userID is null');
-      return;
-    }
-
     client.onSync.stream.listen((sync) {
+      if (client.userID == null) {
+        Logs().w('MatrixState::listenToInvites: Client userID is null');
+        return;
+      }
+
       if (sync.rooms != null &&
-          sync.rooms?.invite != null &&
+          sync.rooms!.invite != null &&
           sync.rooms!.invite!.isNotEmpty) {
         sync.rooms!.invite!.forEach((roomId, roomSync) async {
           Logs().d(
@@ -1036,6 +1035,10 @@ class MatrixState extends State<Matrix>
             if (inviterId != null) {
               final room = client.getRoomById(roomId);
 
+              if (room != null) {
+                await room.addToDirectChat(inviterId);
+              }
+
               final lastEvent = await _getLastEventForUserRelation(
                 room,
                 inviterId,
@@ -1044,21 +1047,8 @@ class MatrixState extends State<Matrix>
               await _storeUserRelationToHiveForReceiver(
                 roomId,
                 inviterId,
+                client.userID!,
                 lastEvent,
-              );
-
-              await room?.sendEvent(
-                {
-                  'status': UserRelationStatus.pending.toString(),
-                  'sender_id': client.userID,
-                  'receiver_id': inviterId,
-                  'timestamp': DateTime.now().millisecondsSinceEpoch,
-                },
-                type: MultiEventTypes.contactAccepted,
-              );
-
-              Logs().d(
-                'MatrixState::listenToInvites: Created pending user relation for $inviterId in room $roomId',
               );
             }
           } catch (e) {
@@ -1133,19 +1123,20 @@ class MatrixState extends State<Matrix>
   Future<void> _storeUserRelationToHiveForReceiver(
     String roomId,
     String inviterId,
+    String peerId,
     UserRelationLastEvent lastEvent,
   ) async {
     final userRelation = UserRelation(
-      id: '${client.userID}_${roomId}_$inviterId',
+      id: '${inviterId}_${roomId}_$peerId',
       status: UserRelationStatus.pending,
-      peerId: inviterId,
+      creatorId: inviterId,
+      peerId: peerId,
       roomId: roomId,
       lastEvent: lastEvent,
       unreadCount: 1,
     );
 
-    final userRelationRepository =
-        await getIt.getAsync<HiveUserRelationRepository>();
+    final userRelationRepository = getIt.get<HiveUserRelationRepository>();
 
     final currentUserRelations =
         await userRelationRepository.getUserRelationByUserId(
@@ -1153,7 +1144,7 @@ class MatrixState extends State<Matrix>
     );
 
     final existingRelationIndex = currentUserRelations.indexWhere(
-      (ur) => ur.peerId == inviterId && ur.roomId == roomId,
+      (ur) => ur.creatorId == inviterId && ur.roomId == roomId,
     );
 
     if (existingRelationIndex >= 0) {
@@ -1179,6 +1170,8 @@ class MatrixState extends State<Matrix>
       );
     }
 
+    Logs().d('listenToinvies: currentUserRelations: $currentUserRelations');
+
     await userRelationRepository.saveUserRelationForUser(
       client.userID!,
       currentUserRelations,
@@ -1191,17 +1184,21 @@ class MatrixState extends State<Matrix>
     String inviterId,
     UserRelationLastEvent lastEvent,
   ) async {
+    final creatorId = currentClientId;
+
+    if (creatorId.isEmpty) return;
+
     final userRelation = UserRelation(
-      id: '${currentClientId}_${roomId}_$inviterId',
+      id: '${creatorId}_${roomId}_$inviterId',
       status: UserRelationStatus.pending,
+      creatorId: creatorId,
       peerId: inviterId,
       roomId: roomId,
       lastEvent: lastEvent,
       unreadCount: 1,
     );
 
-    final userRelationRepository =
-        await getIt.getAsync<HiveUserRelationRepository>();
+    final userRelationRepository = getIt.get<HiveUserRelationRepository>();
 
     final currentUserRelations =
         await userRelationRepository.getUserRelationByUserId(
