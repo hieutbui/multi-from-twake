@@ -24,6 +24,7 @@ enum UserRelationStatus {
 class UserRelation extends Equatable {
   final String id;
   final UserRelationStatus status;
+  final String creatorId;
   final String peerId;
   final String roomId;
   final UserRelationLastEvent lastEvent;
@@ -32,6 +33,7 @@ class UserRelation extends Equatable {
   const UserRelation({
     required this.id,
     required this.status,
+    required this.creatorId,
     required this.peerId,
     required this.roomId,
     required this.lastEvent,
@@ -42,6 +44,7 @@ class UserRelation extends Equatable {
   List<Object?> get props => [
         id,
         status,
+        creatorId,
         peerId,
         roomId,
         lastEvent,
@@ -51,6 +54,7 @@ class UserRelation extends Equatable {
   UserRelation copyWith({
     String? id,
     UserRelationStatus? status,
+    String? creatorId,
     String? peerId,
     String? roomId,
     UserRelationLastEvent? lastEvent,
@@ -59,6 +63,7 @@ class UserRelation extends Equatable {
     return UserRelation(
       id: id ?? this.id,
       status: status ?? this.status,
+      creatorId: creatorId ?? this.creatorId,
       peerId: peerId ?? this.peerId,
       roomId: roomId ?? this.roomId,
       lastEvent: lastEvent ?? this.lastEvent,

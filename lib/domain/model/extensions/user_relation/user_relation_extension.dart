@@ -7,6 +7,7 @@ extension UserRelationExtension on UserRelation {
     return UserRelationHiveObj(
       id: id,
       status: status,
+      creatorId: creatorId,
       peerId: peerId,
       roomId: roomId,
       lastEvent: lastEvent.toHiveObj(),

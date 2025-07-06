@@ -99,6 +99,7 @@ class ChatViewBody extends StatelessWidget with MessageContentMixin {
                           child: ValueListenableBuilder(
                             valueListenable: controller.isPendingChatNotifier,
                             builder: (context, isPending, _) {
+                              Logs().d('chat_view_body:isPending: $isPending');
                               if (isPending) {
                                 return Container(
                                   padding: const EdgeInsets.all(16),
