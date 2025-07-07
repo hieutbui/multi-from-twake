@@ -639,9 +639,39 @@ class ChatController extends State<Chat>
           await requestHistory();
           break;
         case PendingRoomAction.block:
-        case PendingRoomAction.report:
           final updatedRelation = relation.copyWith(
             status: UserRelationStatus.blocked,
+            roomId: '',
+          );
+
+          final currentUserRelation =
+              await userRelationRepo.getUserRelationByUserId(client.userID!);
+
+          final existingRelationIndex = currentUserRelation.indexWhere(
+            (ur) =>
+                ur.peerId == relation.peerId && ur.roomId == relation.roomId,
+          );
+
+          if (existingRelationIndex >= 0) {
+            currentUserRelation[existingRelationIndex] = updatedRelation;
+          } else {
+            currentUserRelation.add(updatedRelation);
+          }
+
+          await userRelationRepo.saveUserRelationForUser(
+            client.userID!,
+            currentUserRelation,
+          );
+
+          // await room!.ban(relation.peerId);
+          await room!.leave();
+
+          Navigator.of(context).pop();
+          break;
+        case PendingRoomAction.report:
+          final updatedRelation = relation.copyWith(
+            status: UserRelationStatus.reported,
+            roomId: '',
           );
 
           final currentUserRelation =
