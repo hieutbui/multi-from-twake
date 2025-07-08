@@ -63,6 +63,12 @@ class ImagePaths {
 
   static String get icShieldLockFill =>
       _getImagePath('ic_shield_lock_fill.svg');
+  static String get icClockSnooze => _getImagePath('ic_clock_snooze.svg');
+  static String get icAttach => _getImagePath('ic_attach.svg');
+  static String get icStartAI => _getImagePath('ic_start_ai.svg');
+  static String get icSendActive => _getImagePath('ic_send_active.svg');
+  static String get icMicrophone => _getImagePath('ic_microphone.svg');
+  static String get icStartAIActive => _getImagePath('ic_start_ai_active.svg');
 
   // Entrance Main Screen assets
   static String get splashBackground =>

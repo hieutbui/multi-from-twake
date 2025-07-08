@@ -26,9 +26,9 @@ class ChatAppBarTitleStyle {
   static double get letterSpacingStatusContent => 0.5;
 
   static TextStyle? appBarTitleStyle(BuildContext context) =>
-      Theme.of(context).textTheme.titleMedium?.copyWith(
-            color: Theme.of(context).colorScheme.onSurface,
-            letterSpacing: ChatAppBarTitleStyle.letterSpacingRoomName,
+      Theme.of(context).textTheme.headlineSmall?.copyWith(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
           );
 
   static TextStyle? offlineStatusTextStyle(BuildContext context) =>
@@ -46,9 +46,8 @@ class ChatAppBarTitleStyle {
 
   static TextStyle? onlineStatusTextStyle(BuildContext context) =>
       responsive.isMobile(context)
-          ? Theme.of(context).textTheme.labelMedium?.copyWith(
-                color: LinagoraRefColors.material().secondary[40],
-                letterSpacing: ChatAppBarTitleStyle.letterSpacingStatusContent,
+          ? Theme.of(context).textTheme.labelLarge?.copyWith(
+                color: Theme.of(context).colorScheme.primary,
               )
           : Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: LinagoraRefColors.material().secondary[40],

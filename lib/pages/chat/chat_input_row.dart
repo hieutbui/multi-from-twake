@@ -1,5 +1,4 @@
 import 'package:fluffychat/pages/chat/chat_input_row_mobile.dart';
-import 'package:fluffychat/pages/chat/chat_input_row_send_btn.dart';
 import 'package:fluffychat/pages/chat/chat_input_row_style.dart';
 import 'package:fluffychat/pages/chat/chat_input_row_web.dart';
 import 'package:fluffychat/pages/chat/reply_display.dart';
@@ -7,12 +6,10 @@ import 'package:fluffychat/resource/image_paths.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
 import 'package:fluffychat/widgets/avatar/avatar.dart';
 import 'package:fluffychat/widgets/matrix.dart';
-import 'package:fluffychat/widgets/twake_components/twake_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:linagora_design_flutter/colors/linagora_ref_colors.dart';
 import 'package:matrix/matrix.dart';
 
 import 'chat.dart';
@@ -28,10 +25,7 @@ class ChatInputRow extends StatelessWidget {
     return KeyboardVisibilityBuilder(
       builder: (context, isKeyboardVisible) {
         return Padding(
-          padding: _paddingInputRow(
-            context: context,
-            isKeyboardVisible: isKeyboardVisible,
-          ),
+          padding: EdgeInsets.zero,
           child: Row(
             crossAxisAlignment:
                 ChatInputRowStyle.responsiveUtils.isMobile(context)
@@ -45,53 +39,37 @@ class ChatInputRow extends StatelessWidget {
                     ),
                   ]
                 : <Widget>[
-                    if (ChatInputRowStyle.responsiveUtils.isMobile(context))
-                      SizedBox(
-                        height: ChatInputRowStyle.chatInputRowHeight,
-                        child: TwakeIconButton(
-                          size: ChatInputRowStyle.chatInputRowMoreBtnSize,
-                          tooltip: L10n.of(context)!.more,
-                          icon: Icons.add_circle_outline,
-                          onTap: () => controller.onSendFileClick(context),
-                        ),
-                      ),
-                    if (controller.matrix!.isMultiAccount &&
-                        controller.matrix!.hasComplexBundles &&
-                        controller.matrix!.currentBundle!.length > 1)
-                      Container(
-                        height: ChatInputRowStyle.chatInputRowHeight,
-                        alignment: Alignment.center,
-                        child: ChatAccountPicker(controller),
-                      ),
+                    // if (ChatInputRowStyle.responsiveUtils.isMobile(context))
+                    //   SizedBox(
+                    //     height: ChatInputRowStyle.chatInputRowHeight,
+                    //     child: TwakeIconButton(
+                    //       size: ChatInputRowStyle.chatInputRowMoreBtnSize,
+                    //       tooltip: L10n.of(context)!.more,
+                    //       icon: Icons.add_circle_outline,
+                    //       onTap: () => controller.onSendFileClick(context),
+                    //     ),
+                    //   ),
+                    // if (controller.matrix!.isMultiAccount &&
+                    //     controller.matrix!.hasComplexBundles &&
+                    //     controller.matrix!.currentBundle!.length > 1)
+                    //   Container(
+                    //     height: ChatInputRowStyle.chatInputRowHeight,
+                    //     alignment: Alignment.center,
+                    //     child: ChatAccountPicker(controller),
+                    //   ),
                     Expanded(
                       child: ChatInputRowStyle.responsiveUtils.isMobile(context)
                           ? _buildMobileInputRow(context)
                           : _buildWebInputRow(context),
                     ),
-                    ChatInputRowSendBtn(
-                      inputText: controller.inputText,
-                      onTap: controller.onInputBarSubmitted,
-                    ),
+                    // ChatInputRowSendBtn(
+                    //   inputText: controller.inputText,
+                    //   onTap: controller.onInputBarSubmitted,
+                    // ),
                   ],
           ),
         );
       },
-    );
-  }
-
-  EdgeInsetsGeometry _paddingInputRow({
-    required BuildContext context,
-    required bool isKeyboardVisible,
-  }) {
-    if (!ChatInputRowStyle.responsiveUtils.isMobile(context)) {
-      return EdgeInsets.zero;
-    }
-
-    if (isKeyboardVisible) {
-      return EdgeInsets.zero;
-    }
-    return const EdgeInsets.only(
-      bottom: 16,
     );
   }
 
@@ -151,12 +129,24 @@ class ChatInputRow extends StatelessWidget {
         hintText: L10n.of(context)!.message,
         isDense: true,
         hintMaxLines: 1,
-        hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: controller.responsive.isMobile(context)
-                  ? LinagoraRefColors.material().tertiary[50]
-                  : LinagoraRefColors.material().tertiary[30],
-              fontFamily: 'Inter',
-            ),
+        suffixIcon: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 8.0,
+            vertical: 12.0,
+          ),
+          child: SvgPicture.asset(
+            ImagePaths.icMicrophone,
+            height: 24,
+            width: 24,
+            fit: BoxFit.contain,
+          ),
+        ),
+        // hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+        //       color: controller.responsive.isMobile(context)
+        //           ? LinagoraRefColors.material().tertiary[50]
+        //           : LinagoraRefColors.material().tertiary[30],
+        //       fontFamily: 'Inter',
+        //     ),
       ),
       onChanged: controller.onInputBarChanged,
     );

@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:fluffychat/pages/chat/chat.dart';
 import 'package:fluffychat/pages/chat/chat_app_bar_title.dart';
 import 'package:fluffychat/pages/chat/chat_invitation_body.dart';
@@ -116,9 +117,25 @@ class ChatView extends StatelessWidget with MessageContentMixin {
                     ? MultiSysColors.material().background
                     : MultiSysColors.material().onPrimary,
                 appBar: AppBar(
-                  backgroundColor: controller.responsive.isMobile(context)
-                      ? MultiSysColors.material().surface
-                      : MultiSysColors.material().onPrimary,
+                  flexibleSpace: Container(
+                    decoration: const ShapeDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment(0.50, -0.00),
+                        end: Alignment(0.50, 1.00),
+                        colors: [
+                          Color(0xFF0E0F13),
+                          Color(0xFF232631),
+                        ],
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(24),
+                          bottomRight: Radius.circular(24),
+                        ),
+                      ),
+                    ),
+                  ),
+                  backgroundColor: Colors.black,
                   automaticallyImplyLeading: false,
                   toolbarHeight: ChatViewStyle.appBarHeight(context),
                   title: Padding(
@@ -154,26 +171,48 @@ class ChatView extends StatelessWidget with MessageContentMixin {
                         padding: ChatViewStyle.paddingTrailing(context),
                         child: Row(
                           children: [
-                            IconButton(
-                              hoverColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onPressed: controller.toggleSearch,
-                              icon: const Icon(Icons.search),
-                            ),
-                            if (!controller.room!.isDirectChat)
-                              Builder(
-                                builder: (context) => TwakeIconButton(
-                                  icon: Icons.more_vert,
-                                  tooltip: L10n.of(context)!.more,
-                                  onTapDown: (tapDownDetails) =>
-                                      controller.handleAppbarMenuAction(
-                                    context,
-                                    tapDownDetails,
-                                  ),
-                                  preferBelow: false,
+                            // IconButton(
+                            //   hoverColor: Colors.transparent,
+                            //   splashColor: Colors.transparent,
+                            //   highlightColor: Colors.transparent,
+                            //   onPressed: controller.toggleSearch,
+                            //   icon: const Icon(Icons.search),
+                            // ),
+                            // if (!controller.room!.isDirectChat)
+                            //   Builder(
+                            //     builder: (context) => TwakeIconButton(
+                            //       icon: Icons.more_vert,
+                            //       tooltip: L10n.of(context)!.more,
+                            //       onTapDown: (tapDownDetails) =>
+                            //           controller.handleAppbarMenuAction(
+                            //         context,
+                            //         tapDownDetails,
+                            //       ),
+                            //       preferBelow: false,
+                            //     ),
+                            //   ),
+                            Builder(
+                              builder: (context) => TwakeIconButton(
+                                icon: Icons.more_vert,
+                                size: 16.0,
+                                tooltip: L10n.of(context)!.more,
+                                onTapDown: (tapDownDetails) =>
+                                    controller.handleAppbarMenuAction(
+                                  context,
+                                  tapDownDetails,
+                                ),
+                                preferBelow: false,
+                                buttonDecoration: BoxDecoration(
+                                  color: Theme.of(context).brightness ==
+                                          Brightness.light
+                                      ? MultiLightColors
+                                          .buttonsMainSecondary15Opasity
+                                      : MultiDarkColors
+                                          .buttonsMainSecondary15Opasity,
+                                  shape: BoxShape.circle,
                                 ),
                               ),
+                            ),
                           ],
                         ),
                       ),
@@ -236,12 +275,19 @@ class ChatView extends StatelessWidget with MessageContentMixin {
   }
 
   Widget _buildBackButton(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(left: 8, right: 8),
+        padding: const EdgeInsets.only(left: 20.0, right: 12.0),
         child: TwakeIconButton(
           tooltip: L10n.of(context)!.back,
-          icon: Icons.chevron_left_outlined,
+          icon: Icons.arrow_back,
+          size: 16.0,
           onTap: controller.onBackPress,
           margin: const EdgeInsets.symmetric(vertical: 12.0),
+          buttonDecoration: BoxDecoration(
+            color: Theme.of(context).brightness == Brightness.light
+                ? MultiLightColors.buttonsMainSecondary15Opasity
+                : MultiDarkColors.buttonsMainSecondary15Opasity,
+            shape: BoxShape.circle,
+          ),
         ),
       );
 

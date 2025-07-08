@@ -2,6 +2,7 @@ import 'package:desktop_drop/desktop_drop.dart';
 import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/chat/chat.dart';
 import 'package:fluffychat/pages/chat/chat_event_list.dart';
+import 'package:fluffychat/pages/chat/chat_input_action_row.dart';
 import 'package:fluffychat/pages/chat/chat_loading_view.dart';
 import 'package:fluffychat/pages/chat/chat_view_body_style.dart';
 import 'package:fluffychat/pages/chat/chat_view_style.dart';
@@ -41,9 +42,19 @@ class ChatViewBody extends StatelessWidget with MessageContentMixin {
       onDragEntered: controller.onDragEntered,
       onDragExited: controller.onDragExited,
       child: Container(
-        color: controller.responsive.isMobile(context)
-            ? MultiSysColors.material().surface
-            : null,
+        // color: controller.responsive.isMobile(context)
+        //     ? MultiSysColors.material().surface
+        //     : null,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment(0.50, -0.00),
+            end: Alignment(0.50, 1.00),
+            colors: [
+              Color(0xFF0E0F13),
+              Color(0xFF191B26),
+            ],
+          ),
+        ),
         child: Stack(
           children: <Widget>[
             if (Matrix.of(context).wallpaper != null)
@@ -64,30 +75,25 @@ class ChatViewBody extends StatelessWidget with MessageContentMixin {
                         height: ChatViewStyle.pinnedMessageHintHeight,
                       ),
                     Expanded(
-                      child: Container(
-                        color: ChatViewBodyStyle.chatViewBackgroundColor(
-                          context,
-                        ),
-                        child: GestureDetector(
-                          onTap: controller.clearSingleSelectedEvent,
-                          child: ValueListenableBuilder(
-                            valueListenable:
-                                controller.openingChatViewStateNotifier,
-                            builder: (context, viewState, __) {
-                              if (viewState is ViewEventListLoading ||
-                                  controller.timeline == null) {
-                                return const ChatLoadingView();
-                              }
+                      child: GestureDetector(
+                        onTap: controller.clearSingleSelectedEvent,
+                        child: ValueListenableBuilder(
+                          valueListenable:
+                              controller.openingChatViewStateNotifier,
+                          builder: (context, viewState, __) {
+                            if (viewState is ViewEventListLoading ||
+                                controller.timeline == null) {
+                              return const ChatLoadingView();
+                            }
 
-                              if (viewState is ViewEventListSuccess) {
-                                return ChatEventList(
-                                  controller: controller,
-                                );
-                              }
+                            if (viewState is ViewEventListSuccess) {
+                              return ChatEventList(
+                                controller: controller,
+                              );
+                            }
 
-                              return const SizedBox.shrink();
-                            },
-                          ),
+                            return const SizedBox.shrink();
+                          },
                         ),
                       ),
                     ),
@@ -343,18 +349,22 @@ class ChatViewBody extends StatelessWidget with MessageContentMixin {
 
   Widget _inputMessageWidget(BuildContext context) {
     return Container(
+      // height: 144,
       decoration: controller.responsive.isMobile(context)
-          ? BoxDecoration(
-              color: MultiSysColors.material().surface,
-              border: Border(
-                top: BorderSide(
-                  color: LinagoraStateLayer(
-                    MultiSysColors.material().surfaceTint,
-                  ).opacityLayer3,
+          ? ShapeDecoration(
+              color: Theme.of(context).colorScheme.onPrimary,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(24),
+                  topRight: Radius.circular(24),
                 ),
               ),
             )
           : null,
+      padding: const EdgeInsets.symmetric(
+        vertical: 12.0,
+        horizontal: 16.0,
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -378,13 +388,14 @@ class ChatViewBody extends StatelessWidget with MessageContentMixin {
             },
           ),
           const SizedBox(height: 8.0),
-          Padding(
-            padding: ChatViewBodyStyle.inputBarPadding(context),
-            child: ChatInputRow(controller),
-          ),
+          ChatInputRow(controller),
           SizedBox(
-            height: controller.responsive.isMobile(context) ? 8.0 : 8.0,
+            height: controller.responsive.isMobile(context) ? 12.0 : 12.0,
           ),
+          ChatInputActionRow(
+            controller: controller,
+          ),
+          const SizedBox(height: 40.0),
         ],
       ),
     );

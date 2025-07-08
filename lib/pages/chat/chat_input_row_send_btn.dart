@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:fluffychat/pages/chat/chat_input_row_style.dart';
 import 'package:fluffychat/resource/image_paths.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
@@ -34,42 +35,57 @@ class ChatInputRowSendBtn extends StatelessWidget {
           );
         }
 
-        if (textInput.isNotEmpty) {
-          return child!;
-        }
+        return ValueListenableBuilder(
+          valueListenable: sendingNotifier ?? ValueNotifier(false),
+          builder: (context, isSending, child) {
+            if (isSending) {
+              return child!;
+            }
 
-        return const SizedBox();
-      },
-      child: ValueListenableBuilder(
-        valueListenable: sendingNotifier ?? ValueNotifier(false),
-        builder: (context, isSending, child) {
-          if (isSending) {
-            return child!;
-          }
-          return Padding(
+            final emptyInputButtonColor =
+                Theme.of(context).brightness == Brightness.light
+                    ? MultiLightColors.buttonsMainPrimaryDisabled
+                    : MultiDarkColors.buttonsMainPrimaryDisabled;
+
+            final normalInputButtonColor =
+                Theme.of(context).brightness == Brightness.light
+                    ? MultiLightColors.buttonsMainPrimaryDefault
+                    : MultiDarkColors.buttonsMainPrimaryDefault;
+
+            final buttonColor = textInput.isEmpty
+                ? emptyInputButtonColor
+                : normalInputButtonColor;
+
+            return Padding(
+              padding: ChatInputRowStyle.sendIconPadding,
+              child: TwakeIconButton(
+                margin: const EdgeInsets.all(11.0),
+                hoverColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                color: buttonColor,
+                size: ChatInputRowStyle.sendIconBtnSize,
+                onTap: onTap,
+                tooltip: L10n.of(context)!.send,
+                imagePath: textInput.isEmpty
+                    ? ImagePaths.icSend
+                    : ImagePaths.icSendActive,
+                paddingAll: 0,
+              ),
+            );
+          },
+          child: const Padding(
             padding: ChatInputRowStyle.sendIconPadding,
-            child: TwakeIconButton(
-              hoverColor: Colors.transparent,
-              splashColor: Colors.transparent,
-              size: ChatInputRowStyle.sendIconBtnSize,
-              onTap: onTap,
-              tooltip: L10n.of(context)!.send,
-              imagePath: ImagePaths.icSend,
-              paddingAll: 0,
-            ),
-          );
-        },
-        child: const Padding(
-          padding: ChatInputRowStyle.sendIconPadding,
-          child: Center(
-            child: SizedBox(
-              width: ChatInputRowStyle.sendIconBtnSize,
-              height: ChatInputRowStyle.sendIconBtnSize,
-              child: CupertinoActivityIndicator(),
+            child: Center(
+              child: SizedBox(
+                width: ChatInputRowStyle.sendIconBtnSize,
+                height: ChatInputRowStyle.sendIconBtnSize,
+                child: CupertinoActivityIndicator(),
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
+      child: const SizedBox.shrink(),
     );
   }
 }
