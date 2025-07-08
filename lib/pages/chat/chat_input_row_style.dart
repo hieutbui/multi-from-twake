@@ -17,16 +17,16 @@ class ChatInputRowStyle {
   static const double chatInputRowMoreBtnSize = 24.0;
   static const EdgeInsets chatInputRowBtnMarginWeb = EdgeInsets.all(12.0);
 
-  static const double sendIconBtnSize = 44.0;
+  static const double sendIconBtnSize = 18.0;
 
   static const EdgeInsets sendIconPadding = EdgeInsets.only(
     left: 8,
   );
 
   static EdgeInsetsDirectional contentPadding(BuildContext context) =>
-      EdgeInsetsDirectional.only(
-        top: responsiveUtils.isMobile(context) ? 7 : 10,
-        bottom: responsiveUtils.isMobile(context) ? 7 : 10,
+      EdgeInsetsDirectional.symmetric(
+        vertical: responsiveUtils.isMobile(context) ? 8 : 10,
+        horizontal: responsiveUtils.isMobile(context) ? 12 : 16,
       );
 
   static const double inputComposerOpacity = 0.38;

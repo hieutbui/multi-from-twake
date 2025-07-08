@@ -17,7 +17,7 @@ class ChatViewStyle {
       );
   static EdgeInsetsDirectional paddingTrailing(BuildContext context) =>
       EdgeInsetsDirectional.only(
-        end: responsive.isMobile(context) ? 0 : 16,
+        end: responsive.isMobile(context) ? 20 : 16,
       );
 
   static BoxDecoration searchBottomViewDecoration(BuildContext context) =>
@@ -45,5 +45,5 @@ class ChatViewStyle {
   static const paddingBottomContextMenu = 16.0;
 
   static double appBarHeight(BuildContext context) =>
-      responsive.isMobile(context) ? 64 : 56;
+      responsive.isMobile(context) ? 66 : 56;
 }

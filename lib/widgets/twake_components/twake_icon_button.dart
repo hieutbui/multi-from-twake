@@ -41,6 +41,8 @@ class TwakeIconButton extends StatelessWidget {
 
   final Color? splashColor;
 
+  final Color? color;
+
   const TwakeIconButton({
     super.key,
     this.tooltip,
@@ -60,6 +62,7 @@ class TwakeIconButton extends StatelessWidget {
     this.iconColor,
     this.highlightColor,
     this.splashColor,
+    this.color,
   });
 
   @override
@@ -68,8 +71,8 @@ class TwakeIconButton extends StatelessWidget {
       color: Colors.transparent,
       child: Container(
         padding: margin,
-        decoration:
-            buttonDecoration ?? const BoxDecoration(shape: BoxShape.circle),
+        decoration: buttonDecoration ??
+            BoxDecoration(shape: BoxShape.circle, color: color),
         child: InkWell(
           mouseCursor: SystemMouseCursors.click,
           onTap: onTap,
