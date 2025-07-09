@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/data/network/service_path.dart';
 
 class HomeserverEndpoint {
@@ -27,7 +28,7 @@ extension ServicePathHomeserver on ServicePath {
     String rootPath = HomeserverEndpoint.homeserverMediaPath,
     String apiVersion = HomeserverEndpoint.homeserverAPIVersion,
   }) {
-    return '$rootPath/$apiVersion$path';
+    return '${AppConfig.sampleValue}$rootPath/$apiVersion$path';
   }
 
   String generateHomeserverConfigEndpoint({
