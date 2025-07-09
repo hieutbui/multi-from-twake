@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:fluffychat/config/app_config.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/domain/model/room/room_extension.dart';
@@ -571,6 +572,10 @@ class _MessageContentWithTimestampBuilderState
     bool enableBorder = true,
     MainAxisSize mainAxisSize = MainAxisSize.max,
   }) {
+    final ownMessageColor = Theme.of(context).brightness == Brightness.light
+        ? MultiLightColors.additionalAccentBlueDark
+        : MultiDarkColors.additionalAccentBlueDark;
+
     return Stack(
       key: key,
       alignment: widget.event.isOwnMessage
@@ -588,10 +593,10 @@ class _MessageContentWithTimestampBuilderState
                     : BoxDecoration(
                         borderRadius: MessageStyle.bubbleBorderRadius,
                         color: widget.event.isOwnMessage
-                            ? LinagoraRefColors.material().primary[95]
+                            ? ownMessageColor
                             : MessageContentWithTimestampBuilder.responsiveUtils
                                     .isMobile(context)
-                                ? MultiSysColors.material().onPrimary
+                                ? Theme.of(context).colorScheme.onPrimary
                                 : Theme.of(context)
                                     .colorScheme
                                     .surfaceContainerHighest,
@@ -602,7 +607,7 @@ class _MessageContentWithTimestampBuilderState
                                         .isMobile(context)
                                 ? Border.all(
                                     color:
-                                        MessageStyle.borderColorReceivedBubble,
+                                        Theme.of(context).colorScheme.onPrimary,
                                   )
                                 : null)
                             : null,
@@ -612,9 +617,11 @@ class _MessageContentWithTimestampBuilderState
                         ? const EdgeInsets.symmetric(
                             horizontal: 16.0,
                           )
-                        : MessageStyle.paddingMessageContentBuilder(
-                            widget.event,
-                          )),
+                        : widget.event.messageType == MessageTypes.Image
+                            ? EdgeInsets.zero
+                            : MessageStyle.paddingMessageContentBuilder(
+                                widget.event,
+                              )),
                 constraints: BoxConstraints(
                   maxWidth: MessageStyle.messageBubbleWidth(
                     context,

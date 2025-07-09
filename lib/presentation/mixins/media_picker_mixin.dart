@@ -139,7 +139,7 @@ mixin MediaPickerMixin on CommonMediaPickerMixin {
             return Container(
               padding: MediaPickerStyle.itemPickerPadding,
               decoration: BoxDecoration(
-                color: MultiSysColors.material().surface,
+                color: Theme.of(context).colorScheme.onPrimary,
                 border: Border(
                   top: BorderSide(
                     color: Theme.of(context)
@@ -165,7 +165,7 @@ mixin MediaPickerMixin on CommonMediaPickerMixin {
           return child!;
         },
         child: Container(
-          color: MultiSysColors.material().background,
+          color: Theme.of(context).colorScheme.onPrimary,
           child: Column(
             children: [
               Stack(
@@ -230,6 +230,10 @@ mixin MediaPickerMixin on CommonMediaPickerMixin {
                                     ImagePaths.icSend,
                                     width: MediaPickerStyle.sendIconSize,
                                     height: MediaPickerStyle.sendIconSize,
+                                    colorFilter: ColorFilter.mode(
+                                      Theme.of(context).colorScheme.secondary,
+                                      BlendMode.srcIn,
+                                    ),
                                   ),
                                   ValueListenableBuilder(
                                     valueListenable:

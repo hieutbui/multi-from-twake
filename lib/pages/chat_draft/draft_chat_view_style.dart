@@ -1,6 +1,5 @@
 import 'package:fluffychat/config/themes.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
-import 'package:fluffychat/pages/chat/chat_input_row_style.dart';
 import 'package:fluffychat/utils/responsive/responsive_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
@@ -21,7 +20,6 @@ class DraftChatViewStyle {
         hintText: L10n.of(context)!.message,
         isDense: true,
         hintMaxLines: 1,
-        contentPadding: ChatInputRowStyle.contentPadding(context),
         hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
               color: responsive.isMobile(context)
                   ? LinagoraRefColors.material().tertiary[50]

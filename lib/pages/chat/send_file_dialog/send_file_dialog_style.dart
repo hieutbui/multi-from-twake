@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:linagora_design_flutter/colors/linagora_ref_colors.dart';
-import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 
 class SendFileDialogStyle {
   static const dialogBorderRadius = 16.0;
@@ -29,18 +28,6 @@ class SendFileDialogStyle {
       InputDecoration(
         hintText: L10n.of(context)!.enterCaption,
         hintMaxLines: 1,
-        hintStyle: Theme.of(context)
-            .textTheme
-            .bodyMedium
-            ?.merge(
-              Theme.of(context).inputDecorationTheme.hintStyle,
-            )
-            .copyWith(
-              letterSpacing: -0.15,
-              color: LinagoraRefColors.material().neutralVariant[60],
-            ),
-        filled: true,
-        fillColor: MultiSysColors.material().background,
       );
 
   static const spaceBwInputBarAndButton = SizedBox(height: 8.0);

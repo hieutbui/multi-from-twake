@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:fluffychat/config/app_config.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_typography.dart';
 import 'package:fluffychat/pages/chat/events/message/display_name_widget.dart';
 import 'package:fluffychat/pages/chat/events/message/message_style.dart';
 import 'package:fluffychat/pages/chat/events/message_time_style.dart';
@@ -11,7 +12,6 @@ import 'package:fluffychat/utils/string_extension.dart';
 import 'package:flutter/material.dart' hide Visibility;
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:intl/intl.dart' hide TextDirection;
-import 'package:linagora_design_flutter/colors/linagora_ref_colors.dart';
 import 'package:matrix/matrix.dart';
 
 mixin MessageContentBuilderMixin {
@@ -123,14 +123,16 @@ mixin MessageContentBuilderMixin {
       textScaler: MediaQuery.of(context).textScaler,
       text: TextSpan(
         text: DateFormat("HH:mm").format(event.originServerTs),
-        style: Theme.of(context).textTheme.bodySmall?.merge(
-              TextStyle(
-                color: event.timelineOverlayMessage
-                    ? Colors.white
-                    : LinagoraRefColors.material().tertiary[30],
-                letterSpacing: 0.4,
-              ),
-            ),
+        style: TextStyle(
+          color: event.timelineOverlayMessage
+              ? Colors.white
+              : Theme.of(context).colorScheme.tertiary,
+          fontFamily: MultiFonts.sfProDisplay,
+          fontSize: 8,
+          fontWeight: FontWeight.w400,
+          height: 1.25,
+          letterSpacing: 0.16,
+        ),
       ),
       textDirection: TextDirection.ltr,
     )..layout(minWidth: 0, maxWidth: maxWidth);

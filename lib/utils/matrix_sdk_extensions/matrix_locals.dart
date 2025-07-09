@@ -9,7 +9,8 @@ class MatrixLocals extends MatrixLocalizations {
 
   @override
   String acceptedTheInvitation(String targetName) {
-    return l10n.acceptedTheInvitation(targetName);
+    // return l10n.acceptedTheInvitation(targetName);
+    return '';
   }
 
   @override
@@ -116,7 +117,8 @@ class MatrixLocals extends MatrixLocalizations {
 
   @override
   String createdTheChat(String senderName) {
-    return l10n.createdTheChat(senderName);
+    // return l10n.createdTheChat(senderName);
+    return '';
   }
 
   @override

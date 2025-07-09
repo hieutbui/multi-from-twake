@@ -78,10 +78,11 @@ class SeenByRow extends StatelessWidget {
       case MessageStatus.sent:
         return Icon(
           Icons.done_all,
-          color: MessageTimeStyle.seenByRowIconSecondaryColor(
-            timelineOverlayMessage,
-            context,
-          ),
+          // color: MessageTimeStyle.seenByRowIconSecondaryColor(
+          //   timelineOverlayMessage,
+          //   context,
+          // ),
+          color: Colors.white,
           size: MessageTimeStyle.seenByRowIconSize,
         );
       case MessageStatus.hasBeenSeen:

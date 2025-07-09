@@ -125,7 +125,6 @@ class ChatInputRow extends StatelessWidget {
       suggestionScrollController: controller.suggestionScrollController,
       showEmojiPickerNotifier: controller.showEmojiPickerNotifier,
       decoration: InputDecoration(
-        contentPadding: ChatInputRowStyle.contentPadding(context),
         hintText: L10n.of(context)!.message,
         isDense: true,
         hintMaxLines: 1,
@@ -141,12 +140,6 @@ class ChatInputRow extends StatelessWidget {
             fit: BoxFit.contain,
           ),
         ),
-        // hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-        //       color: controller.responsive.isMobile(context)
-        //           ? LinagoraRefColors.material().tertiary[50]
-        //           : LinagoraRefColors.material().tertiary[30],
-        //       fontFamily: 'Inter',
-        //     ),
       ),
       onChanged: controller.onInputBarChanged,
     );
