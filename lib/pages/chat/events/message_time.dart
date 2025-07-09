@@ -55,9 +55,7 @@ class MessageTime extends StatelessWidget {
               size: MessageStyle.pushpinIconSize,
               paddingAll: MessageStyle.paddingAllPushpin,
               margin: EdgeInsets.zero,
-              iconColor: timelineOverlayMessage
-                  ? Colors.white
-                  : LinagoraRefColors.material().neutral[50],
+              iconColor: timelineOverlayMessage ? Colors.white : Colors.white,
             ),
             const SizedBox(width: 4.0),
           ],

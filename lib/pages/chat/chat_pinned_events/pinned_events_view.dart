@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/domain/app_state/room/chat_get_pinned_events_state.dart';
 import 'package:fluffychat/pages/chat/chat_pinned_events/pinned_events_argument.dart';
@@ -41,7 +42,10 @@ class PinnedEventsView extends StatelessWidget {
               case const (ChatGetPinnedEventsSuccess):
                 final data = success as ChatGetPinnedEventsSuccess;
                 return Material(
-                  color: MultiSysColors.material().onPrimary,
+                  color: (Theme.of(context).brightness == Brightness.light
+                          ? MultiLightColors.messagesSenderHover
+                          : MultiDarkColors.messagesSenderHover)
+                      .withOpacity(0.5),
                   child: InkWell(
                     onTap: () => controller.pinnedEventsController
                         .jumpToPinnedMessageAction(
@@ -69,9 +73,9 @@ class PinnedEventsView extends StatelessWidget {
                                       width:
                                           PinnedEventsStyle.maxWidthIndicator,
                                       child: ScrollConfiguration(
-                                        behavior:
-                                            ScrollConfiguration.of(context)
-                                                .copyWith(scrollbars: false),
+                                        behavior: ScrollConfiguration.of(
+                                          context,
+                                        ).copyWith(scrollbars: false),
                                         child: ListView.separated(
                                           controller: controller
                                               .pinnedMessageScrollController,
@@ -108,7 +112,9 @@ class PinnedEventsView extends StatelessWidget {
                                             );
                                           },
                                           separatorBuilder: (_, __) {
-                                            return const SizedBox(height: 1);
+                                            return const SizedBox(
+                                              height: 1,
+                                            );
                                           },
                                           itemCount: data.pinnedEvents.length,
                                         ),

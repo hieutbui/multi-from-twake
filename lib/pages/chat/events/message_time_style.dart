@@ -16,8 +16,8 @@ class MessageTimeStyle {
 
   static double get timelineLetterSpacing => 0.4;
 
-  static double get paddingTimeAndIcon => 8;
-  static double get seenByRowIconSize => 16;
+  static double get paddingTimeAndIcon => 2.0;
+  static double get seenByRowIconSize => 14;
   static Color seenByRowIconPrimaryColor(
     bool timelineOverlayMessage,
     BuildContext context,

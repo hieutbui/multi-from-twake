@@ -101,6 +101,7 @@ class ChatViewBody extends StatelessWidget with MessageContentMixin {
                         controller.room!.membership == Membership.join) ...[
                       Center(
                         child: Container(
+                          color: Colors.transparent,
                           alignment: Alignment.center,
                           child: ValueListenableBuilder(
                             valueListenable: controller.isPendingChatNotifier,
@@ -209,25 +210,25 @@ class ChatViewBody extends StatelessWidget with MessageContentMixin {
                   children: [
                     PinnedEventsView(controller),
                     if (controller.room!.pinnedEventIds.isNotEmpty)
-                      Divider(
-                        height: ChatViewBodyStyle.dividerSize,
-                        thickness: ChatViewBodyStyle.dividerSize,
-                        color: Theme.of(context).dividerColor,
+                      // Divider(
+                      //   height: ChatViewBodyStyle.dividerSize,
+                      //   thickness: ChatViewBodyStyle.dividerSize,
+                      //   color: Theme.of(context).dividerColor,
+                      // ),
+                      SizedBox(
+                        key: controller.stickyTimestampKey,
+                        child: ValueListenableBuilder(
+                          valueListenable: controller.stickyTimestampNotifier,
+                          builder: (context, stickyTimestamp, child) {
+                            return StickyTimestampWidget(
+                              isStickyHeader: stickyTimestamp != null,
+                              content: stickyTimestamp != null
+                                  ? stickyTimestamp.relativeTime(context)
+                                  : '',
+                            );
+                          },
+                        ),
                       ),
-                    SizedBox(
-                      key: controller.stickyTimestampKey,
-                      child: ValueListenableBuilder(
-                        valueListenable: controller.stickyTimestampNotifier,
-                        builder: (context, stickyTimestamp, child) {
-                          return StickyTimestampWidget(
-                            isStickyHeader: stickyTimestamp != null,
-                            content: stickyTimestamp != null
-                                ? stickyTimestamp.relativeTime(context)
-                                : '',
-                          );
-                        },
-                      ),
-                    ),
                   ],
                 ),
               ],
@@ -349,7 +350,6 @@ class ChatViewBody extends StatelessWidget with MessageContentMixin {
 
   Widget _inputMessageWidget(BuildContext context) {
     return Container(
-      // height: 144,
       decoration: controller.responsive.isMobile(context)
           ? ShapeDecoration(
               color: Theme.of(context).colorScheme.onPrimary,

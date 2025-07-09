@@ -8,9 +8,9 @@ import 'package:fluffychat/pages/chat/events/message/message_content_with_timest
 import 'package:fluffychat/pages/chat/events/message/message_style.dart';
 import 'package:fluffychat/pages/chat/events/message/multi_platform_message_container.dart';
 import 'package:fluffychat/pages/chat/events/message/swipeable_message.dart';
+import 'package:fluffychat/pages/chat/events/start_period_timestamp_widget.dart';
 import 'package:fluffychat/pages/chat/events/state_message.dart';
 import 'package:fluffychat/pages/chat/events/verification_request_content.dart';
-import 'package:fluffychat/pages/chat/sticky_timestamp_widget.dart';
 import 'package:fluffychat/presentation/mixins/message_avatar_mixin.dart';
 import 'package:fluffychat/utils/date_time_extension.dart';
 import 'package:fluffychat/utils/extension/event_status_custom_extension.dart';
@@ -287,7 +287,7 @@ class _MessageState extends State<Message> with MessageAvatarMixin {
               ValueListenableBuilder(
                 valueListenable: inviewNotifier,
                 builder: (context, inView, _) {
-                  return StickyTimestampWidget(
+                  return StartPeriodTimestampWidget(
                     content: !inView
                         ? widget.event.originServerTs.relativeTime(context)
                         : '',
@@ -305,7 +305,7 @@ class _MessageState extends State<Message> with MessageAvatarMixin {
                   ).opacityLayer3,
                 ),
               ),
-              StickyTimestampWidget(
+              StartPeriodTimestampWidget(
                 content: L10n.of(context)!.unreadMessages,
               ),
             ],
