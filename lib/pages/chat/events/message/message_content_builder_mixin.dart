@@ -104,10 +104,8 @@ mixin MessageContentBuilderMixin {
         ),
         style: event.isDisplayOnlyEmoji()
             ? event.textStyleForOnlyEmoji(context)
-            : Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.onSurface,
+            : Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
                 ),
       ),
       textDirection: TextDirection.ltr,
