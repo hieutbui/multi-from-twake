@@ -1,11 +1,17 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 
 class MessageTimeStyle {
-  static Color? timelineColor(bool timelineOverlayMessage) =>
+  static Color? timelineColor(
+    bool timelineOverlayMessage,
+    BuildContext context,
+  ) =>
       timelineOverlayMessage
-          ? Colors.white
+          ? Theme.of(context).brightness == Brightness.light
+              ? MultiLightColors.textMainTertiaryDisabled
+              : MultiDarkColors.textMainTertiaryDisabled
           : LinagoraRefColors.material().neutral[50];
 
   static double get timelineLetterSpacing => 0.4;
@@ -33,7 +39,7 @@ class MessageTimeStyle {
   ) =>
       Theme.of(context).textTheme.bodySmall?.merge(
             TextStyle(
-              color: timelineColor(timelineOverlayMessage),
+              color: timelineColor(timelineOverlayMessage, context),
               letterSpacing: 0.4,
             ),
           );

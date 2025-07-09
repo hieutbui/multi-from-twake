@@ -48,7 +48,51 @@ class ChatInputActionRow extends StatelessWidget {
     );
   }
 
+  //TODO: Have to clear condition
   Widget _buildAIButton(BuildContext context, bool isAIActive) {
+    // return !isAIActive
+    //     ? Material(
+    //         color: Theme.of(context).brightness == Brightness.light
+    //             ? MultiLightColors.buttonsMainSecondaryDefault
+    //             : MultiDarkColors.buttonsMainSecondaryDefault,
+    //         borderRadius: const BorderRadius.all(
+    //           Radius.circular(
+    //               MultiMobileRoundnessAndPaddings.roundnessButtonsSmall),
+    //         ),
+    //         child: InkWell(
+    //           //TODO: Handle AI button
+    //           onTap: () {},
+    //           enableFeedback: isAIActive,
+    //           child: Padding(
+    //             padding: const EdgeInsets.only(
+    //               left: 28.0,
+    //               right: 20.0,
+    //               top: 5.0,
+    //               bottom: 5.0,
+    //             ),
+    //             child: Row(
+    //               children: <Widget>[
+    //                 Text(
+    //                   'AI help',
+    //                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
+    //                         color: Theme.of(context)
+    //                             .colorScheme
+    //                             .onPrimaryContainer,
+    //                       ),
+    //                 ),
+    //                 const SizedBox(width: 8),
+    //                 SvgPicture.asset(ImagePaths.icStartAI),
+    //               ],
+    //             ),
+    //           ),
+    //         ),
+    //       )
+    //     : TwakeIconButton(
+    //         imagePath: ImagePaths.icStartAIActive,
+    //         size: 24.0,
+    //         tooltip: 'AI help',
+    //         onTap: () {},
+    //       );
     return Material(
       color: Theme.of(context).brightness == Brightness.light
           ? MultiLightColors.buttonsMainSecondaryDefault
@@ -67,26 +111,18 @@ class ChatInputActionRow extends StatelessWidget {
             top: 5.0,
             bottom: 5.0,
           ),
-          child: !isAIActive
-              ? Row(
-                  children: <Widget>[
-                    Text(
-                      'AI help',
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimaryContainer,
-                          ),
+          child: Row(
+            children: <Widget>[
+              Text(
+                'AI help',
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
-                    const SizedBox(width: 8),
-                    SvgPicture.asset(ImagePaths.icStartAI),
-                  ],
-                )
-              : SvgPicture.asset(
-                  ImagePaths.icStartAIActive,
-                  height: 24.0,
-                  width: 24.0,
-                ),
+              ),
+              const SizedBox(width: 8),
+              SvgPicture.asset(ImagePaths.icStartAI),
+            ],
+          ),
         ),
       ),
     );

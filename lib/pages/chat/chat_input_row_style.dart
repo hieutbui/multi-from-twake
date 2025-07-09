@@ -23,11 +23,11 @@ class ChatInputRowStyle {
     left: 8,
   );
 
-  static EdgeInsetsDirectional contentPadding(BuildContext context) =>
-      EdgeInsetsDirectional.symmetric(
-        vertical: responsiveUtils.isMobile(context) ? 8 : 10,
-        horizontal: responsiveUtils.isMobile(context) ? 12 : 16,
-      );
+  // static EdgeInsetsDirectional contentPadding(BuildContext context) =>
+  //     EdgeInsetsDirectional.symmetric(
+  //       vertical: responsiveUtils.isMobile(context) ? 8 : 10,
+  //       horizontal: responsiveUtils.isMobile(context) ? 12 : 16,
+  //     );
 
   static const double inputComposerOpacity = 0.38;
 }

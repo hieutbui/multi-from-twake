@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_typography.dart';
 import 'package:fluffychat/pages/chat/events/message/message_style.dart';
 import 'package:fluffychat/pages/chat/events/message_time_style.dart';
 import 'package:fluffychat/pages/chat/seen_by_row.dart';
@@ -79,14 +80,16 @@ class MessageTime extends StatelessWidget {
           Text(
             DateFormat("HH:mm").format(event.originServerTs),
             textScaler: const TextScaler.linear(1.0),
-            style: Theme.of(context).textTheme.bodySmall?.merge(
-                  TextStyle(
-                    color: timelineOverlayMessage
-                        ? Colors.white
-                        : LinagoraRefColors.material().tertiary[30],
-                    letterSpacing: 0.4,
-                  ),
-                ),
+            style: TextStyle(
+              color: timelineOverlayMessage
+                  ? Colors.white
+                  : Theme.of(context).colorScheme.tertiary,
+              fontFamily: MultiFonts.sfProDisplay,
+              fontSize: 8,
+              fontWeight: FontWeight.w400,
+              height: 1.25,
+              letterSpacing: 0.16,
+            ),
           ),
           if (ownMessage) ...[
             SizedBox(width: MessageTimeStyle.paddingTimeAndIcon),
