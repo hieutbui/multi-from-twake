@@ -234,7 +234,7 @@ class ChatView extends StatelessWidget with MessageContentMixin {
                         controller.selectedEvents.isEmpty &&
                         controller.replyEventNotifier.value == null) {
                       return Padding(
-                        padding: const EdgeInsets.only(bottom: 56.0),
+                        padding: const EdgeInsets.only(bottom: 140.0),
                         child: FloatingActionButton(
                           onPressed: controller.scrollDown,
                           mini: true,
