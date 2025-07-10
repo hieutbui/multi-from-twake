@@ -81,19 +81,6 @@ class ReplyContent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: ReplyContentStyle.prefixBarVerticalPadding,
-              ),
-              child: Container(
-                constraints: const BoxConstraints(
-                  minHeight: ReplyContentStyle.replyContentSize,
-                ),
-                width: ReplyContentStyle.prefixBarWidth,
-                decoration: ReplyContentStyle.prefixBarDecoration(context),
-              ),
-            ),
-            const SizedBox(width: ReplyContentStyle.contentSpacing),
             if (displayEvent.hasAttachment)
               Center(
                 child: ReplyPreviewIconBuilder(

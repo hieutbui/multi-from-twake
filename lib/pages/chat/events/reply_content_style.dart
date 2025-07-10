@@ -1,14 +1,16 @@
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_typography.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/utils/responsive/responsive_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 
 class ReplyContentStyle {
   static ResponsiveUtils responsive = getIt.get<ResponsiveUtils>();
-  static const double fontSizeDisplayName = AppConfig.messageFontSize * 0.76;
-  static const double fontSizeDisplayContent = AppConfig.messageFontSize * 0.88;
+  // static const double fontSizeDisplayName = AppConfig.messageFontSize * 0.76;
+  // static const double fontSizeDisplayContent = AppConfig.messageFontSize * 0.88;
+  static const double fontSizeDisplayName = 11;
+  static const double fontSizeDisplayContent = 16;
   static const double replyContentSize = fontSizeDisplayContent * 2;
 
   static const EdgeInsets replyParentContainerPadding = EdgeInsets.only(
@@ -33,6 +35,12 @@ class ReplyContentStyle {
     return BoxDecoration(
       color: ownMessage ? receiverColor : senderColor,
       borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+      border: Border(
+        left: BorderSide(
+          color: ownMessage ? Colors.black : const Color(0xFF76a4ee),
+          width: 2,
+        ),
+      ),
     );
   }
 
@@ -51,19 +59,21 @@ class ReplyContentStyle {
   static const double previewedImagePlaceholderPadding = 4.0;
 
   static TextStyle? displayNameTextStyle(BuildContext context) {
-    return Theme.of(context).textTheme.titleSmall?.copyWith(
-          color: Theme.of(context).colorScheme.onSurfaceVariant,
-          fontWeight: FontWeight.bold,
-          fontSize: fontSizeDisplayName,
-        );
+    return TextStyle(
+      color: Theme.of(context).colorScheme.onPrimaryContainer,
+      fontWeight: FontWeight.w600,
+      fontSize: fontSizeDisplayName,
+      height: 1.18,
+      letterSpacing: 0.06,
+      fontFamily: MultiFonts.sfPro,
+    );
   }
 
   static TextStyle? replyBodyTextStyle(BuildContext context) {
-    return Theme.of(context).textTheme.bodySmall?.copyWith(
-          color: LinagoraRefColors.material().neutral[50],
-          fontWeight: FontWeight.w500,
-          overflow: TextOverflow.ellipsis,
+    return Theme.of(context).textTheme.bodyMedium?.copyWith(
           fontSize: fontSizeDisplayContent,
+          overflow: TextOverflow.ellipsis,
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
         );
   }
 
