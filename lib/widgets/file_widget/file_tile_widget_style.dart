@@ -1,7 +1,7 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_matrix_html/color_extension.dart';
 import 'package:linagora_design_flutter/colors/linagora_ref_colors.dart';
-import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 
 class FileTileWidgetStyle {
   const FileTileWidgetStyle();
@@ -9,10 +9,17 @@ class FileTileWidgetStyle {
   EdgeInsets get paddingFileTileAll =>
       const EdgeInsets.only(left: 8.0, right: 16.0);
 
-  Color backgroundColor(BuildContext context, {bool ownMessage = false}) =>
-      ownMessage
-          ? MultiSysColors.material().primaryContainer
-          : MultiSysColors.material().onSurface.withOpacity(0.08);
+  Color backgroundColor(BuildContext context, {bool ownMessage = false}) {
+    final receiverColor = Theme.of(context).brightness == Brightness.light
+        ? MultiLightColors.messagesReceiverHover
+        : MultiDarkColors.messagesReceiverHover;
+
+    final senderColor = Theme.of(context).brightness == Brightness.light
+        ? MultiLightColors.messagesSenderHover
+        : MultiDarkColors.messagesSenderHover;
+
+    return ownMessage ? receiverColor : senderColor;
+  }
 
   BorderRadiusGeometry get borderRadius => BorderRadius.circular(8.0);
 
@@ -44,7 +51,7 @@ class FileTileWidgetStyle {
 
   TextStyle textInformationStyle(BuildContext context) {
     return Theme.of(context).textTheme.bodySmall!.copyWith(
-          color: fileInfoColor,
+          color: Theme.of(context).colorScheme.tertiary,
         );
   }
 

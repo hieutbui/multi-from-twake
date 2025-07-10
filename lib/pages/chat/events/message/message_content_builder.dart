@@ -68,13 +68,13 @@ class MessageContentBuilder extends StatelessWidget
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            if (event.relationshipType == RelationshipTypes.reply)
-              ReplyContentWidget(
-                event: event,
-                timeline: timeline,
-                scrollToEventId: scrollToEventId,
-                ownMessage: event.isOwnMessage,
-              ),
+            // if (event.relationshipType == RelationshipTypes.reply)
+            //   ReplyContentWidget(
+            //     event: event,
+            //     timeline: timeline,
+            //     scrollToEventId: scrollToEventId,
+            //     ownMessage: event.isOwnMessage,
+            //   ),
             Stack(
               children: [
                 MessageContent(
@@ -128,6 +128,13 @@ class MessageContentBuilder extends StatelessWidget
                   ),
               ],
             ),
+            if (event.relationshipType == RelationshipTypes.reply)
+              ReplyContentWidget(
+                event: event,
+                timeline: timeline,
+                scrollToEventId: scrollToEventId,
+                ownMessage: event.isOwnMessage,
+              ),
             if (isNeedAddNewLine ||
                 isContainsTagName(event) ||
                 isContainsSpecialHTMLTag(event))
