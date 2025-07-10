@@ -22,12 +22,12 @@ class StartPeriodTimestampWidget extends StatelessWidget {
               color: Theme.of(context).brightness == Brightness.light
                   ? MultiLightColors.backgroundSurfacesTransparent
                   : MultiDarkColors.backgroundSurfacesTransparent,
-              shape: RoundedRectangleBorder(
-                side: const BorderSide(
+              shape: const RoundedRectangleBorder(
+                side: BorderSide(
                   width: 1,
                   color: Color(0x4C738C96),
                 ),
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.all(Radius.circular(20.0)),
               ),
             ),
             alignment: Alignment.center,

@@ -1,5 +1,5 @@
 import 'package:fluffychat/config/app_config.dart';
-import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/utils/responsive/responsive_utils.dart';
 import 'package:flutter/material.dart';
@@ -22,11 +22,17 @@ class ReplyContentStyle {
     BuildContext context,
     bool ownMessage,
   ) {
+    final receiverColor = Theme.of(context).brightness == Brightness.light
+        ? MultiLightColors.messagesReceiverHover
+        : MultiDarkColors.messagesReceiverHover;
+
+    final senderColor = Theme.of(context).brightness == Brightness.light
+        ? MultiLightColors.messagesSenderHover
+        : MultiDarkColors.messagesSenderHover;
+
     return BoxDecoration(
-      color: ownMessage
-          ? MultiSysColors.material().primaryContainer
-          : MultiSysColors.material().onSurface.withOpacity(0.08),
-      borderRadius: BorderRadius.circular(8.0),
+      color: ownMessage ? receiverColor : senderColor,
+      borderRadius: const BorderRadius.all(Radius.circular(4.0)),
     );
   }
 

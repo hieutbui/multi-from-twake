@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:fluffychat/config/multi_sys_variables/multi_typography.dart';
 import 'package:fluffychat/utils/twake_snackbar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -187,7 +188,7 @@ class AudioPlayerState extends State<AudioPlayerWidget> {
   Widget build(BuildContext context) {
     final statusText = this.statusText ??= _durationString ?? '00:00';
     return Padding(
-      padding: EdgeInsets.all(16 * AppConfig.bubbleSizeFactor),
+      padding: EdgeInsets.all(6 * AppConfig.bubbleSizeFactor),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -198,17 +199,7 @@ class AudioPlayerState extends State<AudioPlayerWidget> {
             child: status == AudioPlayerStatus.downloading
                 ? CircularProgressIndicator(strokeWidth: 2, color: widget.color)
                 : InkWell(
-                    borderRadius: BorderRadius.circular(64),
-                    child: Material(
-                      color: widget.color.withAlpha(64),
-                      borderRadius: BorderRadius.circular(64),
-                      child: Icon(
-                        audioPlayer?.playerState.playing == true
-                            ? Icons.pause_outlined
-                            : Icons.play_arrow_outlined,
-                        color: widget.color,
-                      ),
-                    ),
+                    borderRadius: BorderRadius.circular(42.34),
                     onLongPress: () => widget.event.saveFile(context),
                     onTap: () {
                       if (status == AudioPlayerStatus.downloaded) {
@@ -217,6 +208,50 @@ class AudioPlayerState extends State<AudioPlayerWidget> {
                         _downloadAction();
                       }
                     },
+                    child: SizedBox(
+                      width: 41,
+                      height: 41,
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: 41,
+                            height: 41,
+                            decoration: BoxDecoration(
+                              color: const Color(0xff778eec),
+                              borderRadius: BorderRadius.circular(42.34),
+                            ),
+                          ),
+                          Container(
+                            width: 41,
+                            height: 41,
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(42.34),
+                            ),
+                          ),
+                          Container(
+                            width: 41,
+                            height: 41,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(42.34),
+                              border: Border.all(
+                                width: 1.28,
+                                color: Colors.white.withOpacity(0.5),
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: Icon(
+                              audioPlayer?.playerState.playing == true
+                                  ? Icons.pause_outlined
+                                  : Icons.play_arrow,
+                              color: Colors.white,
+                              size: 24,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
           ),
           const SizedBox(width: 8),
@@ -256,12 +291,23 @@ class AudioPlayerState extends State<AudioPlayerWidget> {
           ),
           const SizedBox(width: 8),
           Container(
-            alignment: Alignment.centerRight,
+            alignment: Alignment.center,
+            decoration: ShapeDecoration(
+              color: Colors.white.withOpacity(0.10),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(100),
+              ),
+            ),
             width: 42,
             child: Text(
               statusText,
-              style: TextStyle(
-                color: widget.color,
+              style: const TextStyle(
+                height: 1.33,
+                fontSize: 12,
+                fontFamily: MultiFonts.sfProDisplay,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 0.24,
+                color: Colors.white,
               ),
             ),
           ),
