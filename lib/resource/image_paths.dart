@@ -69,6 +69,10 @@ class ImagePaths {
   static String get icSendActive => _getImagePath('ic_send_active.svg');
   static String get icMicrophone => _getImagePath('ic_microphone.svg');
   static String get icStartAIActive => _getImagePath('ic_start_ai_active.svg');
+  static String get icCheckboxChecked =>
+      _getImagePath('ic_checkbox_checked.svg');
+  static String get icCheckboxUnchecked =>
+      _getImagePath('ic_checkbox_unchecked.svg');
 
   // Entrance Main Screen assets
   static String get splashBackground =>

@@ -24,7 +24,25 @@ class PinnedMessagesScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: MultiSysColors.material().onPrimary,
       appBar: AppBar(
-        backgroundColor: MultiSysColors.material().onPrimary,
+        flexibleSpace: Container(
+          decoration: const ShapeDecoration(
+            gradient: LinearGradient(
+              begin: Alignment(0.50, -0.00),
+              end: Alignment(0.50, 1.00),
+              colors: [
+                Color(0xFF0E0F13),
+                Color(0xFF232631),
+              ],
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(24),
+                bottomRight: Radius.circular(24),
+              ),
+            ),
+          ),
+        ),
+        backgroundColor: Colors.black,
         centerTitle: true,
         title: ValueListenableBuilder(
           valueListenable: controller.eventsNotifier,
@@ -56,91 +74,104 @@ class PinnedMessagesScreen extends StatelessWidget {
             ),
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Padding(
-              padding: PinnedMessagesStyle.paddingListMessages(context),
-              child: ValueListenableBuilder(
-                valueListenable: controller.eventsNotifier,
-                builder: (context, events, child) {
-                  return ListView.custom(
-                    controller: controller.scrollController,
-                    shrinkWrap: true,
-                    reverse: true,
-                    childrenDelegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        // The message at this index:
-                        final currentEventIndex = events.length - index - 1;
-                        final event = events[currentEventIndex];
-                        final nextEvent = currentEventIndex > 0
-                            ? events[currentEventIndex - 1]
-                            : null;
-                        final previousEvent =
-                            currentEventIndex < events.length - 1
-                                ? events[currentEventIndex + 1]
-                                : null;
-                        return ValueListenableBuilder<List<Event>>(
-                          valueListenable: controller.selectedEvents,
-                          builder: (context, selectedEvents, child) {
-                            return Message(
-                              event!,
-                              previousEvent: previousEvent,
-                              nextEvent: nextEvent,
-                              timeline: controller.widget.timeline!,
-                              isHoverNotifier: controller.isHoverNotifier,
-                              listHorizontalActionMenu:
-                                  controller.listHorizontalActionMenuBuilder(),
-                              onMenuAction:
-                                  controller.handleHorizontalActionMenu,
-                              onHover: (isHover, event) =>
-                                  controller.onHover(isHover, index, event),
-                              selectMode: selectedEvents.isNotEmpty,
-                              onSelect: controller.onSelectMessage,
-                              selected: controller.isSelected(event),
-                              menuChildren: (context) =>
-                                  controller.pinnedMessagesActionsList(
-                                context,
-                                controller.getPinnedMessagesActionsList(event),
-                                event,
-                              ),
-                              onLongPressMessage: (event) =>
-                                  controller.onLongPressMessage(
-                                context,
-                                event,
-                              ),
-                              listAction: controller
-                                  .pinnedMessagesContextMenuActionsList(
-                                context,
-                                event,
-                              ),
-                            );
-                          },
-                        );
-                      },
-                      childCount: events.length,
-                    ),
-                  );
-                },
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment(0.50, -0.00),
+            end: Alignment(0.50, 1.00),
+            colors: [
+              Color(0xFF0E0F13),
+              Color(0xFF191B26),
+            ],
+          ),
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: PinnedMessagesStyle.paddingListMessages(context),
+                child: ValueListenableBuilder(
+                  valueListenable: controller.eventsNotifier,
+                  builder: (context, events, child) {
+                    return ListView.custom(
+                      controller: controller.scrollController,
+                      shrinkWrap: true,
+                      reverse: true,
+                      childrenDelegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          // The message at this index:
+                          final currentEventIndex = events.length - index - 1;
+                          final event = events[currentEventIndex];
+                          final nextEvent = currentEventIndex > 0
+                              ? events[currentEventIndex - 1]
+                              : null;
+                          final previousEvent =
+                              currentEventIndex < events.length - 1
+                                  ? events[currentEventIndex + 1]
+                                  : null;
+                          return ValueListenableBuilder<List<Event>>(
+                            valueListenable: controller.selectedEvents,
+                            builder: (context, selectedEvents, child) {
+                              return Message(
+                                event!,
+                                previousEvent: previousEvent,
+                                nextEvent: nextEvent,
+                                timeline: controller.widget.timeline!,
+                                isHoverNotifier: controller.isHoverNotifier,
+                                listHorizontalActionMenu: controller
+                                    .listHorizontalActionMenuBuilder(),
+                                onMenuAction:
+                                    controller.handleHorizontalActionMenu,
+                                onHover: (isHover, event) =>
+                                    controller.onHover(isHover, index, event),
+                                selectMode: selectedEvents.isNotEmpty,
+                                onSelect: controller.onSelectMessage,
+                                selected: controller.isSelected(event),
+                                menuChildren: (context) =>
+                                    controller.pinnedMessagesActionsList(
+                                  context,
+                                  controller
+                                      .getPinnedMessagesActionsList(event),
+                                  event,
+                                ),
+                                onLongPressMessage: (event) =>
+                                    controller.onLongPressMessage(
+                                  context,
+                                  event,
+                                ),
+                                listAction: controller
+                                    .pinnedMessagesContextMenuActionsList(
+                                  context,
+                                  event,
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        childCount: events.length,
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
-          ),
-          if (controller.room?.canPinMessage == true) ...[
-            responsiveUtils.isMobile(context)
-                ? BottomMenuMobile(
-                    selectedEvents: controller.selectedEvents,
-                    onUnpinAll: controller.unpinAll,
-                    onUnpinSelectedEvents: controller.unpinSelectedEvents,
-                  )
-                : BottomMenuWeb(
-                    selectedEvents: controller.selectedEvents,
-                    onCloseSelectionMode: controller.closeSelectionMode,
-                    onUnpinSelectedEvents: controller.unpinSelectedEvents,
-                  ),
-          ] else ...[
-            const SizedBox.shrink(),
+            if (controller.room?.canPinMessage == true) ...[
+              responsiveUtils.isMobile(context)
+                  ? BottomMenuMobile(
+                      selectedEvents: controller.selectedEvents,
+                      onUnpinAll: controller.unpinAll,
+                      onUnpinSelectedEvents: controller.unpinSelectedEvents,
+                    )
+                  : BottomMenuWeb(
+                      selectedEvents: controller.selectedEvents,
+                      onCloseSelectionMode: controller.closeSelectionMode,
+                      onUnpinSelectedEvents: controller.unpinSelectedEvents,
+                    ),
+            ] else ...[
+              const SizedBox.shrink(),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }

@@ -12,6 +12,7 @@ import 'package:fluffychat/pages/chat/events/start_period_timestamp_widget.dart'
 import 'package:fluffychat/pages/chat/events/state_message.dart';
 import 'package:fluffychat/pages/chat/events/verification_request_content.dart';
 import 'package:fluffychat/presentation/mixins/message_avatar_mixin.dart';
+import 'package:fluffychat/resource/image_paths.dart';
 import 'package:fluffychat/utils/date_time_extension.dart';
 import 'package:fluffychat/utils/extension/event_status_custom_extension.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions/event_extension.dart';
@@ -23,6 +24,7 @@ import 'package:fluffychat/widgets/swipeable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_emoji_mart/flutter_emoji_mart.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:inview_notifier_list/inview_notifier_list.dart';
 import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 import 'package:matrix/matrix.dart';
@@ -384,9 +386,7 @@ class _MessageState extends State<Message> with MessageAvatarMixin {
       padding: EdgeInsets.only(
         left: Message.responsiveUtils.isMobile(context) ? 8.0 : 0,
       ),
-      color: widget.selected
-          ? MultiSysColors.material().secondaryContainer
-          : Theme.of(context).primaryColor.withAlpha(0),
+      color: Colors.transparent,
       constraints:
           const BoxConstraints(maxWidth: TwakeThemes.columnWidth * 2.5),
       child: Row(
@@ -395,14 +395,12 @@ class _MessageState extends State<Message> with MessageAvatarMixin {
           if (widget.selectMode && event.status.isAvailable)
             Align(
               alignment: AlignmentDirectional.centerStart,
-              child: Icon(
+              child: SvgPicture.asset(
                 widget.selected
-                    ? Icons.check_circle_rounded
-                    : Icons.circle_outlined,
-                color: widget.selected
-                    ? MultiSysColors.material().primary
-                    : Colors.black,
-                size: 20,
+                    ? ImagePaths.icCheckboxChecked
+                    : ImagePaths.icCheckboxUnchecked,
+                width: 20,
+                height: 20,
               ),
             ),
           Expanded(
