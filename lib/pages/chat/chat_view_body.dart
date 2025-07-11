@@ -393,7 +393,12 @@ class ChatViewBody extends StatelessWidget with MessageContentMixin {
             height: controller.responsive.isMobile(context) ? 12.0 : 12.0,
           ),
           ChatInputActionRow(
-            controller: controller,
+            inputText: controller.inputText,
+            onTapEmoji: () {},
+            onTapAttach: () => controller.onSendFileClick(context),
+            onTapSnooze: () {},
+            onTapSend: controller.onInputBarSubmitted,
+            onTapAI: () {},
           ),
           const SizedBox(height: 40.0),
         ],

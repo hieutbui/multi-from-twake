@@ -113,9 +113,10 @@ class ChatView extends StatelessWidget with MessageContentMixin {
             future: controller.loadTimelineFuture,
             builder: (BuildContext context, snapshot) {
               return Scaffold(
-                backgroundColor: controller.responsive.isMobile(context)
-                    ? MultiSysColors.material().background
-                    : MultiSysColors.material().onPrimary,
+                // backgroundColor: controller.responsive.isMobile(context)
+                //     ? MultiSysColors.material().background
+                //     : MultiSysColors.material().onPrimary,
+                backgroundColor: Colors.black.withOpacity(0.5),
                 appBar: AppBar(
                   flexibleSpace: Container(
                     decoration: const ShapeDecoration(
@@ -135,7 +136,7 @@ class ChatView extends StatelessWidget with MessageContentMixin {
                       ),
                     ),
                   ),
-                  backgroundColor: Colors.black,
+                  backgroundColor: Colors.black.withOpacity(0.5),
                   automaticallyImplyLeading: false,
                   toolbarHeight: ChatViewStyle.appBarHeight(context),
                   title: Padding(

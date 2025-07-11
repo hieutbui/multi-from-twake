@@ -73,6 +73,7 @@ class ImagePaths {
       _getImagePath('ic_checkbox_checked.svg');
   static String get icCheckboxUnchecked =>
       _getImagePath('ic_checkbox_unchecked.svg');
+  static String get icHandHello => _getImagePath('ic_hand_hello.svg');
 
   // Entrance Main Screen assets
   static String get splashBackground =>
