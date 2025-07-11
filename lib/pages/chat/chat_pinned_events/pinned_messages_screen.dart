@@ -9,7 +9,6 @@ import 'package:fluffychat/widgets/twake_components/twake_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
-import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/domain/model/room/room_extension.dart';
 
 class PinnedMessagesScreen extends StatelessWidget {
@@ -22,7 +21,7 @@ class PinnedMessagesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MultiSysColors.material().onPrimary,
+      backgroundColor: Colors.black.withOpacity(0.5),
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: const ShapeDecoration(
@@ -42,7 +41,7 @@ class PinnedMessagesScreen extends StatelessWidget {
             ),
           ),
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.black.withOpacity(0.5),
         centerTitle: true,
         title: ValueListenableBuilder(
           valueListenable: controller.eventsNotifier,

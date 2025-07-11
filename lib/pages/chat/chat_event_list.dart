@@ -265,6 +265,8 @@ class ChatEventList extends StatelessWidget {
   Widget _chatEmptyBuilder(Timeline timeline) {
     if (controller.room?.isDirectChat ?? true) {
       return DraftChatEmpty(
+        receiverId: controller.room?.id ?? '',
+        displayName: controller.room?.name,
         onTap: () => controller.inputFocus.requestFocus(),
       );
     } else {

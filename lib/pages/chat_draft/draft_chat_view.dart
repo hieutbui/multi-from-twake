@@ -1,8 +1,7 @@
 import 'package:desktop_drop/desktop_drop.dart';
-import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/chat/chat.dart';
 import 'package:fluffychat/pages/chat/chat_app_bar_title_style.dart';
-import 'package:fluffychat/pages/chat/chat_view_body_style.dart';
+import 'package:fluffychat/pages/chat/chat_input_action_row.dart';
 import 'package:fluffychat/pages/chat/chat_view_style.dart';
 import 'package:fluffychat/pages/chat_draft/draft_chat.dart';
 import 'package:fluffychat/pages/chat_draft/draft_chat_empty_widget.dart';
@@ -42,13 +41,27 @@ class DraftChatView extends StatelessWidget {
       },
       child: KeyboardDismissOnTap(
         child: Scaffold(
-          backgroundColor: DraftChatViewStyle.responsive.isMobile(context)
-              ? MultiSysColors.material().background
-              : MultiSysColors.material().onPrimary,
+          backgroundColor: Colors.black.withOpacity(0.5),
           appBar: AppBar(
-            backgroundColor: DraftChatViewStyle.responsive.isMobile(context)
-                ? MultiSysColors.material().surface
-                : MultiSysColors.material().onPrimary,
+            flexibleSpace: Container(
+              decoration: const ShapeDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment(0.50, -0.00),
+                  end: Alignment(0.50, 1.00),
+                  colors: [
+                    Color(0xFF0E0F13),
+                    Color(0xFF232631),
+                  ],
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(24),
+                    bottomRight: Radius.circular(24),
+                  ),
+                ),
+              ),
+            ),
+            backgroundColor: Colors.black.withOpacity(0.5),
             automaticallyImplyLeading: false,
             toolbarHeight: ChatViewStyle.appBarHeight(context),
             title: Padding(
@@ -77,195 +90,205 @@ class DraftChatView extends StatelessWidget {
                 ],
               ),
             ),
-            bottom: PreferredSize(
-              preferredSize: const Size(double.infinity, 1),
-              child: Container(
-                color: LinagoraStateLayer(
-                  MultiSysColors.material().surfaceTint,
-                ).opacityLayer1,
-                height: 1,
-              ),
-            ),
+            // bottom: PreferredSize(
+            //   preferredSize: const Size(double.infinity, 1),
+            //   child: Container(
+            //     color: LinagoraStateLayer(
+            //       MultiSysColors.material().surfaceTint,
+            //     ).opacityLayer1,
+            //     height: 1,
+            //   ),
+            // ),
           ),
-          body: Container(
-            color: DraftChatViewStyle.responsive.isMobile(context)
-                ? MultiSysColors.material().surface
-                : Colors.transparent,
-            child: SafeArea(
-              child: Center(
-                child: Stack(
+          body: Center(
+            child: Stack(
+              children: [
+                Column(
                   children: [
-                    Column(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            color: ChatViewBodyStyle.chatViewBackgroundColor(
-                              context,
-                            ),
-                            child: Center(
-                              child: DropTarget(
-                                onDragDone: (details) =>
-                                    controller.handleDragDone(details),
-                                onDragEntered: controller.onDragEntered,
-                                onDragExited: controller.onDragExited,
-                                child: DraftChatEmpty(
-                                  onTap: () =>
-                                      controller.handleDraftAction(context),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          decoration: DraftChatViewStyle.responsive
-                                  .isMobile(context)
-                              ? BoxDecoration(
-                                  color: MultiSysColors.material().surface,
-                                  border: Border(
-                                    top: BorderSide(
-                                      color: LinagoraStateLayer(
-                                        MultiSysColors.material().surfaceTint,
-                                      ).opacityLayer3,
-                                    ),
-                                  ),
-                                )
-                              : null,
-                          child: Column(
-                            children: [
-                              const SizedBox(height: 8.0),
-                              DraftChatInputRow(
-                                onEmojiAction: controller.onEmojiAction,
-                                onInputBarChanged: controller.onInputBarChanged,
-                                onInputBarSubmitted:
-                                    controller.onInputBarSubmitted,
-                                onSendFileClick: controller.onSendFileClick,
-                                textEditingController:
-                                    controller.sendController,
-                                typeAheadFocusNode: controller.inputFocus,
-                                typeAheadKey:
-                                    controller.draftChatComposerTypeAheadKey,
-                                focusSuggestionController:
-                                    controller.focusSuggestionController,
-                                inputText: controller.inputText,
-                                isSendingNotifier: controller.isSendingNotifier,
-                              ),
-                              SizedBox(
-                                height:
-                                    DraftChatViewStyle.bottomBarInputPadding(
-                                  context,
-                                ),
-                              ),
+                    Expanded(
+                      child: Container(
+                        // color: ChatViewBodyStyle.chatViewBackgroundColor(
+                        //   context,
+                        // ),
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment(0.50, -0.00),
+                            end: Alignment(0.50, 1.00),
+                            colors: [
+                              Color(0xFF0E0F13),
+                              Color(0xFF191B26),
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                    ValueListenableBuilder(
-                      valueListenable:
-                          controller.showEmojiPickerComposerNotifier,
-                      builder: (context, display, _) {
-                        if (!display) return const SizedBox.shrink();
-                        return Positioned(
-                          bottom: 72,
-                          right: 64,
-                          child: MouseRegion(
-                            onHover: (_) {
-                              controller.showEmojiPickerComposerNotifier.value =
-                                  true;
-                            },
-                            onExit: (_) async {
-                              await Future.delayed(const Duration(seconds: 1));
-                              controller.showEmojiPickerComposerNotifier.value =
-                                  false;
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(12),
-                              width:
-                                  ChatController.defaultMaxWidthReactionPicker,
-                              height:
-                                  ChatController.defaultMaxHeightReactionPicker,
-                              decoration: BoxDecoration(
-                                color:
-                                    LinagoraRefColors.material().primary[100],
-                                borderRadius: BorderRadius.circular(
-                                  24,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: const Color(0x0000004D)
-                                        .withOpacity(0.15),
-                                    offset: const Offset(0, 4),
-                                    blurRadius: 8,
-                                    spreadRadius: 3,
-                                  ),
-                                  BoxShadow(
-                                    color: const Color(0x00000026)
-                                        .withOpacity(0.3),
-                                    offset: const Offset(0, 1),
-                                    blurRadius: 3,
-                                    spreadRadius: 0,
-                                  ),
-                                ],
-                              ),
-                              child: EmojiPicker(
-                                emojiData: Matrix.of(context).emojiData,
-                                recentEmoji: controller
-                                    .getRecentReactionsInteractor
-                                    .execute(),
-                                configuration: EmojiPickerConfiguration(
-                                  showRecentTab: true,
-                                  emojiStyle: Theme.of(context)
-                                      .textTheme
-                                      .headlineLarge!,
-                                  searchEmptyTextStyle: Theme.of(context)
-                                      .textTheme
-                                      .labelMedium!
-                                      .copyWith(
-                                        color: LinagoraRefColors.material()
-                                            .tertiary[30],
-                                      ),
-                                  searchEmptyWidget: SvgPicture.asset(
-                                    ImagePaths.icSearchEmojiEmpty,
-                                  ),
-                                  searchFocusNode: FocusNode(),
-                                ),
-                                itemBuilder: (
-                                  context,
-                                  emojiId,
-                                  emoji,
-                                  callback,
-                                ) {
-                                  return MouseRegion(
-                                    onHover: (_) {},
-                                    child: EmojiItem(
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .headlineLarge!,
-                                      onTap: () {
-                                        callback(
-                                          emojiId,
-                                          emoji,
-                                        );
-                                      },
-                                      emoji: emoji,
-                                    ),
-                                  );
-                                },
-                                onEmojiSelected: (
-                                  emojiId,
-                                  emoji,
-                                ) {
-                                  controller.typeEmoji(emoji);
-                                },
-                              ),
+                        child: Center(
+                          child: DropTarget(
+                            onDragDone: (details) =>
+                                controller.handleDragDone(details),
+                            onDragEntered: controller.onDragEntered,
+                            onDragExited: controller.onDragExited,
+                            child: DraftChatEmpty(
+                              receiverId:
+                                  controller.presentationContact!.matrixId!,
+                              displayName:
+                                  controller.presentationContact!.displayName,
+                              onTap: () =>
+                                  controller.handleDraftAction(context),
                             ),
                           ),
-                        );
-                      },
+                        ),
+                      ),
+                    ),
+                    Container(
+                      decoration: DraftChatViewStyle.responsive
+                              .isMobile(context)
+                          ? ShapeDecoration(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(24),
+                                  topRight: Radius.circular(24),
+                                ),
+                              ),
+                            )
+                          : null,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12.0,
+                        horizontal: 16.0,
+                      ),
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 8.0),
+                          DraftChatInputRow(
+                            onEmojiAction: controller.onEmojiAction,
+                            onInputBarChanged: controller.onInputBarChanged,
+                            onInputBarSubmitted: controller.onInputBarSubmitted,
+                            onSendFileClick: controller.onSendFileClick,
+                            textEditingController: controller.sendController,
+                            typeAheadFocusNode: controller.inputFocus,
+                            typeAheadKey:
+                                controller.draftChatComposerTypeAheadKey,
+                            focusSuggestionController:
+                                controller.focusSuggestionController,
+                            inputText: controller.inputText,
+                            isSendingNotifier: controller.isSendingNotifier,
+                          ),
+                          SizedBox(
+                            height: DraftChatViewStyle.bottomBarInputPadding(
+                              context,
+                            ),
+                          ),
+                          ChatInputActionRow(
+                            inputText: controller.inputText,
+                            onTapEmoji: () {},
+                            onTapAttach: () =>
+                                controller.onSendFileClick(context),
+                            onTapSnooze: () {},
+                            onTapSend: controller.onInputBarSubmitted,
+                            onTapAI: () {},
+                          ),
+                          const SizedBox(height: 40.0),
+                        ],
+                      ),
                     ),
                   ],
                 ),
-              ),
+                ValueListenableBuilder(
+                  valueListenable: controller.showEmojiPickerComposerNotifier,
+                  builder: (context, display, _) {
+                    if (!display) return const SizedBox.shrink();
+                    return Positioned(
+                      bottom: 72,
+                      right: 64,
+                      child: MouseRegion(
+                        onHover: (_) {
+                          controller.showEmojiPickerComposerNotifier.value =
+                              true;
+                        },
+                        onExit: (_) async {
+                          await Future.delayed(const Duration(seconds: 1));
+                          controller.showEmojiPickerComposerNotifier.value =
+                              false;
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(12),
+                          width: ChatController.defaultMaxWidthReactionPicker,
+                          height: ChatController.defaultMaxHeightReactionPicker,
+                          decoration: BoxDecoration(
+                            color: LinagoraRefColors.material().primary[100],
+                            borderRadius: BorderRadius.circular(
+                              24,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color:
+                                    const Color(0x0000004D).withOpacity(0.15),
+                                offset: const Offset(0, 4),
+                                blurRadius: 8,
+                                spreadRadius: 3,
+                              ),
+                              BoxShadow(
+                                color: const Color(0x00000026).withOpacity(0.3),
+                                offset: const Offset(0, 1),
+                                blurRadius: 3,
+                                spreadRadius: 0,
+                              ),
+                            ],
+                          ),
+                          child: EmojiPicker(
+                            emojiData: Matrix.of(context).emojiData,
+                            recentEmoji: controller.getRecentReactionsInteractor
+                                .execute(),
+                            configuration: EmojiPickerConfiguration(
+                              showRecentTab: true,
+                              emojiStyle:
+                                  Theme.of(context).textTheme.headlineLarge!,
+                              searchEmptyTextStyle: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .copyWith(
+                                    color: LinagoraRefColors.material()
+                                        .tertiary[30],
+                                  ),
+                              searchEmptyWidget: SvgPicture.asset(
+                                ImagePaths.icSearchEmojiEmpty,
+                              ),
+                              searchFocusNode: FocusNode(),
+                            ),
+                            itemBuilder: (
+                              context,
+                              emojiId,
+                              emoji,
+                              callback,
+                            ) {
+                              return MouseRegion(
+                                onHover: (_) {},
+                                child: EmojiItem(
+                                  textStyle: Theme.of(context)
+                                      .textTheme
+                                      .headlineLarge!,
+                                  onTap: () {
+                                    callback(
+                                      emojiId,
+                                      emoji,
+                                    );
+                                  },
+                                  emoji: emoji,
+                                ),
+                              );
+                            },
+                            onEmojiSelected: (
+                              emojiId,
+                              emoji,
+                            ) {
+                              controller.typeEmoji(emoji);
+                            },
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
           ),
         ),
