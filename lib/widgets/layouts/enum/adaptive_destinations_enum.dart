@@ -1,15 +1,15 @@
+import 'package:fluffychat/resource/image_paths.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions/client_stories_extension.dart';
-import 'package:fluffychat/widgets/avatar/bottom_navigation_avatar.dart';
-import 'package:fluffychat/widgets/twake_components/twake_navigation_icon/twake_navigation_icon.dart';
+import 'package:fluffychat/widgets/multi_components/multi_navigation_icon/multi_navigation_icon.dart';
 import 'package:fluffychat/widgets/unread_rooms_badge.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/l10n.dart';
-import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:matrix/matrix.dart';
 
 enum AdaptiveDestinationEnum {
   contacts,
   rooms,
+  //TODO: update when Figma has this screen
+  stories,
   settings;
 
   NavigationDestination getNavigationDestination(
@@ -19,46 +19,57 @@ enum AdaptiveDestinationEnum {
     switch (this) {
       case AdaptiveDestinationEnum.contacts:
         return NavigationDestination(
-          icon: TwakeNavigationIcon(
-            color: MultiSysColors.material().onBackground,
-            icon: Icons.supervised_user_circle_outlined,
+          icon: MultiNavigationIcon(
+            icon: ImagePaths.icBottomNavContactsInactive,
           ),
-          label: L10n.of(context)!.contacts,
-          selectedIcon: const TwakeNavigationIcon(
-            icon: Icons.supervised_user_circle_outlined,
-            isSelected: true,
+          label: 'Contacts',
+          selectedIcon: MultiNavigationIcon(
+            icon: ImagePaths.icBottomNavContactsActive,
           ),
         );
       case AdaptiveDestinationEnum.rooms:
         return NavigationDestination(
           icon: UnreadRoomsBadge(
-            color: MultiSysColors.material().onBackground,
+            icon: ImagePaths.icBottomNavMessageInactive,
             filter: (room) => !room.isSpace && !room.isStoryRoom,
           ),
           selectedIcon: UnreadRoomsBadge(
+            icon: ImagePaths.icBottomNavMessageActive,
             filter: (room) => !room.isSpace && !room.isStoryRoom,
             isSelected: true,
           ),
-          label: L10n.of(context)!.chats,
+          label: 'Chats',
+        );
+      case AdaptiveDestinationEnum.stories:
+        return NavigationDestination(
+          icon: UnreadRoomsBadge(
+            icon: ImagePaths.icBottomNavStoriesInactive,
+            filter: (room) => !room.isSpace && room.isStoryRoom,
+          ),
+          selectedIcon: UnreadRoomsBadge(
+            icon: ImagePaths.icBottomNavStoriesActive,
+            filter: (room) => !room.isSpace && room.isStoryRoom,
+            isSelected: true,
+          ),
+          label: 'Stories',
         );
       case AdaptiveDestinationEnum.settings:
         return NavigationDestination(
-          icon: TwakeNavigationIcon(
-            color: MultiSysColors.material().onBackground,
-            icon: Icons.settings_outlined,
+          icon: MultiNavigationIcon(
+            icon: ImagePaths.icBottomNavSettingInactive,
           ),
-          selectedIcon: const TwakeNavigationIcon(
-            icon: Icons.settings_outlined,
-            isSelected: true,
+          selectedIcon: MultiNavigationIcon(
+            icon: ImagePaths.icBottomNavSettingActive,
           ),
-          label: L10n.of(context)!.settings,
+          label: 'Settings',
         );
       default:
         return NavigationDestination(
           icon: UnreadRoomsBadge(
+            icon: ImagePaths.icBottomNavMessageInactive,
             filter: (room) => !room.isSpace && !room.isStoryRoom,
           ),
-          label: L10n.of(context)!.chats,
+          label: '',
         );
     }
   }
@@ -70,46 +81,64 @@ enum AdaptiveDestinationEnum {
     switch (this) {
       case AdaptiveDestinationEnum.contacts:
         return BottomNavigationBarItem(
-          icon: TwakeNavigationIcon(
-            color: MultiSysColors.material().tertiary,
-            icon: Icons.supervised_user_circle_outlined,
+          icon: MultiNavigationIcon(
+            icon: ImagePaths.icBottomNavContactsInactive,
           ),
-          label: L10n.of(context)!.contacts,
-          activeIcon: const TwakeNavigationIcon(
-            icon: Icons.supervised_user_circle_outlined,
+          label: 'Contacts',
+          activeIcon: MultiNavigationIcon(
+            icon: ImagePaths.icBottomNavContactsActive,
             isSelected: true,
           ),
         );
       case AdaptiveDestinationEnum.rooms:
         return BottomNavigationBarItem(
           icon: UnreadRoomsBadge(
-            color: MultiSysColors.material().tertiary,
+            icon: ImagePaths.icBottomNavMessageInactive,
             filter: (room) => !room.isSpace && !room.isStoryRoom,
           ),
           activeIcon: UnreadRoomsBadge(
+            icon: ImagePaths.icBottomNavMessageActive,
             filter: (room) => !room.isSpace && !room.isStoryRoom,
             isSelected: true,
           ),
-          label: L10n.of(context)!.chats,
+          label: 'Chats',
+        );
+      case AdaptiveDestinationEnum.stories:
+        return BottomNavigationBarItem(
+          icon: UnreadRoomsBadge(
+            icon: ImagePaths.icBottomNavStoriesInactive,
+            filter: (room) => !room.isSpace && room.isStoryRoom,
+          ),
+          activeIcon: UnreadRoomsBadge(
+            icon: ImagePaths.icBottomNavStoriesActive,
+            filter: (room) => !room.isSpace && room.isStoryRoom,
+            isSelected: true,
+          ),
+          label: 'Stories',
         );
       case AdaptiveDestinationEnum.settings:
         return BottomNavigationBarItem(
-          icon: BottomNavigationAvatar(
-            profile: profile,
-            isSelected: false,
+          icon: MultiNavigationIcon(
+            icon: ImagePaths.icBottomNavSettingInactive,
           ),
-          activeIcon: BottomNavigationAvatar(
-            profile: profile,
+          activeIcon: MultiNavigationIcon(
+            icon: ImagePaths.icBottomNavSettingActive,
             isSelected: true,
           ),
-          label: L10n.of(context)!.settings,
+          label: 'Settings',
         );
       default:
         return BottomNavigationBarItem(
           icon: UnreadRoomsBadge(
+            icon: ImagePaths.icBottomNavMessageInactive,
             filter: (room) => !room.isSpace && !room.isStoryRoom,
           ),
-          label: L10n.of(context)!.chats,
+          activeIcon: UnreadRoomsBadge(
+            icon: ImagePaths.icBottomNavMessageActive,
+            filter: (room) => !room.isSpace && !room.isStoryRoom,
+            isSelected: true,
+          ),
+          label: '',
         );
     }
   }

@@ -74,6 +74,22 @@ class ImagePaths {
   static String get icCheckboxUnchecked =>
       _getImagePath('ic_checkbox_unchecked.svg');
   static String get icHandHello => _getImagePath('ic_hand_hello.svg');
+  static String get icBottomNavContactsActive =>
+      _getImagePath('ic_bottom_nav_contacts_active.svg');
+  static String get icBottomNavContactsInactive =>
+      _getImagePath('ic_bottom_nav_contacts_inactive.svg');
+  static String get icBottomNavMessageActive =>
+      _getImagePath('ic_bottom_nav_message_active.svg');
+  static String get icBottomNavMessageInactive =>
+      _getImagePath('ic_bottom_nav_message_inactive.svg');
+  static String get icBottomNavSettingActive =>
+      _getImagePath('ic_bottom_nav_setting_active.svg');
+  static String get icBottomNavSettingInactive =>
+      _getImagePath('ic_bottom_nav_setting_inactive.svg');
+  static String get icBottomNavStoriesActive =>
+      _getImagePath('ic_bottom_nav_stories_active.svg');
+  static String get icBottomNavStoriesInactive =>
+      _getImagePath('ic_bottom_nav_stories_inactive.svg');
 
   // Entrance Main Screen assets
   static String get splashBackground =>

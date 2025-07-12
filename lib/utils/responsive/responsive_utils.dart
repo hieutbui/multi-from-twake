@@ -17,7 +17,7 @@ class ResponsiveUtils {
   static const double bodyRadioWidth = 472;
 
   static const double defaultSizeBodyLayoutDesktop = 280;
-  static const double heightBottomNavigation = 72;
+  static const double heightBottomNavigation = 60;
   static const double heightBottomNavigationBar = 48;
 
   static const double bodyWithRightColumnRatio = 0.64;

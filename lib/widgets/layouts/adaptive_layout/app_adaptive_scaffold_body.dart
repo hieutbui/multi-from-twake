@@ -58,6 +58,7 @@ class AppAdaptiveScaffoldBodyController extends State<AppAdaptiveScaffoldBody>
   List<AdaptiveDestinationEnum> get destinations => [
         AdaptiveDestinationEnum.contacts,
         AdaptiveDestinationEnum.rooms,
+        AdaptiveDestinationEnum.stories,
         AdaptiveDestinationEnum.settings,
       ];
 
