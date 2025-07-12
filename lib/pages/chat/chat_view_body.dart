@@ -1,5 +1,7 @@
 import 'package:desktop_drop/desktop_drop.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_typography.dart';
 import 'package:fluffychat/pages/chat/chat.dart';
 import 'package:fluffychat/pages/chat/chat_event_list.dart';
 import 'package:fluffychat/pages/chat/chat_input_action_row.dart';
@@ -12,6 +14,8 @@ import 'package:fluffychat/pages/chat/events/message_content_mixin.dart';
 import 'package:fluffychat/pages/chat/chat_pinned_events/pinned_events_view.dart';
 import 'package:fluffychat/pages/chat/sticky_timestamp_widget.dart';
 import 'package:fluffychat/pages/chat/tombstone_display.dart';
+import 'package:fluffychat/presentation/model/chat/new_chat_status.dart';
+import 'package:fluffychat/presentation/model/chat/pending_room_action.dart';
 import 'package:fluffychat/presentation/model/chat/view_event_list_ui_state.dart';
 import 'package:fluffychat/resource/image_paths.dart';
 import 'package:fluffychat/utils/date_time_extension.dart';
@@ -42,9 +46,6 @@ class ChatViewBody extends StatelessWidget with MessageContentMixin {
       onDragEntered: controller.onDragEntered,
       onDragExited: controller.onDragExited,
       child: Container(
-        // color: controller.responsive.isMobile(context)
-        //     ? MultiSysColors.material().surface
-        //     : null,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment(0.50, -0.00),
@@ -104,36 +105,126 @@ class ChatViewBody extends StatelessWidget with MessageContentMixin {
                           color: Colors.transparent,
                           alignment: Alignment.center,
                           child: ValueListenableBuilder(
-                            valueListenable: controller.isPendingChatNotifier,
-                            builder: (context, isPending, _) {
-                              Logs().d('chat_view_body:isPending: $isPending');
-                              if (isPending) {
-                                return Container(
-                                  padding: const EdgeInsets.all(16),
-                                  decoration: BoxDecoration(
-                                    color:
-                                        Theme.of(context).colorScheme.surface,
-                                    border: Border(
-                                      top: BorderSide(
-                                        color: LinagoraStateLayer(
-                                          MultiSysColors.material().surfaceTint,
-                                        ).opacityLayer3,
-                                      ),
-                                    ),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      'Waiting for partner to accept the request...',
-                                      style: TextStyle(
-                                        fontStyle: FontStyle.italic,
+                            valueListenable: controller.newChatStatusNotifier,
+                            builder: (context, status, _) {
+                              if (status != NewChatStatus.accepted) {
+                                switch (status) {
+                                  case NewChatStatus.pendingApproval:
+                                    final partner = controller
+                                            .room!.name.isEmpty
+                                        ? controller.room!.directChatMatrixID
+                                        : controller.room!.name;
+
+                                    // UI for the receiver who needs to approve
+                                    return Container(
+                                      padding: const EdgeInsets.all(16),
+                                      decoration: BoxDecoration(
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .onSurface
-                                            .withOpacity(0.7),
+                                            .onPrimary,
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(24),
+                                          topRight: Radius.circular(24),
+                                        ),
+                                        border: const Border(
+                                          top: BorderSide(
+                                            width: 1,
+                                            color: Color(0x4C738C96),
+                                          ),
+                                          // No borders for other sides
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                );
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            'New contact from $partner',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .displaySmall
+                                                ?.copyWith(
+                                                  fontSize:
+                                                      MultiMobileTypography
+                                                          .headlineFontMedium,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onPrimaryContainer,
+                                                ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          const SizedBox(height: 12),
+                                          Text(
+                                            "Do you know this person? They won't know you've read the messages until you accept.",
+                                            textAlign: TextAlign.center,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium
+                                                ?.copyWith(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onSurfaceVariant,
+                                                ),
+                                          ),
+                                          const SizedBox(height: 32),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              NewContactActionButton(
+                                                action: PendingRoomAction.block,
+                                                onTap: controller
+                                                    .handlePendingChatAction,
+                                              ),
+                                              NewContactActionButton(
+                                                action:
+                                                    PendingRoomAction.report,
+                                                onTap: controller
+                                                    .handlePendingChatAction,
+                                              ),
+                                              NewContactActionButton(
+                                                action:
+                                                    PendingRoomAction.accept,
+                                                onTap: controller
+                                                    .handlePendingChatAction,
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 40.0),
+                                        ],
+                                      ),
+                                    );
+                                  case NewChatStatus.waitingForAction:
+                                    return Container(
+                                      padding: const EdgeInsets.all(16),
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .surface,
+                                        border: Border(
+                                          top: BorderSide(
+                                            color: LinagoraStateLayer(
+                                              MultiSysColors.material()
+                                                  .surfaceTint,
+                                            ).opacityLayer3,
+                                          ),
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          'Waiting for partner to accept the request...',
+                                          style: TextStyle(
+                                            fontStyle: FontStyle.italic,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSurface
+                                                .withOpacity(0.7),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  default:
+                                    return const SizedBox.shrink();
+                                }
                               } else {
                                 return controller.room?.isAbandonedDMRoom ==
                                         true
@@ -404,5 +495,53 @@ class ChatViewBody extends StatelessWidget with MessageContentMixin {
         ],
       ),
     );
+  }
+}
+
+typedef NewContactActionCallBack = void Function(PendingRoomAction action);
+
+class NewContactActionButton extends StatelessWidget {
+  final PendingRoomAction action;
+  final NewContactActionCallBack onTap;
+
+  const NewContactActionButton({
+    super.key,
+    required this.action,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => onTap(action),
+      child: Material(
+        color: Theme.of(context).brightness == Brightness.light
+            ? MultiLightColors.buttonsMainSecondaryDefault
+            : MultiDarkColors.buttonsMainSecondaryDefault,
+        borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: 8,
+            horizontal: MediaQuery.of(context).size.width * 0.08,
+          ),
+          child: Text(
+            action.getTitle(context),
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: _getColor(context),
+                ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Color _getColor(BuildContext context) {
+    switch (action) {
+      case PendingRoomAction.accept:
+        return Theme.of(context).colorScheme.onPrimaryContainer;
+      case PendingRoomAction.block:
+      case PendingRoomAction.report:
+        return Theme.of(context).colorScheme.error;
+    }
   }
 }
