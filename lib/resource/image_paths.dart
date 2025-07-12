@@ -90,6 +90,9 @@ class ImagePaths {
       _getImagePath('ic_bottom_nav_stories_active.svg');
   static String get icBottomNavStoriesInactive =>
       _getImagePath('ic_bottom_nav_stories_inactive.svg');
+  static String get icMute => _getImagePath('ic_mute.svg');
+  static String get icTrash => _getImagePath('ic_trash.svg');
+  static String get icDoubleCheck => _getImagePath('ic_double_check.svg');
 
   // Entrance Main Screen assets
   static String get splashBackground =>
