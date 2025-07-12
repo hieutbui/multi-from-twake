@@ -90,6 +90,8 @@ class ChatListController extends State<ChatList>
   final ValueNotifier<List<ConversationSelectionPresentation>>
       conversationSelectionNotifier = ValueNotifier([]);
 
+  final ValueNotifier<int> unreadRoomCountNotifier = ValueNotifier(0);
+
   final TextEditingController searchChatController = TextEditingController();
 
   final ScrollController scrollController = ScrollController();
@@ -180,6 +182,11 @@ class ChatListController extends State<ChatList>
       : PushRuleState.notify;
 
   void addAccountAction() => context.go('/settings/account');
+
+  void _getUnreadCount() {
+    unreadRoomCountNotifier.value =
+        activeClient.rooms.where((room) => room.isUnreadOrInvited).length;
+  }
 
   void _onScroll() {
     final newScrolledToTop = scrollController.position.pixels <= 0;
@@ -832,6 +839,7 @@ class ChatListController extends State<ChatList>
   @override
   void initState() {
     activeRoomIdNotifier.value = widget.activeRoomIdNotifier.value;
+    _getUnreadCount();
     scrollController.addListener(_onScroll);
     if (!matrixState.waitForFirstSync) {
       _trySync();
@@ -842,6 +850,7 @@ class ChatListController extends State<ChatList>
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (mounted) {
         Matrix.of(context).backgroundPush?.setupPush();
+        _getUnreadCount();
       }
     });
     _checkTorBrowser();
