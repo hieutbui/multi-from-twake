@@ -4,6 +4,7 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:collection/collection.dart';
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/config/first_column_inner_routes.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:fluffychat/di/global/dio_cache_interceptor_for_client.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/domain/model/room/room_extension.dart';
@@ -33,6 +34,7 @@ import 'package:fluffychat/widgets/layouts/agruments/logged_in_other_account_bod
 import 'package:fluffychat/widgets/mixins/popup_context_menu_action_mixin.dart';
 import 'package:fluffychat/widgets/mixins/popup_menu_widget_mixin.dart';
 import 'package:fluffychat/widgets/mixins/twake_context_menu_mixin.dart';
+import 'package:fluffychat/widgets/twake_components/twake_icon_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
@@ -638,73 +640,123 @@ class ChatListController extends State<ChatList>
     );
   }
 
-  List<ChatListSelectionActions> _getNavigationDestinations() {
-    return [
-      ChatListSelectionActions.read,
-      ChatListSelectionActions.mute,
-      ChatListSelectionActions.pin,
-      //TODO: Enable when more action is implemented
-      // ChatListSelectionActions.more,
-    ];
-  }
-
   List<Widget> bottomNavigationActionsWidget({
     required EdgeInsetsDirectional paddingIcon,
+    required BuildContext context,
     double? width,
     double? iconSize,
   }) {
-    return _getNavigationDestinations().map((item) {
-      return InkWell(
-        onTap: () => _onTapBottomNavigation(item),
-        child: SizedBox(
-          width: width,
-          child: Column(
-            children: [
-              Padding(
-                padding: paddingIcon,
-                child: Icon(
-                  item.getIconBottomNavigation(),
-                  size: iconSize,
-                  color: Theme.of(context).colorScheme.primary,
+    return <Widget>[
+      TwakeIconButton(
+        onTap: _onTapCloseBottomNav,
+        icon: Icons.close,
+        size: 18,
+        color: Theme.of(context).colorScheme.onPrimaryContainer,
+        buttonDecoration: BoxDecoration(
+          color: Theme.of(context).brightness == Brightness.light
+              ? MultiLightColors.buttonsMainSecondary15Opasity
+              : MultiDarkColors.buttonsMainSecondary15Opasity,
+          borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+        ),
+      ),
+      const SizedBox(width: 12.0),
+      Material(
+        color: Theme.of(context).brightness == Brightness.light
+            ? MultiLightColors.buttonsMainSecondary15Opasity
+            : MultiDarkColors.buttonsMainSecondary15Opasity,
+        borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 8.0,
+            horizontal: 20.0,
+          ),
+          child: Text(
+            '${conversationSelectionNotifier.value.length} selected',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
                 ),
-              ),
-              Text(
-                _getTitleBottomNavigation(item),
-                style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-              ),
-            ],
           ),
         ),
-      );
-    }).toList();
+      ),
+      const Spacer(),
+      TwakeIconButton(
+        onTap: _onTapTrashSelected,
+        imagePath: ImagePaths.icTrash,
+        size: 18,
+        buttonDecoration: BoxDecoration(
+          color: Theme.of(context).brightness == Brightness.light
+              ? MultiLightColors.buttonsMainSecondaryDefault
+              : MultiDarkColors.buttonsMainSecondaryDefault,
+          borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+        ),
+      ),
+      const SizedBox(width: 12.0),
+      TwakeIconButton(
+        onTap: _onTapMuteSelected,
+        imagePath: ImagePaths.icMute,
+        size: 18,
+        buttonDecoration: BoxDecoration(
+          color: Theme.of(context).brightness == Brightness.light
+              ? MultiLightColors.buttonsMainPrimaryDefault
+              : MultiDarkColors.buttonsMainPrimaryDefault,
+          borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+        ),
+      ),
+      const SizedBox(width: 12.0),
+      TwakeIconButton(
+        onTap: _onTapDoubleCheckSelected,
+        imagePath: ImagePaths.icDoubleCheck,
+        size: 18,
+        buttonDecoration: BoxDecoration(
+          color: Theme.of(context).brightness == Brightness.light
+              ? MultiLightColors.statesSuccessShapeMainDefault
+              : MultiDarkColors.statesSuccessShapeMainDefault,
+          borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+        ),
+      ),
+    ];
   }
 
-  String _getTitleBottomNavigation(
-    ChatListSelectionActions actionBottomNavigation,
-  ) {
-    switch (actionBottomNavigation) {
-      case ChatListSelectionActions.read:
-        if (anySelectedRoomNotMarkedUnread) {
-          return L10n.of(context)!.unread;
-        } else {
-          return L10n.of(context)!.read;
-        }
-      case ChatListSelectionActions.mute:
-        if (anySelectedRoomNotMuted) {
-          return L10n.of(context)!.mute;
-        } else {
-          return L10n.of(context)!.unmute;
-        }
-      case ChatListSelectionActions.pin:
-        if (anySelectedRoomNotFavorite) {
-          return L10n.of(context)!.pin;
-        } else {
-          return L10n.of(context)!.unpin;
-        }
-      case ChatListSelectionActions.more:
-        return L10n.of(context)!.more;
+  void _onTapCloseBottomNav() {
+    toggleSelectMode();
+  }
+
+  void _onTapTrashSelected() {
+    final List<String> roomIds = conversationSelectionNotifier.value
+        .map((conversation) => conversation.roomId)
+        .toList();
+
+    for (final roomId in roomIds) {
+      final room = activeClient.getRoomById(roomId);
+      if (room != null) {
+        _archiveSelectedRooms();
+      }
+    }
+  }
+
+  void _onTapMuteSelected() {
+    final List<String> roomIds = conversationSelectionNotifier.value
+        .map((conversation) => conversation.roomId)
+        .toList();
+
+    for (final roomId in roomIds) {
+      final room = activeClient.getRoomById(roomId);
+      if (room != null) {
+        toggleMuteRoom(room);
+      }
+    }
+  }
+
+  void _onTapDoubleCheckSelected() {
+    final List<String> roomIds = conversationSelectionNotifier.value
+        .map((conversation) => conversation.roomId)
+        .toList();
+
+    for (final roomId in roomIds) {
+      final room = activeClient.getRoomById(roomId);
+      if (room != null) {
+        toggleRead(room);
+      }
     }
   }
 

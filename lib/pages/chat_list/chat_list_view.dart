@@ -59,6 +59,7 @@ class ChatListView extends StatelessWidget {
                 paddingIcon: ChatListBottomNavigatorStyle.paddingIcon,
                 iconSize: ChatListBottomNavigatorStyle.iconSize,
                 width: ChatListBottomNavigatorStyle.width,
+                context: context,
               ),
             );
           } else {
