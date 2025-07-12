@@ -9,7 +9,7 @@ class ChatListViewStyle {
   static const double editIconSize = 18.0;
 
   static Size preferredSizeAppBar(BuildContext context) =>
-      const Size.fromHeight(120);
+      const Size.fromHeight(135);
 
   // Slidable Ratio of one slidable item
   static const double slidableSizeRatio = 0.23;

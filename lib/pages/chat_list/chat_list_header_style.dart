@@ -3,6 +3,7 @@ import 'package:fluffychat/utils/responsive/responsive_utils.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/l10n.dart';
+import 'package:gradient_borders/input_borders/gradient_outline_input_border.dart';
 import 'package:linagora_design_flutter/colors/linagora_ref_colors.dart';
 
 class ChatListHeaderStyle {
@@ -27,19 +28,16 @@ class ChatListHeaderStyle {
     Color? prefixIconColor,
   }) {
     return InputDecoration(
-      filled: true,
-      contentPadding: ChatListHeaderStyle.paddingZero,
-      fillColor: Theme.of(context).colorScheme.surface,
-      border: OutlineInputBorder(
-        borderSide: BorderSide.none,
-        borderRadius: BorderRadius.circular(
-          ChatListHeaderStyle.searchRadiusBorder,
+      border: GradientOutlineInputBorder(
+        gradient: const LinearGradient(
+          colors: [Color(0xFF738C96), Color(0xFF738C96)],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          stops: [0.0, 1.0],
         ),
+        borderRadius: BorderRadius.circular(12),
       ),
       hintText: hintText ?? L10n.of(context)!.search,
-      hintStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-            color: LinagoraRefColors.material().neutral[60],
-          ),
       floatingLabelBehavior: FloatingLabelBehavior.never,
       prefixIcon: Icon(
         Icons.search,
