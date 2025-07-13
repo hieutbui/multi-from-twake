@@ -28,18 +28,30 @@ class ContactsTabBodyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        _SliverWarningBanner(controller: controller),
-        _SliverPhonebookLoading(controller: controller),
-        _SliverRecentContacts(controller: controller),
-        _SliverContactsList(controller: controller),
-        if (PlatformInfos.isMobile)
-          _SliverPhonebookList(controller: controller),
-        if (PlatformInfos.isWeb)
-          _SliverAddressBookListOnWeb(controller: controller),
-        const _SliverPadding(),
-      ],
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment(0.50, -0.00),
+          end: Alignment(0.50, 1.00),
+          colors: [
+            Color(0xFF0E0F13),
+            Color(0xFF191B26),
+          ],
+        ),
+      ),
+      child: CustomScrollView(
+        slivers: [
+          _SliverWarningBanner(controller: controller),
+          _SliverPhonebookLoading(controller: controller),
+          _SliverRecentContacts(controller: controller),
+          _SliverContactsList(controller: controller),
+          if (PlatformInfos.isMobile)
+            _SliverPhonebookList(controller: controller),
+          if (PlatformInfos.isWeb)
+            _SliverAddressBookListOnWeb(controller: controller),
+          const _SliverPadding(),
+        ],
+      ),
     );
   }
 }

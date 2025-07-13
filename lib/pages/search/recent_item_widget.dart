@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_typography.dart';
 import 'package:fluffychat/pages/search/recent_item_widget_style.dart';
 import 'package:fluffychat/presentation/extensions/room_summary_extension.dart';
 import 'package:fluffychat/presentation/extensions/search/presentation_search_extensions.dart';
@@ -190,15 +191,24 @@ class _DirectChatInformation extends StatelessWidget {
             children: [
               _SearchHighlightText(
                 text: recentChatPresentationSearch.displayName ?? "",
-                style: ListItemStyle.titleTextStyle(
-                  fontFamily: 'Inter',
+                style: TextStyle(
+                  fontSize: MultiMobileTypography.bodyFontBody,
+                  fontFamily: MultiFonts.sfProDisplay,
+                  fontWeight: FontWeight.w500,
+                  height: 1.29,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
                 ),
                 searchWord: searchKeyword,
               ),
               _SearchHighlightText(
                 text: recentChatPresentationSearch.directChatMatrixID ?? "",
-                style: ListItemStyle.subtitleTextStyle(
-                  fontFamily: 'Inter',
+                style: TextStyle(
+                  fontSize: MultiMobileTypography.bodyLineHeighSubhead,
+                  fontFamily: MultiFonts.sfPro,
+                  fontWeight: FontWeight.w400,
+                  height: 1.20,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  letterSpacing: -0.24,
                 ),
                 searchWord: searchKeyword,
               ),

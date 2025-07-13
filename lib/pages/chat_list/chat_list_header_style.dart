@@ -29,13 +29,16 @@ class ChatListHeaderStyle {
   }) {
     return InputDecoration(
       border: GradientOutlineInputBorder(
-        gradient: const LinearGradient(
-          colors: [Color(0xFF738C96), Color(0xFF738C96)],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          stops: [0.0, 1.0],
+        gradient: LinearGradient(
+          colors: [
+            const Color(0xFF738C96).withOpacity(0.0),
+            const Color(0xFF738C96),
+          ],
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
         ),
-        borderRadius: BorderRadius.circular(12),
+        width: 1.0,
+        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
       ),
       hintText: hintText ?? L10n.of(context)!.search,
       floatingLabelBehavior: FloatingLabelBehavior.never,
