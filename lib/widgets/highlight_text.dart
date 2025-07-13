@@ -25,7 +25,7 @@ class HighlightText extends StatelessWidget {
   Widget build(BuildContext context) {
     final actualHighlightStyle = highlightStyle ??
         style?.copyWith(
-          color: Colors.amber[900],
+          color: Theme.of(context).colorScheme.primary,
         );
     final spans = text.buildHighlightTextSpans(
       searchWord ?? '',

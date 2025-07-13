@@ -110,6 +110,10 @@ class ChatListController extends State<ChatList>
 
   bool scrolledToTop = true;
 
+  bool isScrollingDown = false;
+
+  double previousScrollOffset = 0.0;
+
   Client get activeClient => matrixState.client;
 
   MatrixState get matrixState => Matrix.of(context);
@@ -185,14 +189,21 @@ class ChatListController extends State<ChatList>
 
   void _getUnreadCount() {
     unreadRoomCountNotifier.value =
-        activeClient.rooms.where((room) => room.isUnreadOrInvited).length;
+        activeClient.rooms.where((room) => room.markedUnread).length;
   }
 
   void _onScroll() {
+    final currentScrollOffset = scrollController.position.pixels;
+    final newIsScrollingDown = currentScrollOffset > previousScrollOffset;
+
+    previousScrollOffset = currentScrollOffset;
+
     final newScrolledToTop = scrollController.position.pixels <= 0;
-    if (newScrolledToTop != scrolledToTop) {
+    if (newScrolledToTop != scrolledToTop ||
+        newIsScrollingDown != isScrollingDown) {
       setState(() {
         scrolledToTop = newScrolledToTop;
+        isScrollingDown = newIsScrollingDown;
       });
     }
   }
@@ -623,6 +634,8 @@ class ChatListController extends State<ChatList>
         } else {
           await room.markUnread(true);
         }
+
+        _getUnreadCount();
       },
     );
   }
@@ -765,6 +778,8 @@ class ChatListController extends State<ChatList>
         toggleRead(room);
       }
     }
+
+    _getUnreadCount();
   }
 
   void _hackyWebRTCFixForWeb() {
@@ -850,7 +865,6 @@ class ChatListController extends State<ChatList>
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (mounted) {
         Matrix.of(context).backgroundPush?.setupPush();
-        _getUnreadCount();
       }
     });
     _checkTorBrowser();

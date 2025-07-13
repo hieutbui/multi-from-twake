@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:fluffychat/domain/app_state/search/pre_search_state.dart';
 import 'package:fluffychat/pages/search/recent_contacts_banner_widget.dart';
 import 'package:fluffychat/pages/search/recent_item_widget.dart';
@@ -12,7 +13,6 @@ import 'package:fluffychat/widgets/twake_components/twake_icon_button.dart';
 import 'package:fluffychat/widgets/twake_components/twake_loading/center_loading_indicator.dart';
 import 'package:flutter/material.dart' hide SearchController;
 import 'package:flutter_gen/gen_l10n/l10n.dart';
-import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 
 class SearchView extends StatelessWidget {
   final SearchController searchController;
@@ -22,86 +22,98 @@ class SearchView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MultiSysColors.material().onPrimary,
+      backgroundColor: Colors.black.withOpacity(0.5),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(SearchViewStyle.toolbarHeightSearch),
         child: _buildAppBarSearch(context),
       ),
-      body: CustomScrollView(
-        physics: const ClampingScrollPhysics(),
-        controller: searchController.scrollController,
-        slivers: [
-          ValueListenableBuilder(
-            valueListenable: searchController.preSearchRecentContactsNotifier,
-            builder: (context, value, emptyChild) =>
-                value.fold((failure) => emptyChild!, (success) {
-              switch (success.runtimeType) {
-                case const (PreSearchRecentContactsSuccess):
-                  final data = success as PreSearchRecentContactsSuccess;
-                  return ValueListenableBuilder(
-                    valueListenable: searchController.textEditingController,
-                    builder: (context, textEditingValue, child) {
-                      if (textEditingValue.text.isNotEmpty) {
-                        return emptyChild!;
-                      }
-                      return SliverAppBar(
-                        flexibleSpace: FlexibleSpaceBar(
-                          title: PreSearchRecentContactsContainer(
-                            searchController: searchController,
-                            recentRooms: data.rooms,
-                          ),
-                          titlePadding:
-                              const EdgeInsetsDirectional.only(start: 0.0),
-                        ),
-                        toolbarHeight: 112,
-                        backgroundColor: Colors.transparent,
-                        automaticallyImplyLeading: false,
-                      );
-                    },
-                  );
-                default:
-                  return emptyChild!;
-              }
-            }),
-            child: const SliverToBoxAdapter(),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment(0.50, -0.00),
+            end: Alignment(0.50, 1.00),
+            colors: [
+              Color(0xFF0E0F13),
+              Color(0xFF191B26),
+            ],
           ),
-          _RecentChatAndContactsHeader(searchController: searchController),
-          _recentChatsWidget(),
-          ValueListenableBuilder(
-            valueListenable:
-                searchController.serverSearchController.searchResultsNotifier,
-            builder: ((context, searchResults, child) {
-              if (searchResults is PresentationServerSideEmptySearch) {
-                return child!;
-              }
-
-              if (searchResults is PresentationServerSideSearch) {
-                if (searchResults.searchResults.isEmpty) {
+        ),
+        child: CustomScrollView(
+          physics: const ClampingScrollPhysics(),
+          controller: searchController.scrollController,
+          slivers: [
+            ValueListenableBuilder(
+              valueListenable: searchController.preSearchRecentContactsNotifier,
+              builder: (context, value, emptyChild) =>
+                  value.fold((failure) => emptyChild!, (success) {
+                switch (success.runtimeType) {
+                  case const (PreSearchRecentContactsSuccess):
+                    final data = success as PreSearchRecentContactsSuccess;
+                    return ValueListenableBuilder(
+                      valueListenable: searchController.textEditingController,
+                      builder: (context, textEditingValue, child) {
+                        if (textEditingValue.text.isNotEmpty) {
+                          return emptyChild!;
+                        }
+                        return SliverAppBar(
+                          flexibleSpace: FlexibleSpaceBar(
+                            title: PreSearchRecentContactsContainer(
+                              searchController: searchController,
+                              recentRooms: data.rooms,
+                            ),
+                            titlePadding:
+                                const EdgeInsetsDirectional.only(start: 0.0),
+                          ),
+                          toolbarHeight: 112,
+                          backgroundColor: Colors.transparent,
+                          automaticallyImplyLeading: false,
+                        );
+                      },
+                    );
+                  default:
+                    return emptyChild!;
+                }
+              }),
+              child: const SliverToBoxAdapter(),
+            ),
+            _RecentChatAndContactsHeader(searchController: searchController),
+            _recentChatsWidget(),
+            ValueListenableBuilder(
+              valueListenable:
+                  searchController.serverSearchController.searchResultsNotifier,
+              builder: ((context, searchResults, child) {
+                if (searchResults is PresentationServerSideEmptySearch) {
                   return child!;
                 }
-                return _SearchHeader(
-                  header: L10n.of(context)!.messages,
-                  searchController: searchController,
-                  needShowMore: false,
+
+                if (searchResults is PresentationServerSideSearch) {
+                  if (searchResults.searchResults.isEmpty) {
+                    return child!;
+                  }
+                  return _SearchHeader(
+                    header: L10n.of(context)!.messages,
+                    searchController: searchController,
+                    needShowMore: false,
+                  );
+                }
+                return child!;
+              }),
+              child: _EmptySliverBox(),
+            ),
+            ServerSearchMessagesList(searchController: searchController),
+            ValueListenableBuilder(
+              valueListenable:
+                  searchController.serverSearchController.isLoadingMoreNotifier,
+              builder: (context, isLoadingMore, _) {
+                return SliverToBoxAdapter(
+                  child: isLoadingMore
+                      ? const CenterLoadingIndicator()
+                      : const SizedBox(),
                 );
-              }
-              return child!;
-            }),
-            child: _EmptySliverBox(),
-          ),
-          ServerSearchMessagesList(searchController: searchController),
-          ValueListenableBuilder(
-            valueListenable:
-                searchController.serverSearchController.isLoadingMoreNotifier,
-            builder: (context, isLoadingMore, _) {
-              return SliverToBoxAdapter(
-                child: isLoadingMore
-                    ? const CenterLoadingIndicator()
-                    : const SizedBox(),
-              );
-            },
-          ),
-        ],
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -161,7 +173,22 @@ class SearchView extends StatelessWidget {
   Widget _buildAppBarSearch(BuildContext context) {
     return AppBar(
       toolbarHeight: SearchViewStyle.toolbarHeightSearch,
-      backgroundColor: MultiSysColors.material().onPrimary,
+      backgroundColor: Colors.black.withOpacity(0.5),
+      flexibleSpace: Container(
+        decoration: const ShapeDecoration(
+          gradient: LinearGradient(
+            begin: Alignment(0.50, -0.00),
+            end: Alignment(0.50, 1.00),
+            colors: [Color(0xFF0E0F13), Color(0xFF232631)],
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(24),
+              bottomRight: Radius.circular(24),
+            ),
+          ),
+        ),
+      ),
       leadingWidth: double.infinity,
       leading: Padding(
         padding: SearchViewStyle.paddingLeadingAppBar,
@@ -169,10 +196,18 @@ class SearchView extends StatelessWidget {
           children: [
             TwakeIconButton(
               tooltip: L10n.of(context)!.back,
-              icon: Icons.chevron_left_outlined,
+              icon: Icons.arrow_back,
               onTap: () => Navigator.of(context).pop(),
+              size: 16.0,
+              margin: const EdgeInsets.symmetric(vertical: 12.0),
+              buttonDecoration: BoxDecoration(
+                color: Theme.of(context).brightness == Brightness.light
+                    ? MultiLightColors.buttonsMainSecondary15Opasity
+                    : MultiDarkColors.buttonsMainSecondary15Opasity,
+                shape: BoxShape.circle,
+              ),
             ),
-            const SizedBox(width: 4.0),
+            const SizedBox(width: 16.0),
             Expanded(
               child: SearchTextField(
                 textEditingController: searchController.textEditingController,
@@ -266,7 +301,7 @@ class _SearchHeader extends StatelessWidget {
   }) {
     return Container(
       width: double.infinity,
-      height: SearchViewStyle.toolbarHeightOfSliverAppBar,
+      // height: SearchViewStyle.toolbarHeightOfSliverAppBar,
       padding: SearchViewStyle.paddingRecentChatsHeaders,
       decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
       child: Row(

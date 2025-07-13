@@ -1,5 +1,4 @@
 import 'package:animations/animations.dart';
-import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/config/themes.dart';
 import 'package:fluffychat/pages/chat_list/chat_list.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_body_view_style.dart';
@@ -38,7 +37,7 @@ class ChatListBodyView extends StatelessWidget {
             animation: primaryAnimation,
             secondaryAnimation: secondaryAnimation,
             transitionType: SharedAxisTransitionType.vertical,
-            fillColor: MultiSysColors.material().onPrimary,
+            fillColor: Colors.transparent,
             child: child,
           );
         },

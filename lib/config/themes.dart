@@ -147,6 +147,7 @@ abstract class TwakeThemes {
         snackBarTheme: const SnackBarThemeData(
           behavior: SnackBarBehavior.floating,
         ),
+        splashColor: Colors.transparent,
         scaffoldBackgroundColor: MultiSysColors.material().onPrimary,
         dividerColor: brightness == Brightness.light
             ? Colors.blueGrey.shade50
@@ -295,7 +296,7 @@ abstract class TwakeThemes {
             ),
           ),
         ),
-        highlightColor: LinagoraRefColors.material().tertiary[80],
+        highlightColor: Colors.transparent,
         colorScheme: ColorScheme.fromSeed(
           seedColor: seed ?? AppConfig.colorSchemeSeed,
           brightness: brightness,
@@ -498,19 +499,19 @@ abstract class TwakeThemes {
               ? MultiSysColors.material().background
               : MultiSysColors.material().backgroundDark,
         ),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          backgroundColor: MultiSysColors.material().surface,
-          selectedLabelStyle: fallbackTextTheme.labelSmall?.copyWith(
-            fontSize: 11,
-            color: MultiSysColors.material().primary,
-          ),
-          unselectedLabelStyle: fallbackTextTheme.labelSmall?.copyWith(
-            fontSize: 11,
-            color: MultiSysColors.material().tertiary,
-          ),
-          selectedItemColor: MultiSysColors.material().primary,
-          unselectedItemColor: MultiSysColors.material().tertiary,
-        ),
+        // bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        //   backgroundColor: MultiSysColors.material().surface,
+        //   selectedLabelStyle: fallbackTextTheme.labelSmall?.copyWith(
+        //     fontSize: 11,
+        //     color: MultiSysColors.material().primary,
+        //   ),
+        //   unselectedLabelStyle: fallbackTextTheme.labelSmall?.copyWith(
+        //     fontSize: 11,
+        //     color: MultiSysColors.material().tertiary,
+        //   ),
+        //   selectedItemColor: MultiSysColors.material().primary,
+        //   unselectedItemColor: MultiSysColors.material().tertiary,
+        // ),
       );
 }
 

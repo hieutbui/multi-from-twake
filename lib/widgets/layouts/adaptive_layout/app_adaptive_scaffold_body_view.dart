@@ -283,17 +283,25 @@ class _ColumnPageView extends StatelessWidget {
                 child: Container(
                   height: ResponsiveUtils.heightBottomNavigation,
                   decoration: AppAdaptiveScaffoldBodyViewStyle.navBarDecoration,
-                  child: BottomNavigationBar(
-                    backgroundColor: Colors
-                        .transparent, // Let the container color show through
-                    elevation:
-                        0, // No elevation since we're using the container's shadow
-                    currentIndex: _getActiveBottomNavigationBarIndex(),
-                    onTap: onDestinationSelected,
-                    items: getNavigationDestinationsForBottomBar(context),
-                    showUnselectedLabels: false,
-                    showSelectedLabels: false,
-                    type: BottomNavigationBarType.fixed,
+                  child: Theme(
+                    data: Theme.of(context).copyWith(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                    ),
+                    child: BottomNavigationBar(
+                      backgroundColor: Colors
+                          .transparent, // Let the container color show through
+                      elevation:
+                          0, // No elevation since we're using the container's shadow
+                      currentIndex: _getActiveBottomNavigationBarIndex(),
+                      enableFeedback: false,
+                      fixedColor: Colors.transparent,
+                      onTap: onDestinationSelected,
+                      items: getNavigationDestinationsForBottomBar(context),
+                      showUnselectedLabels: false,
+                      showSelectedLabels: false,
+                      type: BottomNavigationBarType.fixed,
+                    ),
                   ),
                 ),
               ),

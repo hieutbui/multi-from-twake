@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_typography.dart';
 import 'package:fluffychat/pages/settings_dashboard/settings/settings_view_style.dart';
 import 'package:flutter/material.dart';
 import 'package:linagora_design_flutter/linagora_design_flutter.dart';
@@ -53,12 +54,16 @@ class SettingsItemBuilder extends StatelessWidget {
                         children: [
                           Text(
                             title,
-                            style: LinagoraTextStyle.material()
-                                .bodyMedium2
-                                .copyWith(
-                                  color: titleColor,
-                                  fontFamily: 'Inter',
-                                ),
+                            style: TextStyle(
+                              fontSize: MultiMobileTypography.bodyFontCallout,
+                              fontFamily: MultiFonts.sfProDisplay,
+                              fontWeight: FontWeight.w600,
+                              height: 1.25,
+                              letterSpacing: 0.48,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer,
+                            ),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),

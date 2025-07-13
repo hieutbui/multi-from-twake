@@ -1,4 +1,3 @@
-import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/pages/contacts_tab/contacts_appbar.dart';
 import 'package:fluffychat/pages/contacts_tab/contacts_tab.dart';
 import 'package:fluffychat/pages/contacts_tab/contacts_tab_body_view.dart';
@@ -28,7 +27,7 @@ class ContactsTabView extends StatelessWidget {
           textEditingController: contactsController.textEditingController,
         ),
       ),
-      backgroundColor: MultiSysColors.material().onPrimary,
+      backgroundColor: Colors.black.withOpacity(0.5),
       bottomNavigationBar: bottomNavigationBar,
       body: ContactsTabBodyView(contactsController),
     );

@@ -1,4 +1,5 @@
 import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_typography.dart';
 import 'package:fluffychat/pages/chat/events/images_builder/image_placeholder.dart';
 import 'package:fluffychat/presentation/decorators/chat_list/subtitle_image_preview_style.dart';
 import 'package:fluffychat/presentation/decorators/chat_list/subtitle_text_style_decorator/subtitle_text_style_view.dart';
@@ -52,8 +53,13 @@ mixin ChatListItemMixin {
           softWrap: false,
           maxLines: isGroup ? 1 : 2,
           overflow: TextOverflow.ellipsis,
-          style: ListItemStyle.subtitleTextStyle(
-            fontFamily: 'Inter',
+          style: TextStyle(
+            fontFamily: MultiFonts.sfPro,
+            fontSize: MultiMobileTypography.bodyLineHeighSubhead,
+            height: 1.20,
+            letterSpacing: -0.24,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+            fontWeight: FontWeight.w400,
           ),
         );
       },

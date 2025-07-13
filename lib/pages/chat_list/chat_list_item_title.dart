@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_typography.dart';
 import 'package:fluffychat/domain/model/room/room_extension.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_item_title_style.dart';
 import 'package:fluffychat/presentation/mixins/chat_list_item_mixin.dart';
@@ -44,8 +45,14 @@ class ChatListItemTitle extends StatelessWidget with ChatListItemMixin {
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         softWrap: false,
-                        style: ListItemStyle.titleTextStyle(
-                          fontFamily: 'Inter',
+                        style: TextStyle(
+                          fontFamily: MultiFonts.sfProDisplay,
+                          fontWeight: FontWeight.w600,
+                          fontSize: MultiMobileTypography.captionLineHeighSmall,
+                          height: 1.25,
+                          letterSpacing: 0.48,
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
                         ),
                       ),
                     ),
