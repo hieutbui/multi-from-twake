@@ -7,6 +7,7 @@ import 'package:debounce_throttle/debounce_throttle.dart';
 import 'package:desktop_drop/desktop_drop.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:fluffychat/config/app_config.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/domain/model/user_relation/user_relation.dart';
@@ -71,6 +72,7 @@ import 'package:fluffychat/widgets/mixins/twake_context_menu_mixin.dart';
 import 'package:fluffychat/widgets/mixins/twake_context_menu_style.dart';
 import 'package:fluffychat/widgets/mxc_image.dart';
 import 'package:fluffychat/widgets/twake_app.dart';
+import 'package:fluffychat/widgets/twake_components/twake_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_emoji_mart/flutter_emoji_mart.dart' as emoji_mart;
@@ -1866,6 +1868,112 @@ class ChatController extends State<Chat>
         );
         break;
     }
+  }
+
+  List<Widget> bottomNavigationActionsWidget({
+    required EdgeInsetsDirectional paddingIcon,
+    required BuildContext context,
+    double? width,
+    double? iconSize,
+  }) {
+    return <Widget>[
+      TwakeIconButton(
+        onTap: _onTapCloseBottomNav,
+        icon: Icons.close,
+        size: 18,
+        color: Theme.of(context).colorScheme.onPrimaryContainer,
+        buttonDecoration: BoxDecoration(
+          color: Theme.of(context).brightness == Brightness.light
+              ? MultiLightColors.buttonsMainSecondary15Opasity
+              : MultiDarkColors.buttonsMainSecondary15Opasity,
+          borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+        ),
+      ),
+      const SizedBox(width: 12.0),
+      Material(
+        color: Theme.of(context).brightness == Brightness.light
+            ? MultiLightColors.buttonsMainSecondary15Opasity
+            : MultiDarkColors.buttonsMainSecondary15Opasity,
+        borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 8.0,
+            horizontal: 20.0,
+          ),
+          child: Text(
+            '${selectedEvents.length} selected',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                ),
+          ),
+        ),
+      ),
+      const Spacer(),
+      TwakeIconButton(
+        onTap: _onTapTrashSelected,
+        imagePath: ImagePaths.icTrash,
+        size: 18,
+        buttonDecoration: BoxDecoration(
+          color: Theme.of(context).brightness == Brightness.light
+              ? MultiLightColors.buttonsMainSecondaryDefault
+              : MultiDarkColors.buttonsMainSecondaryDefault,
+          borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+        ),
+      ),
+      const SizedBox(width: 12.0),
+      if (selectedEvents.length == 1)
+        TwakeIconButton(
+          onTap: _onTapStarMessage,
+          imagePath: ImagePaths.icStarMessage,
+          size: 18,
+          buttonDecoration: BoxDecoration(
+            color: Theme.of(context).brightness == Brightness.light
+                ? MultiLightColors.buttonsMainSecondaryDefault
+                : MultiDarkColors.buttonsMainSecondaryDefault,
+            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+          ),
+        ),
+      const SizedBox(width: 12.0),
+      if (selectedEvents.length == 1)
+        TwakeIconButton(
+          onTap: _onTapReverseRight,
+          imagePath: ImagePaths.icReverseRight,
+          size: 18,
+          buttonDecoration: BoxDecoration(
+            color: Theme.of(context).brightness == Brightness.light
+                ? MultiLightColors.buttonsMainPrimaryDefault
+                : MultiDarkColors.buttonsMainPrimaryDefault,
+            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+          ),
+        ),
+    ];
+  }
+
+  void _onTapCloseBottomNav() {
+    clearSelectedEvents();
+  }
+
+  void _onTapTrashSelected() {
+    for (final event in selectedEvents) {
+      deleteEventAction(context, event);
+    }
+    clearSelectedEvents();
+  }
+
+  void _onTapStarMessage() {
+    if (selectedEvents.length != 1) return;
+
+    final event = selectedEvents.first;
+    pinEventAction(event);
+    clearSelectedEvents();
+  }
+
+  void _onTapReverseRight() {
+    if (selectedEvents.length != 1) return;
+
+    final event = selectedEvents.first;
+    forwardEventsAction(event: event);
+    clearSelectedEvents();
   }
 
   List<ChatContextMenuActions> _getListPopupMenuActions(Event event) {

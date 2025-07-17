@@ -103,6 +103,8 @@ class SearchController extends State<Search> with WidgetsBindingObserver {
       onContactTap(presentationSearch);
     } else if (presentationSearch is RecentChatPresentationSearch) {
       onRecentChatTap(presentationSearch);
+    } else if (presentationSearch is OmniUserPresentationSearch) {
+      onOmniUserTap(presentationSearch);
     }
   }
 
@@ -131,6 +133,25 @@ class SearchController extends State<Search> with WidgetsBindingObserver {
       'SearchController::onRecentChatTap() - MatrixID: ${recentChatPresentationSearch.id}',
     );
     context.go('/rooms/${recentChatPresentationSearch.id}');
+  }
+
+  void onOmniUserTap(OmniUserPresentationSearch omniUserPresentationSearch) {
+    final roomId = Matrix.of(context)
+        .client
+        .getDirectChatFromUserId(omniUserPresentationSearch.matrixUserId);
+    if (roomId == null) {
+      final contactPresentationSearch = ContactPresentationSearch(
+        matrixId: omniUserPresentationSearch.matrixUserId,
+        displayName: omniUserPresentationSearch.displayName,
+      );
+
+      goToDraftChat(
+        context: context,
+        contactPresentationSearch: contactPresentationSearch,
+      );
+    } else {
+      context.go('/rooms/$roomId');
+    }
   }
 
   void goToDraftChat({

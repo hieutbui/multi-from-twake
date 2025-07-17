@@ -7,6 +7,7 @@ import 'package:fluffychat/pages/chat/chat_event_list.dart';
 import 'package:fluffychat/pages/chat/chat_input_action_row.dart';
 import 'package:fluffychat/pages/chat/chat_loading_view.dart';
 import 'package:fluffychat/pages/chat/chat_view_body_style.dart';
+import 'package:fluffychat/pages/chat/chat_view_bottom_action_widget.dart';
 import 'package:fluffychat/pages/chat/chat_view_style.dart';
 import 'package:fluffychat/pages/chat/disabled_chat_input_row.dart';
 import 'package:fluffychat/pages/chat/events/edit_display.dart';
@@ -14,6 +15,7 @@ import 'package:fluffychat/pages/chat/events/message_content_mixin.dart';
 import 'package:fluffychat/pages/chat/chat_pinned_events/pinned_events_view.dart';
 import 'package:fluffychat/pages/chat/sticky_timestamp_widget.dart';
 import 'package:fluffychat/pages/chat/tombstone_display.dart';
+import 'package:fluffychat/pages/chat_list/chat_list_bottom_navigator_style.dart';
 import 'package:fluffychat/presentation/model/chat/new_chat_status.dart';
 import 'package:fluffychat/presentation/model/chat/pending_room_action.dart';
 import 'package:fluffychat/presentation/model/chat/view_event_list_ui_state.dart';
@@ -440,61 +442,72 @@ class ChatViewBody extends StatelessWidget with MessageContentMixin {
   }
 
   Widget _inputMessageWidget(BuildContext context) {
-    return Container(
-      decoration: controller.responsive.isMobile(context)
-          ? ShapeDecoration(
-              color: Theme.of(context).colorScheme.onPrimary,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(24),
-                  topRight: Radius.circular(24),
-                ),
-              ),
-            )
-          : null,
-      padding: const EdgeInsets.symmetric(
-        vertical: 12.0,
-        horizontal: 16.0,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const ConnectionStatusHeader(),
-          ValueListenableBuilder(
-            valueListenable: controller.editEventNotifier,
-            builder: (context, editEvent, _) {
-              if (!controller.responsive.isMobile(context)) {
-                return const SizedBox.shrink();
-              }
+    Logs().d('isSelectMode ${controller.selectMode}');
+    Logs().d('selectedEvents ${controller.selectedEvents}');
+    return controller.selectMode == false
+        ? Container(
+            decoration: controller.responsive.isMobile(context)
+                ? ShapeDecoration(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(24),
+                        topRight: Radius.circular(24),
+                      ),
+                    ),
+                  )
+                : null,
+            padding: const EdgeInsets.symmetric(
+              vertical: 12.0,
+              horizontal: 16.0,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const ConnectionStatusHeader(),
+                ValueListenableBuilder(
+                  valueListenable: controller.editEventNotifier,
+                  builder: (context, editEvent, _) {
+                    if (!controller.responsive.isMobile(context)) {
+                      return const SizedBox.shrink();
+                    }
 
-              if (editEvent == null) return const SizedBox.shrink();
-              return Padding(
-                padding: ChatViewBodyStyle.inputBarPadding(context),
-                child: EditDisplay(
-                  editEventNotifier: controller.editEventNotifier,
-                  onCloseEditAction: controller.cancelEditEventAction,
-                  timeline: controller.timeline,
+                    if (editEvent == null) return const SizedBox.shrink();
+                    return Padding(
+                      padding: ChatViewBodyStyle.inputBarPadding(context),
+                      child: EditDisplay(
+                        editEventNotifier: controller.editEventNotifier,
+                        onCloseEditAction: controller.cancelEditEventAction,
+                        timeline: controller.timeline,
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
-          ),
-          const SizedBox(height: 8.0),
-          ChatInputRow(controller),
-          SizedBox(
-            height: controller.responsive.isMobile(context) ? 12.0 : 12.0,
-          ),
-          ChatInputActionRow(
-            inputText: controller.inputText,
-            onTapEmoji: () {},
-            onTapAttach: () => controller.onSendFileClick(context),
-            onTapSnooze: () {},
-            onTapSend: controller.onInputBarSubmitted,
-            onTapAI: () {},
-          ),
-          const SizedBox(height: 40.0),
-        ],
-      ),
-    );
+                const SizedBox(height: 8.0),
+                ChatInputRow(controller),
+                SizedBox(
+                  height: controller.responsive.isMobile(context) ? 12.0 : 12.0,
+                ),
+                ChatInputActionRow(
+                  inputText: controller.inputText,
+                  onTapEmoji: () {},
+                  onTapAttach: () => controller.onSendFileClick(context),
+                  onTapSnooze: () {},
+                  onTapSend: controller.onInputBarSubmitted,
+                  onTapAI: () {},
+                ),
+                const SizedBox(height: 40.0),
+              ],
+            ),
+          )
+        : ChatViewBottomActionWidget(
+            actions: controller.bottomNavigationActionsWidget(
+              paddingIcon: ChatListBottomNavigatorStyle.paddingIcon,
+              iconSize: ChatListBottomNavigatorStyle.iconSize,
+              width: ChatListBottomNavigatorStyle.width,
+              context: context,
+            ),
+          );
   }
 }
 

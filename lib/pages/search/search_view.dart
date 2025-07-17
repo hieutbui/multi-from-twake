@@ -188,6 +188,8 @@ class SearchView extends StatelessWidget {
                   keyword: searchController.textEditingController.text,
                   omniUser: omniUserSearch[index],
                   client: searchController.client,
+                  onTap: () =>
+                      searchController.onSearchItemTap(omniUserSearch[index]),
                 );
               },
               itemCount: omniUserSearch.length,
