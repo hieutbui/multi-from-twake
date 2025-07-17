@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:fluffychat/domain/model/search/contact_search_model.dart';
+import 'package:fluffychat/domain/model/search/omni_user_search_model.dart';
 import 'package:fluffychat/domain/model/search/recent_chat_model.dart';
 import 'package:fluffychat/presentation/model/contact/presentation_contact.dart';
 import 'package:matrix/matrix.dart';
@@ -92,6 +93,39 @@ class RecentChatPresentationSearch extends PresentationSearch {
       [roomId, displayName, roomSummary, directChatMatrixID];
 }
 
+class OmniUserPresentationSearch extends PresentationSearch {
+  final int userId;
+  final String username;
+  final String matrixUserId;
+  final bool isVerified;
+  final String? contactStatus;
+  final String? contactDirection;
+
+  const OmniUserPresentationSearch({
+    required this.userId,
+    required this.username,
+    required this.matrixUserId,
+    required this.isVerified,
+    super.displayName,
+    this.contactStatus,
+    this.contactDirection,
+  });
+
+  @override
+  String get id => matrixUserId;
+
+  @override
+  List<Object?> get props => [
+        userId,
+        username,
+        displayName,
+        matrixUserId,
+        isVerified,
+        contactStatus,
+        contactDirection,
+      ];
+}
+
 extension RecentChatSearchModelExtension on RecentChatSearchModel {
   RecentChatPresentationSearch toPresentation() {
     return RecentChatPresentationSearch(
@@ -126,6 +160,20 @@ extension PresentationSearchExtension on PresentationSearch {
     return PresentationContact(
       matrixId: directChatMatrixID,
       displayName: displayName,
+    );
+  }
+}
+
+extension OmniUserSearchModelExtension on OmniUserSearchModel {
+  OmniUserPresentationSearch toPresentation() {
+    return OmniUserPresentationSearch(
+      userId: userId,
+      username: username,
+      displayName: displayName,
+      matrixUserId: matrixUserId,
+      isVerified: isVerified,
+      contactStatus: contactStatus,
+      contactDirection: contactDirection,
     );
   }
 }

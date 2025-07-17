@@ -15,12 +15,18 @@ class AuthResponse with EquatableMixin {
   final String matrixUserId;
   @JsonKey(name: 'matrix_access_token')
   final String matrixAccessToken;
+  @JsonKey(name: 'access_token')
+  final String accessToken;
+  @JsonKey(name: 'token_type')
+  final String tokenType;
 
   AuthResponse({
     required this.username,
     required this.email,
     required this.matrixUserId,
     required this.matrixAccessToken,
+    required this.accessToken,
+    required this.tokenType,
     this.displayName,
   });
 
@@ -36,5 +42,7 @@ class AuthResponse with EquatableMixin {
         email,
         matrixUserId,
         matrixAccessToken,
+        accessToken,
+        tokenType,
       ];
 }

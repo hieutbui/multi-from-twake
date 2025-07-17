@@ -2,40 +2,50 @@ import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/data/network/service_path.dart';
 
 class OmniEndpoint {
+  static const apiRoute = '/api';
+
+  static const authRoute = '$apiRoute/auth';
+
+  static const userRoute = '$apiRoute/users';
+
   static final ServicePath signupServicePath = ServicePath(
-    '/api/auth/signup',
+    '$authRoute/signup',
   );
 
   static final ServicePath signinServicePath = ServicePath(
-    '/api/auth/signin',
+    '$authRoute/signin',
   );
 
   static final ServicePath checkCodeServicePath = ServicePath(
-    '/api/auth/check-code',
+    '$authRoute/check-code',
   );
 
   static final ServicePath setDisplayNameServicePath = ServicePath(
-    '/api/auth/set-display-name',
+    '$authRoute/set-display-name',
   );
 
   static final ServicePath setUsernameServicePath = ServicePath(
-    '/api/auth/set-username',
+    '$authRoute/set-username',
   );
 
   static final ServicePath oauthSignupServicePath = ServicePath(
-    '/api/auth/oauth/signup',
+    '$authRoute/oauth/signup',
   );
 
   static final ServicePath oauthSigninServicePath = ServicePath(
-    '/api/auth/oauth/signin',
+    '$authRoute/oauth/signin',
   );
 
   static final ServicePath signoutServicePath = ServicePath(
-    '/api/auth/signout',
+    '$authRoute/signout',
   );
 
   static final ServicePath getUsernameSuggestion = ServicePath(
-    '/api/auth/suggest-usernames',
+    '$authRoute/suggest-usernames',
+  );
+
+  static final ServicePath userSearchServicePath = ServicePath(
+    '$userRoute/search',
   );
 
   static const String omniRootPath = '';

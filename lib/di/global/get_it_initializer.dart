@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:fluffychat/config/app_grid_config/app_config_loader.dart';
 import 'package:fluffychat/data/datasource/auth_datasource.dart';
 import 'package:fluffychat/data/datasource/contact/address_book_datasource.dart';
+import 'package:fluffychat/data/datasource/search/omni_user_search_datasource.dart';
 import 'package:fluffychat/data/datasource/user_relation/hive_user_relation_datasource.dart';
 import 'package:fluffychat/data/datasource/contact/hive_third_party_contact_datasource.dart';
 import 'package:fluffychat/data/datasource/contact/phonebook_datasource.dart';
@@ -20,6 +21,7 @@ import 'package:fluffychat/data/datasource/tom_configurations_datasource.dart';
 import 'package:fluffychat/data/datasource/tom_contacts_datasource.dart';
 import 'package:fluffychat/data/datasource_impl/auth/auth_datasource_impl.dart';
 import 'package:fluffychat/data/datasource_impl/contact/address_book_datasource_impl.dart';
+import 'package:fluffychat/data/datasource_impl/search/omni_user_search_datasource_impl.dart';
 import 'package:fluffychat/data/datasource_impl/user_relation/hive_user_relation_datasource_impl.dart';
 import 'package:fluffychat/data/datasource_impl/contact/hive_third_party_contact_datasource_impl.dart';
 import 'package:fluffychat/data/datasource_impl/contact/phonebook_contact_datasource_impl.dart';
@@ -48,8 +50,10 @@ import 'package:fluffychat/data/network/media/media_api.dart';
 import 'package:fluffychat/data/network/recovery_words/recovery_words_api.dart';
 import 'package:fluffychat/data/network/search/server_search_api.dart';
 import 'package:fluffychat/data/network/server_config_api.dart';
+import 'package:fluffychat/data/network/user/omni_user_api.dart';
 import 'package:fluffychat/data/repository/auth/auth_repository_impl.dart';
 import 'package:fluffychat/data/repository/contact/address_book_repository_impl.dart';
+import 'package:fluffychat/data/repository/search/omni_user_search_repository_impl.dart';
 import 'package:fluffychat/data/repository/user_relation/hive_user_relation_repository_impl.dart';
 import 'package:fluffychat/data/repository/contact/hive_third_party_contact_repository_impl.dart';
 import 'package:fluffychat/data/repository/contact/phonebook_contact_repository_impl.dart';
@@ -72,6 +76,7 @@ import 'package:fluffychat/domain/contact_manager/contacts_manager.dart';
 import 'package:fluffychat/domain/repository/auth_repository.dart';
 import 'package:fluffychat/domain/repository/contact/address_book_repository.dart';
 import 'package:fluffychat/domain/repository/contact/hive_contact_repository.dart';
+import 'package:fluffychat/domain/repository/search/omni_user_search_repository.dart';
 import 'package:fluffychat/domain/repository/user_relation/hive_user_relation_repository.dart';
 import 'package:fluffychat/domain/repository/contact_repository.dart';
 import 'package:fluffychat/domain/repository/federation_configurations_repository.dart';
@@ -131,6 +136,7 @@ import 'package:fluffychat/domain/usecase/search/search_recent_chat_interactor.d
 import 'package:fluffychat/domain/usecase/search/server_search_interactor.dart';
 import 'package:fluffychat/domain/usecase/settings/save_language_interactor.dart';
 import 'package:fluffychat/domain/usecase/settings/update_profile_interactor.dart';
+import 'package:fluffychat/domain/usecase/user/omni_user_search_interactor.dart';
 import 'package:fluffychat/domain/usecase/verify_name_interactor.dart';
 import 'package:fluffychat/event/twake_event_dispatcher.dart';
 import 'package:fluffychat/modules/federation_identity_lookup/manager/federation_identity_lookup_manager.dart';
@@ -213,6 +219,7 @@ class GetItInitializer {
     getIt.registerSingleton<ServerConfigAPI>(ServerConfigAPI());
     getIt.registerFactory<InvitationAPI>(() => InvitationAPI());
     getIt.registerSingleton<OmniAuthAPI>(OmniAuthAPI());
+    getIt.registerSingleton<OmniUserApi>(OmniUserApi());
   }
 
   void bindingManager() {
@@ -266,6 +273,9 @@ class GetItInitializer {
     getIt.registerFactory<AuthDatasource>(
       () => AuthDatasourceImpl(),
     );
+    getIt.registerFactory<OmniUserSearchDatasource>(
+      () => OmniUserSearchDatasourceImpl(),
+    );
   }
 
   void bindingDatasourceImpl() {
@@ -304,6 +314,10 @@ class GetItInitializer {
 
     getIt.registerFactory<AuthDatasourceImpl>(
       () => AuthDatasourceImpl(),
+    );
+
+    getIt.registerFactory<OmniUserSearchDatasourceImpl>(
+      () => OmniUserSearchDatasourceImpl(),
     );
   }
 
@@ -360,6 +374,9 @@ class GetItInitializer {
     );
     getIt.registerFactory<AuthRepository>(
       () => AuthRepositoryImpl(),
+    );
+    getIt.registerFactory<OmniUserSearchRepository>(
+      () => OmniUserSearchRepositoryImpl(),
     );
   }
 
@@ -523,6 +540,9 @@ class GetItInitializer {
     );
     getIt.registerFactory<SetUsernameInteractor>(
       () => SetUsernameInteractor(),
+    );
+    getIt.registerFactory<OmniUserSearchInteractor>(
+      () => OmniUserSearchInteractor(),
     );
   }
 
