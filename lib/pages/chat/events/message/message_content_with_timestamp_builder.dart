@@ -1,8 +1,5 @@
-import 'dart:ui';
-
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
-import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/domain/model/room/room_extension.dart';
 import 'package:fluffychat/pages/chat/events/message/display_name_widget.dart';
@@ -24,6 +21,7 @@ import 'package:fluffychat/widgets/context_menu/context_menu_action.dart';
 import 'package:fluffychat/widgets/context_menu/context_menu_action_item.dart';
 import 'package:fluffychat/widgets/context_menu/twake_context_menu_area.dart';
 import 'package:fluffychat/widgets/matrix.dart';
+import 'package:fluffychat/widgets/reaction/multi_hero_dialog_route.dart';
 import 'package:fluffychat/widgets/twake_components/twake_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_emoji_mart/flutter_emoji_mart.dart';
@@ -218,7 +216,7 @@ class _MessageContentWithTimestampBuilderState
                       widget.onDisplayEmojiReaction?.call();
                       _displayEmojiPicker.value = false;
                       await Navigator.of(context).push(
-                        HeroDialogRoute(
+                        MultiHeroDialogRoute(
                           builder: (context) {
                             final myReaction = event
                                 .aggregatedEvents(
@@ -234,6 +232,10 @@ class _MessageContentWithTimestampBuilderState
                                 .firstOrNull;
                             final relatesTo = (myReaction?.content
                                 as Map<String, dynamic>?)?['m.relates_to'];
+                            final ownMessageColor =
+                                Theme.of(context).brightness == Brightness.light
+                                    ? MultiLightColors.additionalAccentBlueDark
+                                    : MultiDarkColors.additionalAccentBlueDark;
                             return GestureDetector(
                               behavior: HitTestBehavior.opaque,
                               onTap: () {
@@ -241,31 +243,41 @@ class _MessageContentWithTimestampBuilderState
                               },
                               child: Stack(
                                 children: [
-                                  Positioned.fill(
-                                    child: BackdropFilter(
-                                      filter: ImageFilter.blur(
-                                        sigmaX: 80,
-                                        sigmaY: 80,
-                                      ),
-                                      child: Container(
-                                        color: const Color(
-                                          0xFF636363,
-                                        ).withOpacity(0.2),
-                                      ),
-                                    ),
-                                  ),
+                                  // Positioned.fill(
+                                  //   child: BackdropFilter(
+                                  //     filter: ImageFilter.blur(
+                                  //       sigmaX: 80,
+                                  //       sigmaY: 80,
+                                  //     ),
+                                  //     child: Container(
+                                  //       color: Colors.transparent,
+                                  //     ),
+                                  //   ),
+                                  // ),
                                   ValueListenableBuilder(
                                     valueListenable: _displayEmojiPicker,
                                     builder: (context, display, child) {
                                       return ReactionsDialogWidget(
+                                        backgroundColor: widget
+                                                .event.isOwnMessage
+                                            ? ownMessageColor
+                                            : MessageContentWithTimestampBuilder
+                                                    .responsiveUtils
+                                                    .isMobile(context)
+                                                ? Theme.of(context)
+                                                    .colorScheme
+                                                    .onPrimary
+                                                : Theme.of(context)
+                                                    .colorScheme
+                                                    .surfaceContainerHighest,
                                         messageWidget: Material(
                                           color: widget.event.isOwnMessage
-                                              ? LinagoraRefColors.material()
-                                                  .primary[95]
+                                              ? ownMessageColor
                                               : MessageContentWithTimestampBuilder
                                                       .responsiveUtils
                                                       .isMobile(context)
-                                                  ? MultiSysColors.material()
+                                                  ? Theme.of(context)
+                                                      .colorScheme
                                                       .onPrimary
                                                   : Theme.of(context)
                                                       .colorScheme
@@ -282,16 +294,16 @@ class _MessageContentWithTimestampBuilderState
                                             decoration: BoxDecoration(
                                               borderRadius: MessageStyle
                                                   .bubbleBorderRadius,
-                                              border: !widget
-                                                          .event.isOwnMessage &&
-                                                      MessageContentWithTimestampBuilder
-                                                          .responsiveUtils
-                                                          .isMobile(context)
-                                                  ? Border.all(
-                                                      color: MessageStyle
-                                                          .borderColorReceivedBubble,
-                                                    )
-                                                  : null,
+                                              // border: !widget
+                                              //             .event.isOwnMessage &&
+                                              //         MessageContentWithTimestampBuilder
+                                              //             .responsiveUtils
+                                              //             .isMobile(context)
+                                              //     ? Border.all(
+                                              //         color: MessageStyle
+                                              //             .borderColorReceivedBubble,
+                                              //       )
+                                              //     : null,
                                             ),
                                             child: SingleChildScrollView(
                                               primary: true,
@@ -363,10 +375,20 @@ class _MessageContentWithTimestampBuilderState
                                                 child: PullDownMenu(
                                                   routeTheme:
                                                       PullDownMenuRouteTheme(
-                                                    backgroundColor:
-                                                        LinagoraRefColors
-                                                                .material()
-                                                            .primary[100],
+                                                    backgroundColor: widget
+                                                            .event.isOwnMessage
+                                                        ? ownMessageColor
+                                                        : MessageContentWithTimestampBuilder
+                                                                .responsiveUtils
+                                                                .isMobile(
+                                                            context,
+                                                          )
+                                                            ? Theme.of(context)
+                                                                .colorScheme
+                                                                .onPrimary
+                                                            : Theme.of(context)
+                                                                .colorScheme
+                                                                .surfaceContainerHighest,
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                       20,
@@ -385,6 +407,7 @@ class _MessageContentWithTimestampBuilderState
                                                           itemTheme:
                                                               _themeContextMenu(
                                                             item,
+                                                            context,
                                                           ),
                                                           icon: item
                                                               .getIcon(event),
@@ -394,6 +417,7 @@ class _MessageContentWithTimestampBuilderState
                                                               _iconContextMenu(
                                                             event,
                                                             item,
+                                                            context,
                                                           ),
                                                           iconColor:
                                                               item.getIconColor(
@@ -509,12 +533,6 @@ class _MessageContentWithTimestampBuilderState
         width: 326,
         height: 360,
         padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: LinagoraRefColors.material().primary[100],
-          borderRadius: BorderRadius.circular(
-            24,
-          ),
-        ),
         child: EmojiPicker(
           emojiData: emojiData,
           recentEmoji: widget.recentEmojiFuture,
@@ -777,23 +795,34 @@ class _MessageContentWithTimestampBuilderState
     );
   }
 
-  Color? _textContextMenuColor(MessageContextMenuAction action) {
+  Color? _textContextMenuColor(
+    MessageContextMenuAction action,
+    BuildContext context,
+  ) {
     return action == MessageContextMenuAction.delete
-        ? MultiSysColors.material().error
-        : LinagoraRefColors.material().neutral[30];
+        ? Theme.of(context).colorScheme.error
+        : Theme.of(context).colorScheme.onPrimaryContainer;
   }
 
-  PullDownMenuItemTheme _themeContextMenu(MessageContextMenuAction action) {
+  PullDownMenuItemTheme _themeContextMenu(
+    MessageContextMenuAction action,
+    BuildContext context,
+  ) {
     return PullDownMenuItemTheme(
       textStyle: context.textTheme.bodyLarge!.copyWith(
         color: _textContextMenuColor(
           action,
+          context,
         ),
       ),
     );
   }
 
-  Widget? _iconContextMenu(Event event, MessageContextMenuAction item) {
+  Widget? _iconContextMenu(
+    Event event,
+    MessageContextMenuAction item,
+    BuildContext context,
+  ) {
     return item.imagePath(event) != null
         ? SvgPicture.asset(
             item.imagePath(
@@ -803,7 +832,11 @@ class _MessageContentWithTimestampBuilderState
             width: 24,
             height: 24,
             colorFilter: ColorFilter.mode(
-              LinagoraRefColors.material().neutral[30]!,
+              _textContextMenuColor(
+                    item,
+                    context,
+                  ) ??
+                  Theme.of(context).colorScheme.onPrimaryContainer,
               BlendMode.srcIn,
             ),
           )
