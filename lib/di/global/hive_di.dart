@@ -9,6 +9,7 @@ class HiveDI extends BaseDI {
     get.registerLazySingletonAsync<HiveCollectionToMDatabase>(
       () => HiveCollectionToMDatabase.databaseBuilder(),
     );
+
     get.registerLazySingletonAsync<HiveCollectionMultiDatabase>(
       () => HiveCollectionMultiDatabase.databaseBuilder(),
     );

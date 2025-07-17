@@ -22,3 +22,22 @@ extension PresentationSearchExtensions on ContactPresentationSearch {
     }
   }
 }
+
+extension OmniUserPresentationSearchExtensions on OmniUserPresentationSearch {
+  Future<Profile?> getProfile(Client client) async {
+    try {
+      final profile = await client.getProfileFromUserId(
+        matrixUserId,
+        getFromRooms: false,
+      );
+      Logs().d("SearchController()::getProfiles(): ${profile.avatarUrl}");
+      return profile;
+    } catch (e) {
+      return Profile(
+        avatarUrl: null,
+        displayName: displayName,
+        userId: matrixUserId,
+      );
+    }
+  }
+}

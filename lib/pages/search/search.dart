@@ -4,6 +4,7 @@ import 'package:fluffychat/app_state/success.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/domain/app_state/search/search_state.dart';
 import 'package:fluffychat/domain/usecase/search/pre_search_recent_contacts_interactor.dart';
+import 'package:fluffychat/pages/search/omni_user_search_controller.dart';
 import 'package:fluffychat/pages/search/search_contacts_and_chats_controller.dart';
 import 'package:fluffychat/pages/search/search_view.dart';
 import 'package:fluffychat/pages/search/server_search_controller.dart';
@@ -37,6 +38,7 @@ class SearchController extends State<Search> with WidgetsBindingObserver {
 
   SearchContactsAndChatsController? searchContactAndRecentChatController;
   final serverSearchController = ServerSearchController();
+  final omniUserSearchController = OmniUserSearchController();
 
   final _preSearchRecentContactsInteractor =
       getIt.get<PreSearchRecentContactsInteractor>();
@@ -168,6 +170,7 @@ class SearchController extends State<Search> with WidgetsBindingObserver {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (mounted) {
         await searchContactAndRecentChatController?.init();
+        await omniUserSearchController.init();
         serverSearchController.initSearch(
           context: context,
         );
@@ -182,6 +185,7 @@ class SearchController extends State<Search> with WidgetsBindingObserver {
 
   void onSearchBarChanged(String keyword) {
     searchContactAndRecentChatController?.onSearchBarChanged(keyword);
+    omniUserSearchController.onSearchBarChanged(keyword);
     serverSearchController.onSearchBarChanged(keyword);
   }
 
@@ -206,6 +210,7 @@ class SearchController extends State<Search> with WidgetsBindingObserver {
   @override
   void dispose() {
     searchContactAndRecentChatController?.dispose();
+    omniUserSearchController.dispose();
     serverSearchController.dispose();
     preSearchRecentContactsNotifier.dispose();
     textEditingController.dispose();

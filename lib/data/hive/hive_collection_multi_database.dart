@@ -18,8 +18,10 @@ class HiveCollectionMultiDatabase {
   late BoxCollection _collection;
 
   String get _userRelationBoxName => 'user_relation_box';
+  String get _authCredentialBoxName => 'auth_credential_box';
 
   late CollectionBox<Map> userRelationBox;
+  late CollectionBox<Map> authCredentialBox;
 
   HiveCollectionMultiDatabase(this.name, this.path, {this.key});
 
@@ -125,6 +127,7 @@ class HiveCollectionMultiDatabase {
       name,
       {
         _userRelationBoxName,
+        _authCredentialBoxName,
       },
       path: path,
       key: key,
@@ -133,10 +136,14 @@ class HiveCollectionMultiDatabase {
       _userRelationBoxName,
       preload: true,
     );
+    authCredentialBox = await _collection.openBox(
+      _authCredentialBoxName,
+    );
   }
 
   Future<void> clear() async {
     await userRelationBox.clear();
+    await authCredentialBox.clear();
 
     if (PlatformInfos.isMobile) {
       await _collection.deleteFromDisk();

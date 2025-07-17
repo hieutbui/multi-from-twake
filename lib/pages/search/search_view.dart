@@ -4,6 +4,7 @@ import 'package:fluffychat/pages/search/recent_contacts_banner_widget.dart';
 import 'package:fluffychat/pages/search/recent_item_widget.dart';
 import 'package:fluffychat/pages/search/search.dart';
 import 'package:fluffychat/pages/search/search_external_contact.dart';
+import 'package:fluffychat/pages/search/search_omni_user_widget.dart';
 import 'package:fluffychat/pages/search/search_text_field.dart';
 import 'package:fluffychat/pages/search/search_view_style.dart';
 import 'package:fluffychat/pages/search/server_search_view.dart';
@@ -76,6 +77,7 @@ class SearchView extends StatelessWidget {
               }),
               child: const SliverToBoxAdapter(),
             ),
+            _omniUsersWidget(),
             _RecentChatAndContactsHeader(searchController: searchController),
             _recentChatsWidget(),
             ValueListenableBuilder(
@@ -166,6 +168,35 @@ class SearchView extends StatelessWidget {
             child: const SizedBox(),
           );
         },
+      ),
+    );
+  }
+
+  Widget _omniUsersWidget() {
+    return SliverToBoxAdapter(
+      child: ValueListenableBuilder(
+        valueListenable:
+            searchController.omniUserSearchController.omniUserSearchNotifier,
+        builder: (context, omniUserSearch, child) {
+          if (omniUserSearch.isNotEmpty) {
+            return ListView.builder(
+              shrinkWrap: true,
+              physics: const ClampingScrollPhysics(),
+              padding: SearchViewStyle.paddingRecentChats,
+              itemBuilder: (context, index) {
+                return SearchOmniUserWidget(
+                  keyword: searchController.textEditingController.text,
+                  omniUser: omniUserSearch[index],
+                  client: searchController.client,
+                );
+              },
+              itemCount: omniUserSearch.length,
+            );
+          }
+
+          return child!;
+        },
+        child: const SizedBox.shrink(),
       ),
     );
   }

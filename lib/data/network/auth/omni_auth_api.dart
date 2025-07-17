@@ -12,7 +12,7 @@ import 'package:fluffychat/data/model/auth/sign_up_request.dart';
 import 'package:fluffychat/data/model/auth/sign_up_response.dart';
 import 'package:fluffychat/data/model/auth/verify_code_request.dart';
 import 'package:fluffychat/data/model/auth/verify_code_response.dart';
-import 'package:fluffychat/data/network/auth/omni_endpoint.dart';
+import 'package:fluffychat/data/network/omni_endpoint.dart';
 import 'package:fluffychat/data/network/dio_client.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/di/global/network_di.dart';

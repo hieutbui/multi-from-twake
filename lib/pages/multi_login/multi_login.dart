@@ -6,6 +6,7 @@ import 'package:fluffychat/app_state/success.dart';
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/domain/app_state/auth/signin_state.dart';
+import 'package:fluffychat/domain/auth_manager/auth_credential_storage.dart';
 import 'package:fluffychat/domain/usecase/auth/signin_interactor.dart';
 import 'package:fluffychat/pages/multi_login/multi_login_view.dart';
 import 'package:fluffychat/utils/dialog/twake_dialog.dart';
@@ -156,6 +157,11 @@ class MultiLoginController extends State<MultiLogin> {
   Future<void> _handleSigninSuccessState(Success success) async {
     if (success is SigninSuccess) {
       try {
+        final authCredentialStorage = AuthCredentialStorage();
+        final accessToken = success.authResponse.accessToken;
+
+        await authCredentialStorage.saveOmniAccessToken(accessToken);
+
         var homeserver = Uri.parse(AppConfig.sampleValue);
         Logs().d('Homeserver URL: ${homeserver.toString()}');
 
