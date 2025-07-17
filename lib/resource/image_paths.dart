@@ -95,6 +95,8 @@ class ImagePaths {
   static String get icDoubleCheck => _getImagePath('ic_double_check.svg');
   static String get icMessagePlusSquare =>
       _getImagePath('ic_message_plus_square.svg');
+  static String get icReverseRight => _getImagePath('ic_reverse_right.svg');
+  static String get icStarMessage => _getImagePath('ic_star_message.svg');
 
   // Entrance Main Screen assets
   static String get splashBackground =>

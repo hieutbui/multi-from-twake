@@ -32,41 +32,48 @@ class ChatInputRow extends StatelessWidget {
                     ? CrossAxisAlignment.end
                     : CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: controller.selectMode
-                ? [
-                    ActionSelectModeWidget(
-                      controller: controller,
-                    ),
-                  ]
-                : <Widget>[
-                    // if (ChatInputRowStyle.responsiveUtils.isMobile(context))
-                    //   SizedBox(
-                    //     height: ChatInputRowStyle.chatInputRowHeight,
-                    //     child: TwakeIconButton(
-                    //       size: ChatInputRowStyle.chatInputRowMoreBtnSize,
-                    //       tooltip: L10n.of(context)!.more,
-                    //       icon: Icons.add_circle_outline,
-                    //       onTap: () => controller.onSendFileClick(context),
-                    //     ),
-                    //   ),
-                    // if (controller.matrix!.isMultiAccount &&
-                    //     controller.matrix!.hasComplexBundles &&
-                    //     controller.matrix!.currentBundle!.length > 1)
-                    //   Container(
-                    //     height: ChatInputRowStyle.chatInputRowHeight,
-                    //     alignment: Alignment.center,
-                    //     child: ChatAccountPicker(controller),
-                    //   ),
-                    Expanded(
-                      child: ChatInputRowStyle.responsiveUtils.isMobile(context)
-                          ? _buildMobileInputRow(context)
-                          : _buildWebInputRow(context),
-                    ),
-                    // ChatInputRowSendBtn(
-                    //   inputText: controller.inputText,
-                    //   onTap: controller.onInputBarSubmitted,
-                    // ),
-                  ],
+            // children: controller.selectMode
+            // ? [
+            //     ActionSelectModeWidget(
+            //       controller: controller,
+            //     ),
+            //   ]
+            // : <Widget>[
+            // if (ChatInputRowStyle.responsiveUtils.isMobile(context))
+            //   SizedBox(
+            //     height: ChatInputRowStyle.chatInputRowHeight,
+            //     child: TwakeIconButton(
+            //       size: ChatInputRowStyle.chatInputRowMoreBtnSize,
+            //       tooltip: L10n.of(context)!.more,
+            //       icon: Icons.add_circle_outline,
+            //       onTap: () => controller.onSendFileClick(context),
+            //     ),
+            //   ),
+            // if (controller.matrix!.isMultiAccount &&
+            //     controller.matrix!.hasComplexBundles &&
+            //     controller.matrix!.currentBundle!.length > 1)
+            //   Container(
+            //     height: ChatInputRowStyle.chatInputRowHeight,
+            //     alignment: Alignment.center,
+            //     child: ChatAccountPicker(controller),
+            //   ),
+            // Expanded(
+            //   child: ChatInputRowStyle.responsiveUtils.isMobile(context)
+            //       ? _buildMobileInputRow(context)
+            //       : _buildWebInputRow(context),
+            // ),
+            // ChatInputRowSendBtn(
+            //   inputText: controller.inputText,
+            //   onTap: controller.onInputBarSubmitted,
+            // ),
+            // ],
+            children: [
+              Expanded(
+                child: ChatInputRowStyle.responsiveUtils.isMobile(context)
+                    ? _buildMobileInputRow(context)
+                    : _buildWebInputRow(context),
+              ),
+            ],
           ),
         );
       },
