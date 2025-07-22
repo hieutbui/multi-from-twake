@@ -113,10 +113,8 @@ class ChatListView extends StatelessWidget {
                             bottom: 6,
                           ),
                           decoration: ShapeDecoration(
-                            color: Theme.of(context).brightness ==
-                                    Brightness.light
-                                ? MultiLightColors.buttonsMainSecondary15Opasity
-                                : MultiDarkColors.buttonsMainSecondary15Opasity,
+                            color: MultiColors.of(context)
+                                .buttonsMainSecondary15Opasity,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(100),
                             ),
@@ -130,12 +128,8 @@ class ChatListView extends StatelessWidget {
                                   vertical: 5,
                                 ),
                                 decoration: ShapeDecoration(
-                                  color: Theme.of(context).brightness ==
-                                          Brightness.light
-                                      ? MultiLightColors
-                                          .additionalAccentBlueMain
-                                      : MultiDarkColors
-                                          .additionalAccentBlueMain,
+                                  color: MultiColors.of(context)
+                                      .additionalAccentBlueMain,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(16),
                                   ),

@@ -124,12 +124,8 @@ class RegistrationNameView extends StatelessWidget {
                                     .textTheme
                                     .headlineLarge
                                     ?.copyWith(
-                                      color: Theme.of(context).brightness ==
-                                              Brightness.light
-                                          ? MultiLightColors
-                                              .textMainTertiaryDisabled
-                                          : MultiDarkColors
-                                              .textMainTertiaryDisabled,
+                                      color: MultiColors.of(context)
+                                          .textMainTertiaryDisabled,
                                     ),
                               ),
                             ),

@@ -72,9 +72,7 @@ class EntranceMainView extends StatelessWidget {
                         style: AuthButtonStyle(
                           separator: EntranceViewStyle.oauthButtonSeparator,
                           buttonColor:
-                              Theme.of(context).brightness == Brightness.light
-                                  ? MultiLightColors.buttonsMainPrimaryDefault
-                                  : MultiDarkColors.buttonsMainPrimaryDefault,
+                              MultiColors.of(context).buttonsMainPrimaryDefault,
                           iconSize: EntranceViewStyle.oauthButtonIconSize,
                           iconColor:
                               Theme.of(context).colorScheme.onInverseSurface,
@@ -95,9 +93,7 @@ class EntranceMainView extends StatelessWidget {
                       style: AuthButtonStyle(
                         separator: EntranceViewStyle.oauthButtonSeparator,
                         buttonColor:
-                            Theme.of(context).brightness == Brightness.light
-                                ? MultiLightColors.buttonsMainSecondaryDefault
-                                : MultiDarkColors.buttonsMainSecondaryDefault,
+                            MultiColors.of(context).buttonsMainSecondaryDefault,
                         iconColor: Theme.of(context).colorScheme.onSurface,
                         iconSize: EntranceViewStyle.oauthButtonIconSize,
                         height: EntranceViewStyle.oauthButtonHeight,
@@ -117,9 +113,7 @@ class EntranceMainView extends StatelessWidget {
                       style: AuthButtonStyle(
                         separator: EntranceViewStyle.oauthButtonSeparator,
                         buttonColor:
-                            Theme.of(context).brightness == Brightness.light
-                                ? MultiLightColors.buttonsMainSecondaryDefault
-                                : MultiDarkColors.buttonsMainSecondaryDefault,
+                            MultiColors.of(context).buttonsMainSecondaryDefault,
                         iconSize: EntranceViewStyle.oauthButtonIconSize,
                         iconColor: Theme.of(context).colorScheme.onSurface,
                         height: EntranceViewStyle.oauthButtonHeight,

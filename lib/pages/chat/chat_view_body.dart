@@ -528,9 +528,7 @@ class NewContactActionButton extends StatelessWidget {
     return InkWell(
       onTap: () => onTap(action),
       child: Material(
-        color: Theme.of(context).brightness == Brightness.light
-            ? MultiLightColors.buttonsMainSecondaryDefault
-            : MultiDarkColors.buttonsMainSecondaryDefault,
+        color: MultiColors.of(context).buttonsMainSecondaryDefault,
         borderRadius: const BorderRadius.all(Radius.circular(16.0)),
         child: Padding(
           padding: EdgeInsets.symmetric(

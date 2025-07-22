@@ -42,9 +42,8 @@ class PinnedEventsView extends StatelessWidget {
               case const (ChatGetPinnedEventsSuccess):
                 final data = success as ChatGetPinnedEventsSuccess;
                 return Material(
-                  color: (Theme.of(context).brightness == Brightness.light
-                          ? MultiLightColors.messagesSenderHover
-                          : MultiDarkColors.messagesSenderHover)
+                  color: MultiColors.of(context)
+                      .messagesSenderHover
                       .withOpacity(0.5),
                   child: InkWell(
                     onTap: () => controller.pinnedEventsController

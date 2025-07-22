@@ -37,9 +37,7 @@ class MultiRegistrationButton extends StatelessWidget {
         height: 48,
         child: isLoading == true
             ? CircularProgressIndicator(
-                color: Theme.of(context).brightness == Brightness.light
-                    ? MultiLightColors.textMainTertiaryDisabled
-                    : MultiDarkColors.textMainTertiaryDisabled,
+                color: MultiColors.of(context).textMainTertiaryDisabled,
               )
             : Text(
                 label,
@@ -54,56 +52,32 @@ class MultiRegistrationButton extends StatelessWidget {
   }
 
   Color? getBackgroundColor(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
-
     switch (type) {
       case MultiRegistrationButtonType.mainSecondaryDefault:
-        return brightness == Brightness.light
-            ? MultiLightColors.buttonsMainSecondaryDefault
-            : MultiDarkColors.buttonsMainSecondaryDefault;
+        return MultiColors.of(context).buttonsMainSecondaryDefault;
       case MultiRegistrationButtonType.mainSecondaryDisabled:
-        return brightness == Brightness.light
-            ? MultiLightColors.buttonsMainSecondaryDisabled
-            : MultiDarkColors.buttonsMainSecondaryDisabled;
+        return MultiColors.of(context).buttonsMainSecondaryDisabled;
       case MultiRegistrationButtonType.mainPrimaryDefault:
-        return brightness == Brightness.light
-            ? MultiLightColors.buttonsMainPrimaryDefault
-            : MultiDarkColors.buttonsMainPrimaryDefault;
+        return MultiColors.of(context).buttonsMainPrimaryDefault;
       case MultiRegistrationButtonType.mainSecondary15Opacity:
-        return brightness == Brightness.light
-            ? MultiLightColors.buttonsMainSecondary15Opasity
-            : MultiDarkColors.buttonsMainSecondary15Opasity;
+        return MultiColors.of(context).buttonsMainSecondary15Opasity;
       case MultiRegistrationButtonType.mainError:
-        return brightness == Brightness.light
-            ? MultiLightColors.buttonsMainSecondaryDefault
-            : MultiDarkColors.buttonsMainSecondaryDefault;
+        return MultiColors.of(context).buttonsMainSecondaryDefault;
     }
   }
 
   Color? getForegroundColor(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
-
     switch (type) {
       case MultiRegistrationButtonType.mainSecondaryDefault:
-        return brightness == Brightness.light
-            ? MultiLightColors.textMainPrimaryDefault
-            : MultiDarkColors.textMainPrimaryDefault;
+        return MultiColors.of(context).textMainPrimaryDefault;
       case MultiRegistrationButtonType.mainSecondaryDisabled:
-        return brightness == Brightness.light
-            ? MultiLightColors.textMainTertiaryDisabled
-            : MultiDarkColors.textMainTertiaryDisabled;
+        return MultiColors.of(context).textMainTertiaryDisabled;
       case MultiRegistrationButtonType.mainPrimaryDefault:
-        return brightness == Brightness.light
-            ? MultiLightColors.textReversedPrimary
-            : MultiDarkColors.textReversedPrimary;
+        return MultiColors.of(context).textReversedPrimary;
       case MultiRegistrationButtonType.mainSecondary15Opacity:
-        return brightness == Brightness.light
-            ? MultiLightColors.textReversedPrimary
-            : MultiDarkColors.textReversedPrimary;
+        return MultiColors.of(context).textReversedPrimary;
       case MultiRegistrationButtonType.mainError:
-        return brightness == Brightness.light
-            ? MultiLightColors.textMainError
-            : MultiDarkColors.textMainError;
+        return MultiColors.of(context).textMainError;
     }
   }
 }

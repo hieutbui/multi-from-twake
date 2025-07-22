@@ -9,9 +9,7 @@ class MessageTimeStyle {
     BuildContext context,
   ) =>
       timelineOverlayMessage
-          ? Theme.of(context).brightness == Brightness.light
-              ? MultiLightColors.textMainTertiaryDisabled
-              : MultiDarkColors.textMainTertiaryDisabled
+          ? MultiColors.of(context).textMainTertiaryDisabled
           : LinagoraRefColors.material().neutral[50];
 
   static double get timelineLetterSpacing => 0.4;

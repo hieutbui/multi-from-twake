@@ -24,13 +24,9 @@ class ReplyContentStyle {
     BuildContext context,
     bool ownMessage,
   ) {
-    final receiverColor = Theme.of(context).brightness == Brightness.light
-        ? MultiLightColors.messagesReceiverHover
-        : MultiDarkColors.messagesReceiverHover;
+    final receiverColor = MultiColors.of(context).messagesReceiverHover;
 
-    final senderColor = Theme.of(context).brightness == Brightness.light
-        ? MultiLightColors.messagesSenderHover
-        : MultiDarkColors.messagesSenderHover;
+    final senderColor = MultiColors.of(context).messagesSenderHover;
 
     return BoxDecoration(
       color: ownMessage ? receiverColor : senderColor,

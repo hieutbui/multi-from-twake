@@ -186,9 +186,7 @@ class RegistrationWithEmailView extends StatelessWidget {
                     style: AuthButtonStyle(
                       separator: 8.0,
                       buttonColor:
-                          Theme.of(context).brightness == Brightness.light
-                              ? MultiLightColors.buttonsMainSecondaryDefault
-                              : MultiDarkColors.buttonsMainSecondaryDefault,
+                          MultiColors.of(context).buttonsMainSecondaryDefault,
                       iconSize: 18,
                       iconColor: Theme.of(context).colorScheme.onSurface,
                       height: 48,
@@ -209,9 +207,7 @@ class RegistrationWithEmailView extends StatelessWidget {
                     style: AuthButtonStyle(
                       separator: 8.0,
                       buttonColor:
-                          Theme.of(context).brightness == Brightness.light
-                              ? MultiLightColors.buttonsMainSecondaryDefault
-                              : MultiDarkColors.buttonsMainSecondaryDefault,
+                          MultiColors.of(context).buttonsMainSecondaryDefault,
                       iconSize: 18,
                       iconColor: Theme.of(context).colorScheme.onSurface,
                       height: 48,

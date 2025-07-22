@@ -48,9 +48,7 @@ class DraftChatEmpty extends StatelessWidget {
                     height: 32,
                     width: 32,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).brightness == Brightness.light
-                          ? MultiLightColors.additionalAccentBlueMain
-                          : MultiDarkColors.additionalAccentBlueMain,
+                      color: MultiColors.of(context).additionalAccentBlueMain,
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Center(

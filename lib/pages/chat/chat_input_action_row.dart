@@ -107,9 +107,7 @@ class ChatInputActionRow extends StatelessWidget {
     //         onTap: () {},
     //       );
     return Material(
-      color: Theme.of(context).brightness == Brightness.light
-          ? MultiLightColors.buttonsMainSecondaryDefault
-          : MultiDarkColors.buttonsMainSecondaryDefault,
+      color: MultiColors.of(context).buttonsMainSecondaryDefault,
       borderRadius: const BorderRadius.all(
         Radius.circular(MultiMobileRoundnessAndPaddings.roundnessButtonsSmall),
       ),
