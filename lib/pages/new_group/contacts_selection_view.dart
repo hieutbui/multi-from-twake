@@ -31,11 +31,9 @@ class ContactsSelectionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MultiSysColors.material().onPrimary,
+      backgroundColor: Colors.black.withOpacity(0.5),
       appBar: PreferredSize(
-        preferredSize: controller.isFullScreen
-            ? ContactsSelectionViewStyle.preferredSize(context)
-            : ContactsSelectionViewStyle.maxPreferredSize(context),
+        preferredSize: const Size.fromHeight(128),
         child: SearchableAppBar(
           toolbarHeight: ContactsSelectionViewStyle.maxToolbarHeight(context),
           focusNode: controller.searchFocusNode,

@@ -1,5 +1,7 @@
 import 'package:fluffychat/config/first_column_inner_routes.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_typography.dart';
 import 'package:fluffychat/pages/dialer/pip/dismiss_keyboard.dart';
 import 'package:fluffychat/widgets/context_menu_builder_ios_paste_without_permission.dart';
 import 'package:fluffychat/widgets/twake_components/twake_icon_button.dart';
@@ -7,10 +9,10 @@ import 'package:fluffychat/widgets/app_bars/searchable_app_bar_style.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
+import 'package:gradient_borders/input_borders/gradient_outline_input_border.dart';
 import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 
 class SearchableAppBar extends StatelessWidget {
-  final ValueNotifier<bool> searchModeNotifier;
   final bool displayBackButton;
   final FocusNode focusNode;
   final String title;
@@ -23,7 +25,6 @@ class SearchableAppBar extends StatelessWidget {
 
   const SearchableAppBar({
     super.key,
-    required this.searchModeNotifier,
     required this.title,
     this.hintText,
     required this.focusNode,
@@ -49,20 +50,40 @@ class SearchableAppBar extends StatelessWidget {
           height: 1,
         ),
       ),
-      backgroundColor: MultiSysColors.material().onPrimary,
-      title: Align(
-        alignment: Alignment.centerLeft,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (!isFullScreen) SearchableAppBarStyle.paddingTitleFullScreen,
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (isFullScreen) ...[
+      flexibleSpace: Container(
+        decoration: const ShapeDecoration(
+          gradient: LinearGradient(
+            begin: Alignment(0.50, -0.00),
+            end: Alignment(0.50, 1.00),
+            colors: [
+              Color(0xFF0E0F13),
+              Color(0xFF232631),
+            ],
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(24),
+              bottomRight: Radius.circular(24),
+            ),
+          ),
+        ),
+        child: Container(
+          margin: EdgeInsets.only(
+            top: 12.0 + MediaQuery.of(context).padding.top,
+          ),
+          padding: const EdgeInsetsDirectional.only(
+            bottom: 20,
+            start: 20,
+            end: 20,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
                   TwakeIconButton(
-                    icon: Icons.chevron_left_outlined,
+                    icon: Icons.arrow_back,
                     onTap: () {
                       if (!FirstColumnInnerRoutes.instance
                           .goRouteAvailableInFirstColumn()) {
@@ -76,106 +97,42 @@ class SearchableAppBar extends StatelessWidget {
                       }
                     },
                     tooltip: L10n.of(context)!.back,
-                    paddingAll: 8.0,
-                    margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                  ),
-                ] else ...[
-                  const SizedBox(width: 56.0),
-                ],
-                Expanded(
-                  child: ValueListenableBuilder(
-                    valueListenable: searchModeNotifier,
-                    builder: (context, searchModeNotifier, child) {
-                      if (searchModeNotifier) {
-                        return Padding(
-                          padding: const EdgeInsetsDirectional.only(top: 10.0),
-                          child: _textFieldBuilder(context),
-                        );
-                      }
-                      return GestureDetector(
-                        onTap: isFullScreen ? openSearchBar : null,
-                        child: Text(
-                          title,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge
-                              ?.copyWith(
-                                color: Theme.of(context).colorScheme.onSurface,
-                              ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                if (isFullScreen) ...[
-                  ValueListenableBuilder(
-                    valueListenable: searchModeNotifier,
-                    builder: (context, isSearchModeEnabled, child) {
-                      if (isSearchModeEnabled) {
-                        return ValueListenableBuilder(
-                          valueListenable: textEditingController,
-                          builder: (context, value, child) {
-                            return value.text.isNotEmpty
-                                ? child!
-                                : const SizedBox.shrink();
-                          },
-                          child: TwakeIconButton(
-                            onTap: closeSearchBar,
-                            tooltip: L10n.of(context)!.close,
-                            icon: Icons.close,
-                            paddingAll:
-                                SearchableAppBarStyle.closeButtonPaddingAll,
-                            margin: SearchableAppBarStyle.closeButtonMargin,
-                          ),
-                        );
-                      }
-                      return TwakeIconButton(
-                        icon: Icons.search,
-                        onTap: openSearchBar,
-                        tooltip: L10n.of(context)!.search,
-                        paddingAll: 10.0,
-                        margin: const EdgeInsets.symmetric(vertical: 10.0),
-                      );
-                    },
-                  ),
-                ] else ...[
-                  if (displayBackButton)
-                    TwakeIconButton(
-                      onTap: () => Navigator.of(context).pop(),
-                      tooltip: L10n.of(context)!.close,
-                      icon: Icons.close,
-                      paddingAll: SearchableAppBarStyle.closeButtonPaddingAll,
-                      margin: SearchableAppBarStyle.closeButtonMargin,
-                    )
-                  else
-                    Container(
-                      width: SearchableAppBarStyle.closeButtonPlaceholderWidth,
-                      height: SearchableAppBarStyle.closeButtonPlaceholderWidth,
-                      padding: const EdgeInsets.all(
-                        SearchableAppBarStyle.closeButtonPaddingAll,
-                      ),
-                      margin: SearchableAppBarStyle.closeButtonMargin,
-                      child: const SizedBox.shrink(),
+                    size: 16.0,
+                    buttonDecoration: BoxDecoration(
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? MultiLightColors.buttonsMainSecondary15Opasity
+                          : MultiDarkColors.buttonsMainSecondary15Opasity,
+                      shape: BoxShape.circle,
                     ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      title,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .displayMedium
+                          ?.copyWith(
+                            fontSize: MultiMobileTypography.headlineFontSmall,
+                            fontWeight: FontWeight.w600,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer,
+                          ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 28.0,
+                  ),
                 ],
-              ],
-            ),
-            if (!isFullScreen)
-              Divider(
-                height: 1,
-                color: LinagoraStateLayer(
-                  MultiSysColors.material().surfaceTint,
-                ).opacityLayer3,
               ),
-            if (!isFullScreen)
-              Padding(
-                padding: SearchableAppBarStyle.textFieldWebPadding,
-                child: _textFieldBuilder(context),
-              ),
-          ],
+              const SizedBox(height: 16.0),
+              _textFieldBuilder(context),
+            ],
+          ),
         ),
       ),
+      backgroundColor: Colors.black.withOpacity(0.5),
     );
   }
 
@@ -200,21 +157,25 @@ class SearchableAppBar extends StatelessWidget {
       scrollPadding: const EdgeInsets.all(0),
       controller: textEditingController,
       decoration: InputDecoration(
-        contentPadding: SearchableAppBarStyle.textFieldContentPadding,
         isCollapsed: true,
         hintText: hintText,
-        prefixIcon: !isFullScreen
-            ? Icon(
-                Icons.search_outlined,
-                // TODO: change to colorSurface when its approved
-                // ignore: deprecated_member_use
-                color: Theme.of(context).colorScheme.onBackground,
-              )
-            : null,
+        prefixIcon: const Icon(
+          Icons.search,
+          size: 24,
+        ),
         suffixIcon: const SizedBox.shrink(),
-        hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: LinagoraRefColors.material().neutral[60],
-            ),
+        border: GradientOutlineInputBorder(
+          gradient: LinearGradient(
+            colors: [
+              const Color(0xFF738C96).withOpacity(0.0),
+              const Color(0xFF738C96),
+            ],
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+          ),
+          width: 1.0,
+          borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+        ),
       ),
     );
   }
