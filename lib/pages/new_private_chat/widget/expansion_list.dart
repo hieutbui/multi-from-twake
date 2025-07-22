@@ -2,18 +2,21 @@ import 'package:dartz/dartz.dart';
 import 'package:fluffychat/app_state/failure.dart';
 import 'package:fluffychat/app_state/success.dart';
 import 'package:fluffychat/domain/app_state/contact/get_contacts_state.dart';
+import 'package:fluffychat/pages/contacts_tab/contacts_tab_view_style.dart';
 import 'package:fluffychat/pages/new_private_chat/widget/loading_contact_widget.dart';
+import 'package:fluffychat/pages/search/recent_item_widget.dart';
 import 'package:fluffychat/presentation/enum/contacts/warning_contacts_banner_enum.dart';
 import 'package:fluffychat/presentation/extensions/value_notifier_custom.dart';
 import 'package:fluffychat/presentation/model/contact/get_presentation_contacts_empty.dart';
 import 'package:fluffychat/presentation/model/contact/get_presentation_contacts_failure.dart';
 import 'package:fluffychat/presentation/model/contact/presentation_contact.dart';
 import 'package:fluffychat/presentation/model/contact/presentation_contact_success.dart';
+import 'package:fluffychat/presentation/model/search/presentation_search.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
 import 'package:flutter/material.dart';
 import 'package:fluffychat/pages/new_private_chat/widget/expansion_contact_list_tile.dart';
-import 'package:fluffychat/pages/new_private_chat/widget/no_contacts_found.dart';
 import 'package:linagora_design_flutter/linagora_design_flutter.dart';
+import 'package:matrix/matrix.dart';
 
 class ExpansionList extends StatelessWidget {
   final ValueNotifierCustom<Either<Failure, Success>>
@@ -22,6 +25,8 @@ class ExpansionList extends StatelessWidget {
       presentationPhonebookContactNotifier;
   final ValueNotifierCustom<Either<Failure, Success>>
       presentationAddressBookNotifier;
+  final ValueNotifierCustom<List<PresentationSearch>>
+      presentationRecentContactNotifier;
   final Function() goToNewGroupChat;
   final Function(BuildContext context, PresentationContact contact)
       onExternalContactTap;
@@ -31,6 +36,7 @@ class ExpansionList extends StatelessWidget {
   final ValueNotifier<WarningContactsBannerState> warningBannerNotifier;
   final Function()? closeContactsWarningBanner;
   final Function()? goToSettingsForPermissionActions;
+  final Client client;
 
   const ExpansionList({
     super.key,
@@ -44,17 +50,22 @@ class ExpansionList extends StatelessWidget {
     this.goToSettingsForPermissionActions,
     required this.presentationPhonebookContactNotifier,
     required this.presentationAddressBookNotifier,
+    required this.presentationRecentContactNotifier,
+    required this.client,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // ..._buildResponsiveButtons(context),
-        _sliverContactsList(),
-        if (PlatformInfos.isMobile) _sliverPhonebookList(),
-        if (PlatformInfos.isWeb) _sliverAddressBookListOnWeb(),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          // ..._buildResponsiveButtons(context),
+          _sliverContactsList(),
+          _sliverRecentContactsList(),
+          if (PlatformInfos.isMobile) _sliverPhonebookList(),
+          if (PlatformInfos.isWeb) _sliverAddressBookListOnWeb(),
+        ],
+      ),
     );
   }
 
@@ -64,7 +75,7 @@ class ExpansionList extends StatelessWidget {
       builder: (context, state, child) {
         return state.fold(
           (failure) {
-            final textControllerIsEmpty = textEditingController.text.isEmpty;
+            // final textControllerIsEmpty = textEditingController.text.isEmpty;
             if (PlatformInfos.isWeb) {
               return presentationAddressBookNotifier.value.fold(
                 (_) {
@@ -73,18 +84,19 @@ class ExpansionList extends StatelessWidget {
                   }
                   if (failure is GetPresentationContactsFailure ||
                       failure is GetPresentationContactsEmpty) {
-                    return Column(
-                      children: [
-                        const SizedBox(
-                          height: 12,
-                        ),
-                        NoContactsFound(
-                          keyword: textControllerIsEmpty
-                              ? null
-                              : textEditingController.text,
-                        ),
-                      ],
-                    );
+                    // return Column(
+                    //   children: [
+                    //     const SizedBox(
+                    //       height: 12,
+                    //     ),
+                    //     NoContactsFound(
+                    //       keyword: textControllerIsEmpty
+                    //           ? null
+                    //           : textEditingController.text,
+                    //     ),
+                    //   ],
+                    // );
+                    return child!;
                   }
                   return child!;
                 },
@@ -98,18 +110,19 @@ class ExpansionList extends StatelessWidget {
                   }
                   if (failure is GetPresentationContactsFailure ||
                       failure is GetPresentationContactsEmpty) {
-                    return Column(
-                      children: [
-                        const SizedBox(
-                          height: 12,
-                        ),
-                        NoContactsFound(
-                          keyword: textControllerIsEmpty
-                              ? null
-                              : textEditingController.text,
-                        ),
-                      ],
-                    );
+                    // return Column(
+                    //   children: [
+                    //     const SizedBox(
+                    //       height: 12,
+                    //     ),
+                    //     NoContactsFound(
+                    //       keyword: textControllerIsEmpty
+                    //           ? null
+                    //           : textEditingController.text,
+                    //     ),
+                    //   ],
+                    // );
+                    return child!;
                   }
                   return child!;
                 },
@@ -149,11 +162,12 @@ class ExpansionList extends StatelessWidget {
             if (success is PresentationContactsSuccess) {
               final contacts = success.contacts;
               if (contacts.isEmpty && textEditingController.text.isNotEmpty) {
-                return NoContactsFound(
-                  keyword: textEditingController.text.isEmpty
-                      ? null
-                      : textEditingController.text,
-                );
+                // return NoContactsFound(
+                //   keyword: textEditingController.text.isEmpty
+                //       ? null
+                //       : textEditingController.text,
+                // );
+                return child!;
               }
               return ListView.builder(
                 shrinkWrap: true,
@@ -182,6 +196,57 @@ class ExpansionList extends StatelessWidget {
 
             return child!;
           },
+        );
+      },
+      child: const SizedBox(),
+    );
+  }
+
+  Widget _sliverRecentContactsList() {
+    return ValueListenableBuilder(
+      valueListenable: presentationRecentContactNotifier,
+      builder: (context, recentContactState, child) {
+        if (recentContactState.isEmpty) {
+          return child!;
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: ContactsTabViewStyle.padding,
+                vertical: 8.0,
+              ),
+              child: Text(
+                'Recent Chats',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const ClampingScrollPhysics(),
+              itemCount: recentContactState.length,
+              itemBuilder: (context, index) => Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: ContactsTabViewStyle.padding,
+                ),
+                child: RecentItemWidget(
+                  presentationSearch: recentContactState[index],
+                  highlightKeyword: textEditingController.text,
+                  client: client,
+                  key: Key('contact_recent_${recentContactState[index].id}'),
+                  onTap: () => onContactTap(
+                    context,
+                    recentContactState[index].toPresentationContact(),
+                  ),
+                  avatarSize: ContactsTabViewStyle.avatarSize,
+                ),
+              ),
+            ),
+          ],
         );
       },
       child: const SizedBox(),

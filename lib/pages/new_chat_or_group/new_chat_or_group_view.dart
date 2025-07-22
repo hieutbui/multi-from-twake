@@ -91,38 +91,39 @@ class NewChatOrGroupView extends StatelessWidget {
               subTitle: 'Lorem ipsum',
               onTap: () {},
             ),
-            Column(
-              children: [
-                Padding(
-                  padding: NewPrivateChatStyle.paddingWarningBanner,
-                  child: ContactsWarningBannerView(
-                    warningBannerNotifier: controller.warningBannerNotifier,
-                    closeContactsWarningBanner:
-                        controller.closeContactsWarningBanner,
-                    goToSettingsForPermissionActions: () =>
-                        controller.displayContactPermissionDialog(context),
-                    isShowMargin: false,
-                  ),
-                ),
-                _phonebookLoading(),
-                ExpansionList(
-                  presentationContactsNotifier:
-                      controller.presentationContactNotifier,
-                  presentationPhonebookContactNotifier:
-                      controller.presentationPhonebookContactNotifier,
-                  presentationAddressBookNotifier:
-                      controller.presentationAddressBookNotifier,
-                  goToNewGroupChat: () => controller.goToNewGroupChat(context),
-                  onContactTap: controller.onContactAction,
-                  onExternalContactTap: controller.onExternalContactAction,
-                  textEditingController: controller.textEditingController,
-                  warningBannerNotifier: controller.warningBannerNotifier,
-                  closeContactsWarningBanner:
-                      controller.closeContactsWarningBanner,
-                  goToSettingsForPermissionActions: () =>
-                      controller.displayContactPermissionDialog(context),
-                ),
-              ],
+            Padding(
+              padding: NewPrivateChatStyle.paddingWarningBanner,
+              child: ContactsWarningBannerView(
+                warningBannerNotifier: controller.warningBannerNotifier,
+                closeContactsWarningBanner:
+                    controller.closeContactsWarningBanner,
+                goToSettingsForPermissionActions: () =>
+                    controller.displayContactPermissionDialog(context),
+                isShowMargin: false,
+              ),
+            ),
+            _phonebookLoading(),
+            Expanded(
+              child: ExpansionList(
+                client: controller.client,
+                presentationRecentContactNotifier:
+                    controller.presentationRecentContactNotifier,
+                presentationContactsNotifier:
+                    controller.presentationContactNotifier,
+                presentationPhonebookContactNotifier:
+                    controller.presentationPhonebookContactNotifier,
+                presentationAddressBookNotifier:
+                    controller.presentationAddressBookNotifier,
+                goToNewGroupChat: () => controller.goToNewGroupChat(context),
+                onContactTap: controller.onContactAction,
+                onExternalContactTap: controller.onExternalContactAction,
+                textEditingController: controller.textEditingController,
+                warningBannerNotifier: controller.warningBannerNotifier,
+                closeContactsWarningBanner:
+                    controller.closeContactsWarningBanner,
+                goToSettingsForPermissionActions: () =>
+                    controller.displayContactPermissionDialog(context),
+              ),
             ),
           ],
         ),
