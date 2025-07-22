@@ -921,6 +921,14 @@ class ChatListController extends State<ChatList>
     ];
   }
 
+  void onTapMessagePushSquare() {
+    if (FirstColumnInnerRoutes.instance.goRouteAvailableInFirstColumn()) {
+      context.go('/rooms/newchatorgroup');
+    } else {
+      context.pushInner('innernavigator/newchatorgroup');
+    }
+  }
+
   @override
   void dispose() {
     scrollController.removeListener(_onScroll);
