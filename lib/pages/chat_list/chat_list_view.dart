@@ -169,7 +169,7 @@ class ChatListView extends StatelessWidget {
                         ),
                         const Spacer(),
                         TwakeIconButton(
-                          onTap: () {},
+                          onTap: controller.onTapMessagePushSquare,
                           imagePath: ImagePaths.icMessagePlusSquare,
                           size: 24,
                         ),
