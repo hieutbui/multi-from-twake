@@ -204,12 +204,8 @@ class ChatView extends StatelessWidget with MessageContentMixin {
                                 ),
                                 preferBelow: false,
                                 buttonDecoration: BoxDecoration(
-                                  color: Theme.of(context).brightness ==
-                                          Brightness.light
-                                      ? MultiLightColors
-                                          .buttonsMainSecondary15Opasity
-                                      : MultiDarkColors
-                                          .buttonsMainSecondary15Opasity,
+                                  color: MultiColors.of(context)
+                                      .buttonsMainSecondary15Opasity,
                                   shape: BoxShape.circle,
                                 ),
                               ),
@@ -284,9 +280,7 @@ class ChatView extends StatelessWidget with MessageContentMixin {
           onTap: controller.onBackPress,
           margin: const EdgeInsets.symmetric(vertical: 12.0),
           buttonDecoration: BoxDecoration(
-            color: Theme.of(context).brightness == Brightness.light
-                ? MultiLightColors.buttonsMainSecondary15Opasity
-                : MultiDarkColors.buttonsMainSecondary15Opasity,
+            color: MultiColors.of(context).buttonsMainSecondary15Opasity,
             shape: BoxShape.circle,
           ),
         ),

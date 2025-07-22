@@ -136,12 +136,8 @@ class RegistrationNicknameView extends StatelessWidget {
                                           vertical: 4.0,
                                         ),
                                         decoration: ShapeDecoration(
-                                          color: Theme.of(context).brightness ==
-                                                  Brightness.light
-                                              ? MultiLightColors
-                                                  .additionalBlackout
-                                              : MultiDarkColors
-                                                  .additionalBlackout,
+                                          color: MultiColors.of(context)
+                                              .additionalBlackout,
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(100),

@@ -673,17 +673,13 @@ class ChatListController extends State<ChatList>
         size: 18,
         color: Theme.of(context).colorScheme.onPrimaryContainer,
         buttonDecoration: BoxDecoration(
-          color: Theme.of(context).brightness == Brightness.light
-              ? MultiLightColors.buttonsMainSecondary15Opasity
-              : MultiDarkColors.buttonsMainSecondary15Opasity,
+          color: MultiColors.of(context).buttonsMainSecondary15Opasity,
           borderRadius: const BorderRadius.all(Radius.circular(16.0)),
         ),
       ),
       const SizedBox(width: 12.0),
       Material(
-        color: Theme.of(context).brightness == Brightness.light
-            ? MultiLightColors.buttonsMainSecondary15Opasity
-            : MultiDarkColors.buttonsMainSecondary15Opasity,
+        color: MultiColors.of(context).buttonsMainSecondary15Opasity,
         borderRadius: const BorderRadius.all(Radius.circular(16.0)),
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -704,9 +700,7 @@ class ChatListController extends State<ChatList>
         imagePath: ImagePaths.icTrash,
         size: 18,
         buttonDecoration: BoxDecoration(
-          color: Theme.of(context).brightness == Brightness.light
-              ? MultiLightColors.buttonsMainSecondaryDefault
-              : MultiDarkColors.buttonsMainSecondaryDefault,
+          color: MultiColors.of(context).buttonsMainSecondaryDefault,
           borderRadius: const BorderRadius.all(Radius.circular(16.0)),
         ),
       ),
@@ -716,9 +710,7 @@ class ChatListController extends State<ChatList>
         imagePath: ImagePaths.icMute,
         size: 18,
         buttonDecoration: BoxDecoration(
-          color: Theme.of(context).brightness == Brightness.light
-              ? MultiLightColors.buttonsMainPrimaryDefault
-              : MultiDarkColors.buttonsMainPrimaryDefault,
+          color: MultiColors.of(context).buttonsMainPrimaryDefault,
           borderRadius: const BorderRadius.all(Radius.circular(16.0)),
         ),
       ),
@@ -728,9 +720,7 @@ class ChatListController extends State<ChatList>
         imagePath: ImagePaths.icDoubleCheck,
         size: 18,
         buttonDecoration: BoxDecoration(
-          color: Theme.of(context).brightness == Brightness.light
-              ? MultiLightColors.statesSuccessShapeMainDefault
-              : MultiDarkColors.statesSuccessShapeMainDefault,
+          color: MultiColors.of(context).statesSuccessShapeMainDefault,
           borderRadius: const BorderRadius.all(Radius.circular(16.0)),
         ),
       ),

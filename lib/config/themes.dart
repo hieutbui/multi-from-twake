@@ -160,16 +160,12 @@ abstract class TwakeThemes {
         inputDecorationTheme: InputDecorationTheme(
           isDense: true,
           contentPadding: const EdgeInsets.all(12.0),
-          fillColor: brightness == Brightness.light
-              ? MultiLightColors.backgroundInputsDefault
-              : MultiDarkColors.backgroundInputsDefault,
+          fillColor: MultiColors.of(context).backgroundInputsDefault,
           border: const MultiCustomBorderInput(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.all(Radius.circular(12)),
           ),
-          focusColor: brightness == Brightness.light
-              ? MultiLightColors.backgroundInputsActive
-              : MultiDarkColors.backgroundInputsActive,
+          focusColor: MultiColors.of(context).backgroundInputsActive,
           focusedBorder: MultiCustomBorderInput(
             shadow: const BoxShadow(
               color: Color(0x3F4C64BA),
@@ -179,9 +175,7 @@ abstract class TwakeThemes {
             ),
             borderSide: BorderSide(
               width: 1.0,
-              color: brightness == Brightness.light
-                  ? MultiLightColors.bordersMainActive
-                  : MultiDarkColors.bordersMainActive,
+              color: MultiColors.of(context).bordersMainActive,
             ),
             borderRadius: const BorderRadius.all(Radius.circular(12)),
           ),
@@ -194,9 +188,7 @@ abstract class TwakeThemes {
             ),
             borderSide: BorderSide(
               width: 1.0,
-              color: brightness == Brightness.light
-                  ? MultiLightColors.bordersErrorDefault
-                  : MultiDarkColors.bordersErrorDefault,
+              color: MultiColors.of(context).bordersErrorDefault,
             ),
             borderRadius: const BorderRadius.all(Radius.circular(12)),
           ),
@@ -209,34 +201,26 @@ abstract class TwakeThemes {
             ),
             borderSide: BorderSide(
               width: 1.0,
-              color: brightness == Brightness.light
-                  ? MultiLightColors.bordersErrorDefault
-                  : MultiDarkColors.bordersErrorDefault,
+              color: MultiColors.of(context).bordersErrorDefault,
             ),
             borderRadius: const BorderRadius.all(Radius.circular(12)),
           ),
           labelStyle: fallbackTextTheme.headlineSmall?.merge(
             TextStyle(
-              color: brightness == Brightness.light
-                  ? MultiLightColors.textMainTertiaryDisabled
-                  : MultiDarkColors.textMainTertiaryDisabled,
+              color: MultiColors.of(context).textMainTertiaryDisabled,
               overflow: TextOverflow.ellipsis,
             ),
           ),
           floatingLabelStyle: fallbackTextTheme.labelSmall?.merge(
             TextStyle(
-              color: brightness == Brightness.light
-                  ? MultiLightColors.textMainTertiaryDisabled
-                  : MultiDarkColors.textMainTertiaryDisabled,
+              color: MultiColors.of(context).textMainTertiaryDisabled,
               overflow: TextOverflow.ellipsis,
             ),
           ),
           filled: true,
           hintStyle: fallbackTextTheme.headlineSmall?.merge(
             TextStyle(
-              color: brightness == Brightness.light
-                  ? MultiLightColors.textMainTertiaryDisabled
-                  : MultiDarkColors.textMainTertiaryDisabled,
+              color: MultiColors.of(context).textMainTertiaryDisabled,
               overflow: TextOverflow.ellipsis,
             ),
           ),

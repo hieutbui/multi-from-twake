@@ -232,10 +232,8 @@ class _MessageContentWithTimestampBuilderState
                                 .firstOrNull;
                             final relatesTo = (myReaction?.content
                                 as Map<String, dynamic>?)?['m.relates_to'];
-                            final ownMessageColor =
-                                Theme.of(context).brightness == Brightness.light
-                                    ? MultiLightColors.additionalAccentBlueDark
-                                    : MultiDarkColors.additionalAccentBlueDark;
+                            final ownMessageColor = MultiColors.of(context)
+                                .additionalAccentBlueDark;
                             return GestureDetector(
                               behavior: HitTestBehavior.opaque,
                               onTap: () {
@@ -590,9 +588,7 @@ class _MessageContentWithTimestampBuilderState
     bool enableBorder = true,
     MainAxisSize mainAxisSize = MainAxisSize.max,
   }) {
-    final ownMessageColor = Theme.of(context).brightness == Brightness.light
-        ? MultiLightColors.additionalAccentBlueDark
-        : MultiDarkColors.additionalAccentBlueDark;
+    final ownMessageColor = MultiColors.of(context).additionalAccentBlueDark;
 
     return Stack(
       key: key,

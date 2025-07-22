@@ -157,13 +157,13 @@ class MultiLoginView extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: Text(
                           'or',
-                          style:
-                              Theme.of(context).textTheme.bodySmall!.copyWith(
-                                    color: Theme.of(context).brightness ==
-                                            Brightness.light
-                                        ? MultiLightColors.additionalDivider
-                                        : MultiDarkColors.additionalDivider,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(
+                                color:
+                                    MultiColors.of(context).additionalDivider,
+                              ),
                         ),
                       ),
                       Expanded(
@@ -184,9 +184,7 @@ class MultiLoginView extends StatelessWidget {
                     style: AuthButtonStyle(
                       separator: 8.0,
                       buttonColor:
-                          Theme.of(context).brightness == Brightness.light
-                              ? MultiLightColors.buttonsMainSecondaryDefault
-                              : MultiDarkColors.buttonsMainSecondaryDefault,
+                          MultiColors.of(context).buttonsMainSecondaryDefault,
                       iconSize: 18,
                       iconColor: Theme.of(context).colorScheme.onSurface,
                       height: 48,
@@ -207,9 +205,7 @@ class MultiLoginView extends StatelessWidget {
                     style: AuthButtonStyle(
                       separator: 8.0,
                       buttonColor:
-                          Theme.of(context).brightness == Brightness.light
-                              ? MultiLightColors.buttonsMainSecondaryDefault
-                              : MultiDarkColors.buttonsMainSecondaryDefault,
+                          MultiColors.of(context).buttonsMainSecondaryDefault,
                       iconSize: 18,
                       iconColor: Theme.of(context).colorScheme.onSurface,
                       height: 48,

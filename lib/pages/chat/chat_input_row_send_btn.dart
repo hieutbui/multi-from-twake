@@ -43,14 +43,10 @@ class ChatInputRowSendBtn extends StatelessWidget {
             }
 
             final emptyInputButtonColor =
-                Theme.of(context).brightness == Brightness.light
-                    ? MultiLightColors.buttonsMainPrimaryDisabled
-                    : MultiDarkColors.buttonsMainPrimaryDisabled;
+                MultiColors.of(context).buttonsMainPrimaryDisabled;
 
             final normalInputButtonColor =
-                Theme.of(context).brightness == Brightness.light
-                    ? MultiLightColors.buttonsMainPrimaryDefault
-                    : MultiDarkColors.buttonsMainPrimaryDefault;
+                MultiColors.of(context).buttonsMainPrimaryDefault;
 
             final buttonColor = textInput.isEmpty
                 ? emptyInputButtonColor

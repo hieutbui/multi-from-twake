@@ -19,9 +19,7 @@ class StartPeriodTimestampWidget extends StatelessWidget {
           child: Container(
             margin: const EdgeInsets.only(top: 8.0),
             decoration: ShapeDecoration(
-              color: Theme.of(context).brightness == Brightness.light
-                  ? MultiLightColors.backgroundSurfacesTransparent
-                  : MultiDarkColors.backgroundSurfacesTransparent,
+              color: MultiColors.of(context).backgroundSurfacesTransparent,
               shape: const RoundedRectangleBorder(
                 side: BorderSide(
                   width: 1,

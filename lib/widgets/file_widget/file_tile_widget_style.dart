@@ -10,13 +10,9 @@ class FileTileWidgetStyle {
       const EdgeInsets.only(left: 8.0, right: 16.0);
 
   Color backgroundColor(BuildContext context, {bool ownMessage = false}) {
-    final receiverColor = Theme.of(context).brightness == Brightness.light
-        ? MultiLightColors.messagesReceiverHover
-        : MultiDarkColors.messagesReceiverHover;
+    final receiverColor = MultiColors.of(context).messagesReceiverHover;
 
-    final senderColor = Theme.of(context).brightness == Brightness.light
-        ? MultiLightColors.messagesSenderHover
-        : MultiDarkColors.messagesSenderHover;
+    final senderColor = MultiColors.of(context).messagesSenderHover;
 
     return ownMessage ? receiverColor : senderColor;
   }
