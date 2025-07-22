@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:fluffychat/app_state/failure.dart';
 import 'package:fluffychat/app_state/success.dart';
-import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/domain/app_state/contact/get_contacts_state.dart';
 import 'package:fluffychat/pages/new_private_chat/widget/loading_contact_widget.dart';
 import 'package:fluffychat/presentation/enum/contacts/warning_contacts_banner_enum.dart';
@@ -11,9 +10,7 @@ import 'package:fluffychat/presentation/model/contact/get_presentation_contacts_
 import 'package:fluffychat/presentation/model/contact/presentation_contact.dart';
 import 'package:fluffychat/presentation/model/contact/presentation_contact_success.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
-import 'package:fluffychat/utils/responsive/responsive_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:fluffychat/pages/new_private_chat/widget/expansion_contact_list_tile.dart';
 import 'package:fluffychat/pages/new_private_chat/widget/no_contacts_found.dart';
 import 'package:linagora_design_flutter/linagora_design_flutter.dart';
@@ -53,7 +50,7 @@ class ExpansionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ..._buildResponsiveButtons(context),
+        // ..._buildResponsiveButtons(context),
         _sliverContactsList(),
         if (PlatformInfos.isMobile) _sliverPhonebookList(),
         if (PlatformInfos.isWeb) _sliverAddressBookListOnWeb(),
@@ -277,80 +274,80 @@ class ExpansionList extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildResponsiveButtons(BuildContext context) {
-    if (!getIt.get<ResponsiveUtils>().isSingleColumnLayout(context)) return [];
+  // List<Widget> _buildResponsiveButtons(BuildContext context) {
+  //   if (!getIt.get<ResponsiveUtils>().isSingleColumnLayout(context)) return [];
 
-    return [
-      _NewGroupButton(
-        onPressed: goToNewGroupChat,
-      ),
-    ];
-  }
+  //   return [
+  //     _NewGroupButton(
+  //       onPressed: goToNewGroupChat,
+  //     ),
+  //   ];
+  // }
 }
 
-class _IconTextTileButton extends StatelessWidget {
-  const _IconTextTileButton({
-    required this.context,
-    required this.onPressed,
-    required this.iconData,
-    required this.text,
-  });
+// class _IconTextTileButton extends StatelessWidget {
+//   const _IconTextTileButton({
+//     required this.context,
+//     required this.onPressed,
+//     required this.iconData,
+//     required this.text,
+//   });
 
-  final BuildContext context;
-  final Function()? onPressed;
-  final IconData iconData;
-  final String text;
+//   final BuildContext context;
+//   final Function()? onPressed;
+//   final IconData iconData;
+//   final String text;
 
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPressed,
-      borderRadius: BorderRadius.circular(16.0),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8.0),
-        child: Material(
-          color: Colors.transparent,
-          child: SizedBox(
-            height: 56.0,
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 16.0),
-                  child: Icon(
-                    iconData,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                Text(
-                  text,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                        letterSpacing: -0.15,
-                      ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return InkWell(
+//       onTap: onPressed,
+//       borderRadius: BorderRadius.circular(16.0),
+//       child: Padding(
+//         padding: const EdgeInsets.only(left: 8.0),
+//         child: Material(
+//           color: Colors.transparent,
+//           child: SizedBox(
+//             height: 56.0,
+//             child: Row(
+//               children: [
+//                 Padding(
+//                   padding: const EdgeInsets.only(right: 16.0),
+//                   child: Icon(
+//                     iconData,
+//                     color: Theme.of(context).colorScheme.primary,
+//                   ),
+//                 ),
+//                 Text(
+//                   text,
+//                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+//                         color: Theme.of(context).colorScheme.primary,
+//                         letterSpacing: -0.15,
+//                       ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
-class _NewGroupButton extends StatelessWidget {
-  final Function() onPressed;
+// class _NewGroupButton extends StatelessWidget {
+//   final Function() onPressed;
 
-  const _NewGroupButton({
-    required this.onPressed,
-  });
+//   const _NewGroupButton({
+//     required this.onPressed,
+//   });
 
-  @override
-  Widget build(BuildContext context) {
-    return _IconTextTileButton(
-      context: context,
-      onPressed: onPressed,
-      iconData: Icons.supervisor_account_outlined,
-      text: L10n.of(context)!.newGroupChat,
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return _IconTextTileButton(
+//       context: context,
+//       onPressed: onPressed,
+//       iconData: Icons.supervisor_account_outlined,
+//       text: L10n.of(context)!.newGroupChat,
+//     );
+//   }
+// }
