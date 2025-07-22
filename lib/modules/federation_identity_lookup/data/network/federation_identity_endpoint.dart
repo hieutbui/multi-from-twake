@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/data/network/service_path.dart';
 
 class FederationIdentityEndpoint {
@@ -26,6 +27,6 @@ extension FederationServicePathExtensions on ServicePath {
     String rootPath = FederationIdentityEndpoint.federationIdentityRootPath,
     String apiVersion = FederationIdentityEndpoint.federationIdentityAPIVersion,
   }) {
-    return '$rootPath/$apiVersion$path';
+    return '${AppConfig.sampleValue}$rootPath/$apiVersion$path';
   }
 }

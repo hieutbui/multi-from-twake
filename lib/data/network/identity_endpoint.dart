@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/data/network/service_path.dart';
 
 class IdentityEndpoint {
@@ -26,13 +27,13 @@ extension ServicePathExtensions on ServicePath {
     String rootPath = IdentityEndpoint.twakeIdentityRootPath,
     String apiVersion = IdentityEndpoint.twakeIdentityAPIVersion,
   }) {
-    return '$rootPath/$apiVersion$path';
+    return '${AppConfig.sampleValue}$rootPath/$apiVersion$path';
   }
 
   String generateMatrixIdentityEndpoint({
     String rootPath = IdentityEndpoint.matrixIdentityRootPath,
     String apiVersion = IdentityEndpoint.matrixIdentityAPIVersion,
   }) {
-    return '$rootPath/$apiVersion$path';
+    return '${AppConfig.sampleValue}$rootPath/$apiVersion$path';
   }
 }
