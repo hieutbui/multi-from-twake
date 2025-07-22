@@ -5,6 +5,11 @@ import 'package:fluffychat/data/network/omni_endpoint.dart';
 import 'package:matrix/matrix.dart';
 
 class AuthorizationInterceptor extends InterceptorsWrapper {
+  static final List<String> omniCustomService = [
+    OmniEndpoint.userSearchServicePath.path,
+    OmniEndpoint.getContactServicePath.path,
+  ];
+
   AuthorizationInterceptor();
 
   String? _accessToken;
@@ -23,17 +28,30 @@ class AuthorizationInterceptor extends InterceptorsWrapper {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    String? token;
+    String? token = _accessToken;
 
-    if (options.path.contains(OmniEndpoint.userSearchServicePath.path)) {
-      token = 'Bearer $_omniAccessToken';
+    // Extract just the path part from the full URL
+    final String pathOnly;
+    if (options.path.startsWith('http')) {
+      // If it's a full URL, parse it and extract just the path
+      final uri = Uri.parse(options.path);
+      pathOnly = uri.path;
+    } else {
+      // If it's already just a path, use it as is
+      pathOnly = options.path;
+    }
+
+    if (omniCustomService.contains(pathOnly)) {
+      token = _omniAccessToken;
     } else {
       token = _accessToken;
     }
 
     if (token != null) {
-      options.headers[HttpHeaders.authorizationHeader] = token;
-      Logs().d('AuthorizationInterceptor::onRequest:accessToken: $token');
+      options.headers[HttpHeaders.authorizationHeader] = 'Bearer $token';
+      Logs().d(
+        'AuthorizationInterceptor::onRequest:accessToken: $token with path: $pathOnly',
+      );
     }
 
     super.onRequest(options, handler);

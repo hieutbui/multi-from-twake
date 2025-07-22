@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/data/network/service_path.dart';
 
 class TomEndpoint {
@@ -27,6 +28,6 @@ extension ServicePathTom on ServicePath {
     String rootPath = TomEndpoint.twakeRootPath,
     String apiVersion = TomEndpoint.twakeAPIVersion,
   }) {
-    return '$rootPath/$apiVersion$path';
+    return '${AppConfig.sampleValue}$rootPath/$apiVersion$path';
   }
 }

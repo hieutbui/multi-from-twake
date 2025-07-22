@@ -35,13 +35,13 @@ extension ServicePathHomeserver on ServicePath {
     String rootPath = HomeserverEndpoint.homeserverMediaPath,
     String apiVersion = HomeserverEndpoint.homeserverAPIVersion,
   }) {
-    return '$rootPath/$apiVersion$path';
+    return '${AppConfig.sampleValue}$rootPath/$apiVersion$path';
   }
 
   String generateHomeserverServerSearchPath({
     String rootPath = HomeserverEndpoint.homeserverClientPath,
     String apiVersion = HomeserverEndpoint.homeserverAPIVersion,
   }) {
-    return '$rootPath/$apiVersion$path';
+    return '${AppConfig.sampleValue}$rootPath/$apiVersion$path';
   }
 }
