@@ -31,6 +31,8 @@ class NewPrivateChatController extends State<NewPrivateChat>
         InviteExternalContactMixin,
         AddressBooksMixin,
         GoToGroupChatMixin {
+  Client get client => Matrix.of(context).client;
+
   final scrollController = ScrollController();
 
   @override
@@ -39,7 +41,6 @@ class NewPrivateChatController extends State<NewPrivateChat>
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       WidgetsBinding.instance.addObserver(this);
       if (mounted) {
-        final client = Matrix.of(context).client;
         listenAddressBookEvents(client);
         initialFetchContacts(
           context: context,

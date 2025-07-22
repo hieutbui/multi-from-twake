@@ -51,6 +51,9 @@ class NewPrivateChatView extends StatelessWidget {
             ),
             _phonebookLoading(),
             ExpansionList(
+              client: controller.client,
+              presentationRecentContactNotifier:
+                  controller.presentationRecentContactNotifier,
               presentationContactsNotifier:
                   controller.presentationContactNotifier,
               presentationPhonebookContactNotifier:
