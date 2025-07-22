@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:fluffychat/app_state/failure.dart';
 import 'package:fluffychat/app_state/success.dart';
-import 'package:fluffychat/config/app_config.dart';
+import 'package:fluffychat/data/model/contact/omni_contact_request.dart';
 import 'package:fluffychat/data/network/interceptor/authorization_interceptor.dart';
 import 'package:fluffychat/data/network/interceptor/dynamic_url_interceptor.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
@@ -13,12 +13,14 @@ import 'package:fluffychat/domain/app_state/contact/get_contacts_state.dart';
 import 'package:fluffychat/domain/app_state/contact/get_phonebook_contact_state.dart';
 import 'package:fluffychat/domain/app_state/contact/post_address_book_state.dart';
 import 'package:fluffychat/domain/app_state/contact/try_get_synced_phone_book_contact_state.dart';
+import 'package:fluffychat/domain/auth_manager/auth_credential_storage.dart';
 import 'package:fluffychat/domain/exception/federation_configuration_not_found.dart';
 import 'package:fluffychat/domain/model/contact/contact.dart';
 import 'package:fluffychat/domain/model/extensions/contact/contact_extension.dart';
 import 'package:fluffychat/domain/repository/federation_configurations_repository.dart';
 import 'package:fluffychat/domain/usecase/contacts/federation_look_up_argument.dart';
 import 'package:fluffychat/domain/usecase/contacts/get_address_book_interactor.dart';
+import 'package:fluffychat/domain/usecase/contacts/get_omni_contacts_interactor.dart';
 import 'package:fluffychat/domain/usecase/contacts/get_tom_contacts_interactor.dart';
 import 'package:fluffychat/domain/usecase/contacts/federation_look_up_phonebook_contact_interactor.dart';
 import 'package:fluffychat/domain/usecase/contacts/post_address_book_interactor.dart';
@@ -37,6 +39,9 @@ class ContactsManager {
 
   final GetTomContactsInteractor getTomContactsInteractor =
       getIt.get<GetTomContactsInteractor>();
+
+  final GetOmniContactsInteractor getOmniContactsInteractor =
+      getIt.get<GetOmniContactsInteractor>();
 
   final FederationLookUpPhonebookContactInteractor
       federationLookUpPhonebookContactInteractor =
@@ -57,6 +62,8 @@ class ContactsManager {
       getIt.get<TryGetSyncedPhoneBookContactInteractor>();
 
   StreamSubscription<Either<Failure, Success>>? tomContactsSubscription;
+
+  StreamSubscription<Either<Failure, Success>>? omniContactsSubscription;
 
   StreamSubscription<Either<Failure, Success>>?
       federationPhonebookContactsSubscription;
@@ -114,6 +121,8 @@ class ContactsManager {
   bool get isDoNotShowWarningContactsDialogAgain =>
       _doNotShowWarningContactsDialogAgain;
 
+  String? omniAccessToken;
+
   set updateNotShowWarningContactsBannerAgain(bool value) {
     _doNotShowWarningContactsBannerAgain = value;
   }
@@ -162,6 +171,14 @@ class ContactsManager {
 
     _isSynchronizing = true;
 
+    final authStorage = AuthCredentialStorage();
+
+    omniAccessToken = await authStorage.getOmniAccessToken();
+
+    final AuthorizationInterceptor authorization =
+        getIt.get<AuthorizationInterceptor>();
+    authorization.omniAccessToken = omniAccessToken;
+
     await _getAllContacts(
       isAvailableSupportPhonebookContacts: isAvailableSupportPhonebookContacts,
       withMxId: withMxId,
@@ -172,8 +189,35 @@ class ContactsManager {
     bool isAvailableSupportPhonebookContacts = false,
     required String withMxId,
   }) async {
-    tomContactsSubscription = getTomContactsInteractor
-        .execute(limit: AppConfig.maxFetchContacts)
+    // tomContactsSubscription = getTomContactsInteractor
+    //     .execute(limit: AppConfig.maxFetchContacts)
+    //     .listen(
+    //   (event) {
+    //     _contactsNotifier.value = event;
+    //   },
+    // )
+    //   ..onDone(() async {
+    //     Logs().d('ContactsManager::_getAllContacts: done');
+    //     await _lookUpPhonebookContacts(
+    //       isAvailableSupportPhonebookContacts:
+    //           isAvailableSupportPhonebookContacts,
+    //       withMxId: withMxId,
+    //     ).whenComplete(
+    //       () => _isSynchronizing = false,
+    //     );
+    //   })
+    //   ..onError((error) async {
+    //     Logs().d('ContactsManager::_getAllContacts: error - $error');
+    //     await _lookUpPhonebookContacts(
+    //       isAvailableSupportPhonebookContacts:
+    //           isAvailableSupportPhonebookContacts,
+    //       withMxId: withMxId,
+    //     ).whenComplete(
+    //       () => _isSynchronizing = false,
+    //     );
+    //   });
+    omniContactsSubscription = getOmniContactsInteractor
+        .execute(status: OmniContactStatus.accepted)
         .listen(
       (event) {
         _contactsNotifier.value = event;
