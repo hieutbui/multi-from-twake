@@ -8,6 +8,8 @@ class OmniEndpoint {
 
   static const userRoute = '$apiRoute/users';
 
+  static const contactRoute = '$apiRoute/contacts';
+
   static final ServicePath signupServicePath = ServicePath(
     '$authRoute/signup',
   );
@@ -46,6 +48,10 @@ class OmniEndpoint {
 
   static final ServicePath userSearchServicePath = ServicePath(
     '$userRoute/search',
+  );
+
+  static final ServicePath getContactServicePath = ServicePath(
+    contactRoute,
   );
 
   static const String omniRootPath = '';
