@@ -93,6 +93,7 @@ mixin ChatDetailsTabMixin<T extends StatefulWidget>
   void _initTabList() {
     if (room != null) {
       tabList = [
+        ChatDetailsPage.info,
         if (chatType == ChatDetailsScreenEnum.group) ChatDetailsPage.members,
         ChatDetailsPage.media,
         ChatDetailsPage.links,

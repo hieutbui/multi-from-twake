@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
 enum ChatDetailsPage {
+  info,
   members,
   media,
   files,
@@ -10,6 +11,8 @@ enum ChatDetailsPage {
 
   String getTitle(BuildContext context) {
     switch (this) {
+      case ChatDetailsPage.info:
+        return L10n.of(context)!.info;
       case ChatDetailsPage.members:
         return L10n.of(context)!.members;
       case ChatDetailsPage.media:
