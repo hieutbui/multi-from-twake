@@ -77,7 +77,7 @@ class NewChatOrGroupView extends StatelessWidget {
             CreateNewChatOrGroupButton(
               title: 'Create new group',
               subTitle: 'Lorem ipsum',
-              onTap: () {},
+              onTap: () => controller.goToNewGroupChat(context),
             ),
             const SizedBox(height: 12.0),
             CreateNewChatOrGroupButton(

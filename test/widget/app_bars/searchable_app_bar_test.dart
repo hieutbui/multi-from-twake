@@ -30,7 +30,6 @@ void main() {
             appBar: PreferredSize(
               preferredSize: ForwardViewStyle.maxPreferredSize(context),
               child: SearchableAppBar(
-                searchModeNotifier: searchModeNotifier,
                 title: "Title",
                 hintText: "Hint",
                 focusNode: FocusNode(),
