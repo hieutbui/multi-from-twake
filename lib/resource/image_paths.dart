@@ -123,6 +123,7 @@ class ImagePaths {
   static String get imgEllipse235 => _getImagePath('img_ellipse_235.svg');
   static String get imgEllipse236 => _getImagePath('img_ellipse_236.svg');
   static String get imgEllipse238 => _getImagePath('img_ellipse_238.svg');
+  static String get icQrCode => _getImagePath('ic_qr_code.svg');
 
   static String _getImagePath(String imageName) {
     return AssetsPaths.images + imageName;
