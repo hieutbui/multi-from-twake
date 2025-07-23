@@ -1,4 +1,5 @@
 import 'package:fluffychat/domain/model/contact/contact_type.dart';
+import 'package:fluffychat/pages/search/omni_user_search_controller.dart';
 import 'package:fluffychat/presentation/mixins/address_book_mixin.dart';
 import 'package:fluffychat/presentation/mixins/contacts_view_controller_mixin.dart';
 import 'package:fluffychat/presentation/mixins/invite_external_contact_mixin.dart';
@@ -20,6 +21,9 @@ abstract class ContactsSelectionController<T extends StatefulWidget>
         AddressBooksMixin,
         WidgetsBindingObserver {
   final selectedContactsMapNotifier = SelectedContactsMapChangeNotifier();
+
+  final OmniUserSearchController omniUserSearchController =
+      OmniUserSearchController();
 
   String getTitle(BuildContext context);
 
@@ -49,6 +53,7 @@ abstract class ContactsSelectionController<T extends StatefulWidget>
           context: context,
           client: client,
           matrixLocalizations: MatrixLocals(L10n.of(context)!),
+          omniUserSearchController: omniUserSearchController,
         );
       }
     });
@@ -65,6 +70,7 @@ abstract class ContactsSelectionController<T extends StatefulWidget>
     WidgetsBinding.instance.removeObserver(this);
     disposeContactsMixin();
     selectedContactsMapNotifier.dispose();
+    omniUserSearchController.dispose();
     super.dispose();
   }
 

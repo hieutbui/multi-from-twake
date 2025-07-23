@@ -1,4 +1,5 @@
 import 'package:fluffychat/di/global/get_it_initializer.dart';
+import 'package:fluffychat/pages/search/omni_user_search_controller.dart';
 import 'package:fluffychat/presentation/mixins/address_book_mixin.dart';
 import 'package:fluffychat/presentation/mixins/comparable_presentation_contact_mixin.dart';
 import 'package:fluffychat/pages/contacts_tab/contacts_tab_view.dart';
@@ -37,6 +38,9 @@ class ContactsTabController extends State<ContactsTab>
         WidgetsBindingObserver {
   final responsive = getIt.get<ResponsiveUtils>();
 
+  final OmniUserSearchController omniUserSearchController =
+      OmniUserSearchController();
+
   Client get client => Matrix.of(context).client;
 
   @override
@@ -50,6 +54,7 @@ class ContactsTabController extends State<ContactsTab>
           context: context,
           client: Matrix.of(context).client,
           matrixLocalizations: MatrixLocals(L10n.of(context)!),
+          omniUserSearchController: omniUserSearchController,
         );
       }
     });
@@ -124,6 +129,7 @@ class ContactsTabController extends State<ContactsTab>
   void dispose() {
     disposeContactsMixin();
     WidgetsBinding.instance.removeObserver(this);
+    omniUserSearchController.dispose();
     super.dispose();
   }
 

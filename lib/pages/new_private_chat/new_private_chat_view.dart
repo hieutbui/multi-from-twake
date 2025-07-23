@@ -23,7 +23,6 @@ class NewPrivateChatView extends StatelessWidget {
         preferredSize: SearchableAppBarStyle.preferredSize(context),
         child: SearchableAppBar(
           title: L10n.of(context)!.newChat,
-          searchModeNotifier: controller.isSearchModeNotifier,
           textEditingController: controller.textEditingController,
           openSearchBar: controller.openSearchBar,
           closeSearchBar: controller.closeSearchBar,

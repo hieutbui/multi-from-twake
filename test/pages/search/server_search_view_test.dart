@@ -1,6 +1,7 @@
 import 'package:fluffychat/config/localizations/localization_service.dart';
 import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/config/themes.dart';
+import 'package:fluffychat/pages/search/omni_user_search_controller.dart';
 import 'package:fluffychat/pages/search/search.dart';
 import 'package:fluffychat/pages/search/search_contacts_and_chats_controller.dart';
 import 'package:fluffychat/pages/search/server_search_controller.dart';
@@ -27,6 +28,7 @@ import 'server_search_view_test.mocks.dart';
   MockSpec<ServerSearchController>(),
   MockSpec<TextEditingController>(),
   MockSpec<SearchContactsAndChatsController>(),
+  MockSpec<OmniUserSearchController>(),
 ])
 void main() {
   late final SearchController mockSearchController;
@@ -34,6 +36,7 @@ void main() {
   late final TextEditingController mockTextEditingController;
   late final SearchContactsAndChatsController
       mockSearchContactAndRecentChatController;
+  late final OmniUserSearchController mockOmniUserSearchController;
 
   setUpAll(() {
     final getIt = GetIt.instance;
@@ -43,6 +46,7 @@ void main() {
     mockTextEditingController = MockTextEditingController();
     mockSearchContactAndRecentChatController =
         MockSearchContactsAndChatsController();
+    mockOmniUserSearchController = MockOmniUserSearchController();
   });
 
   Future<void> makeTestable(WidgetTester tester) async {
@@ -106,6 +110,9 @@ void main() {
           when(
             mockSearchContactAndRecentChatController.recentAndContactsNotifier,
           ).thenReturn(ValueNotifier<List<PresentationSearch>>([]));
+          when(mockOmniUserSearchController.omniUserSearchNotifier).thenReturn(
+            ValueNotifier<List<OmniUserPresentationSearch>>([]),
+          );
 
           await makeTestable(tester);
 

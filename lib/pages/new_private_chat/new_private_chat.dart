@@ -1,3 +1,4 @@
+import 'package:fluffychat/pages/search/omni_user_search_controller.dart';
 import 'package:fluffychat/presentation/mixins/address_book_mixin.dart';
 import 'package:fluffychat/presentation/mixins/comparable_presentation_contact_mixin.dart';
 import 'package:fluffychat/presentation/mixins/contacts_view_controller_mixin.dart';
@@ -35,6 +36,9 @@ class NewPrivateChatController extends State<NewPrivateChat>
 
   final scrollController = ScrollController();
 
+  final OmniUserSearchController omniUserSearchController =
+      OmniUserSearchController();
+
   @override
   void initState() {
     super.initState();
@@ -46,6 +50,7 @@ class NewPrivateChatController extends State<NewPrivateChat>
           context: context,
           client: client,
           matrixLocalizations: MatrixLocals(L10n.of(context)!),
+          omniUserSearchController: omniUserSearchController,
         );
       }
     });
@@ -105,6 +110,7 @@ class NewPrivateChatController extends State<NewPrivateChat>
     WidgetsBinding.instance.removeObserver(this);
     disposeContactsMixin();
     scrollController.dispose();
+    omniUserSearchController.dispose();
   }
 
   @override

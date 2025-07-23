@@ -22,7 +22,6 @@ class ShareView extends StatelessWidget {
         preferredSize: SearchableAppBarStyle.preferredSize(context),
         child: SearchableAppBar(
           title: L10n.of(context)!.selectChat,
-          searchModeNotifier: controller.isSearchModeNotifier,
           textEditingController: controller.searchTextEditingController,
           openSearchBar: controller.toggleSearchMode,
           closeSearchBar: controller.closeSearchBar,
