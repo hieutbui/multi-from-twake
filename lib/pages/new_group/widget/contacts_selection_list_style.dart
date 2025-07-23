@@ -9,7 +9,8 @@ class ContactsSelectionListStyle {
   static const listPaddingTop = 8.0;
   static BorderRadius contactItemBorderRadius = BorderRadius.circular(16.0);
 
-  static const contactItemPadding = EdgeInsets.symmetric(horizontal: 16.0);
+  static const contactItemPadding =
+      EdgeInsetsDirectional.symmetric(horizontal: 12.0, vertical: 8.0);
 
   static EdgeInsets checkBoxPadding(double paddingTop) {
     return EdgeInsets.only(

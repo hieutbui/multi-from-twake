@@ -54,29 +54,33 @@ class ContactsSelectionView extends StatelessWidget {
               builder: (context, haveSelectedContact, child) {
                 return child!;
               },
-              child: CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: ContactsWarningBannerView(
-                      warningBannerNotifier: controller.warningBannerNotifier,
-                      closeContactsWarningBanner:
-                          controller.closeContactsWarningBanner,
-                      goToSettingsForPermissionActions: () =>
-                          controller.displayContactPermissionDialog(context),
+              child: Padding(
+                padding:
+                    const EdgeInsetsDirectional.symmetric(horizontal: 12.0),
+                child: CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: ContactsWarningBannerView(
+                        warningBannerNotifier: controller.warningBannerNotifier,
+                        closeContactsWarningBanner:
+                            controller.closeContactsWarningBanner,
+                        goToSettingsForPermissionActions: () =>
+                            controller.displayContactPermissionDialog(context),
+                      ),
                     ),
-                  ),
-                  _sliverPhonebookLoading(),
-                  SliverToBoxAdapter(
-                    child: SelectedParticipantsList(
-                      contactsSelectionController: controller,
+                    _sliverPhonebookLoading(),
+                    SliverToBoxAdapter(
+                      child: SelectedParticipantsList(
+                        contactsSelectionController: controller,
+                      ),
                     ),
-                  ),
-                  _sliverRecentContacts(),
-                  _sliverOmniUserSearch(),
-                  _sliverContactsList(),
-                  if (PlatformInfos.isMobile) _sliverPhonebookList(),
-                  if (PlatformInfos.isWeb) _sliverAddressBookListOnWeb(),
-                ],
+                    _sliverRecentContacts(),
+                    _sliverOmniUserSearch(),
+                    _sliverContactsList(),
+                    if (PlatformInfos.isMobile) _sliverPhonebookList(),
+                    if (PlatformInfos.isWeb) _sliverAddressBookListOnWeb(),
+                  ],
+                ),
               ),
             ),
           ),
