@@ -37,7 +37,6 @@ class ForwardView extends StatelessWidget {
               toolbarHeight: ForwardViewStyle.maxToolbarHeight(context),
               focusNode: controller.searchFocusNode,
               title: L10n.of(context)!.forwardTo,
-              searchModeNotifier: controller.isSearchModeNotifier,
               hintText: L10n.of(context)!.searchContacts,
               textEditingController: controller.searchTextEditingController,
               openSearchBar: controller.openSearchBar,

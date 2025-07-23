@@ -12,6 +12,7 @@ import 'package:fluffychat/domain/model/contact/contact_type.dart';
 import 'package:fluffychat/domain/model/extensions/contact/address_book_extension.dart';
 import 'package:fluffychat/domain/model/extensions/contact/contact_extension.dart';
 import 'package:fluffychat/domain/usecase/search/search_recent_chat_interactor.dart';
+import 'package:fluffychat/pages/search/omni_user_search_controller.dart';
 import 'package:fluffychat/presentation/enum/contacts/warning_contacts_banner_enum.dart';
 import 'package:fluffychat/presentation/extensions/contact/presentation_contact_extension.dart';
 import 'package:fluffychat/presentation/extensions/value_notifier_custom.dart';
@@ -182,6 +183,7 @@ mixin class ContactsViewControllerMixin {
     required BuildContext context,
     required Client client,
     required MatrixLocalizations matrixLocalizations,
+    required OmniUserSearchController omniUserSearchController,
   }) async {
     if (PlatformInfos.isMobile &&
         !contactsManager.isDoNotShowWarningContactsDialogAgain) {
@@ -189,6 +191,9 @@ mixin class ContactsViewControllerMixin {
     } else {
       await _initWarningBanner();
     }
+
+    await omniUserSearchController.init();
+
     _refreshAllContacts(
       context: context,
       client: client,
@@ -209,6 +214,8 @@ mixin class ContactsViewControllerMixin {
         client: client,
         matrixLocalizations: matrixLocalizations,
       );
+
+      omniUserSearchController.onSearchBarChanged(keyword);
     });
 
     if (client.userID == null) {

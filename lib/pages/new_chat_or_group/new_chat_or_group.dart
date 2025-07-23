@@ -1,4 +1,5 @@
 import 'package:fluffychat/pages/new_chat_or_group/new_chat_or_group_view.dart';
+import 'package:fluffychat/pages/search/omni_user_search_controller.dart';
 import 'package:fluffychat/presentation/mixins/contacts_view_controller_mixin.dart';
 import 'package:fluffychat/presentation/mixins/go_to_direct_chat_mixin.dart';
 import 'package:fluffychat/presentation/mixins/go_to_group_chat_mixin.dart';
@@ -26,6 +27,9 @@ class NewChatOrGroupController extends State<NewChatOrGroup>
         GoToGroupChatMixin,
         GoToDraftChatMixin,
         InviteExternalContactMixin {
+  final OmniUserSearchController omniUserSearchController =
+      OmniUserSearchController();
+
   Client get client => Matrix.of(context).client;
 
   @override
@@ -37,6 +41,7 @@ class NewChatOrGroupController extends State<NewChatOrGroup>
           context: context,
           client: client,
           matrixLocalizations: MatrixLocals(L10n.of(context)!),
+          omniUserSearchController: omniUserSearchController,
         );
       }
     });
@@ -45,6 +50,7 @@ class NewChatOrGroupController extends State<NewChatOrGroup>
   @override
   void dispose() {
     disposeContactsMixin();
+    omniUserSearchController.dispose();
     super.dispose();
   }
 

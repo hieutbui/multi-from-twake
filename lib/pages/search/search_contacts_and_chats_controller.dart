@@ -7,6 +7,7 @@ import 'package:fluffychat/domain/app_state/search/search_state.dart';
 import 'package:fluffychat/domain/model/extensions/contact/address_book_extension.dart';
 import 'package:fluffychat/domain/usecase/search/search_recent_chat_interactor.dart';
 import 'package:fluffychat/domain/contact_manager/contacts_manager.dart';
+import 'package:fluffychat/pages/search/omni_user_search_controller.dart';
 import 'package:fluffychat/pages/search/search_debouncer_mixin.dart';
 import 'package:fluffychat/pages/search/search_mixin.dart';
 import 'package:fluffychat/presentation/extensions/contact/presentation_contact_extension.dart';
@@ -29,6 +30,9 @@ class SearchContactsAndChatsController
   SearchContactsAndChatsController(this.context);
 
   static const int _limitPrefetchedRecentChats = 3;
+
+  final OmniUserSearchController omniUserSearchController =
+      OmniUserSearchController();
 
   final SearchRecentChatInteractor _searchRecentChatInteractor =
       getIt.get<SearchRecentChatInteractor>();
@@ -58,6 +62,7 @@ class SearchContactsAndChatsController
       context: context,
       client: Matrix.of(context).client,
       matrixLocalizations: MatrixLocals(L10n.of(context)!),
+      omniUserSearchController: omniUserSearchController,
     );
     fetchPreSearchChat();
   }
@@ -209,5 +214,6 @@ class SearchContactsAndChatsController
   void dispose() {
     disposeDebouncer();
     recentAndContactsNotifier.dispose();
+    omniUserSearchController.dispose();
   }
 }

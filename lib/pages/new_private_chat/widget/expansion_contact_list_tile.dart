@@ -101,6 +101,7 @@ class _ExpansionContactListTileState extends State<ExpansionContactListTile>
 
   @override
   Widget build(BuildContext context) {
+    Logs().d('ExpansionContactListTile::build: ${widget.contact.matrixId}');
     return TwakeInkWell(
       onTap: _onContactTapHandler(
         context,

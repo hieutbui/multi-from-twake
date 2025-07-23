@@ -38,7 +38,6 @@ class ContactsSelectionView extends StatelessWidget {
           toolbarHeight: ContactsSelectionViewStyle.maxToolbarHeight(context),
           focusNode: controller.searchFocusNode,
           title: controller.getTitle(context),
-          searchModeNotifier: controller.isSearchModeNotifier,
           hintText: controller.getHintText(context),
           textEditingController: controller.textEditingController,
           openSearchBar: controller.openSearchBar,
@@ -73,6 +72,7 @@ class ContactsSelectionView extends StatelessWidget {
                     ),
                   ),
                   _sliverRecentContacts(),
+                  _sliverOmniUserSearch(),
                   _sliverContactsList(),
                   if (PlatformInfos.isMobile) _sliverPhonebookList(),
                   if (PlatformInfos.isWeb) _sliverAddressBookListOnWeb(),
@@ -162,6 +162,39 @@ class ContactsSelectionView extends StatelessWidget {
           child: SizedBox(),
         ),
       ),
+    );
+  }
+
+  Widget _sliverOmniUserSearch() {
+    return ValueListenableBuilder<List<OmniUserPresentationSearch>>(
+      valueListenable:
+          controller.omniUserSearchController.omniUserSearchNotifier,
+      builder: (context, omniUserSearchResults, child) {
+        if (omniUserSearchResults.isEmpty) {
+          return const SliverToBoxAdapter(child: SizedBox());
+        }
+        return SliverExpandableList(
+          title: L10n.of(context)!.contactsCount(omniUserSearchResults.length),
+          itemCount: omniUserSearchResults.length,
+          itemBuilder: (context, index) {
+            final omniUser = omniUserSearchResults[index];
+            final disabled = controller.disabledContactIds.contains(
+              omniUser.matrixUserId,
+            );
+
+            return ContactItem(
+              contact: omniUser.toPresentationContact(),
+              selectedContactsMapNotifier:
+                  controller.selectedContactsMapNotifier,
+              onSelectedContact: controller.onSelectedContact,
+              highlightKeyword: controller.textEditingController.text,
+              disabled: disabled,
+              paddingTop:
+                  index == 0 ? ContactsSelectionListStyle.listPaddingTop : 0,
+            );
+          },
+        );
+      },
     );
   }
 
