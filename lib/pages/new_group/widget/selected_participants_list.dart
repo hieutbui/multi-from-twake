@@ -112,41 +112,6 @@ class _SelectedParticipantsListState extends State<SelectedParticipantsList> {
                 const Divider(
                   color: Color(0x33738C96),
                 ),
-                // Padding(
-                //   padding: SelectedParticipantsListStyle.contactPadding,
-                //   child: Row(
-                //     children: [
-                //       Text(
-                //         '${L10n.of(context)!.selectedUsers}: ${contactsNotifier.contactsList.length}',
-                //         style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                //               color: LinagoraRefColors.material().tertiary[20],
-                //             ),
-                //       ),
-                //       Expanded(
-                //         child: Row(
-                //           mainAxisAlignment: MainAxisAlignment.end,
-                //           children: [
-                //             InkWell(
-                //               onTap: () => widget.contactsSelectionController
-                //                   .selectedContactsMapNotifier
-                //                   .unselectAllContacts(),
-                //               child: Text(
-                //                 L10n.of(context)!.clearAllSelected,
-                //                 style: Theme.of(context)
-                //                     .textTheme
-                //                     .labelLarge
-                //                     ?.copyWith(
-                //                       color: LinagoraRefColors.material()
-                //                           .tertiary[20],
-                //                     ),
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
               ],
             );
           },
