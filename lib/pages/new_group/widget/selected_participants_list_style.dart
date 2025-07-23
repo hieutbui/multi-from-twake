@@ -13,7 +13,7 @@ class SelectedParticipantsListStyle {
     bottom: 2.0,
   );
 
-  static const double avatarChipSize = 24.0;
+  static const double avatarChipSize = 60.0;
 
   static const EdgeInsetsDirectional contactPadding =
       EdgeInsetsDirectional.only(

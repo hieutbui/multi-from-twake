@@ -1,6 +1,5 @@
 import 'package:fluffychat/pages/new_group/contacts_selection.dart';
 import 'package:fluffychat/pages/new_group/widget/selected_participants_list_style.dart';
-import 'package:fluffychat/utils/platform_infos.dart';
 import 'package:fluffychat/widgets/avatar/avatar.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import 'package:flutter/material.dart';
@@ -44,58 +43,67 @@ class _SelectedParticipantsListState extends State<SelectedParticipantsList> {
                 Padding(
                   padding: SelectedParticipantsListStyle.paddingAll,
                   child: Wrap(
-                    spacing: 8.0,
-                    runSpacing: PlatformInfos.isWeb ? 4.0 : 0.0,
+                    spacing: 12.0,
+                    runSpacing: 8.0,
                     children: contactsNotifier.contactsList.map((contact) {
-                      return InputChip(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                            SelectedParticipantsListStyle.borderRadiusChip,
-                          ),
-                          side: BorderSide(
-                            color: Theme.of(context).colorScheme.outline,
-                            width: 1.0,
-                          ),
-                        ),
-                        labelPadding:
-                            SelectedParticipantsListStyle.labelChipPadding,
-                        padding: const EdgeInsets.all(0),
-                        label: Text(
-                          contact.displayName ?? contact.matrixId ?? '',
-                          style:
-                              Theme.of(context).textTheme.labelLarge?.copyWith(
+                      return Stack(
+                        children: [
+                          contact.matrixId != null
+                              ? FutureBuilder<Profile>(
+                                  future: Matrix.of(context)
+                                      .client
+                                      .getProfileFromUserId(
+                                        contact.matrixId!,
+                                        getFromRooms: false,
+                                      ),
+                                  builder: ((context, snapshot) {
+                                    return Avatar(
+                                      mxContent: snapshot.data?.avatarUrl,
+                                      name: contact.displayName,
+                                      size: SelectedParticipantsListStyle
+                                          .avatarChipSize,
+                                    );
+                                  }),
+                                )
+                              : Avatar(
+                                  name: contact.displayName,
+                                  size: SelectedParticipantsListStyle
+                                      .avatarChipSize,
+                                ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: InkWell(
+                              onTap: () {
+                                widget.contactsSelectionController
+                                    .selectedContactsMapNotifier
+                                    .unselectContact(contact);
+                              },
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(12.0)),
+                              child: Container(
+                                height: 24,
+                                width: 24,
+                                decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(12.0),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.close,
+                                    size: 16,
                                     color: Theme.of(context)
                                         .colorScheme
-                                        .onSurfaceVariant,
+                                        .onPrimaryContainer,
                                   ),
-                        ),
-                        avatar: contact.matrixId != null
-                            ? FutureBuilder<Profile>(
-                                future: Matrix.of(context)
-                                    .client
-                                    .getProfileFromUserId(
-                                      contact.matrixId!,
-                                      getFromRooms: false,
-                                    ),
-                                builder: ((context, snapshot) {
-                                  return Avatar(
-                                    mxContent: snapshot.data?.avatarUrl,
-                                    name: contact.displayName,
-                                    size: SelectedParticipantsListStyle
-                                        .avatarChipSize,
-                                  );
-                                }),
-                              )
-                            : Avatar(
-                                name: contact.displayName,
-                                size: SelectedParticipantsListStyle
-                                    .avatarChipSize,
+                                ),
                               ),
-                        onDeleted: () {
-                          widget.contactsSelectionController
-                              .selectedContactsMapNotifier
-                              .unselectContact(contact);
-                        },
+                            ),
+                          ),
+                        ],
                       );
                     }).toList(),
                   ),
