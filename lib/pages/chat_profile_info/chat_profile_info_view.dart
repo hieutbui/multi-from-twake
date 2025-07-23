@@ -32,18 +32,15 @@ class ChatProfileInfoView extends StatelessWidget {
         backgroundColor: Colors.transparent,
         leading: IconButton(
           style: IconButton.styleFrom(
-            backgroundColor: Theme.of(context).brightness == Brightness.dark
-                ? MultiDarkColors.buttonsMainSecondary15Opasity
-                : MultiLightColors.buttonsMainSecondary15Opasity,
+            backgroundColor:
+                MultiColors.of(context).buttonsMainSecondary15Opasity,
           ),
           iconSize: 18,
           constraints: BoxConstraints.tight(const Size.square(28)),
           padding: const EdgeInsets.all(0),
           icon: Icon(
             Icons.arrow_back,
-            color: Theme.of(context).brightness == Brightness.dark
-                ? MultiDarkColors.textMainPrimaryDefault
-                : MultiLightColors.textMainPrimaryDefault,
+            color: MultiColors.of(context).textMainPrimaryDefault,
           ),
           onPressed: controller.onPressBack,
         ),
@@ -59,7 +56,7 @@ class ChatProfileInfoView extends StatelessWidget {
                     Color(0xFF191B26),
                   ]
                 : [
-                    MultiLightColors.backgroundPageDefault,
+                    const MultiLightColors().backgroundPageDefault,
                   ],
           ),
         ),
@@ -82,9 +79,8 @@ class ChatProfileInfoView extends StatelessWidget {
                           top: MediaQuery.of(context).padding.top,
                         ),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).brightness == Brightness.dark
-                              ? MultiDarkColors.backgroundSurfacesDefault
-                              : MultiLightColors.backgroundSurfacesDefault,
+                          color:
+                              MultiColors.of(context).backgroundSurfacesDefault,
                           borderRadius: const BorderRadius.all(
                             Radius.circular(20.0),
                           ),
@@ -160,21 +156,15 @@ class ChatProfileInfoView extends StatelessWidget {
                   borderRadius:
                       MultiMobileRoundnessAndPaddings.paddingCardsLarge,
                   backgroundColor:
-                      Theme.of(context).brightness == Brightness.dark
-                          ? MultiDarkColors.backgroundSurfacesDefault
-                          : MultiLightColors.backgroundSurfacesDefault,
+                      MultiColors.of(context).backgroundSurfacesDefault,
                   child: TabBar(
                     indicatorSize: TabBarIndicatorSize.tab,
                     indicatorPadding: const EdgeInsets.symmetric(
                       horizontal: 16,
                     ),
-                    labelColor: Theme.of(context).brightness == Brightness.dark
-                        ? MultiDarkColors.textMainPrimaryDefault
-                        : MultiLightColors.textMainPrimaryDefault,
+                    labelColor: MultiColors.of(context).textMainPrimaryDefault,
                     unselectedLabelColor:
-                        Theme.of(context).brightness == Brightness.dark
-                            ? MultiDarkColors.textMainSecondary
-                            : MultiLightColors.textMainSecondary,
+                        MultiColors.of(context).textMainSecondary,
                     dividerColor: Colors.transparent,
                     tabs: controller.tabList.map((page) {
                       return Tab(

@@ -19,9 +19,7 @@ class InfoTabView extends StatelessWidget {
           Container(
             padding: ChatProfileInfoStyle.paddingInformation,
             decoration: BoxDecoration(
-              color: Theme.of(context).brightness == Brightness.dark
-                  ? MultiDarkColors.backgroundSurfacesDefault
-                  : MultiLightColors.backgroundSurfacesDefault,
+              color: MultiColors.of(context).backgroundSurfacesDefault,
               borderRadius: const BorderRadius.all(
                 Radius.circular(20.0),
               ),
@@ -51,9 +49,7 @@ class InfoTabView extends StatelessWidget {
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).brightness == Brightness.dark
-                            ? MultiDarkColors.supportiveColorsPinkMain
-                            : MultiLightColors.supportiveColorsPinkMain,
+                        color: MultiColors.of(context).supportiveColorsPinkMain,
                         borderRadius: BorderRadius.circular(
                           MultiMobileRoundnessAndPaddings.roundnessTags,
                         ),
@@ -63,9 +59,8 @@ class InfoTabView extends StatelessWidget {
                         style: TextStyle(
                           fontSize: MultiMobileTypography.buttonFontSmall,
                           fontWeight: FontWeight.w400,
-                          color: Theme.of(context).brightness == Brightness.dark
-                              ? MultiDarkColors.supportiveColorsPinkContrast
-                              : MultiLightColors.supportiveColorsPinkContrast,
+                          color: MultiColors.of(context)
+                              .supportiveColorsPinkContrast,
                         ),
                       ),
                     ),
@@ -96,9 +91,7 @@ class InfoTabView extends StatelessWidget {
                 margin: const EdgeInsets.only(top: 10, left: 24.5, right: 24.5),
                 height: 66,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).brightness == Brightness.dark
-                      ? MultiDarkColors.backgroundSurfacesDefault
-                      : MultiLightColors.backgroundSurfacesDefault,
+                  color: MultiColors.of(context).backgroundSurfacesDefault,
                   borderRadius: BorderRadius.circular(
                     MultiMobileRoundnessAndPaddings
                         .roundnessCardsSmallDropdowns,
@@ -111,9 +104,7 @@ class InfoTabView extends StatelessWidget {
                   vertical: 13,
                 ),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).brightness == Brightness.dark
-                      ? MultiDarkColors.backgroundSurfacesDefault
-                      : MultiLightColors.backgroundSurfacesDefault,
+                  color: MultiColors.of(context).backgroundSurfacesDefault,
                   borderRadius: const BorderRadius.all(
                     Radius.circular(20.0),
                   ),
@@ -147,10 +138,8 @@ class InfoTabView extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
-                              color: Theme.of(context).brightness ==
-                                      Brightness.dark
-                                  ? MultiDarkColors.textMainPrimaryDefault
-                                  : MultiLightColors.textMainPrimaryDefault,
+                              color: MultiColors.of(context)
+                                  .textMainPrimaryDefault,
                             ),
                           ),
                         ),
@@ -164,10 +153,7 @@ class InfoTabView extends StatelessWidget {
                             style: TextStyle(
                               fontSize: MultiMobileTypography.bodyFontSubhead,
                               fontWeight: FontWeight.w400,
-                              color: Theme.of(context).brightness ==
-                                      Brightness.dark
-                                  ? MultiDarkColors.textMainSecondary
-                                  : MultiLightColors.textMainSecondary,
+                              color: MultiColors.of(context).textMainSecondary,
                             ),
                           ),
                         ),
@@ -183,9 +169,8 @@ class InfoTabView extends StatelessWidget {
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Theme.of(context).brightness == Brightness.dark
-                  ? MultiDarkColors.buttonsMainSecondaryDefault
-                  : MultiLightColors.buttonsMainSecondaryDefault,
+              backgroundColor:
+                  MultiColors.of(context).buttonsMainSecondaryDefault,
             ),
             onPressed: () {},
             child: Text(
@@ -193,9 +178,7 @@ class InfoTabView extends StatelessWidget {
               style: TextStyle(
                 fontSize: MultiMobileTypography.buttonFontLarge,
                 fontWeight: FontWeight.w500,
-                color: Theme.of(context).brightness == Brightness.dark
-                    ? MultiDarkColors.textMainError
-                    : MultiLightColors.textMainError,
+                color: MultiColors.of(context).textMainError,
               ),
             ),
           ),
