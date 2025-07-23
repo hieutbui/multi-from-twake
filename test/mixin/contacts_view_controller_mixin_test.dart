@@ -4,6 +4,7 @@ import 'package:fluffychat/app_state/success.dart';
 import 'package:fluffychat/domain/app_state/contact/get_contacts_state.dart';
 import 'package:fluffychat/domain/app_state/contact/get_phonebook_contact_state.dart';
 import 'package:fluffychat/domain/model/contact/contact_status.dart';
+import 'package:fluffychat/pages/search/omni_user_search_controller.dart';
 import 'package:fluffychat/presentation/extensions/value_notifier_custom.dart';
 import 'package:fluffychat/presentation/mixins/contacts_view_controller_mixin.dart';
 import 'package:fluffychat/presentation/model/contact/get_presentation_contacts_success.dart';
@@ -38,6 +39,7 @@ class CustomContactsViewControllerMixin with ContactsViewControllerMixin {}
   MockSpec<Client>(),
   MockSpec<MatrixLocalizations>(),
   MockSpec<ContactsViewControllerMixin>(),
+  MockSpec<OmniUserSearchController>(),
 ])
 void main() {
   const debouncerIntervalInMilliseconds = 300;
@@ -78,12 +80,14 @@ void main() {
     late Client mockClient;
     late MatrixLocalizations mockMatrixLocalizations;
     late BuildContext mockBuildContext;
+    late OmniUserSearchController mockOmniUserSearchController;
 
     setUp(() {
       mockContactsViewControllerMixin = MockContactsViewControllerMixin();
       mockMatrixLocalizations = MockMatrixLocalizations();
       mockClient = MockClient();
       mockBuildContext = MockBuildContext();
+      mockOmniUserSearchController = MockOmniUserSearchController();
     });
 
     test(
@@ -124,6 +128,7 @@ void main() {
           context: mockBuildContext,
           client: mockClient,
           matrixLocalizations: mockMatrixLocalizations,
+          omniUserSearchController: mockOmniUserSearchController,
         );
 
         verify(
@@ -131,6 +136,7 @@ void main() {
             context: mockBuildContext,
             client: mockClient,
             matrixLocalizations: mockMatrixLocalizations,
+            omniUserSearchController: mockOmniUserSearchController,
           ),
         ).called(1);
 
@@ -199,6 +205,7 @@ void main() {
           context: mockBuildContext,
           client: mockClient,
           matrixLocalizations: mockMatrixLocalizations,
+          omniUserSearchController: mockOmniUserSearchController,
         );
 
         verify(
@@ -206,6 +213,7 @@ void main() {
             context: mockBuildContext,
             client: mockClient,
             matrixLocalizations: mockMatrixLocalizations,
+            omniUserSearchController: mockOmniUserSearchController,
           ),
         ).called(1);
 
@@ -276,6 +284,7 @@ void main() {
           context: mockBuildContext,
           client: mockClient,
           matrixLocalizations: mockMatrixLocalizations,
+          omniUserSearchController: mockOmniUserSearchController,
         );
 
         verify(
@@ -283,6 +292,7 @@ void main() {
             context: mockBuildContext,
             client: mockClient,
             matrixLocalizations: mockMatrixLocalizations,
+            omniUserSearchController: mockOmniUserSearchController,
           ),
         ).called(1);
 
@@ -369,6 +379,7 @@ void main() {
           context: mockBuildContext,
           client: mockClient,
           matrixLocalizations: mockMatrixLocalizations,
+          omniUserSearchController: mockOmniUserSearchController,
         );
 
         verify(
@@ -376,6 +387,7 @@ void main() {
             context: mockBuildContext,
             client: mockClient,
             matrixLocalizations: mockMatrixLocalizations,
+            omniUserSearchController: mockOmniUserSearchController,
           ),
         ).called(1);
 
@@ -468,6 +480,7 @@ void main() {
           context: mockBuildContext,
           client: mockClient,
           matrixLocalizations: mockMatrixLocalizations,
+          omniUserSearchController: mockOmniUserSearchController,
         );
 
         verify(
@@ -475,6 +488,7 @@ void main() {
             context: mockBuildContext,
             client: mockClient,
             matrixLocalizations: mockMatrixLocalizations,
+            omniUserSearchController: mockOmniUserSearchController,
           ),
         ).called(1);
 
@@ -642,6 +656,7 @@ void main() {
           context: mockBuildContext,
           client: mockClient,
           matrixLocalizations: mockMatrixLocalizations,
+          omniUserSearchController: mockOmniUserSearchController,
         );
 
         verify(
@@ -649,6 +664,7 @@ void main() {
             context: mockBuildContext,
             client: mockClient,
             matrixLocalizations: mockMatrixLocalizations,
+            omniUserSearchController: mockOmniUserSearchController,
           ),
         ).called(1);
 
@@ -816,6 +832,7 @@ void main() {
           context: mockBuildContext,
           client: mockClient,
           matrixLocalizations: mockMatrixLocalizations,
+          omniUserSearchController: mockOmniUserSearchController,
         );
 
         verify(
@@ -823,6 +840,7 @@ void main() {
             context: mockBuildContext,
             client: mockClient,
             matrixLocalizations: mockMatrixLocalizations,
+            omniUserSearchController: mockOmniUserSearchController,
           ),
         ).called(1);
 
@@ -990,6 +1008,7 @@ void main() {
           context: mockBuildContext,
           client: mockClient,
           matrixLocalizations: mockMatrixLocalizations,
+          omniUserSearchController: mockOmniUserSearchController,
         );
 
         verify(
@@ -997,6 +1016,7 @@ void main() {
             context: mockBuildContext,
             client: mockClient,
             matrixLocalizations: mockMatrixLocalizations,
+            omniUserSearchController: mockOmniUserSearchController,
           ),
         ).called(1);
 
@@ -1193,6 +1213,7 @@ void main() {
           context: mockBuildContext,
           client: mockClient,
           matrixLocalizations: mockMatrixLocalizations,
+          omniUserSearchController: mockOmniUserSearchController,
         );
 
         verify(
@@ -1200,6 +1221,7 @@ void main() {
             context: mockBuildContext,
             client: mockClient,
             matrixLocalizations: mockMatrixLocalizations,
+            omniUserSearchController: mockOmniUserSearchController,
           ),
         ).called(1);
 
@@ -1432,12 +1454,14 @@ void main() {
     late Client mockClient;
     late MatrixLocalizations mockMatrixLocalizations;
     late BuildContext mockBuildContext;
+    late OmniUserSearchController mockOmniUserSearchController;
 
     setUp(() {
       mockContactsViewControllerMixin = MockContactsViewControllerMixin();
       mockMatrixLocalizations = MockMatrixLocalizations();
       mockClient = MockClient();
       mockBuildContext = MockBuildContext();
+      mockOmniUserSearchController = MockOmniUserSearchController();
     });
     test(
       'WHEN it is available get Phonebook contact.\n'
@@ -1477,6 +1501,7 @@ void main() {
           context: mockBuildContext,
           client: mockClient,
           matrixLocalizations: mockMatrixLocalizations,
+          omniUserSearchController: mockOmniUserSearchController,
         );
 
         verify(
@@ -1484,6 +1509,7 @@ void main() {
             context: mockBuildContext,
             client: mockClient,
             matrixLocalizations: mockMatrixLocalizations,
+            omniUserSearchController: mockOmniUserSearchController,
           ),
         ).called(1);
 
@@ -1552,6 +1578,7 @@ void main() {
           context: mockBuildContext,
           client: mockClient,
           matrixLocalizations: mockMatrixLocalizations,
+          omniUserSearchController: mockOmniUserSearchController,
         );
 
         verify(
@@ -1559,6 +1586,7 @@ void main() {
             context: mockBuildContext,
             client: mockClient,
             matrixLocalizations: mockMatrixLocalizations,
+            omniUserSearchController: mockOmniUserSearchController,
           ),
         ).called(1);
 
@@ -1636,6 +1664,7 @@ void main() {
           context: mockBuildContext,
           client: mockClient,
           matrixLocalizations: mockMatrixLocalizations,
+          omniUserSearchController: mockOmniUserSearchController,
         );
 
         verify(
@@ -1643,6 +1672,7 @@ void main() {
             context: mockBuildContext,
             client: mockClient,
             matrixLocalizations: mockMatrixLocalizations,
+            omniUserSearchController: mockOmniUserSearchController,
           ),
         ).called(1);
 
@@ -1741,6 +1771,7 @@ void main() {
           context: mockBuildContext,
           client: mockClient,
           matrixLocalizations: mockMatrixLocalizations,
+          omniUserSearchController: mockOmniUserSearchController,
         );
 
         verify(
@@ -1748,6 +1779,7 @@ void main() {
             context: mockBuildContext,
             client: mockClient,
             matrixLocalizations: mockMatrixLocalizations,
+            omniUserSearchController: mockOmniUserSearchController,
           ),
         ).called(1);
 
@@ -1840,6 +1872,7 @@ void main() {
           context: mockBuildContext,
           client: mockClient,
           matrixLocalizations: mockMatrixLocalizations,
+          omniUserSearchController: mockOmniUserSearchController,
         );
 
         verify(
@@ -1847,6 +1880,7 @@ void main() {
             context: mockBuildContext,
             client: mockClient,
             matrixLocalizations: mockMatrixLocalizations,
+            omniUserSearchController: mockOmniUserSearchController,
           ),
         ).called(1);
 
@@ -2014,6 +2048,7 @@ void main() {
           context: mockBuildContext,
           client: mockClient,
           matrixLocalizations: mockMatrixLocalizations,
+          omniUserSearchController: mockOmniUserSearchController,
         );
 
         verify(
@@ -2021,6 +2056,7 @@ void main() {
             context: mockBuildContext,
             client: mockClient,
             matrixLocalizations: mockMatrixLocalizations,
+            omniUserSearchController: mockOmniUserSearchController,
           ),
         ).called(1);
 
@@ -2195,6 +2231,7 @@ void main() {
           context: mockBuildContext,
           client: mockClient,
           matrixLocalizations: mockMatrixLocalizations,
+          omniUserSearchController: mockOmniUserSearchController,
         );
 
         verify(
@@ -2202,6 +2239,7 @@ void main() {
             context: mockBuildContext,
             client: mockClient,
             matrixLocalizations: mockMatrixLocalizations,
+            omniUserSearchController: mockOmniUserSearchController,
           ),
         ).called(1);
 
@@ -2381,6 +2419,7 @@ void main() {
           context: mockBuildContext,
           client: mockClient,
           matrixLocalizations: mockMatrixLocalizations,
+          omniUserSearchController: mockOmniUserSearchController,
         );
 
         verify(
@@ -2388,6 +2427,7 @@ void main() {
             context: mockBuildContext,
             client: mockClient,
             matrixLocalizations: mockMatrixLocalizations,
+            omniUserSearchController: mockOmniUserSearchController,
           ),
         ).called(1);
 
@@ -2596,6 +2636,7 @@ void main() {
           context: mockBuildContext,
           client: mockClient,
           matrixLocalizations: mockMatrixLocalizations,
+          omniUserSearchController: mockOmniUserSearchController,
         );
 
         verify(
@@ -2603,6 +2644,7 @@ void main() {
             context: mockBuildContext,
             client: mockClient,
             matrixLocalizations: mockMatrixLocalizations,
+            omniUserSearchController: mockOmniUserSearchController,
           ),
         ).called(1);
 

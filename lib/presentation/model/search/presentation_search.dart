@@ -164,6 +164,15 @@ extension PresentationSearchExtension on PresentationSearch {
   }
 }
 
+extension OmniUserPresentationSearchExtension on OmniUserPresentationSearch {
+  PresentationContact toPresentationContact() {
+    return PresentationContact(
+      matrixId: matrixUserId,
+      displayName: displayName,
+    );
+  }
+}
+
 extension OmniUserSearchModelExtension on OmniUserSearchModel {
   OmniUserPresentationSearch toPresentation() {
     return OmniUserPresentationSearch(
