@@ -1,4 +1,6 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class AppAdaptiveScaffoldBodyViewStyle {
   static const EdgeInsetsGeometry navBarBackLayoutPadding = EdgeInsets.only(
@@ -20,4 +22,18 @@ class AppAdaptiveScaffoldBodyViewStyle {
       ),
     ],
   );
+
+  static Color centerItemBorderColor(BuildContext context) {
+    if (Theme.of(context).brightness == Brightness.dark) {
+      return Colors.black;
+    }
+    return const MultiLightColors().backgroundPageDefault;
+  }
+
+  static Color centerItemColor(BuildContext context) {
+    if (Theme.of(context).brightness == Brightness.dark) {
+      return const Color(0xff7591FF);
+    }
+    return const MultiLightColors().buttonsMainGhostDefault;
+  }
 }
