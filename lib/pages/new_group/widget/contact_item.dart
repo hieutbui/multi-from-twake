@@ -42,47 +42,41 @@ class ContactItem extends StatelessWidget {
                 );
               },
         borderRadius: ContactsSelectionListStyle.contactItemBorderRadius,
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding: ContactsSelectionListStyle.checkBoxPadding(paddingTop),
-            child: Row(
-              children: [
-                ValueListenableBuilder<bool>(
-                  valueListenable: contactNotifier,
-                  builder: (context, isCurrentSelected, child) {
-                    return InkWell(
-                      onTap: disabled
-                          ? null
-                          : () {
-                              onSelectedContact?.call();
-                              selectedContactsMapNotifier.onContactTileTap(
-                                context,
-                                contact,
-                              );
-                            },
-                      child: Align(
-                        alignment: AlignmentDirectional.centerStart,
-                        child: SvgPicture.asset(
-                          (disabled || contactNotifier.value)
-                              ? ImagePaths.icCheckboxChecked
-                              : ImagePaths.icCheckboxUnchecked,
-                          width: 20,
-                          height: 20,
-                        ),
-                      ),
-                    );
-                  },
-                ),
-                Expanded(
-                  child: ExpansionContactListTile(
-                    contact: contact,
-                    highlightKeyword: highlightKeyword,
+        child: Row(
+          children: [
+            ValueListenableBuilder<bool>(
+              valueListenable: contactNotifier,
+              builder: (context, isCurrentSelected, child) {
+                return InkWell(
+                  onTap: disabled
+                      ? null
+                      : () {
+                          onSelectedContact?.call();
+                          selectedContactsMapNotifier.onContactTileTap(
+                            context,
+                            contact,
+                          );
+                        },
+                  child: Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: SvgPicture.asset(
+                      (disabled || contactNotifier.value)
+                          ? ImagePaths.icCheckboxChecked
+                          : ImagePaths.icCheckboxUnchecked,
+                      width: 20,
+                      height: 20,
+                    ),
                   ),
-                ),
-              ],
+                );
+              },
             ),
-          ),
+            Expanded(
+              child: ExpansionContactListTile(
+                contact: contact,
+                highlightKeyword: highlightKeyword,
+              ),
+            ),
+          ],
         ),
       ),
     );
