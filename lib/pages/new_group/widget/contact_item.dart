@@ -2,7 +2,9 @@ import 'package:fluffychat/pages/new_group/selected_contacts_map_change_notifier
 import 'package:fluffychat/pages/new_group/widget/contacts_selection_list_style.dart';
 import 'package:fluffychat/pages/new_private_chat/widget/expansion_contact_list_tile.dart';
 import 'package:fluffychat/presentation/model/contact/presentation_contact.dart';
+import 'package:fluffychat/resource/image_paths.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ContactItem extends StatelessWidget {
   final PresentationContact contact;
@@ -49,17 +51,26 @@ class ContactItem extends StatelessWidget {
                 ValueListenableBuilder<bool>(
                   valueListenable: contactNotifier,
                   builder: (context, isCurrentSelected, child) {
-                    return Checkbox(
-                      value: disabled || contactNotifier.value,
-                      onChanged: disabled
+                    return InkWell(
+                      onTap: disabled
                           ? null
-                          : (newValue) {
+                          : () {
                               onSelectedContact?.call();
                               selectedContactsMapNotifier.onContactTileTap(
                                 context,
                                 contact,
                               );
                             },
+                      child: Align(
+                        alignment: AlignmentDirectional.centerStart,
+                        child: SvgPicture.asset(
+                          (disabled || contactNotifier.value)
+                              ? ImagePaths.icCheckboxChecked
+                              : ImagePaths.icCheckboxUnchecked,
+                          width: 20,
+                          height: 20,
+                        ),
+                      ),
                     );
                   },
                 ),
