@@ -44,7 +44,7 @@ class EntranceMainView extends StatelessWidget {
             child: Container(
               width: double.infinity,
               padding: EntranceViewStyle.padding,
-              decoration: EntranceViewStyle.backgroundDecoration,
+              decoration: EntranceViewStyle.backgroundDecoration(context),
               child: Padding(
                 padding: EntranceViewStyle.logoPadding,
                 child: Column(

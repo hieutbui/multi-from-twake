@@ -13,12 +13,14 @@ class EntranceViewStyle {
   static const EdgeInsetsGeometry logoPadding =
       EdgeInsets.symmetric(horizontal: 20);
 
-  static Decoration backgroundDecoration = BoxDecoration(
-    color: const MultiDarkColors().backgroundPageDefault,
-    shape: BoxShape.rectangle,
-    borderRadius: const BorderRadius.only(
-      topLeft: Radius.circular(24),
-      topRight: Radius.circular(24),
-    ),
-  );
+  static Decoration backgroundDecoration(BuildContext context) {
+    return BoxDecoration(
+      color: MultiColors.of(context).backgroundPageDefault,
+      shape: BoxShape.rectangle,
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(24),
+        topRight: Radius.circular(24),
+      ),
+    );
+  }
 }
