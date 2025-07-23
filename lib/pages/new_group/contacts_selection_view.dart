@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/domain/app_state/contact/get_contacts_state.dart';
 import 'package:fluffychat/pages/contacts_tab/empty_contacts_body.dart';
@@ -17,7 +18,6 @@ import 'package:fluffychat/widgets/app_bars/searchable_app_bar.dart';
 import 'package:fluffychat/widgets/contacts_warning_banner/contacts_warning_banner_view.dart';
 import 'package:fluffychat/widgets/phone_book_loading/phone_book_loading_view.dart';
 import 'package:fluffychat/widgets/sliver_expandable_list.dart';
-import 'package:fluffychat/widgets/twake_components/twake_fab.dart';
 import 'package:fluffychat/widgets/twake_components/twake_text_button.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter/material.dart';
@@ -100,8 +100,8 @@ class ContactsSelectionView extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: controller.isFullScreen
-          ? ValueListenableBuilder<bool>(
+      bottomNavigationBar: controller.isFullScreen
+          ? ValueListenableBuilder(
               valueListenable: controller
                   .selectedContactsMapNotifier.haveSelectedContactsNotifier,
               builder: (context, haveSelectedContacts, child) {
@@ -110,12 +110,84 @@ class ContactsSelectionView extends StatelessWidget {
                 }
                 return child!;
               },
-              child: TwakeFloatingActionButton(
-                icon: Icons.arrow_forward,
-                onTap: () => controller.trySubmit(context),
+              child: Container(
+                height: 106,
+                padding: const EdgeInsetsDirectional.only(
+                  top: 18.0,
+                  bottom: 40.0,
+                  start: 20.0,
+                  end: 20.0,
+                ),
+                decoration: ShapeDecoration(
+                  color: Theme.of(context).colorScheme.surface,
+                  shape: const RoundedRectangleBorder(
+                    side: BorderSide(
+                      width: 1,
+                      color: Color(0x4C738C96),
+                    ),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    _bottomActionButton(
+                      context: context,
+                      label: 'Reset',
+                      onTap: controller
+                          .selectedContactsMapNotifier.unselectAllContacts,
+                      backgroundColor:
+                          Theme.of(context).brightness == Brightness.light
+                              ? MultiLightColors.buttonsMainSecondary15Opasity
+                              : MultiDarkColors.buttonsMainSecondary15Opasity,
+                      foregroundColor:
+                          Theme.of(context).colorScheme.onPrimaryContainer,
+                    ),
+                    const SizedBox(width: 12),
+                    _bottomActionButton(
+                      context: context,
+                      label: 'Next',
+                      onTap: () => controller.trySubmit(context),
+                      backgroundColor:
+                          Theme.of(context).brightness == Brightness.light
+                              ? MultiLightColors.buttonsMainPrimaryDefault
+                              : MultiDarkColors.buttonsMainPrimaryDefault,
+                      foregroundColor:
+                          Theme.of(context).brightness == Brightness.light
+                              ? MultiLightColors.textReversedPrimary
+                              : MultiDarkColors.textReversedPrimary,
+                    ),
+                  ],
+                ),
               ),
             )
           : null,
+    );
+  }
+
+  Widget _bottomActionButton({
+    required BuildContext context,
+    required String label,
+    required VoidCallback onTap,
+    required Color backgroundColor,
+    required Color foregroundColor,
+  }) {
+    return Expanded(
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+          ),
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(vertical: 13.0),
+          child: Text(
+            label,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  color: foregroundColor,
+                ),
+          ),
+        ),
+      ),
     );
   }
 
