@@ -301,6 +301,7 @@ class _ColumnPageView extends StatelessWidget {
                       showUnselectedLabels: false,
                       showSelectedLabels: false,
                       type: BottomNavigationBarType.fixed,
+                      selectedFontSize: 0,
                     ),
                   ),
                 ),
