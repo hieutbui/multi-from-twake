@@ -5,7 +5,9 @@ import 'package:fluffychat/app_state/success.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/domain/app_state/contact/lookup_match_contact_state.dart';
 import 'package:fluffychat/domain/usecase/contacts/lookup_match_contact_interactor.dart';
+import 'package:fluffychat/pages/chat_details/chat_details_page_view/chat_details_page_enum.dart';
 import 'package:fluffychat/pages/chat_profile_info/chat_profile_info_view.dart';
+import 'package:fluffychat/pages/chat_profile_info/widgets/info_tab_view.dart';
 import 'package:fluffychat/presentation/enum/chat/chat_details_screen_enum.dart';
 import 'package:fluffychat/presentation/mixins/chat_details_tab_mixin.dart';
 import 'package:fluffychat/presentation/mixins/handle_video_download_mixin.dart';
@@ -78,6 +80,21 @@ class ChatProfileInfoController extends State<ChatProfileInfo>
     } else {
       return const ClampingScrollPhysics();
     }
+  }
+
+  void onPressBack() {
+    Navigator.of(context).pop();
+  }
+
+  List<Widget> getTabBarViewList() {
+    return sharedPages().asMap().entries.map((page) {
+      final index = page.key;
+      final value = page.value;
+      if (index == ChatDetailsPage.info.index) {
+        return const InfoTabView();
+      }
+      return value.child;
+    }).toList();
   }
 
   @override

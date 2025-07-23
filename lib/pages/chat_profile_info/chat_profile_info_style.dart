@@ -13,9 +13,9 @@ class ChatProfileInfoStyle {
 
   static const double toolbarHeightSliverAppBar = 340.0;
 
-  static const EdgeInsetsGeometry mainPadding = EdgeInsets.symmetric(
-    horizontal: 20,
-  );
+  static const EdgeInsetsGeometry mainPadding =
+      EdgeInsetsDirectional.symmetric(horizontal: 20);
 
-  static const EdgeInsetsGeometry paddingInformation = EdgeInsets.all(20);
+  static const EdgeInsetsGeometry paddingInformation =
+      EdgeInsetsDirectional.all(20);
 }
