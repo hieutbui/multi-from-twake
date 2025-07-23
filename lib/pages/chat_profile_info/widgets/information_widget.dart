@@ -32,13 +32,9 @@ class InformationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final iconColor = Theme.of(context).brightness == Brightness.dark
-        ? MultiDarkColors.buttonsMainGhostDefault
-        : MultiLightColors.buttonsMainGhostDefault;
+    final iconColor = MultiColors.of(context).buttonsMainGhostDefault;
     final textMainPrimaryDefaultColor =
-        Theme.of(context).brightness == Brightness.dark
-            ? MultiDarkColors.textMainPrimaryDefault
-            : MultiLightColors.textMainPrimaryDefault;
+        MultiColors.of(context).textMainPrimaryDefault;
     final text = displayName?.getShortcutNameForAvatar() ?? '@';
     final placeholder = Container(
       decoration: BoxDecoration(
@@ -130,9 +126,7 @@ class InformationWidget extends StatelessWidget {
               style: TextStyle(
                 fontSize: MultiMobileTypography.bodyFontBody,
                 fontWeight: FontWeight.w400,
-                color: Theme.of(context).brightness == Brightness.dark
-                    ? MultiDarkColors.textMainSecondary
-                    : MultiLightColors.textMainSecondary,
+                color: MultiColors.of(context).textMainSecondary,
               ),
             ),
           ),
@@ -146,9 +140,8 @@ class InformationWidget extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(
                   horizontal: 29,
                 ),
-                backgroundColor: Theme.of(context).brightness == Brightness.dark
-                    ? MultiDarkColors.buttonsMainSecondaryDefault
-                    : MultiLightColors.buttonsMainSecondaryDefault,
+                backgroundColor:
+                    MultiColors.of(context).buttonsMainSecondaryDefault,
               ),
               onPressed: () {},
               child: Row(

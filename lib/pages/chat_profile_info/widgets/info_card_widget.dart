@@ -22,9 +22,7 @@ class InfoCardWidget extends StatelessWidget {
           style: TextStyle(
             fontSize: MultiMobileTypography.captionFontCaption2,
             fontWeight: FontWeight.w400,
-            color: Theme.of(context).brightness == Brightness.dark
-                ? MultiDarkColors.textMainTertiaryDisabled
-                : MultiLightColors.textMainTertiaryDisabled,
+            color: MultiColors.of(context).textMainTertiaryDisabled,
           ),
         ),
         Text(
@@ -32,9 +30,7 @@ class InfoCardWidget extends StatelessWidget {
           style: TextStyle(
             fontSize: MultiMobileTypography.bodyFontBody,
             fontWeight: FontWeight.w400,
-            color: Theme.of(context).brightness == Brightness.dark
-                ? MultiDarkColors.textMainPrimaryDefault
-                : MultiLightColors.textMainPrimaryDefault,
+            color: MultiColors.of(context).textMainPrimaryDefault,
           ),
         ),
       ],
