@@ -110,140 +110,137 @@ class _ExpansionContactListTileState extends State<ExpansionContactListTile>
             .getSuccessOrNull<GetInvitationStatusSuccessState>()
             ?.invitationStatusResponse,
       ),
-      child: TwakeListItem(
-        child: Padding(
-          padding: const EdgeInsetsDirectional.only(
-            start: 12.0,
-          ),
-          child: FutureBuilder<Profile?>(
-            key: widget.contact.matrixId != null
-                ? Key(widget.contact.matrixId!)
-                : null,
-            future: widget.contact.status == ContactStatus.active
-                ? getProfile(context)
-                : null,
-            builder: (context, snapshot) {
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: IgnorePointer(
-                      child: Avatar(
-                        mxContent: snapshot.data?.avatarUrl,
-                        name: widget.contact.displayName,
-                        size: 40,
-                      ),
+      child: Container(
+        padding: const EdgeInsetsDirectional.only(
+          start: 12.0,
+        ),
+        child: FutureBuilder<Profile?>(
+          key: widget.contact.matrixId != null
+              ? Key(widget.contact.matrixId!)
+              : null,
+          future: widget.contact.status == ContactStatus.active
+              ? getProfile(context)
+              : null,
+          builder: (context, snapshot) {
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: IgnorePointer(
+                    child: Avatar(
+                      mxContent: snapshot.data?.avatarUrl,
+                      name: widget.contact.displayName,
+                      size: 40,
                     ),
                   ),
-                  const SizedBox(
-                    width: 12.0,
-                  ),
-                  Expanded(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              IntrinsicWidth(
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Row(
-                                        children: [
-                                          Flexible(
-                                            child: BuildDisplayName(
-                                              profileDisplayName:
-                                                  snapshot.data?.displayName,
-                                              contactDisplayName:
-                                                  widget.contact.displayName,
-                                              highlightKeyword:
-                                                  widget.highlightKeyword,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleLarge!
-                                                  .copyWith(
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .onPrimaryContainer,
-                                                  ),
-                                            ),
+                ),
+                const SizedBox(
+                  width: 12.0,
+                ),
+                Expanded(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            IntrinsicWidth(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        Flexible(
+                                          child: BuildDisplayName(
+                                            profileDisplayName:
+                                                snapshot.data?.displayName,
+                                            contactDisplayName:
+                                                widget.contact.displayName,
+                                            highlightKeyword:
+                                                widget.highlightKeyword,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleLarge!
+                                                .copyWith(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onPrimaryContainer,
+                                                ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                    if (widget.contact.matrixId != null &&
-                                        widget.contact.matrixId!
-                                            .isCurrentMatrixId(context)) ...[
-                                      const SizedBox(width: 8.0),
-                                      TwakeChip(
-                                        text: L10n.of(context)!.owner,
-                                        textColor: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
-                                      ),
-                                    ],
+                                  ),
+                                  if (widget.contact.matrixId != null &&
+                                      widget.contact.matrixId!
+                                          .isCurrentMatrixId(context)) ...[
                                     const SizedBox(width: 8.0),
-                                    if (widget.contact.status != null &&
-                                        widget.contact.status ==
-                                            ContactStatus.inactive)
-                                      ContactStatusWidget(
-                                        status: widget.contact.status!,
-                                      ),
+                                    TwakeChip(
+                                      text: L10n.of(context)!.owner,
+                                      textColor:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
                                   ],
-                                ),
+                                  const SizedBox(width: 8.0),
+                                  if (widget.contact.status != null &&
+                                      widget.contact.status ==
+                                          ContactStatus.inactive)
+                                    ContactStatusWidget(
+                                      status: widget.contact.status!,
+                                    ),
+                                ],
                               ),
-                              if (widget.contact.matrixId != null &&
-                                  widget.contact.matrixId!.isNotEmpty) ...[
-                                const SizedBox(height: 4.0),
-                                HighlightText(
-                                  text: widget.contact.matrixId!,
-                                  searchWord: widget.highlightKeyword,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall
-                                      ?.copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSurfaceVariant,
-                                      ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                if (widget.highlightKeyword.isNotEmpty) ...[
-                                  if (widget.highlightKeyword
-                                      .isPhoneNumberFormatted()) ...[
-                                    _displayPhoneNumber(),
-                                  ] else ...[
-                                    _displayEmail(),
-                                  ],
+                            ),
+                            if (widget.contact.matrixId != null &&
+                                widget.contact.matrixId!.isNotEmpty) ...[
+                              const SizedBox(height: 4.0),
+                              HighlightText(
+                                text: widget.contact.matrixId!,
+                                searchWord: widget.highlightKeyword,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurfaceVariant,
+                                    ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              if (widget.highlightKeyword.isNotEmpty) ...[
+                                if (widget.highlightKeyword
+                                    .isPhoneNumberFormatted()) ...[
+                                  _displayPhoneNumber(),
                                 ] else ...[
-                                  _displayInformationDefault(),
+                                  _displayEmail(),
                                 ],
                               ] else ...[
-                                _displayPhoneNumber(),
-                                _displayEmail(),
+                                _displayInformationDefault(),
                               ],
+                            ] else ...[
+                              _displayPhoneNumber(),
+                              _displayEmail(),
                             ],
-                          ),
+                          ],
                         ),
-                        if (widget.contact.matrixId == null ||
-                            widget.contact.matrixId!.isEmpty)
-                          ValueListenableBuilder(
-                            valueListenable: getInvitationStatusNotifier,
-                            builder: _invitationIconBuilder,
-                            child: _displayIconInvitation(),
-                          ),
-                      ],
-                    ),
+                      ),
+                      if (widget.contact.matrixId == null ||
+                          widget.contact.matrixId!.isEmpty)
+                        ValueListenableBuilder(
+                          valueListenable: getInvitationStatusNotifier,
+                          builder: _invitationIconBuilder,
+                          child: _displayIconInvitation(),
+                        ),
+                    ],
                   ),
-                ],
-              );
-            },
-          ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
