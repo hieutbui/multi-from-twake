@@ -45,47 +45,60 @@ class ContactsSelectionView extends StatelessWidget {
           isFullScreen: controller.isFullScreen,
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ValueListenableBuilder<bool>(
-              valueListenable: controller
-                  .selectedContactsMapNotifier.haveSelectedContactsNotifier,
-              builder: (context, haveSelectedContact, child) {
-                return child!;
-              },
-              child: Padding(
-                padding:
-                    const EdgeInsetsDirectional.symmetric(horizontal: 12.0),
-                child: CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: ContactsWarningBannerView(
-                        warningBannerNotifier: controller.warningBannerNotifier,
-                        closeContactsWarningBanner:
-                            controller.closeContactsWarningBanner,
-                        goToSettingsForPermissionActions: () =>
-                            controller.displayContactPermissionDialog(context),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment(0.50, -0.00),
+            end: Alignment(0.50, 1.00),
+            colors: [
+              Color(0xFF0E0F13),
+              Color(0xFF191B26),
+            ],
+          ),
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: ValueListenableBuilder<bool>(
+                valueListenable: controller
+                    .selectedContactsMapNotifier.haveSelectedContactsNotifier,
+                builder: (context, haveSelectedContact, child) {
+                  return child!;
+                },
+                child: Padding(
+                  padding:
+                      const EdgeInsetsDirectional.symmetric(horizontal: 12.0),
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: ContactsWarningBannerView(
+                          warningBannerNotifier:
+                              controller.warningBannerNotifier,
+                          closeContactsWarningBanner:
+                              controller.closeContactsWarningBanner,
+                          goToSettingsForPermissionActions: () => controller
+                              .displayContactPermissionDialog(context),
+                        ),
                       ),
-                    ),
-                    _sliverPhonebookLoading(),
-                    SliverToBoxAdapter(
-                      child: SelectedParticipantsList(
-                        contactsSelectionController: controller,
+                      _sliverPhonebookLoading(),
+                      SliverToBoxAdapter(
+                        child: SelectedParticipantsList(
+                          contactsSelectionController: controller,
+                        ),
                       ),
-                    ),
-                    _sliverRecentContacts(),
-                    _sliverOmniUserSearch(),
-                    _sliverContactsList(),
-                    if (PlatformInfos.isMobile) _sliverPhonebookList(),
-                    if (PlatformInfos.isWeb) _sliverAddressBookListOnWeb(),
-                  ],
+                      _sliverRecentContacts(),
+                      _sliverOmniUserSearch(),
+                      _sliverContactsList(),
+                      if (PlatformInfos.isMobile) _sliverPhonebookList(),
+                      if (PlatformInfos.isWeb) _sliverAddressBookListOnWeb(),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          if (!controller.isFullScreen) _webActionButton(context),
-        ],
+            if (!controller.isFullScreen) _webActionButton(context),
+          ],
+        ),
       ),
       floatingActionButton: controller.isFullScreen
           ? ValueListenableBuilder<bool>(

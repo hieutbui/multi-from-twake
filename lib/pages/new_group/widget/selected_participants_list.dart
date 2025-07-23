@@ -3,9 +3,7 @@ import 'package:fluffychat/pages/new_group/widget/selected_participants_list_sty
 import 'package:fluffychat/widgets/avatar/avatar.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import 'package:flutter/material.dart';
-import 'package:linagora_design_flutter/colors/linagora_ref_colors.dart';
 import 'package:matrix/matrix.dart';
-import 'package:flutter_gen/gen_l10n/l10n.dart';
 
 class SelectedParticipantsList extends StatefulWidget {
   final ContactsSelectionController contactsSelectionController;
@@ -108,50 +106,47 @@ class _SelectedParticipantsListState extends State<SelectedParticipantsList> {
                     }).toList(),
                   ),
                 ),
-                Divider(
-                  color: Theme.of(context)
-                      .colorScheme
-                      .surfaceTint
-                      .withOpacity(0.16),
-                ),
                 const SizedBox(
-                  height: 4.0,
+                  height: 12.0,
                 ),
-                Padding(
-                  padding: SelectedParticipantsListStyle.contactPadding,
-                  child: Row(
-                    children: [
-                      Text(
-                        '${L10n.of(context)!.selectedUsers}: ${contactsNotifier.contactsList.length}',
-                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                              color: LinagoraRefColors.material().tertiary[20],
-                            ),
-                      ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            InkWell(
-                              onTap: () => widget.contactsSelectionController
-                                  .selectedContactsMapNotifier
-                                  .unselectAllContacts(),
-                              child: Text(
-                                L10n.of(context)!.clearAllSelected,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelLarge
-                                    ?.copyWith(
-                                      color: LinagoraRefColors.material()
-                                          .tertiary[20],
-                                    ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                const Divider(
+                  color: Color(0x33738C96),
                 ),
+                // Padding(
+                //   padding: SelectedParticipantsListStyle.contactPadding,
+                //   child: Row(
+                //     children: [
+                //       Text(
+                //         '${L10n.of(context)!.selectedUsers}: ${contactsNotifier.contactsList.length}',
+                //         style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                //               color: LinagoraRefColors.material().tertiary[20],
+                //             ),
+                //       ),
+                //       Expanded(
+                //         child: Row(
+                //           mainAxisAlignment: MainAxisAlignment.end,
+                //           children: [
+                //             InkWell(
+                //               onTap: () => widget.contactsSelectionController
+                //                   .selectedContactsMapNotifier
+                //                   .unselectAllContacts(),
+                //               child: Text(
+                //                 L10n.of(context)!.clearAllSelected,
+                //                 style: Theme.of(context)
+                //                     .textTheme
+                //                     .labelLarge
+                //                     ?.copyWith(
+                //                       color: LinagoraRefColors.material()
+                //                           .tertiary[20],
+                //                     ),
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
               ],
             );
           },
