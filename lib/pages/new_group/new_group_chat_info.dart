@@ -118,6 +118,13 @@ class NewGroupChatInfoController extends State<NewGroupChatInfo>
     );
   }
 
+  void onTapNext() {
+    if (isCreatingRoom) {
+      return;
+    }
+    moveToGroupChatScreen();
+  }
+
   void _handleUploadAvatarNewGroupChatOnData(
     BuildContext context,
     Either<Failure, Success> event,

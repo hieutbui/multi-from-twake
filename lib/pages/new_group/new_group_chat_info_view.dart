@@ -3,17 +3,14 @@ import 'package:fluffychat/app_state/failure.dart';
 import 'package:fluffychat/app_state/success.dart';
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
-import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/config/multi_sys_variables/multi_typography.dart';
 import 'package:fluffychat/pages/new_group/new_group_chat_info.dart';
 import 'package:fluffychat/pages/new_group/new_group_chat_info_style.dart';
-import 'package:fluffychat/pages/new_group/new_group_info_controller.dart';
 import 'package:fluffychat/pages/new_group/widget/expansion_participants_list.dart';
 import 'package:fluffychat/presentation/model/pick_avatar_state.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions/int_extension.dart';
 import 'package:fluffychat/widgets/context_menu_builder_ios_paste_without_permission.dart';
 import 'package:fluffychat/widgets/stream_image_view.dart';
-import 'package:fluffychat/widgets/twake_components/twake_fab.dart';
 import 'package:fluffychat/widgets/twake_components/twake_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
@@ -106,27 +103,68 @@ class NewGroupChatInfoView extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: ValueListenableBuilder<bool>(
+      bottomNavigationBar: ValueListenableBuilder<bool>(
         valueListenable: newGroupInfoController.haveGroupNameNotifier,
         builder: (context, value, child) {
           if (!value) {
             return const SizedBox.shrink();
           }
+
           return child!;
         },
-        child: ValueListenableBuilder<Either<Failure, Success>?>(
-          valueListenable: newGroupInfoController.createRoomStateNotifier,
-          builder: (context, value, child) {
-            if (newGroupInfoController.isCreatingRoom) {
-              return const TwakeFloatingActionButton(
-                customIcon: SizedBox(child: CircularProgressIndicator()),
+        child: Container(
+          height: 106,
+          padding: const EdgeInsetsDirectional.only(
+            top: 18.0,
+            bottom: 40.0,
+            start: 20.0,
+            end: 20.0,
+          ),
+          decoration: ShapeDecoration(
+            color: Theme.of(context).colorScheme.surface,
+            shape: const RoundedRectangleBorder(
+              side: BorderSide(
+                width: 1,
+                color: Color(0x4C738C96),
+              ),
+            ),
+          ),
+          child: ValueListenableBuilder<Either<Failure, Success>>(
+            valueListenable: newGroupInfoController.createRoomStateNotifier,
+            builder: (context, value, child) {
+              return InkWell(
+                onTap: newGroupInfoController.onTapNext,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? MultiLightColors.buttonsMainPrimaryDefault
+                        : MultiDarkColors.buttonsMainPrimaryDefault,
+                    borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                  ),
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.symmetric(vertical: 13.0),
+                  child: newGroupInfoController.isCreatingRoom
+                      ? const SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2.5,
+                          ),
+                        )
+                      : Text(
+                          'Next',
+                          style:
+                              Theme.of(context).textTheme.titleLarge?.copyWith(
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.light
+                                        ? MultiLightColors.textReversedPrimary
+                                        : MultiDarkColors.textReversedPrimary,
+                                  ),
+                        ),
+                ),
               );
-            }
-            return TwakeFloatingActionButton(
-              icon: Icons.done,
-              onTap: () => newGroupInfoController.moveToGroupChatScreen(),
-            );
-          },
+            },
+          ),
         ),
       ),
     );
@@ -191,8 +229,8 @@ class NewGroupChatInfoView extends StatelessWidget {
           newGroupInfoController.showImagesPickerAction(context: context),
       customBorder: const CircleBorder(),
       child: Container(
-        width: NewGroupChatInfoStyle.profileSize(context),
-        height: NewGroupChatInfoStyle.profileSize(context),
+        width: MediaQuery.of(context).size.width * 0.51,
+        height: MediaQuery.of(context).size.height * 0.24,
         decoration: BoxDecoration(
           color: LinagoraRefColors.material().neutral[80],
           shape: BoxShape.circle,
@@ -227,28 +265,8 @@ class NewGroupChatInfoView extends StatelessWidget {
                 focusNode: newGroupInfoController.groupNameFocusNode,
                 enabled: !newGroupInfoController.isCreatingRoom,
                 decoration: InputDecoration(
-                  errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: MultiSysColors.material().error,
-                    ),
-                  ),
-                  border: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Theme.of(context).colorScheme.shadow),
-                  ),
-                  errorText: newGroupInfoController.getErrorMessage(
-                    newGroupInfoController.groupNameTextEditingController.text,
-                  ),
-                  errorStyle: TextStyle(color: MultiSysColors.material().error),
-                  labelText: L10n.of(context)!.widgetName,
-                  labelStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
+                  labelText: L10n.of(context)!.groupName,
                   hintText: L10n.of(context)!.enterGroupName,
-                  hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: LinagoraRefColors.material().neutral[60],
-                      ),
-                  contentPadding: NewGroupChatInfoStyle.contentPadding,
                 ),
                 contextMenuBuilder: mobileTwakeContextMenuBuilder,
               );
@@ -294,14 +312,12 @@ class _AvatarForMobileBuilder extends StatelessWidget {
         }
         return ClipOval(
           child: SizedBox.fromSize(
-            size: const Size.fromRadius(
-              NewGroupChatInfoStyle.avatarRadiusForMobile,
-            ),
+            size: Size.infinite,
             child: AssetEntityImage(
               value,
-              thumbnailSize: const ThumbnailSize(
-                NewGroupChatInfoStyle.thumbnailSizeWidth,
-                NewGroupChatInfoStyle.thumbnailSizeHeight,
+              thumbnailSize: ThumbnailSize(
+                (MediaQuery.of(context).size.width * 0.51).toInt(),
+                (MediaQuery.of(context).size.height * 0.24).toInt(),
               ),
               fit: BoxFit.cover,
               loadingBuilder: (context, child, loadingProgress) {
@@ -325,7 +341,8 @@ class _AvatarForMobileBuilder extends StatelessWidget {
       },
       child: Icon(
         Icons.camera_alt_outlined,
-        color: Theme.of(context).colorScheme.surface,
+        color: Theme.of(context).colorScheme.onPrimaryContainer,
+        size: 32,
       ),
     );
   }
