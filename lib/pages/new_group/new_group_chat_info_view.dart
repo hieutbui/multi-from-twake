@@ -2,7 +2,9 @@ import 'package:dartz/dartz.dart';
 import 'package:fluffychat/app_state/failure.dart';
 import 'package:fluffychat/app_state/success.dart';
 import 'package:fluffychat/config/app_config.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_typography.dart';
 import 'package:fluffychat/pages/new_group/new_group_chat_info.dart';
 import 'package:fluffychat/pages/new_group/new_group_chat_info_style.dart';
 import 'package:fluffychat/pages/new_group/new_group_info_controller.dart';
@@ -31,63 +33,76 @@ class NewGroupChatInfoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MultiSysColors.material().onPrimary,
+      backgroundColor: Colors.black.withOpacity(0.5),
       appBar: _buildAppBar(context),
-      body: NestedScrollView(
-        headerSliverBuilder: (context, innerBoxIsScrolled) {
-          return [
-            SliverOverlapAbsorber(
-              handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-              sliver: SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: NewGroupChatInfoStyle.profilePadding,
-                      child: _buildChangeProfileWidget(context),
-                    ),
-                    const SizedBox(height: 16.0),
-                    Text(
-                      L10n.of(context)!.addAPhoto,
-                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                            color: Theme.of(context).colorScheme.onSurface,
-                          ),
-                    ),
-                    Text(
-                      L10n.of(context)!.maxImageSize(
-                        AppConfig.defaultMaxUploadAvtarSizeInBytes
-                            .bytesToMBInt(),
-                      ),
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: LinagoraRefColors.material().neutral[40],
-                          ),
-                    ),
-                    const SizedBox(height: 32),
-                    _buildGroupNameTextField(context),
-                    const SizedBox(height: 16),
-                    _EncryptionSettingTile(
-                      enableEncryptionNotifier:
-                          newGroupInfoController.enableEncryptionNotifier,
-                      onChanged: (value) {
-                        newGroupInfoController.toggleEnableEncryption();
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ];
-        },
-        body: Padding(
-          padding: NewGroupChatInfoStyle.padding,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Expanded(
-                child: ExpansionParticipantsList(
-                  contactsList: newGroupInfoController.contactsList ?? {},
-                ),
-              ),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment(0.50, -0.00),
+            end: Alignment(0.50, 1.00),
+            colors: [
+              Color(0xFF0E0F13),
+              Color(0xFF191B26),
             ],
+          ),
+        ),
+        child: NestedScrollView(
+          headerSliverBuilder: (context, innerBoxIsScrolled) {
+            return [
+              SliverOverlapAbsorber(
+                handle:
+                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                sliver: SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: NewGroupChatInfoStyle.profilePadding,
+                        child: _buildChangeProfileWidget(context),
+                      ),
+                      const SizedBox(height: 16.0),
+                      Text(
+                        L10n.of(context)!.addAPhoto,
+                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
+                      ),
+                      Text(
+                        L10n.of(context)!.maxImageSize(
+                          AppConfig.defaultMaxUploadAvtarSizeInBytes
+                              .bytesToMBInt(),
+                        ),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: LinagoraRefColors.material().neutral[40],
+                            ),
+                      ),
+                      const SizedBox(height: 32),
+                      _buildGroupNameTextField(context),
+                      const SizedBox(height: 16),
+                      _EncryptionSettingTile(
+                        enableEncryptionNotifier:
+                            newGroupInfoController.enableEncryptionNotifier,
+                        onChanged: (value) {
+                          newGroupInfoController.toggleEnableEncryption();
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ];
+          },
+          body: Padding(
+            padding: NewGroupChatInfoStyle.padding,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+                  child: ExpansionParticipantsList(
+                    contactsList: newGroupInfoController.contactsList ?? {},
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -123,47 +138,47 @@ class NewGroupChatInfoView extends StatelessWidget {
         NewGroupChatInfoStyle.toolbarHeight,
       ),
       child: AppBar(
-        backgroundColor: MultiSysColors.material().onPrimary,
+        backgroundColor: Colors.black.withOpacity(0.5),
         automaticallyImplyLeading: false,
         toolbarHeight: NewGroupChatInfoStyle.toolbarHeight,
-        title: Row(
-          children: [
-            TwakeIconButton(
-              icon: Icons.chevron_left_outlined,
-              onTap: () => Navigator.of(context).pop(),
-              tooltip: L10n.of(context)!.back,
-              paddingAll: NewGroupChatInfoStyle.backIconPaddingAll,
-              margin: NewGroupChatInfoStyle.backIconMargin,
-            ),
-            Text(
-              L10n.of(context)!.newGroupChat,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-          ],
-        ),
-        titleSpacing: 0,
-        centerTitle: false,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1),
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(color: Colors.black.withOpacity(0.15)),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.08),
-                  offset: const Offset(0, 1),
-                  blurRadius: 80,
-                ),
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.15),
-                  offset: const Offset(0, 1),
-                  blurRadius: 3,
-                  spreadRadius: 0.5,
-                ),
+        flexibleSpace: Container(
+          decoration: const ShapeDecoration(
+            gradient: LinearGradient(
+              begin: Alignment(0.50, -0.00),
+              end: Alignment(0.50, 1.00),
+              colors: [
+                Color(0xFF0E0F13),
+                Color(0xFF232631),
               ],
             ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(24),
+                bottomRight: Radius.circular(24),
+              ),
+            ),
+          ),
+        ),
+        title: Padding(
+          padding: const EdgeInsets.only(bottom: 16.0),
+          child: Row(
+            children: [
+              _buildBackButton(context),
+              Expanded(
+                child: Text(
+                  'New group',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                        fontSize: MultiMobileTypography.headlineFontSmall,
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                      ),
+                ),
+              ),
+              const SizedBox(
+                width: 64.0,
+              ),
+            ],
           ),
         ),
       ),
@@ -243,6 +258,23 @@ class NewGroupChatInfoView extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildBackButton(BuildContext context) => Padding(
+        padding: const EdgeInsets.only(left: 20.0, right: 12.0),
+        child: TwakeIconButton(
+          tooltip: L10n.of(context)!.back,
+          icon: Icons.arrow_back,
+          size: 16.0,
+          onTap: () => Navigator.of(context).pop(),
+          margin: const EdgeInsets.symmetric(vertical: 12.0),
+          buttonDecoration: BoxDecoration(
+            color: Theme.of(context).brightness == Brightness.light
+                ? MultiLightColors.buttonsMainSecondary15Opasity
+                : MultiDarkColors.buttonsMainSecondary15Opasity,
+            shape: BoxShape.circle,
+          ),
+        ),
+      );
 }
 
 class _AvatarForMobileBuilder extends StatelessWidget {
