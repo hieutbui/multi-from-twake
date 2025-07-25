@@ -135,9 +135,7 @@ class ContactsSelectionView extends StatelessWidget {
                       onTap: controller
                           .selectedContactsMapNotifier.unselectAllContacts,
                       backgroundColor:
-                          Theme.of(context).brightness == Brightness.light
-                              ? MultiLightColors.buttonsMainSecondary15Opasity
-                              : MultiDarkColors.buttonsMainSecondary15Opasity,
+                          MultiColors.of(context).buttonsMainSecondary15Opasity,
                       foregroundColor:
                           Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
@@ -147,13 +145,9 @@ class ContactsSelectionView extends StatelessWidget {
                       label: 'Next',
                       onTap: () => controller.trySubmit(context),
                       backgroundColor:
-                          Theme.of(context).brightness == Brightness.light
-                              ? MultiLightColors.buttonsMainPrimaryDefault
-                              : MultiDarkColors.buttonsMainPrimaryDefault,
+                          MultiColors.of(context).buttonsMainPrimaryDefault,
                       foregroundColor:
-                          Theme.of(context).brightness == Brightness.light
-                              ? MultiLightColors.textReversedPrimary
-                              : MultiDarkColors.textReversedPrimary,
+                          MultiColors.of(context).textReversedPrimary,
                     ),
                   ],
                 ),

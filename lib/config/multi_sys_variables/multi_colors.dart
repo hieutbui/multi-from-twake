@@ -447,8 +447,8 @@ abstract class MultiColors {
   /// Name: Background/Secondary
   Color get backgroundSecondary;
 
-  static MultiColors of(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
+  static MultiColors of(BuildContext context, {Brightness? brightness}) {
+    brightness ??= Theme.of(context).brightness;
     if (brightness == Brightness.dark) {
       return const MultiDarkColors();
     } else {
