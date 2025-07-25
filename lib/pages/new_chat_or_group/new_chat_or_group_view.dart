@@ -140,9 +140,7 @@ class NewChatOrGroupView extends StatelessWidget {
           onTap: controller.onBackPress,
           margin: const EdgeInsets.symmetric(vertical: 12.0),
           buttonDecoration: BoxDecoration(
-            color: Theme.of(context).brightness == Brightness.light
-                ? MultiLightColors.buttonsMainSecondary15Opasity
-                : MultiDarkColors.buttonsMainSecondary15Opasity,
+            color: MultiColors.of(context).buttonsMainSecondary15Opasity,
             shape: BoxShape.circle,
           ),
         ),

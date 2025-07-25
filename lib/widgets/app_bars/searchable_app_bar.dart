@@ -99,9 +99,8 @@ class SearchableAppBar extends StatelessWidget {
                     tooltip: L10n.of(context)!.back,
                     size: 16.0,
                     buttonDecoration: BoxDecoration(
-                      color: Theme.of(context).brightness == Brightness.light
-                          ? MultiLightColors.buttonsMainSecondary15Opasity
-                          : MultiDarkColors.buttonsMainSecondary15Opasity,
+                      color:
+                          MultiColors.of(context).buttonsMainSecondary15Opasity,
                       shape: BoxShape.circle,
                     ),
                   ),
