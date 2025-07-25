@@ -1,5 +1,4 @@
 import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppAdaptiveScaffoldBodyViewStyle {

@@ -148,7 +148,9 @@ abstract class TwakeThemes {
           behavior: SnackBarBehavior.floating,
         ),
         splashColor: Colors.transparent,
-        scaffoldBackgroundColor: MultiSysColors.material().onPrimary,
+        scaffoldBackgroundColor: brightness == Brightness.light
+            ? MultiSysColors.material().onPrimary
+            : MultiSysColors.material().onPrimaryDark,
         dividerColor: brightness == Brightness.light
             ? Colors.blueGrey.shade50
             : Colors.blueGrey.shade900,
@@ -160,12 +162,14 @@ abstract class TwakeThemes {
         inputDecorationTheme: InputDecorationTheme(
           isDense: true,
           contentPadding: const EdgeInsets.all(12.0),
-          fillColor: MultiColors.of(context).backgroundInputsDefault,
+          fillColor: MultiColors.of(context, brightness: brightness)
+              .backgroundInputsDefault,
           border: const MultiCustomBorderInput(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.all(Radius.circular(12)),
           ),
-          focusColor: MultiColors.of(context).backgroundInputsActive,
+          focusColor: MultiColors.of(context, brightness: brightness)
+              .backgroundInputsActive,
           focusedBorder: MultiCustomBorderInput(
             shadow: const BoxShadow(
               color: Color(0x3F4C64BA),
@@ -175,7 +179,8 @@ abstract class TwakeThemes {
             ),
             borderSide: BorderSide(
               width: 1.0,
-              color: MultiColors.of(context).bordersMainActive,
+              color: MultiColors.of(context, brightness: brightness)
+                  .bordersMainActive,
             ),
             borderRadius: const BorderRadius.all(Radius.circular(12)),
           ),
@@ -188,7 +193,8 @@ abstract class TwakeThemes {
             ),
             borderSide: BorderSide(
               width: 1.0,
-              color: MultiColors.of(context).bordersErrorDefault,
+              color: MultiColors.of(context, brightness: brightness)
+                  .bordersErrorDefault,
             ),
             borderRadius: const BorderRadius.all(Radius.circular(12)),
           ),
@@ -201,32 +207,37 @@ abstract class TwakeThemes {
             ),
             borderSide: BorderSide(
               width: 1.0,
-              color: MultiColors.of(context).bordersErrorDefault,
+              color: MultiColors.of(context, brightness: brightness)
+                  .bordersErrorDefault,
             ),
             borderRadius: const BorderRadius.all(Radius.circular(12)),
           ),
           labelStyle: fallbackTextTheme.headlineSmall?.merge(
             TextStyle(
-              color: MultiColors.of(context).textMainTertiaryDisabled,
+              color: MultiColors.of(context, brightness: brightness)
+                  .textMainTertiaryDisabled,
               overflow: TextOverflow.ellipsis,
             ),
           ),
           floatingLabelStyle: fallbackTextTheme.labelSmall?.merge(
             TextStyle(
-              color: MultiColors.of(context).textMainTertiaryDisabled,
+              color: MultiColors.of(context, brightness: brightness)
+                  .textMainTertiaryDisabled,
               overflow: TextOverflow.ellipsis,
             ),
           ),
           filled: true,
           hintStyle: fallbackTextTheme.headlineSmall?.merge(
             TextStyle(
-              color: MultiColors.of(context).textMainTertiaryDisabled,
+              color: MultiColors.of(context, brightness: brightness)
+                  .textMainTertiaryDisabled,
               overflow: TextOverflow.ellipsis,
             ),
           ),
           errorStyle: fallbackTextTheme.labelLarge?.merge(
             TextStyle(
-              color: MultiSysColors.material().error,
+              color:
+                  MultiColors.of(context, brightness: brightness).textMainError,
             ),
           ),
         ),
@@ -239,10 +250,10 @@ abstract class TwakeThemes {
             statusBarIconBrightness: brightness.reversed,
             statusBarBrightness: brightness,
           ),
-          foregroundColor: brightness == Brightness.light
-              ? MultiSysColors.material().onBackground
-              : MultiSysColors.material().onBackgroundDark,
-          backgroundColor: MultiSysColors.material().onPrimary,
+          foregroundColor: MultiColors.of(context, brightness: brightness)
+              .textMainPrimaryDefault,
+          backgroundColor: MultiColors.of(context, brightness: brightness)
+              .backgroundSurfacesDefault,
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
@@ -282,7 +293,10 @@ abstract class TwakeThemes {
         ),
         highlightColor: Colors.transparent,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: seed ?? AppConfig.colorSchemeSeed,
+          seedColor: seed ??
+              (brightness == Brightness.light
+                  ? MultiSysColors.material().primary
+                  : MultiSysColors.material().primaryDark),
           brightness: brightness,
           primary: brightness == Brightness.light
               ? MultiSysColors.material().primary
@@ -323,13 +337,9 @@ abstract class TwakeThemes {
           onSecondaryContainer: brightness == Brightness.light
               ? MultiSysColors.material().onSecondaryContainer
               : MultiSysColors.material().onSecondaryContainerDark,
-          // TODO: remove when the color scheme is updated
-          // ignore: deprecated_member_use
           background: brightness == Brightness.light
               ? MultiSysColors.material().background
               : MultiSysColors.material().backgroundDark,
-          // TODO: remove when the color scheme is updated
-          // ignore: deprecated_member_use
           onBackground: brightness == Brightness.light
               ? MultiSysColors.material().onBackground
               : MultiSysColors.material().onBackgroundDark,
@@ -483,19 +493,6 @@ abstract class TwakeThemes {
               ? MultiSysColors.material().background
               : MultiSysColors.material().backgroundDark,
         ),
-        // bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        //   backgroundColor: MultiSysColors.material().surface,
-        //   selectedLabelStyle: fallbackTextTheme.labelSmall?.copyWith(
-        //     fontSize: 11,
-        //     color: MultiSysColors.material().primary,
-        //   ),
-        //   unselectedLabelStyle: fallbackTextTheme.labelSmall?.copyWith(
-        //     fontSize: 11,
-        //     color: MultiSysColors.material().tertiary,
-        //   ),
-        //   selectedItemColor: MultiSysColors.material().primary,
-        //   unselectedItemColor: MultiSysColors.material().tertiary,
-        // ),
       );
 }
 

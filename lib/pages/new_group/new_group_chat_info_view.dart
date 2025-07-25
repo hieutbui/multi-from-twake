@@ -136,9 +136,7 @@ class NewGroupChatInfoView extends StatelessWidget {
                 onTap: newGroupInfoController.onTapNext,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).brightness == Brightness.light
-                        ? MultiLightColors.buttonsMainPrimaryDefault
-                        : MultiDarkColors.buttonsMainPrimaryDefault,
+                    color: MultiColors.of(context).buttonsMainPrimaryDefault,
                     borderRadius: const BorderRadius.all(Radius.circular(16.0)),
                   ),
                   alignment: Alignment.center,
@@ -153,13 +151,13 @@ class NewGroupChatInfoView extends StatelessWidget {
                         )
                       : Text(
                           'Next',
-                          style:
-                              Theme.of(context).textTheme.titleLarge?.copyWith(
-                                    color: Theme.of(context).brightness ==
-                                            Brightness.light
-                                        ? MultiLightColors.textReversedPrimary
-                                        : MultiDarkColors.textReversedPrimary,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge
+                              ?.copyWith(
+                                color:
+                                    MultiColors.of(context).textReversedPrimary,
+                              ),
                         ),
                 ),
               );
@@ -286,9 +284,7 @@ class NewGroupChatInfoView extends StatelessWidget {
           onTap: () => Navigator.of(context).pop(),
           margin: const EdgeInsets.symmetric(vertical: 12.0),
           buttonDecoration: BoxDecoration(
-            color: Theme.of(context).brightness == Brightness.light
-                ? MultiLightColors.buttonsMainSecondary15Opasity
-                : MultiDarkColors.buttonsMainSecondary15Opasity,
+            color: MultiColors.of(context).buttonsMainSecondary15Opasity,
             shape: BoxShape.circle,
           ),
         ),

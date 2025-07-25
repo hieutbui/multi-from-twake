@@ -4,6 +4,7 @@ import 'package:fluffychat/pages/chat_list/chat_list.dart';
 import 'package:fluffychat/pages/contacts_tab/contacts_tab.dart';
 import 'package:fluffychat/pages/settings_dashboard/settings/settings.dart';
 import 'package:fluffychat/pages/stories_tab/stories_tab.dart';
+import 'package:fluffychat/pages/voice_tab/voice_tab.dart';
 import 'package:fluffychat/utils/responsive/responsive_utils.dart';
 import 'package:fluffychat/widgets/layouts/adaptive_layout/adaptive_scaffold_primary_navigation.dart';
 import 'package:fluffychat/widgets/layouts/adaptive_layout/adaptive_scaffold_view_style.dart';
@@ -235,6 +236,12 @@ class _ColumnPageView extends StatelessWidget {
           activeRoomIdNotifier: activeRoomIdNotifier,
           onOpenSettings: onOpenSettings,
           adaptiveScaffoldBodyArgs: adaptiveScaffoldBodyArgs,
+        ),
+        _triggerPageViewBuilder(
+          navigatorBarType: AdaptiveDestinationEnum.voice,
+          navigatorBarWidget: VoiceTab(
+            bottomNavigationBar: _bottomNavigationBarBuilder(context),
+          ),
         ),
         _triggerPageViewBuilder(
           navigatorBarType: AdaptiveDestinationEnum.stories,
