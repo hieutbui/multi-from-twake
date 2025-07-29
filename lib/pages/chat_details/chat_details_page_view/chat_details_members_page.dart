@@ -1,4 +1,5 @@
 import 'package:fluffychat/pages/chat_details/participant_list_item/participant_list_item.dart';
+import 'package:fluffychat/widgets/stacked_cards/stacked_cards_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
@@ -28,46 +29,49 @@ class ChatDetailsMembersPage extends StatelessWidget {
       builder: (context, members, child) {
         members ??= [];
         final canRequestMoreMembers = members.length < actualMembersCount;
-        return Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: members.length + (canRequestMoreMembers ? 1 : 0),
-                itemBuilder: (BuildContext context, int index) {
-                  if (index < members!.length) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: ParticipantListItem(
-                        members[index],
-                        onUpdatedMembers: onUpdatedMembers,
-                      ),
-                    );
-                  }
-                  final haveMoreMembers = actualMembersCount > members.length;
-                  if (!haveMoreMembers) {
-                    return const SizedBox.shrink();
-                  }
-                  return ListTile(
-                    title: Text(
-                      L10n.of(context)!.loadCountMoreParticipants(
-                        (actualMembersCount - members.length).toString(),
-                      ),
+
+        // Create a combined list that includes both members and potentially a "load more" item
+        final List<dynamic> itemsList = [...members];
+
+        if (canRequestMoreMembers) {
+          // Add a special item to represent "load more"
+          itemsList.add('load_more');
+        }
+
+        return SizedBox.expand(
+          child: StackedCardsWidget<dynamic>(
+            items: itemsList,
+            cardHeight: 80,
+            itemBuilder: (context, item, index, isStacked) {
+              // If this is our special "load more" item
+              if (item == 'load_more') {
+                return ListTile(
+                  title: Text(
+                    L10n.of(context)!.loadCountMoreParticipants(
+                      (actualMembersCount - members!.length).toString(),
                     ),
-                    leading: CircleAvatar(
-                      backgroundColor:
-                          Theme.of(context).scaffoldBackgroundColor,
-                      child: const Icon(
-                        Icons.refresh,
-                        color: Colors.grey,
-                      ),
+                  ),
+                  leading: CircleAvatar(
+                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                    child: const Icon(
+                      Icons.refresh,
+                      color: Colors.grey,
                     ),
-                    onTap: requestMoreMembersAction,
-                  );
-                },
-              ),
-            ),
-          ],
+                  ),
+                  onTap: requestMoreMembersAction,
+                );
+              }
+
+              if (item is User) {
+                return ParticipantListItem(
+                  item,
+                  onUpdatedMembers: onUpdatedMembers,
+                );
+              }
+
+              return const SizedBox.shrink();
+            },
+          ),
         );
       },
     );
