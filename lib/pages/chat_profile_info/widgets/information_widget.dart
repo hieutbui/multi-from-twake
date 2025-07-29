@@ -1,6 +1,3 @@
-import 'package:dartz/dartz.dart';
-import 'package:fluffychat/app_state/failure.dart';
-import 'package:fluffychat/app_state/success.dart';
 import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:fluffychat/config/multi_sys_variables/multi_typography.dart';
 import 'package:fluffychat/pages/chat_profile_info/chat_profile_info_style.dart';
@@ -19,16 +16,16 @@ class InformationWidget extends StatelessWidget {
     super.key,
     this.avatarUri,
     this.displayName,
-    this.matrixId,
-    required this.lookupContactNotifier,
-    required this.isDraftInfo,
+    this.subtitle,
+    // required this.lookupContactNotifier,
+    // required this.isDraftInfo,
   });
 
   final Uri? avatarUri;
   final String? displayName;
-  final String? matrixId;
-  final ValueNotifier<Either<Failure, Success>> lookupContactNotifier;
-  final bool isDraftInfo;
+  final String? subtitle;
+  // final ValueNotifier<Either<Failure, Success>> lookupContactNotifier;
+  // final bool isDraftInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +119,7 @@ class InformationWidget extends StatelessWidget {
           SizedBox(
             height: 20,
             child: Text(
-              matrixId ?? "",
+              subtitle ?? "",
               style: TextStyle(
                 fontSize: MultiMobileTypography.bodyFontBody,
                 fontWeight: FontWeight.w400,
