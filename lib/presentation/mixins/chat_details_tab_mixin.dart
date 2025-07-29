@@ -94,7 +94,7 @@ mixin ChatDetailsTabMixin<T extends StatefulWidget>
     if (room != null) {
       tabList = [
         ChatDetailsPage.info,
-        if (chatType == ChatDetailsScreenEnum.group) ChatDetailsPage.members,
+        // if (chatType == ChatDetailsScreenEnum.group) ChatDetailsPage.members,
         ChatDetailsPage.media,
         ChatDetailsPage.links,
         ChatDetailsPage.files,
@@ -268,7 +268,7 @@ mixin ChatDetailsTabMixin<T extends StatefulWidget>
   List<ChatDetailsPageModel> sharedPages() => tabList.map(
         (page) {
           if (chatType == ChatDetailsScreenEnum.group &&
-              page == ChatDetailsPage.members) {
+              page == ChatDetailsPage.info) {
             return ChatDetailsPageModel(
               page: page,
               child: ChatDetailsMembersPage(
