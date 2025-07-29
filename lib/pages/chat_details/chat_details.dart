@@ -99,6 +99,20 @@ class ChatDetailsController extends State<ChatDetails>
     );
   }
 
+  String generateGroupInfoSubtitle(int? count) {
+    if (count == null) {
+      return "";
+    }
+    return L10n.of(context)!.countMembers(count);
+  }
+
+  List<Widget> getTabBarViewList() {
+    return sharedPages().asMap().entries.map((page) {
+      final value = page.value;
+      return value.child;
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
