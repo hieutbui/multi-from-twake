@@ -32,15 +32,12 @@ class RecentItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TwakeInkWell(
       onTap: onTap,
-      child: SizedBox(
-        height: RecentItemStyle.recentItemHeight,
-        child: TwakeListItem(
-          height: RecentItemStyle.recentItemHeight,
-          child: Padding(
-            padding: RecentItemStyle.paddingRecentItem,
-            child: _buildInformationWidget(context),
-          ),
+      child: Padding(
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: 12,
+          vertical: 10,
         ),
+        child: _buildInformationWidget(context),
       ),
     );
   }
@@ -184,7 +181,7 @@ class _DirectChatInformation extends StatelessWidget {
           ),
           size: avatarSize ?? RecentItemStyle.avatarSize,
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: 12),
         Flexible(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -192,7 +189,7 @@ class _DirectChatInformation extends StatelessWidget {
               _SearchHighlightText(
                 text: recentChatPresentationSearch.displayName ?? "",
                 style: TextStyle(
-                  fontSize: MultiMobileTypography.bodyFontBody,
+                  fontSize: MultiMobileTypography.buttonFontLarge,
                   fontFamily: MultiFonts.sfProDisplay,
                   fontWeight: FontWeight.w500,
                   height: 1.29,
@@ -203,7 +200,7 @@ class _DirectChatInformation extends StatelessWidget {
               _SearchHighlightText(
                 text: recentChatPresentationSearch.directChatMatrixID ?? "",
                 style: TextStyle(
-                  fontSize: MultiMobileTypography.bodyLineHeighSubhead,
+                  fontSize: MultiMobileTypography.bodyFontSubhead,
                   fontFamily: MultiFonts.sfPro,
                   fontWeight: FontWeight.w400,
                   height: 1.20,
@@ -248,7 +245,7 @@ class _ContactInformation extends StatelessWidget {
             );
           },
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: 30),
         Flexible(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

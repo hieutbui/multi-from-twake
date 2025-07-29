@@ -1,10 +1,9 @@
 import 'package:fluffychat/config/multi_sys_variables/multi_typography.dart';
 import 'package:fluffychat/domain/model/room/room_extension.dart';
+import 'package:fluffychat/pages/chat_list/chat_list_item_style.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_item_title_style.dart';
 import 'package:fluffychat/presentation/mixins/chat_list_item_mixin.dart';
-import 'package:fluffychat/pages/chat_list/chat_list_item_style.dart';
 import 'package:fluffychat/resource/image_paths.dart';
-import 'package:fluffychat/utils/date_time_extension.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
 import 'package:fluffychat/utils/room_status_extension.dart';
 import 'package:flutter/material.dart';
@@ -47,10 +46,8 @@ class ChatListItemTitle extends StatelessWidget with ChatListItemMixin {
                         softWrap: false,
                         style: TextStyle(
                           fontFamily: MultiFonts.sfProDisplay,
-                          fontWeight: FontWeight.w600,
-                          fontSize: MultiMobileTypography.captionLineHeighSmall,
-                          height: 1.25,
-                          letterSpacing: 0.48,
+                          fontWeight: FontWeight.w500,
+                          fontSize: MultiMobileTypography.buttonFontLarge,
                           color:
                               Theme.of(context).colorScheme.onPrimaryContainer,
                         ),
@@ -100,16 +97,6 @@ class ChatListItemTitle extends StatelessWidget with ChatListItemMixin {
                   size: ChatListItemTitleStyle.iconScheduleSize,
                 ),
               ],
-              Padding(
-                padding: ChatListItemTitleStyle.paddingLeftIcon,
-                child: Text(
-                  (originServerTs ?? room.timeCreated)
-                      .localizedTimeShort(context),
-                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        color: LinagoraRefColors.material().tertiary[30],
-                      ),
-                ),
-              ),
             ],
           ),
         ),

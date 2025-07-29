@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:gradient_borders/input_borders/gradient_outline_input_border.dart';
+
+import 'package:flutter_gen/gen_l10n/l10n.dart';
+import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 
 class SearchViewStyle {
-  static double get toolbarHeightSearch => 90.0;
+  static double get toolbarHeightSearch => 80;
 
   static double get toolbarHeightOfSliverAppBar => 44.0;
 
@@ -33,4 +37,33 @@ class SearchViewStyle {
           );
 
   static const double searchIconSize = 24.0;
+
+  static InputDecoration searchInputDecoration(
+    BuildContext context, {
+    String? hintText,
+    Color? prefixIconColor,
+  }) {
+    return InputDecoration(
+      border: GradientOutlineInputBorder(
+        gradient: LinearGradient(
+          colors: [
+            const Color(0xFF738C96).withOpacity(0.0),
+            const Color(0xFF738C96),
+          ],
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+        ),
+        width: 1.0,
+        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+      ),
+      hintText: hintText ?? L10n.of(context)!.search,
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+      prefixIcon: Icon(
+        Icons.search,
+        size: SearchViewStyle.searchIconSize,
+        color: prefixIconColor ?? LinagoraRefColors.material().neutral[60],
+      ),
+      suffixIcon: const SizedBox.shrink(),
+    );
+  }
 }
