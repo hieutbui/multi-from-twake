@@ -107,29 +107,29 @@ class ChatProfileInfoView extends StatelessWidget {
                                   avatarUri: snapshot.data?.avatarUrl,
                                   displayName: snapshot.data?.displayName ??
                                       contact.displayName,
-                                  matrixId: contact.matrixId,
-                                  lookupContactNotifier:
-                                      controller.lookupContactNotifier,
-                                  isDraftInfo: controller.widget.isDraftInfo,
+                                  subtitle: contact.matrixId,
+                                  // lookupContactNotifier:
+                                  //     controller.lookupContactNotifier,
+                                  // isDraftInfo: controller.widget.isDraftInfo,
                                 ),
                               );
                             }
                             if (contact != null) {
                               return InformationWidget(
                                 displayName: contact.displayName,
-                                matrixId: contact.matrixId,
-                                lookupContactNotifier:
-                                    controller.lookupContactNotifier,
-                                isDraftInfo: controller.widget.isDraftInfo,
+                                subtitle: contact.matrixId,
+                                // lookupContactNotifier:
+                                //     controller.lookupContactNotifier,
+                                // isDraftInfo: controller.widget.isDraftInfo,
                               );
                             }
                             return InformationWidget(
                               avatarUri: user?.avatarUrl,
                               displayName: user?.calcDisplayname(),
-                              matrixId: user?.id,
-                              lookupContactNotifier:
-                                  controller.lookupContactNotifier,
-                              isDraftInfo: controller.widget.isDraftInfo,
+                              subtitle: user?.id,
+                              // lookupContactNotifier:
+                              //     controller.lookupContactNotifier,
+                              // isDraftInfo: controller.widget.isDraftInfo,
                             );
                           },
                         ),
