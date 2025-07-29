@@ -31,6 +31,8 @@ class ChatDetailViewStyle {
       EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0);
   static const double switchButtonHeight = 24.0;
   static const double switchButtonWidth = 38.0;
+  static const EdgeInsetsGeometry groupInformationPadding =
+      EdgeInsetsDirectional.all(20.0);
 
   static const EdgeInsetsGeometry mainPadding =
       EdgeInsets.symmetric(horizontal: 20, vertical: 10);
