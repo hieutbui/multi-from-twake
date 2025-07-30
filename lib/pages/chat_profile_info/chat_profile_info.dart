@@ -1,19 +1,27 @@
 import 'dart:async';
+
 import 'package:dartz/dartz.dart' hide State;
 import 'package:fluffychat/app_state/failure.dart';
 import 'package:fluffychat/app_state/success.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/domain/app_state/contact/lookup_match_contact_state.dart';
+import 'package:fluffychat/domain/model/room/room_extension.dart';
 import 'package:fluffychat/domain/usecase/contacts/lookup_match_contact_interactor.dart';
+import 'package:fluffychat/pages/chat/chat_actions.dart';
 import 'package:fluffychat/pages/chat_details/chat_details_page_view/chat_details_page_enum.dart';
 import 'package:fluffychat/pages/chat_profile_info/chat_profile_info_view.dart';
 import 'package:fluffychat/pages/chat_profile_info/widgets/info_tab_view.dart';
 import 'package:fluffychat/presentation/enum/chat/chat_details_screen_enum.dart';
 import 'package:fluffychat/presentation/mixins/chat_details_tab_mixin.dart';
 import 'package:fluffychat/presentation/mixins/handle_video_download_mixin.dart';
+import 'package:fluffychat/presentation/mixins/leave_chat_mixin.dart';
+import 'package:fluffychat/presentation/mixins/mute_chat_mixin.dart';
 import 'package:fluffychat/presentation/mixins/play_video_action_mixin.dart';
 import 'package:fluffychat/presentation/model/contact/presentation_contact.dart';
+import 'package:fluffychat/widgets/context_menu/context_menu_action.dart';
 import 'package:fluffychat/widgets/matrix.dart';
+import 'package:fluffychat/widgets/mixins/popup_menu_widget_style.dart';
+import 'package:fluffychat/widgets/mixins/twake_context_menu_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:matrix/matrix.dart';
 
@@ -42,6 +50,9 @@ class ChatProfileInfoController extends State<ChatProfileInfo>
         HandleVideoDownloadMixin,
         PlayVideoActionMixin,
         SingleTickerProviderStateMixin,
+        TwakeContextMenuMixin,
+        LeaveChatMixin,
+        MuteChatMixin,
         ChatDetailsTabMixin<ChatProfileInfo> {
   final _lookupMatchContactInteractor =
       getIt.get<LookupMatchContactInteractor>();
@@ -95,6 +106,65 @@ class ChatProfileInfoController extends State<ChatProfileInfo>
       }
       return value.child;
     }).toList();
+  }
+
+  void handleAppbarMenuAction(
+    BuildContext context,
+    TapDownDetails tapDownDetails,
+  ) async {
+    final offset = tapDownDetails.globalPosition;
+    final selectedActionIndex = await showTwakeContextMenu(
+      offset: offset,
+      context: context,
+      listActions: getListActions()
+          .map(
+            (action) => ContextMenuAction(
+              name: action.getTitle(context),
+              icon: action.getIcon(),
+              colorIcon: action.getColorIcon(context),
+              styleName:
+                  PopupMenuWidgetStyle.defaultItemTextStyle(context)?.copyWith(
+                color: action.getColorIcon(context),
+              ),
+              imagePath: action.getImagePath(),
+            ),
+          )
+          .toList(),
+    );
+
+    if (selectedActionIndex != null && selectedActionIndex is int) {
+      final selectedAction = getListActions()[selectedActionIndex];
+      onSelectedAppBarActions(selectedAction);
+    }
+  }
+
+  List<ChatAppBarActions> getListActions() {
+    return [
+      ChatAppBarActions.editContact,
+      if (room != null) ...[
+        if (room!.isMuted)
+          ChatAppBarActions.unmuteContact
+        else
+          ChatAppBarActions.muteContact,
+      ],
+      ChatAppBarActions.deleteContact,
+    ];
+  }
+
+  void onSelectedAppBarActions(ChatAppBarActions action) {
+    switch (action) {
+      case ChatAppBarActions.editContact:
+        break;
+      case ChatAppBarActions.unmuteContact:
+      case ChatAppBarActions.muteContact:
+        muteChat(context, room);
+        break;
+      case ChatAppBarActions.deleteContact:
+        leaveChat(context, room);
+        break;
+      default:
+        break;
+    }
   }
 
   @override

@@ -197,11 +197,12 @@ class ChatView extends StatelessWidget with MessageContentMixin {
                                 icon: Icons.more_vert,
                                 size: 16.0,
                                 tooltip: L10n.of(context)!.more,
-                                onTapDown: (tapDownDetails) =>
-                                    controller.handleAppbarMenuAction(
-                                  context,
-                                  tapDownDetails,
-                                ),
+                                onTapDown: (TapDownDetails tapDownDetails) {
+                                  controller.handleAppbarMenuAction(
+                                    context,
+                                    tapDownDetails,
+                                  );
+                                },
                                 preferBelow: false,
                                 buttonDecoration: BoxDecoration(
                                   color: MultiColors.of(context)

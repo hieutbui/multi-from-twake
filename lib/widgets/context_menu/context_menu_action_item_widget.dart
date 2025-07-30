@@ -74,15 +74,14 @@ class ContextMenuActionItemWidget extends StatelessWidget {
       child: SizedBox(
         child: Row(
           children: [
+            buildIcon(),
+            const SizedBox(width: TwakeContextMenuStyle.defaultItemElementsGap),
             Expanded(
               child: Text(
                 nameAction,
-                style: styleName ??
-                    TwakeContextMenuStyle.defaultItemTextStyle(context),
+                style: styleName,
               ),
             ),
-            const SizedBox(width: TwakeContextMenuStyle.defaultItemElementsGap),
-            buildIcon(),
           ],
         ),
       ),

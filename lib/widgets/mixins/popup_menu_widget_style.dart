@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
 import 'package:fluffychat/utils/extension/build_context_extension.dart';
 import 'package:flutter/material.dart';
@@ -22,12 +23,13 @@ class PopupMenuWidgetStyle {
 
   // Context Menu Items
   static TextStyle? defaultItemTextStyle(BuildContext context) {
-    return context.textTheme.bodyLarge!
-        .copyWith(color: LinagoraRefColors.material().neutral[30]);
+    return context.textTheme.bodyLarge!.copyWith(
+      color: MultiColors.of(context).textMainPrimaryDefault,
+    );
   }
 
   static Color? defaultItemColorIcon(BuildContext context) {
-    return LinagoraRefColors.material().neutral[30];
+    return MultiColors.of(context).textMainPrimaryDefault;
   }
 
   static const double defaultItemIconSize = 24.0;

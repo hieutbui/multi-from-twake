@@ -1,4 +1,6 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:fluffychat/pages/chat/chat_actions_style.dart';
+import 'package:fluffychat/resource/image_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
@@ -90,7 +92,20 @@ enum ChatAppBarActions {
   report,
   saveToDownload,
   saveToGallery,
-  leaveGroup;
+  viewContact,
+  editContact,
+  search,
+  muteChat,
+  muteContact,
+  muteGroup,
+  unmuteChat,
+  unmuteContact,
+  unmuteGroup,
+  favorites,
+  makeGroup,
+  addToFolder,
+  deleteContact,
+  deleteGroup;
 
   String getTitle(BuildContext context) {
     switch (this) {
@@ -102,8 +117,34 @@ enum ChatAppBarActions {
         return L10n.of(context)!.saveToDownloads;
       case ChatAppBarActions.saveToGallery:
         return L10n.of(context)!.saveToGallery;
-      case ChatAppBarActions.leaveGroup:
-        return L10n.of(context)!.commandHint_leave;
+      case ChatAppBarActions.viewContact:
+        return "View contact";
+      case ChatAppBarActions.editContact:
+        return "Edit contact";
+      case ChatAppBarActions.search:
+        return "Search";
+      case ChatAppBarActions.muteChat:
+        return "Mute chat";
+      case ChatAppBarActions.muteContact:
+        return "Mute contact";
+      case ChatAppBarActions.muteGroup:
+        return "Mute group";
+      case ChatAppBarActions.unmuteChat:
+        return "Unmute chat";
+      case ChatAppBarActions.unmuteContact:
+        return "Unmute contact";
+      case ChatAppBarActions.unmuteGroup:
+        return "Unmute group";
+      case ChatAppBarActions.favorites:
+        return "Favorites";
+      case ChatAppBarActions.makeGroup:
+        return "Make group";
+      case ChatAppBarActions.addToFolder:
+        return "Add to folder";
+      case ChatAppBarActions.deleteContact:
+        return "Delete contact";
+      case ChatAppBarActions.deleteGroup:
+        return "Delete group";
     }
   }
 
@@ -117,8 +158,34 @@ enum ChatAppBarActions {
         return Icons.download_outlined;
       case ChatAppBarActions.saveToGallery:
         return Icons.save_outlined;
-      case ChatAppBarActions.leaveGroup:
-        return Icons.logout_outlined;
+      case ChatAppBarActions.viewContact:
+        return Icons.edit;
+      case ChatAppBarActions.editContact:
+        return Icons.edit_outlined;
+      case ChatAppBarActions.search:
+        return Icons.search_outlined;
+      case ChatAppBarActions.muteChat:
+        return Icons.volume_off_outlined;
+      case ChatAppBarActions.muteContact:
+        return Icons.volume_off_outlined;
+      case ChatAppBarActions.muteGroup:
+        return Icons.volume_off_outlined;
+      case ChatAppBarActions.unmuteChat:
+        return Icons.volume_up_outlined;
+      case ChatAppBarActions.unmuteContact:
+        return Icons.volume_up_outlined;
+      case ChatAppBarActions.unmuteGroup:
+        return Icons.volume_up_outlined;
+      case ChatAppBarActions.favorites:
+        return Icons.favorite_border_outlined;
+      case ChatAppBarActions.makeGroup:
+        return Icons.group_outlined;
+      case ChatAppBarActions.addToFolder:
+        return Icons.folder_outlined;
+      case ChatAppBarActions.deleteContact:
+        return Icons.delete_outline;
+      case ChatAppBarActions.deleteGroup:
+        return Icons.delete_outline;
     }
   }
 
@@ -130,8 +197,37 @@ enum ChatAppBarActions {
         return Theme.of(context).colorScheme.onSurface;
       case ChatAppBarActions.report:
         return MultiSysColors.material().errorDark;
-      case ChatAppBarActions.leaveGroup:
-        return Theme.of(context).colorScheme.error;
+      case ChatAppBarActions.deleteContact:
+      case ChatAppBarActions.deleteGroup:
+        return MultiColors.of(context).textMainError;
+      case ChatAppBarActions.viewContact:
+      case ChatAppBarActions.editContact:
+      case ChatAppBarActions.search:
+      case ChatAppBarActions.muteChat:
+      case ChatAppBarActions.muteContact:
+      case ChatAppBarActions.muteGroup:
+      case ChatAppBarActions.unmuteChat:
+      case ChatAppBarActions.unmuteContact:
+      case ChatAppBarActions.unmuteGroup:
+      case ChatAppBarActions.favorites:
+      case ChatAppBarActions.makeGroup:
+      case ChatAppBarActions.addToFolder:
+        return MultiColors.of(context).textMainPrimaryDefault;
+    }
+  }
+
+  String? getImagePath() {
+    switch (this) {
+      case ChatAppBarActions.viewContact:
+        return ImagePaths.icEdit;
+      case ChatAppBarActions.editContact:
+        return ImagePaths.icEdit;
+      case ChatAppBarActions.muteChat:
+      case ChatAppBarActions.muteContact:
+      case ChatAppBarActions.muteGroup:
+        return ImagePaths.icMute;
+      default:
+        return null;
     }
   }
 

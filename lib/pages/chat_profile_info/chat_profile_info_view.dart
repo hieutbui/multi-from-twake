@@ -108,9 +108,11 @@ class ChatProfileInfoView extends StatelessWidget {
                                   displayName: snapshot.data?.displayName ??
                                       contact.displayName,
                                   subtitle: contact.matrixId,
-                                  // lookupContactNotifier:
-                                  //     controller.lookupContactNotifier,
-                                  // isDraftInfo: controller.widget.isDraftInfo,
+                                  onTapMenuAction: (tapDownDetails) =>
+                                      controller.handleAppbarMenuAction(
+                                    context,
+                                    tapDownDetails,
+                                  ),
                                 ),
                               );
                             }
@@ -118,18 +120,22 @@ class ChatProfileInfoView extends StatelessWidget {
                               return InformationWidget(
                                 displayName: contact.displayName,
                                 subtitle: contact.matrixId,
-                                // lookupContactNotifier:
-                                //     controller.lookupContactNotifier,
-                                // isDraftInfo: controller.widget.isDraftInfo,
+                                onTapMenuAction: (tapDownDetails) =>
+                                    controller.handleAppbarMenuAction(
+                                  context,
+                                  tapDownDetails,
+                                ),
                               );
                             }
                             return InformationWidget(
                               avatarUri: user?.avatarUrl,
                               displayName: user?.calcDisplayname(),
                               subtitle: user?.id,
-                              // lookupContactNotifier:
-                              //     controller.lookupContactNotifier,
-                              // isDraftInfo: controller.widget.isDraftInfo,
+                              onTapMenuAction: (tapDownDetails) =>
+                                  controller.handleAppbarMenuAction(
+                                context,
+                                tapDownDetails,
+                              ),
                             );
                           },
                         ),

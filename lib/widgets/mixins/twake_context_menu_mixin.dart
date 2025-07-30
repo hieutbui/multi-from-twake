@@ -28,7 +28,7 @@ mixin TwakeContextMenuMixin {
     dynamic result;
     await showDialog(
       context: context,
-      barrierColor: Colors.transparent,
+      barrierColor: Colors.black.withOpacity(0.5),
       barrierDismissible: false,
       builder: (dialogContext) => TwakeContextMenu(
         dialogContext: dialogContext,

@@ -34,6 +34,7 @@ import 'package:fluffychat/presentation/mixins/go_to_direct_chat_mixin.dart';
 import 'package:fluffychat/presentation/mixins/handle_clipboard_action_mixin.dart';
 import 'package:fluffychat/presentation/mixins/leave_chat_mixin.dart';
 import 'package:fluffychat/presentation/mixins/media_picker_mixin.dart';
+import 'package:fluffychat/presentation/mixins/mute_chat_mixin.dart';
 import 'package:fluffychat/presentation/mixins/paste_image_mixin.dart';
 import 'package:fluffychat/presentation/mixins/save_file_to_twake_downloads_folder_mixin.dart';
 import 'package:fluffychat/presentation/mixins/save_media_to_gallery_android_mixin.dart';
@@ -133,6 +134,7 @@ class ChatController extends State<Chat>
         SaveFileToTwakeAndroidDownloadsFolderMixin,
         SaveMediaToGalleryAndroidMixin,
         LeaveChatMixin,
+        MuteChatMixin,
         DeleteEventMixin {
   final NetworkConnectionService networkConnectionService =
       getIt.get<NetworkConnectionService>();
@@ -2719,7 +2721,18 @@ class ChatController extends State<Chat>
 
   List<ChatAppBarActions> _getListActionAppbarMenuNormal() {
     return [
-      ChatAppBarActions.leaveGroup,
+      ChatAppBarActions.viewContact,
+      ChatAppBarActions.search,
+      if (room != null) ...[
+        if (room!.isMuted)
+          ChatAppBarActions.unmuteChat
+        else
+          ChatAppBarActions.muteChat,
+      ],
+      ChatAppBarActions.favorites,
+      ChatAppBarActions.makeGroup,
+      ChatAppBarActions.addToFolder,
+      ChatAppBarActions.deleteContact,
     ];
   }
 
@@ -2731,11 +2744,10 @@ class ChatController extends State<Chat>
         name: action.getTitle(context),
         icon: action.getIcon(),
         colorIcon: action.getColorIcon(context),
-        styleName: action == ChatAppBarActions.leaveGroup
-            ? PopupMenuWidgetStyle.defaultItemTextStyle(context)?.copyWith(
-                color: action.getColorIcon(context),
-              )
-            : null,
+        styleName: PopupMenuWidgetStyle.defaultItemTextStyle(context)?.copyWith(
+          color: action.getColorIcon(context),
+        ),
+        imagePath: action.getImagePath(),
       );
     }).toList();
   }
@@ -2768,8 +2780,27 @@ class ChatController extends State<Chat>
           reportEventAction,
         );
         break;
-      case ChatAppBarActions.leaveGroup:
+      case ChatAppBarActions.deleteGroup:
+      case ChatAppBarActions.deleteContact:
         leaveChat(context, room);
+        break;
+      case ChatAppBarActions.viewContact:
+        onPushDetails();
+        break;
+      case ChatAppBarActions.search:
+        toggleSearch();
+        break;
+      case ChatAppBarActions.muteChat:
+      case ChatAppBarActions.muteContact:
+      case ChatAppBarActions.muteGroup:
+      case ChatAppBarActions.unmuteChat:
+      case ChatAppBarActions.unmuteContact:
+      case ChatAppBarActions.unmuteGroup:
+        muteChat(context, room);
+        break;
+      case ChatAppBarActions.favorites:
+      case ChatAppBarActions.makeGroup:
+      case ChatAppBarActions.addToFolder:
         break;
       default:
         break;

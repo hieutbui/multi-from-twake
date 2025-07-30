@@ -1,12 +1,13 @@
 // reference to: https://pub.dev/packages/contextmenu
+import 'package:after_layout/after_layout.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
 import 'package:fluffychat/widgets/context_menu/context_menu_action.dart';
 import 'package:fluffychat/widgets/context_menu/context_menu_action_item_widget.dart';
 import 'package:fluffychat/widgets/context_menu/context_menu_position.dart';
-import 'package:fluffychat/widgets/mixins/popup_menu_widget_style.dart';
 import 'package:fluffychat/widgets/mixins/twake_context_menu_style.dart';
 import 'package:flutter/material.dart';
-import 'package:after_layout/after_layout.dart';
+
 import 'twake_context_menu_area.dart';
 
 const double _kMinTileHeight = 24;
@@ -77,7 +78,7 @@ class TwakeContextMenuState extends State<TwakeContextMenu>
     final items = widget.listActions
         .map(
           (action) => _GrowingWidget(
-            child: action,
+            action: action,
             closeMenuAction: () {
               closeContextMenu(
                 popResult: widget.listActions.indexOf(action),
@@ -120,19 +121,17 @@ class TwakeContextMenuState extends State<TwakeContextMenu>
                     );
                   },
                   child: Card(
+                    color: MultiColors.of(context).backgroundSurfacesDefault,
                     elevation: TwakeContextMenuStyle.menuElevation,
                     margin: EdgeInsets.zero,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        TwakeContextMenuStyle.menuBorderRadius,
-                      ),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius:
+                          TwakeContextMenuStyle.defaultMenuBorderRadius,
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(
-                        TwakeContextMenuStyle.menuBorderRadius,
-                      ),
+                      borderRadius:
+                          TwakeContextMenuStyle.defaultMenuBorderRadius,
                       child: Material(
-                        color: TwakeContextMenuStyle.defaultMenuColor(context),
                         child: ConstrainedBox(
                           constraints: const BoxConstraints(
                             minWidth: TwakeContextMenuStyle.menuMinWidth,
@@ -158,15 +157,6 @@ class TwakeContextMenuState extends State<TwakeContextMenu>
                                     children: [
                                       for (final item in items) ...[
                                         item,
-                                        if (item != items.last)
-                                          Divider(
-                                            height: PopupMenuWidgetStyle
-                                                .dividerHeight,
-                                            thickness: PopupMenuWidgetStyle
-                                                .dividerThickness,
-                                            color: PopupMenuWidgetStyle
-                                                .defaultDividerColor(context),
-                                          ),
                                       ],
                                     ],
                                   ),
@@ -235,7 +225,7 @@ class TwakeContextMenuState extends State<TwakeContextMenu>
     return ContextMenuPosition(
       alignment: alignment,
       left: positionLeft,
-      top: positionTop,
+      top: positionTop + 16,
       right: positionRight,
       bottom: positionBottom,
     );
@@ -243,12 +233,12 @@ class TwakeContextMenuState extends State<TwakeContextMenu>
 }
 
 class _GrowingWidget extends StatefulWidget {
-  final ContextMenuAction child;
+  final ContextMenuAction action;
   final ValueChanged<double> onHeightChange;
   final void Function()? closeMenuAction;
 
   const _GrowingWidget({
-    required this.child,
+    required this.action,
     required this.onHeightChange,
     this.closeMenuAction,
   });
@@ -265,7 +255,7 @@ class __GrowingWidgetState extends State<_GrowingWidget> with AfterLayoutMixin {
     return Container(
       key: _key,
       child: ContextMenuActionItemWidget(
-        action: widget.child,
+        action: widget.action,
         closeMenuAction: widget.closeMenuAction,
       ),
     );

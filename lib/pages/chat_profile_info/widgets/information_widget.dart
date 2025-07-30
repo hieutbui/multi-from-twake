@@ -6,9 +6,9 @@ import 'package:fluffychat/utils/string_extension.dart';
 import 'package:fluffychat/widgets/avatar/avatar.dart';
 import 'package:fluffychat/widgets/avatar/avatar_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linagora_design_flutter/avatar/round_avatar_style.dart';
-import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:linagora_design_flutter/extensions/string_extension.dart';
 
 class InformationWidget extends StatelessWidget {
@@ -17,15 +17,13 @@ class InformationWidget extends StatelessWidget {
     this.avatarUri,
     this.displayName,
     this.subtitle,
-    // required this.lookupContactNotifier,
-    // required this.isDraftInfo,
+    this.onTapMenuAction,
   });
 
   final Uri? avatarUri;
   final String? displayName;
   final String? subtitle;
-  // final ValueNotifier<Either<Failure, Success>> lookupContactNotifier;
-  // final bool isDraftInfo;
+  final Function(TapDownDetails)? onTapMenuAction;
 
   @override
   Widget build(BuildContext context) {
@@ -89,12 +87,15 @@ class InformationWidget extends StatelessWidget {
                   );
                 },
               ),
-              SizedBox(
-                height: ChatProfileInfoStyle.iconSize,
-                width: ChatProfileInfoStyle.iconSize,
-                child: Icon(
-                  Icons.more_vert,
-                  color: iconColor,
+              InkWell(
+                onTapDown: onTapMenuAction,
+                child: SizedBox(
+                  height: ChatProfileInfoStyle.iconSize,
+                  width: ChatProfileInfoStyle.iconSize,
+                  child: Icon(
+                    Icons.more_vert,
+                    color: iconColor,
+                  ),
                 ),
               ),
             ],
