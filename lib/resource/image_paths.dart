@@ -126,6 +126,7 @@ class ImagePaths {
   static String get icQrCode => _getImagePath('ic_qr_code.svg');
   static String get icRecord => _getImagePath('ic_record.svg');
   static String get icFlipForward => _getImagePath('ic_flip_forward.svg');
+  static String get icEdit => _getImagePath('ic_edit.svg');
 
   static String _getImagePath(String imageName) {
     return AssetsPaths.images + imageName;
