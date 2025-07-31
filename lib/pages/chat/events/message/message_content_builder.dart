@@ -1,10 +1,13 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_typography.dart';
 import 'package:fluffychat/pages/chat/events/message/message_content_builder_mixin.dart';
 import 'package:fluffychat/pages/chat/events/message/message_style.dart';
 import 'package:fluffychat/pages/chat/events/message_time.dart';
+import 'package:fluffychat/resource/image_paths.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions/event_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:fluffychat/pages/chat/events/message/reply_content_widget.dart';
 import 'package:fluffychat/pages/chat/events/message_content.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:matrix/matrix.dart' hide Visibility;
 import 'message.dart';
 
@@ -75,6 +78,28 @@ class MessageContentBuilder extends StatelessWidget
             //     scrollToEventId: scrollToEventId,
             //     ownMessage: event.isOwnMessage,
             //   ),
+            if (event.isForwarded)
+              Row(
+                children: [
+                  SvgPicture.asset(
+                    ImagePaths.icFlipForward,
+                    width: 14,
+                    height: 14,
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    'Forwarded a message',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
+                      fontSize: MultiMobileTypography.captionFontCaption2,
+                      fontFamily: MultiFonts.sfPro,
+                      fontWeight: FontWeight.w500,
+                      height: 1.18,
+                      letterSpacing: 0.06,
+                    ),
+                  ),
+                ],
+              ),
             Stack(
               children: [
                 MessageContent(

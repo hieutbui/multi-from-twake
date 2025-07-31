@@ -4,7 +4,6 @@ import 'package:fluffychat/pages/forward/recent_chat_list_style.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
 import 'package:fluffychat/widgets/avatar/avatar.dart';
 import 'package:flutter/material.dart';
-import 'package:linagora_design_flutter/colors/linagora_ref_colors.dart';
 import 'package:matrix/matrix.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
@@ -41,7 +40,7 @@ class RecentChatList extends StatelessWidget {
             final room = rooms[index];
             return Material(
               borderRadius: RecentChatListStyle.borderRadiusItem,
-              color: LinagoraRefColors.material().primary[100],
+              color: Colors.transparent,
               child: InkWell(
                 borderRadius: RecentChatListStyle.borderRadiusItem,
                 onTap: () => onSelectedChat(room.id),
