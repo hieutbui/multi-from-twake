@@ -52,7 +52,7 @@ class ChatListTabBarWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                const _AddGroupItem(),
+                _AddGroupItem(controller),
               ],
             ),
           ),
@@ -107,12 +107,15 @@ class _TabBarFirstItem extends StatelessWidget {
 }
 
 class _AddGroupItem extends StatelessWidget {
-  const _AddGroupItem();
+  const _AddGroupItem(this.controller);
+
+  final ChatListController controller;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      behavior: HitTestBehavior.translucent,
+      onTap: controller.showCreateGroupBottomSheet,
       child: Container(
         padding: const EdgeInsetsDirectional.only(
           top: 12,

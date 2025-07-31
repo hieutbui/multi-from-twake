@@ -11,6 +11,7 @@ import 'package:fluffychat/domain/model/room/room_extension.dart';
 import 'package:fluffychat/pages/bootstrap/bootstrap_dialog.dart';
 import 'package:fluffychat/pages/chat_list/chat_custom_slidable_action.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_view_style.dart';
+import 'package:fluffychat/pages/chat_list/create_group_bottom_sheet.dart';
 import 'package:fluffychat/presentation/mixins/comparable_presentation_contact_mixin.dart';
 import 'package:fluffychat/pages/bootstrap/tom_bootstrap_dialog.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_view.dart';
@@ -812,6 +813,23 @@ class ChatListController extends State<ChatList>
 
   void onClickAvatar() {
     context.push('/rooms/profile');
+  }
+
+  void showCreateGroupBottomSheet() {
+    showModalBottomSheet<void>(
+      backgroundColor: Colors.transparent,
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return CreateGroupBottomSheet(
+          controller: this,
+        );
+      },
+    );
+  }
+
+  void closeCreateGroupBottomSheet() {
+    Navigator.of(context).pop();
   }
 
   void _handleRecovery() {
