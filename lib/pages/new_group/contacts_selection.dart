@@ -29,6 +29,8 @@ abstract class ContactsSelectionController<T extends StatefulWidget>
 
   String getHintText(BuildContext context);
 
+  final String submitText = "Next";
+
   void onSubmit();
 
   List<String> get disabledContactIds => [];

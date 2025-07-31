@@ -10,10 +10,12 @@ Future<T?> showAdaptiveBottomSheet<T>({
   bool isDismissible = true,
   bool isScrollControlled = false,
   bool showDragHandle = false,
+  Color? backgroundColor,
 }) =>
     showModalBottomSheet(
       context: context,
       builder: builder,
+      backgroundColor: backgroundColor,
       showDragHandle: showDragHandle,
       useRootNavigator: !PlatformInfos.isMobile,
       isDismissible: isDismissible,

@@ -142,7 +142,7 @@ class ContactsSelectionView extends StatelessWidget {
                     const SizedBox(width: 12),
                     _bottomActionButton(
                       context: context,
-                      label: 'Next',
+                      label: controller.submitText,
                       onTap: () => controller.trySubmit(context),
                       backgroundColor:
                           MultiColors.of(context).buttonsMainPrimaryDefault,
