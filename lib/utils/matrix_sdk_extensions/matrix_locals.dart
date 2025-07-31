@@ -274,7 +274,7 @@ class MatrixLocals extends MatrixLocalizations {
 
   @override
   // TODO: implement youAcceptedTheInvitation
-  String get youAcceptedTheInvitation => l10n.youAcceptedTheInvitation;
+  String get youAcceptedTheInvitation => '';
 
   @override
   String youBannedUser(String targetName) => l10n.youBannedUser(targetName);
