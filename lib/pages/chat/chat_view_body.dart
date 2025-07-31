@@ -112,10 +112,29 @@ class ChatViewBody extends StatelessWidget with MessageContentMixin {
                               if (status != NewChatStatus.accepted) {
                                 switch (status) {
                                   case NewChatStatus.pendingApproval:
-                                    final partner = controller
-                                            .room!.name.isEmpty
-                                        ? controller.room!.directChatMatrixID
-                                        : controller.room!.name;
+                                    // Get the appropriate name based on room type
+                                    final String partnerName;
+                                    final String messageText;
+
+                                    if (controller.room!.isDirectChat) {
+                                      // For direct chats
+                                      partnerName =
+                                          controller.room!.name.isEmpty
+                                              ? controller.room!
+                                                      .directChatMatrixID ??
+                                                  'User'
+                                              : controller.room!.name;
+                                      messageText =
+                                          "Do you know this person? They won't know you've read the messages until you accept.";
+                                    } else {
+                                      // For group rooms
+                                      partnerName =
+                                          controller.room!.name.isEmpty
+                                              ? 'Group'
+                                              : controller.room!.name;
+                                      messageText =
+                                          "You've been invited to join this group";
+                                    }
 
                                     // UI for the receiver who needs to approve
                                     return Container(
@@ -140,7 +159,9 @@ class ChatViewBody extends StatelessWidget with MessageContentMixin {
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Text(
-                                            'New contact from $partner',
+                                            controller.room!.isDirectChat
+                                                ? 'New contact from $partnerName'
+                                                : 'Group invitation: $partnerName',
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .displaySmall
@@ -156,7 +177,7 @@ class ChatViewBody extends StatelessWidget with MessageContentMixin {
                                           ),
                                           const SizedBox(height: 12),
                                           Text(
-                                            "Do you know this person? They won't know you've read the messages until you accept.",
+                                            messageText,
                                             textAlign: TextAlign.center,
                                             style: Theme.of(context)
                                                 .textTheme
@@ -171,25 +192,43 @@ class ChatViewBody extends StatelessWidget with MessageContentMixin {
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              NewContactActionButton(
-                                                action: PendingRoomAction.block,
-                                                onTap: controller
-                                                    .handlePendingChatAction,
-                                              ),
-                                              NewContactActionButton(
-                                                action:
-                                                    PendingRoomAction.report,
-                                                onTap: controller
-                                                    .handlePendingChatAction,
-                                              ),
-                                              NewContactActionButton(
-                                                action:
-                                                    PendingRoomAction.accept,
-                                                onTap: controller
-                                                    .handlePendingChatAction,
-                                              ),
-                                            ],
+                                            children: controller
+                                                    .room!.isDirectChat
+                                                ? [
+                                                    NewContactActionButton(
+                                                      action: PendingRoomAction
+                                                          .block,
+                                                      onTap: controller
+                                                          .handlePendingChatAction,
+                                                    ),
+                                                    NewContactActionButton(
+                                                      action: PendingRoomAction
+                                                          .report,
+                                                      onTap: controller
+                                                          .handlePendingChatAction,
+                                                    ),
+                                                    NewContactActionButton(
+                                                      action: PendingRoomAction
+                                                          .accept,
+                                                      onTap: controller
+                                                          .handlePendingChatAction,
+                                                    ),
+                                                  ]
+                                                : [
+                                                    NewContactActionButton(
+                                                      action: PendingRoomAction
+                                                          .block,
+                                                      customTitle: 'Leave',
+                                                      onTap: controller
+                                                          .handlePendingChatAction,
+                                                    ),
+                                                    NewContactActionButton(
+                                                      action: PendingRoomAction
+                                                          .accept,
+                                                      onTap: controller
+                                                          .handlePendingChatAction,
+                                                    ),
+                                                  ],
                                           ),
                                           const SizedBox(height: 40.0),
                                         ],
@@ -516,11 +555,13 @@ typedef NewContactActionCallBack = void Function(PendingRoomAction action);
 class NewContactActionButton extends StatelessWidget {
   final PendingRoomAction action;
   final NewContactActionCallBack onTap;
+  final String? customTitle;
 
   const NewContactActionButton({
     super.key,
     required this.action,
     required this.onTap,
+    this.customTitle,
   });
 
   @override
@@ -536,7 +577,7 @@ class NewContactActionButton extends StatelessWidget {
             horizontal: MediaQuery.of(context).size.width * 0.08,
           ),
           child: Text(
-            action.getTitle(context),
+            customTitle ?? action.getTitle(context),
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: _getColor(context),
                 ),
