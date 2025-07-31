@@ -19,6 +19,7 @@ import 'package:fluffychat/pages/homeserver_picker/homeserver_picker.dart';
 import 'package:fluffychat/pages/login/on_auth_redirect.dart';
 import 'package:fluffychat/pages/multi_login/multi_login.dart';
 import 'package:fluffychat/pages/new_chat_or_group/new_chat_or_group.dart';
+import 'package:fluffychat/pages/new_folder/new_folder.dart';
 import 'package:fluffychat/pages/new_group/new_group_chat_info.dart';
 import 'package:fluffychat/pages/registration_contacts/registration_contacts.dart';
 import 'package:fluffychat/pages/registration_name/registration_name.dart';
@@ -351,6 +352,13 @@ abstract class AppRoutes {
                   );
                 },
                 redirect: loggedOutRedirect,
+              ),
+              GoRoute(
+                path: 'newFolder',
+                pageBuilder: (context, state) => defaultPageBuilder(
+                  context,
+                  const NewFolder(),
+                ),
               ),
               GoRoute(
                 path: 'newprivatechat',

@@ -21,6 +21,7 @@ import 'package:fluffychat/presentation/extensions/client_extension.dart';
 import 'package:fluffychat/presentation/mixins/go_to_group_chat_mixin.dart';
 import 'package:fluffychat/presentation/model/chat_list/chat_selection_actions.dart';
 import 'package:fluffychat/resource/image_paths.dart';
+import 'package:fluffychat/utils/adaptive_bottom_sheet.dart';
 import 'package:fluffychat/utils/dialog/twake_dialog.dart';
 import 'package:fluffychat/utils/extension/build_context_extension.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
@@ -116,6 +117,9 @@ class ChatListController extends State<ChatList>
   double previousScrollOffset = 0.0;
 
   late TabController tabController;
+
+  // TODO: Remove dummy data, add logic get folder from server
+  int folderCount = 3;
 
   Client get activeClient => matrixState.client;
 
@@ -816,7 +820,7 @@ class ChatListController extends State<ChatList>
   }
 
   void showCreateGroupBottomSheet() {
-    showModalBottomSheet<void>(
+    showAdaptiveBottomSheet<void>(
       backgroundColor: Colors.transparent,
       context: context,
       isScrollControlled: true,
@@ -830,6 +834,14 @@ class ChatListController extends State<ChatList>
 
   void closeCreateGroupBottomSheet() {
     Navigator.of(context).pop();
+  }
+
+  void navigateToNewFolder() {
+    if (FirstColumnInnerRoutes.instance.goRouteAvailableInFirstColumn()) {
+      context.go('/rooms/newFolder');
+    } else {
+      context.pushInner('innernavigator/newFolder');
+    }
   }
 
   void _handleRecovery() {
@@ -879,8 +891,7 @@ class ChatListController extends State<ChatList>
     });
     _checkTorBrowser();
     super.initState();
-    // TODO: Remove dummy data, add logic get tab bar from server
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(length: folderCount, vsync: this);
   }
 
   void onOpenSearchPageInMultipleColumns() {

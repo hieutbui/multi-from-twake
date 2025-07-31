@@ -65,7 +65,7 @@ class CreateGroupBottomSheet extends StatelessWidget {
           ),
           GestureDetector(
             behavior: HitTestBehavior.translucent,
-            onTap: () {},
+            onTap: controller.navigateToNewFolder,
             child: TextField(
               enabled: false,
               decoration: ChatListTabBarStyles.addChatInputDecoration(context),
