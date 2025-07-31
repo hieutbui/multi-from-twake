@@ -82,6 +82,8 @@ extension LocalizedBody on Event {
 
   bool get isAFile => messageType == MessageTypes.File;
 
+  bool get isForwarded => content['m.multi.forwarded'] == true;
+
   void shareFile(BuildContext context) async {
     final matrixFile = await getFile(context);
 
