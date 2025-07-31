@@ -3,6 +3,7 @@ import 'package:fluffychat/config/themes.dart';
 import 'package:fluffychat/pages/chat_list/chat_list.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_body_view_style.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_skeletonizer_widget.dart';
+import 'package:fluffychat/pages/chat_list/chat_list_tab_bar_widget.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_view_builder.dart';
 import 'package:fluffychat/pages/chat_list/space_view.dart';
 import 'package:fluffychat/presentation/enum/chat_list/chat_list_enum.dart';
@@ -120,6 +121,9 @@ class ChatListBodyView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const ConnectionStatusHeader(),
+                      ChatListTabBarWidget(
+                        controller: controller,
+                      ),
                       AnimatedContainer(
                         height: ChatListBodyViewStyle.heightIsTorBrowser(
                           controller.isTorBrowser,

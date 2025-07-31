@@ -114,6 +114,8 @@ class ChatListController extends State<ChatList>
 
   double previousScrollOffset = 0.0;
 
+  late TabController tabController;
+
   Client get activeClient => matrixState.client;
 
   MatrixState get matrixState => Matrix.of(context);
@@ -859,6 +861,8 @@ class ChatListController extends State<ChatList>
     });
     _checkTorBrowser();
     super.initState();
+    // TODO: Remove dummy data, add logic get tab bar from server
+    tabController = TabController(length: 3, vsync: this);
   }
 
   void onOpenSearchPageInMultipleColumns() {
