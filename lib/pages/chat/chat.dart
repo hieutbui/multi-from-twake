@@ -496,72 +496,92 @@ class ChatController extends State<Chat>
       return;
     }
 
-    final otherUserId = room!.directChatMatrixID;
-    if (otherUserId == null) {
-      Logs().d('_checkPendingStatus: Other user ID is null');
-      return;
-    }
-
     final currentUserId = client.userID;
     if (currentUserId == null) {
       Logs().d('_checkPendingStatus: Current user ID is null');
       return;
     }
 
-    try {
-      final userRelationRepo = getIt.get<HiveUserRelationRepository>();
-      final currentUserRelation =
-          await userRelationRepo.getUserRelationByUserId(currentUserId);
-
-      UserRelation? targetRelation;
-
-      // First try to find the exact relation for this room
-      for (final relation in currentUserRelation) {
-        if (relation.roomId == roomId) {
-          // Ensure this relation involves the other user
-          if (relation.peerId == otherUserId ||
-              relation.creatorId == otherUserId) {
-            targetRelation = relation;
-            Logs().d(
-              '_checkPendingStatus: Found relation with status: ${relation.status}',
-            );
-            break;
-          }
-        }
-      }
-
-      if (targetRelation == null) {
-        Logs().d('_checkPendingStatus: No relation found for this room');
-        newChatStatusNotifier.value =
-            NewChatStatus.accepted; // Default to accepted if no relation
+    // Handle direct chats
+    if (room!.isDirectChat) {
+      final otherUserId = room!.directChatMatrixID;
+      if (otherUserId == null) {
+        Logs().d('_checkPendingStatus: Other user ID is null');
         return;
       }
 
-      if (targetRelation.status == UserRelationStatus.pending) {
-        final isCreator = currentUserId == targetRelation.creatorId;
+      try {
+        final userRelationRepo = getIt.get<HiveUserRelationRepository>();
+        final currentUserRelation =
+            await userRelationRepo.getUserRelationByUserId(currentUserId);
 
-        if (isCreator) {
-          // This is the sender side, show waiting UI
-          newChatStatusNotifier.value = NewChatStatus.waitingForAction;
-          Logs().d(
-            '_checkPendingStatus: Set to waitingForAction, user is sender',
-          );
+        UserRelation? targetRelation;
+
+        // First try to find the exact relation for this room
+        for (final relation in currentUserRelation) {
+          if (relation.roomId == roomId) {
+            // Ensure this relation involves the other user
+            if (relation.peerId == otherUserId ||
+                relation.creatorId == otherUserId) {
+              targetRelation = relation;
+              Logs().d(
+                '_checkPendingStatus: Found relation with status: ${relation.status}',
+              );
+              break;
+            }
+          }
+        }
+
+        if (targetRelation == null) {
+          Logs().d('_checkPendingStatus: No relation found for this room');
+          newChatStatusNotifier.value =
+              NewChatStatus.accepted; // Default to accepted if no relation
+          return;
+        }
+
+        if (targetRelation.status == UserRelationStatus.pending) {
+          final isCreator = currentUserId == targetRelation.creatorId;
+
+          if (isCreator) {
+            // This is the sender side, show waiting UI
+            newChatStatusNotifier.value = NewChatStatus.waitingForAction;
+            Logs().d(
+              '_checkPendingStatus: Set to waitingForAction, user is sender',
+            );
+          } else {
+            // This is the receiver side, show approval UI
+            newChatStatusNotifier.value = NewChatStatus.pendingApproval;
+            Logs().d(
+              '_checkPendingStatus: Set to pendingApproval, user is receiver',
+            );
+          }
         } else {
-          // This is the receiver side, show approval UI
-          newChatStatusNotifier.value = NewChatStatus.pendingApproval;
+          // Not pending, show normal chat UI
+          newChatStatusNotifier.value = NewChatStatus.accepted;
           Logs().d(
-            '_checkPendingStatus: Set to pendingApproval, user is receiver',
+            '_checkPendingStatus: Set to accepted, relation status is ${targetRelation.status}',
           );
         }
+      } catch (e) {
+        Logs().e('_checkPendingStatus: Failed to check pending status', e);
+      }
+    }
+    // Handle group rooms
+    else {
+      // For group rooms, check if the room is in invite state
+      if (room!.membership == Membership.invite) {
+        // This is an invitation to a group room, show approval UI
+        newChatStatusNotifier.value = NewChatStatus.pendingApproval;
+        Logs().d(
+          '_checkPendingStatus: Set to pendingApproval for group room invitation',
+        );
       } else {
         // Not pending, show normal chat UI
         newChatStatusNotifier.value = NewChatStatus.accepted;
         Logs().d(
-          '_checkPendingStatus: Set to accepted, relation status is ${targetRelation.status}',
+          '_checkPendingStatus: Set to accepted for group room',
         );
       }
-    } catch (e) {
-      Logs().e('_checkPendingStatus: Failed to check pending status', e);
     }
   }
 
