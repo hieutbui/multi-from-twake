@@ -5,6 +5,10 @@ extension BacsicEventExtension on BasicEvent {
     if (content['m.relates_to'] != null) {
       content.remove('m.relates_to');
     }
+
+    // Add a custom field to mark this as forwarded
+    content['m.multi.forwarded'] = true;
+
     return content;
   }
 }
