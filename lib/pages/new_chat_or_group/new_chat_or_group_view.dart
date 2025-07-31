@@ -66,11 +66,21 @@ class NewChatOrGroupView extends StatelessWidget {
           ),
         ),
       ),
-      body: Padding(
+      body: Container(
         padding: const EdgeInsetsDirectional.only(
           top: 12.0,
           start: 12.0,
           end: 12.0,
+        ),
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment(0.50, -0.00),
+            end: Alignment(0.50, 1.00),
+            colors: [
+              Color(0xFF0E0F13),
+              Color(0xFF191B26),
+            ],
+          ),
         ),
         child: Column(
           children: [
