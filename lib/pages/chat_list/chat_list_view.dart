@@ -10,13 +10,9 @@ import 'package:fluffychat/pages/chat_list/chat_list_view_style.dart';
 import 'package:fluffychat/pages/search/search.dart';
 import 'package:fluffychat/resource/image_paths.dart';
 import 'package:fluffychat/utils/responsive/responsive_utils.dart';
-import 'package:fluffychat/widgets/mixins/popup_menu_widget_style.dart';
 import 'package:fluffychat/widgets/swipe_to_dismiss_wrap.dart';
-import 'package:fluffychat/widgets/twake_components/twake_fab.dart';
 import 'package:fluffychat/widgets/twake_components/twake_icon_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:keyboard_shortcuts/keyboard_shortcuts.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
 
@@ -176,15 +172,7 @@ class ChatListView extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 16.0),
-                    AnimatedCrossFade(
-                      firstChild: _normalModeWidgetsMobile(context),
-                      secondChild: const SizedBox(height: 0),
-                      crossFadeState: controller.isScrollingDown
-                          ? CrossFadeState.showSecond
-                          : CrossFadeState.showFirst,
-                      duration: const Duration(milliseconds: 300),
-                      sizeCurve: Curves.easeInOut,
-                    ),
+                    _normalModeWidgetsMobile(context),
                   ],
                 ),
               ),
@@ -218,64 +206,64 @@ class ChatListView extends StatelessWidget {
             return ChatListBodyView(controller);
           },
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-        floatingActionButton: ValueListenableBuilder(
-          valueListenable: controller.selectModeNotifier,
-          builder: (context, _, __) {
-            if (controller.isSelectMode) return const SizedBox();
-            return KeyBoardShortcuts(
-              keysToPress: {
-                LogicalKeyboardKey.controlLeft,
-                LogicalKeyboardKey.keyN,
-              },
-              onKeysPressed: () => controller.goToNewPrivateChat(),
-              helpLabel: L10n.of(context)!.newChat,
-              child: !responsiveUtils.isSingleColumnLayout(context)
-                  ? MenuAnchor(
-                      menuChildren: [
-                        MenuItemButton(
-                          leadingIcon: const Icon(Icons.chat),
-                          child: Text(
-                            L10n.of(context)!.newDirectMessage,
-                            style: PopupMenuWidgetStyle.defaultItemTextStyle(
-                              context,
-                            ),
-                          ),
-                          onPressed: () => controller.goToNewPrivateChat(),
-                        ),
-                        MenuItemButton(
-                          leadingIcon: const Icon(Icons.group),
-                          onPressed: () => controller.goToNewGroupChat(context),
-                          child: Text(
-                            L10n.of(context)!.newGroupChat,
-                            style: PopupMenuWidgetStyle.defaultItemTextStyle(
-                              context,
-                            ),
-                          ),
-                        ),
-                      ],
-                      style: MenuStyle(
-                        alignment: Alignment.topLeft,
-                        backgroundColor: WidgetStatePropertyAll(
-                          PopupMenuWidgetStyle.defaultMenuColor(context),
-                        ),
-                      ),
-                      builder: (context, menuController, child) {
-                        return TwakeFloatingActionButton(
-                          icon: Icons.mode_edit_outline_outlined,
-                          size: ChatListViewStyle.editIconSize,
-                          onTap: () => menuController.open(),
-                        );
-                      },
-                    )
-                  : TwakeFloatingActionButton(
-                      icon: Icons.mode_edit_outline_outlined,
-                      size: ChatListViewStyle.editIconSize,
-                      onTap: controller.goToNewPrivateChat,
-                    ),
-            );
-          },
-        ),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        // floatingActionButton: ValueListenableBuilder(
+        //   valueListenable: controller.selectModeNotifier,
+        //   builder: (context, _, __) {
+        //     if (controller.isSelectMode) return const SizedBox();
+        //     return KeyBoardShortcuts(
+        //       keysToPress: {
+        //         LogicalKeyboardKey.controlLeft,
+        //         LogicalKeyboardKey.keyN,
+        //       },
+        //       onKeysPressed: () => controller.goToNewPrivateChat(),
+        //       helpLabel: L10n.of(context)!.newChat,
+        //       child: !responsiveUtils.isSingleColumnLayout(context)
+        //           ? MenuAnchor(
+        //               menuChildren: [
+        //                 MenuItemButton(
+        //                   leadingIcon: const Icon(Icons.chat),
+        //                   child: Text(
+        //                     L10n.of(context)!.newDirectMessage,
+        //                     style: PopupMenuWidgetStyle.defaultItemTextStyle(
+        //                       context,
+        //                     ),
+        //                   ),
+        //                   onPressed: () => controller.goToNewPrivateChat(),
+        //                 ),
+        //                 MenuItemButton(
+        //                   leadingIcon: const Icon(Icons.group),
+        //                   onPressed: () => controller.goToNewGroupChat(context),
+        //                   child: Text(
+        //                     L10n.of(context)!.newGroupChat,
+        //                     style: PopupMenuWidgetStyle.defaultItemTextStyle(
+        //                       context,
+        //                     ),
+        //                   ),
+        //                 ),
+        //               ],
+        //               style: MenuStyle(
+        //                 alignment: Alignment.topLeft,
+        //                 backgroundColor: WidgetStatePropertyAll(
+        //                   PopupMenuWidgetStyle.defaultMenuColor(context),
+        //                 ),
+        //               ),
+        //               builder: (context, menuController, child) {
+        //                 return TwakeFloatingActionButton(
+        //                   icon: Icons.mode_edit_outline_outlined,
+        //                   size: ChatListViewStyle.editIconSize,
+        //                   onTap: () => menuController.open(),
+        //                 );
+        //               },
+        //             )
+        //           : TwakeFloatingActionButton(
+        //               icon: Icons.mode_edit_outline_outlined,
+        //               size: ChatListViewStyle.editIconSize,
+        //               onTap: controller.goToNewPrivateChat,
+        //             ),
+        //     );
+        //   },
+        // ),
       ),
     );
   }
