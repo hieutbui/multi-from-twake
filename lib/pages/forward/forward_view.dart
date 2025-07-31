@@ -27,16 +27,18 @@ class ForwardView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: controller.isFullScreen
-            ? ForwardViewStyle.preferredSize(context)
-            : ForwardViewStyle.maxPreferredSize(context),
+        // preferredSize: controller.isFullScreen
+        //     ? ForwardViewStyle.preferredSize(context)
+        //     : ForwardViewStyle.maxPreferredSize(context),
+        preferredSize: const Size.fromHeight(128),
         child: ValueListenableBuilder<Either<Failure, Success>?>(
           valueListenable: controller.forwardMessageNotifier,
           builder: (context, forwardMessageState, child) {
             return SearchableAppBar(
               toolbarHeight: ForwardViewStyle.maxToolbarHeight(context),
               focusNode: controller.searchFocusNode,
-              title: L10n.of(context)!.forwardTo,
+              // title: L10n.of(context)!.forwardTo,
+              title: 'Forward to the chat',
               hintText: L10n.of(context)!.searchContacts,
               textEditingController: controller.searchTextEditingController,
               openSearchBar: controller.openSearchBar,
@@ -47,44 +49,57 @@ class ForwardView extends StatelessWidget {
           },
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              padding:
-                  const EdgeInsetsDirectional.all(ForwardViewStyle.paddingBody),
-              child: Column(
-                children: [
-                  const RecentChatsTitle(),
-                  ValueListenableBuilder<List<Room>>(
-                    valueListenable: controller.recentlyChatsNotifier,
-                    builder: (context, rooms, child) {
-                      if (rooms.isNotEmpty) {
-                        return RecentChatList(
-                          rooms: rooms,
-                          selectedChatNotifier:
-                              controller.selectedRoomIdNotifier,
-                          onSelectedChat: (roomId) =>
-                              controller.onToggleSelectChat(roomId),
-                          recentChatScrollController:
-                              controller.recentChatScrollController,
-                        );
-                      }
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment(0.50, -0.00),
+            end: Alignment(0.50, 1.00),
+            colors: [
+              Color(0xFF0E0F13),
+              Color(0xFF191B26),
+            ],
+          ),
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsetsDirectional.all(
+                  ForwardViewStyle.paddingBody,
+                ),
+                child: Column(
+                  children: [
+                    const RecentChatsTitle(),
+                    ValueListenableBuilder<List<Room>>(
+                      valueListenable: controller.recentlyChatsNotifier,
+                      builder: (context, rooms, child) {
+                        if (rooms.isNotEmpty) {
+                          return RecentChatList(
+                            rooms: rooms,
+                            selectedChatNotifier:
+                                controller.selectedRoomIdNotifier,
+                            onSelectedChat: (roomId) =>
+                                controller.onToggleSelectChat(roomId),
+                            recentChatScrollController:
+                                controller.recentChatScrollController,
+                          );
+                        }
 
-                      return const SizedBox.shrink();
-                    },
-                  ),
-                ],
+                        return const SizedBox.shrink();
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          if (!controller.isFullScreen)
-            _WebActionsButton(
-              selectedChatNotifier: controller.selectedRoomIdNotifier,
-              forwardMessageNotifier: controller.forwardMessageNotifier,
-              forwardAction: controller.forwardAction,
-            ),
-        ],
+            if (!controller.isFullScreen)
+              _WebActionsButton(
+                selectedChatNotifier: controller.selectedRoomIdNotifier,
+                forwardMessageNotifier: controller.forwardMessageNotifier,
+                forwardAction: controller.forwardAction,
+              ),
+          ],
+        ),
       ),
       floatingActionButton: controller.isFullScreen
           ? _ForwardButton(
@@ -225,12 +240,17 @@ class _ForwardButton extends StatelessWidget {
           } else {
             return forwardMessageState.fold((failure) => child!, (success) {
               if (success is ForwardMessageLoading) {
-                return const SizedBox(
+                return SizedBox(
                   height: ForwardViewStyle.bottomBarHeight,
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: TwakeFloatingActionButton(
-                      customIcon: SizedBox(child: CupertinoActivityIndicator()),
+                      customIcon: SizedBox(
+                        child: CupertinoActivityIndicator(
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
+                        ),
+                      ),
                     ),
                   ),
                 );
