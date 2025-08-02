@@ -58,4 +58,38 @@ class ChatListTabBarStyles {
       floatingLabelBehavior: FloatingLabelBehavior.never,
     );
   }
+
+  static InputDecoration folderNameEditInputDecoration(BuildContext context) {
+    return InputDecoration(
+      border: GradientOutlineInputBorder(
+        gradient: LinearGradient(
+          colors: [
+            const Color(0xFF738C96).withOpacity(0.0),
+            const Color(0xFF738C96),
+          ],
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+        ),
+        width: 1.0,
+        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+      ),
+      contentPadding: const EdgeInsetsDirectional.fromSTEB(12, 28, 12, 12),
+      hintText: "Folder Name",
+      hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            color: MultiColors.of(context).textMainTertiaryDisabled,
+          ),
+      suffix: Padding(
+        padding: const EdgeInsetsDirectional.only(start: 8),
+        child: GestureDetector(
+          onTap: () {},
+          child: Text(
+            "Delete folder",
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  color: MultiColors.of(context).buttonsMainGhostError,
+                ),
+          ),
+        ),
+      ),
+    );
+  }
 }

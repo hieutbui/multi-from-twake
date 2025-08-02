@@ -1,5 +1,6 @@
 import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:fluffychat/pages/chat_list/chat_list.dart';
+import 'package:fluffychat/pages/chat_list/custom_tab_bar.dart';
 import 'package:flutter/material.dart';
 
 class ChatListTabBarWidget extends StatelessWidget {
@@ -24,7 +25,7 @@ class ChatListTabBarWidget extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                TabBar(
+                CustomTabBar(
                   controller: controller.tabController,
                   tabAlignment: TabAlignment.start,
                   isScrollable: true,
@@ -51,6 +52,12 @@ class ChatListTabBarWidget extends StatelessWidget {
                       title: "AI chat",
                     ),
                   ],
+                  onTapDown: (details, index) {
+                    controller.setTapDownDetails(details);
+                  },
+                  onLongPress: (index) {
+                    controller.handleTabBarMenuAction(context);
+                  },
                 ),
                 _AddGroupItem(controller),
               ],

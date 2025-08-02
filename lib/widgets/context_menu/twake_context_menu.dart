@@ -31,12 +31,15 @@ class TwakeContextMenu extends StatefulWidget {
   /// The padding value at the top an bottom between the edge of the [TwakeContextMenu] and the first / last item
   final double? verticalPadding;
 
+  final bool isHorizontalCenter;
+
   const TwakeContextMenu({
     super.key,
     required this.dialogContext,
     required this.listActions,
     required this.position,
     this.verticalPadding,
+    this.isHorizontalCenter = false,
   });
 
   @override
@@ -47,6 +50,8 @@ class TwakeContextMenuState extends State<TwakeContextMenu>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _animation;
+  final GlobalKey _menuKey = GlobalKey();
+  double? _menuWidth;
 
   @override
   void initState() {
@@ -60,6 +65,15 @@ class TwakeContextMenuState extends State<TwakeContextMenu>
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final context = _menuKey.currentContext;
+      if (context != null) {
+        final size = context.size;
+        if (size != null && mounted) {
+          setState(() {
+            _menuWidth = size.width;
+          });
+        }
+      }
       _animationController.forward();
     });
   }
@@ -121,6 +135,7 @@ class TwakeContextMenuState extends State<TwakeContextMenu>
                     );
                   },
                   child: Card(
+                    key: _menuKey,
                     color: MultiColors.of(context).backgroundSurfacesDefault,
                     elevation: TwakeContextMenuStyle.menuElevation,
                     margin: EdgeInsets.zero,
@@ -215,11 +230,18 @@ class TwakeContextMenuState extends State<TwakeContextMenu>
     double? positionRight;
     Alignment alignment = Alignment.topLeft;
 
-    if (availableRightSpace < TwakeContextMenuStyle.menuMaxWidth) {
-      positionRight = screenWidth - positionLeftTap;
-      alignment = Alignment.topRight;
+    const double menuWidth = TwakeContextMenuStyle.menuMaxWidth;
+
+    if (widget.isHorizontalCenter && _menuWidth != null) {
+      positionLeft = (screenWidth - _menuWidth!) / 2;
+      alignment = Alignment.topCenter;
     } else {
-      positionLeft = positionLeftTap;
+      if (availableRightSpace < menuWidth) {
+        positionRight = screenWidth - positionLeftTap;
+        alignment = Alignment.topRight;
+      } else {
+        positionLeft = positionLeftTap;
+      }
     }
 
     return ContextMenuPosition(
