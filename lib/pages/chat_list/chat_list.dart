@@ -10,8 +10,10 @@ import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/domain/model/room/room_extension.dart';
 import 'package:fluffychat/pages/bootstrap/bootstrap_dialog.dart';
 import 'package:fluffychat/pages/chat_list/chat_custom_slidable_action.dart';
+import 'package:fluffychat/pages/chat_list/chat_list_actions.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_view_style.dart';
 import 'package:fluffychat/pages/chat_list/create_group_bottom_sheet.dart';
+import 'package:fluffychat/pages/chat_list/edit_group_bottom_sheet.dart';
 import 'package:fluffychat/presentation/mixins/comparable_presentation_contact_mixin.dart';
 import 'package:fluffychat/pages/bootstrap/tom_bootstrap_dialog.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_view.dart';
@@ -35,9 +37,11 @@ import 'package:fluffychat/widgets/layouts/agruments/logged_in_body_args.dart';
 import 'package:fluffychat/widgets/layouts/agruments/logged_in_other_account_body_args.dart';
 import 'package:fluffychat/widgets/mixins/popup_context_menu_action_mixin.dart';
 import 'package:fluffychat/widgets/mixins/popup_menu_widget_mixin.dart';
+import 'package:fluffychat/widgets/mixins/popup_menu_widget_style.dart';
 import 'package:fluffychat/widgets/mixins/twake_context_menu_mixin.dart';
 import 'package:fluffychat/widgets/twake_components/twake_icon_button.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_svg/svg.dart';
@@ -120,6 +124,8 @@ class ChatListController extends State<ChatList>
 
   // TODO: Remove dummy data, add logic get folder from server
   int folderCount = 3;
+
+  TapDownDetails? tapDownDetails;
 
   Client get activeClient => matrixState.client;
 
@@ -832,7 +838,7 @@ class ChatListController extends State<ChatList>
     );
   }
 
-  void closeCreateGroupBottomSheet() {
+  void closeBottomSheet() {
     Navigator.of(context).pop();
   }
 
@@ -842,6 +848,75 @@ class ChatListController extends State<ChatList>
     } else {
       context.pushInner('innernavigator/newFolder');
     }
+  }
+
+  void setTapDownDetails(TapDownDetails details) {
+    tapDownDetails = details;
+  }
+
+  void handleTabBarMenuAction(
+    BuildContext context,
+  ) async {
+    if (tapDownDetails == null) return;
+
+    final offset = tapDownDetails!.globalPosition;
+    final listAppBarActions = _getListTabBarActionMenu();
+    final listContextMenuActions =
+        _mapChatListActionToContextMenuAction(listAppBarActions);
+
+    final selectedActionIndex = await showTwakeContextMenu(
+      offset: offset,
+      context: context,
+      listActions: listContextMenuActions,
+      isHorizontalCenter: true,
+    );
+
+    if (selectedActionIndex != null && selectedActionIndex is int) {
+      final selectedAction = listAppBarActions[selectedActionIndex];
+      _onSelectedTabBarActions(selectedAction);
+    }
+  }
+
+  List<ChatListActions> _getListTabBarActionMenu() {
+    return ChatListActions.values;
+  }
+
+  List<ContextMenuAction> _mapChatListActionToContextMenuAction(
+    List<ChatListActions> listAction,
+  ) {
+    return listAction.map((action) {
+      return ContextMenuAction(
+        name: action.getTitle(),
+        icon: action.getIcon(),
+        colorIcon: action.getColorIcon(context),
+        imagePath: action.getImagePath(),
+        styleName: action == ChatListActions.ungroupFolder
+            ? PopupMenuWidgetStyle.defaultItemTextStyle(context)
+                ?.copyWith(color: action.getColorIcon(context))
+            : null,
+      );
+    }).toList();
+  }
+
+  void _onSelectedTabBarActions(ChatListActions action) {
+    switch (action) {
+      case ChatListActions.editFolder:
+        _showEditGroupBottomSheet();
+      default:
+    }
+  }
+
+  void _showEditGroupBottomSheet() {
+    showAdaptiveBottomSheet<void>(
+      backgroundColor: Colors.transparent,
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return EditGroupBottomSheet(
+          controller: this,
+        );
+      },
+    );
   }
 
   void _handleRecovery() {

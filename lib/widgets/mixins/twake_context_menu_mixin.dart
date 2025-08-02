@@ -24,6 +24,7 @@ mixin TwakeContextMenuMixin {
     required BuildContext context,
     double? verticalPadding,
     VoidCallback? onClose,
+    bool isHorizontalCenter = false,
   }) async {
     dynamic result;
     await showDialog(
@@ -35,6 +36,7 @@ mixin TwakeContextMenuMixin {
         listActions: listActions,
         position: offset,
         verticalPadding: verticalPadding,
+        isHorizontalCenter: isHorizontalCenter,
       ),
     ).then((value) {
       result = value;
