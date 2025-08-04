@@ -13,7 +13,7 @@ class ChatListItemStyle {
 
   static const double mentionIconWidth = 20;
 
-  static const double chatItemHeight = 80;
+  static const double chatItemHeight = 85;
 
   static double unreadBadgeSize(
     bool unread,
