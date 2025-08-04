@@ -73,6 +73,7 @@ class EntranceMainView extends StatelessWidget {
                           separator: EntranceViewStyle.oauthButtonSeparator,
                           buttonColor:
                               MultiColors.of(context).buttonsMainPrimaryDefault,
+                          borderRadius: 16,
                           iconSize: EntranceViewStyle.oauthButtonIconSize,
                           iconColor:
                               Theme.of(context).colorScheme.onInverseSurface,
@@ -94,6 +95,7 @@ class EntranceMainView extends StatelessWidget {
                         separator: EntranceViewStyle.oauthButtonSeparator,
                         buttonColor:
                             MultiColors.of(context).buttonsMainSecondaryDefault,
+                        borderRadius: 16,
                         iconColor: Theme.of(context).colorScheme.onSurface,
                         iconSize: EntranceViewStyle.oauthButtonIconSize,
                         height: EntranceViewStyle.oauthButtonHeight,
@@ -114,6 +116,7 @@ class EntranceMainView extends StatelessWidget {
                         separator: EntranceViewStyle.oauthButtonSeparator,
                         buttonColor:
                             MultiColors.of(context).buttonsMainSecondaryDefault,
+                        borderRadius: 16,
                         iconSize: EntranceViewStyle.oauthButtonIconSize,
                         iconColor: Theme.of(context).colorScheme.onSurface,
                         height: EntranceViewStyle.oauthButtonHeight,
