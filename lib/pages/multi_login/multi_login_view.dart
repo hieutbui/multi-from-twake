@@ -93,6 +93,7 @@ class MultiLoginView extends StatelessWidget {
                           isRequired: true,
                           isShowPasswordStrength: false,
                           controller: controller.passwordController,
+                          isValidatePasswordStrength: false,
                         ),
                         Align(
                           alignment: Alignment.centerRight,

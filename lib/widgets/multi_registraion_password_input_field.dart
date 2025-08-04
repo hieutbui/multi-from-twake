@@ -10,6 +10,7 @@ class MultiRegistrationPasswordInputField extends StatefulWidget {
   final bool? isRequired;
   final bool isObscured;
   final bool? isShowPasswordStrength;
+  final bool isValidatePasswordStrength;
 
   const MultiRegistrationPasswordInputField({
     super.key,
@@ -19,6 +20,7 @@ class MultiRegistrationPasswordInputField extends StatefulWidget {
     this.isRequired,
     this.isObscured = true,
     this.isShowPasswordStrength = true,
+    this.isValidatePasswordStrength = true,
   });
 
   @override
@@ -70,9 +72,10 @@ class _MultiRegistrationPasswordInputFieldState
           autovalidateMode: AutovalidateMode.onUserInteraction,
           // Use simpler minLength validator that just checks length
           validator: FormBuilderValidators.compose([
-            FormBuilderValidators.password(
-              errorText: 'Your password is not strong enough',
-            ),
+            if (widget.isValidatePasswordStrength)
+              FormBuilderValidators.password(
+                errorText: 'Your password is not strong enough',
+              ),
             if (widget.isRequired ?? false)
               FormBuilderValidators.required(
                 errorText: 'Password is required',
