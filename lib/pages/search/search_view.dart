@@ -241,9 +241,9 @@ class SearchView extends StatelessWidget {
                                 color: MultiColors.of(context).textMainAccent,
                               ),
                     ),
-                  )
+                  ),
                 ],
-              )
+              ),
             ],
           ),
         ),

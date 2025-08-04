@@ -26,7 +26,7 @@ class InitClientDialog extends StatefulWidget {
 
 class _InitClientDialogState extends State<InitClientDialog>
     with TickerProviderStateMixin {
-  late AnimationController loginSSOProgressController;
+  late AnimationController loadingProgressController;
 
   Client? _clientFirstLoggedIn;
 
@@ -49,7 +49,7 @@ class _InitClientDialogState extends State<InitClientDialog>
             );
     WidgetsBinding.instance.addPostFrameCallback(
       (_) async {
-        _startLoginSSOProgress();
+        _startLoadingProgress();
         await widget
             .future()
             .then(
@@ -119,22 +119,22 @@ class _InitClientDialogState extends State<InitClientDialog>
   }
 
   void _initial() {
-    loginSSOProgressController = AnimationController(
+    loadingProgressController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(milliseconds: 800),
     );
   }
 
-  void _startLoginSSOProgress() {
-    loginSSOProgressController.addListener(() {
+  void _startLoadingProgress() {
+    loadingProgressController.addListener(() {
       setState(() {});
     });
-    loginSSOProgressController.repeat();
+    loadingProgressController.repeat();
   }
 
   @override
   void dispose() {
-    loginSSOProgressController.dispose();
+    loadingProgressController.dispose();
     _clientLoginStateChangedSubscription?.cancel();
     super.dispose();
   }

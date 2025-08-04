@@ -72,7 +72,8 @@ class EditGroupBottomSheet extends StatelessWidget {
                 TextFormField(
                   decoration:
                       ChatListTabBarStyles.folderNameEditInputDecoration(
-                          context),
+                    context,
+                  ),
                   textAlignVertical: TextAlignVertical.bottom,
                   // TODO: Remove dummy data
                   initialValue: "Folder Name",
@@ -90,7 +91,7 @@ class EditGroupBottomSheet extends StatelessWidget {
                               MultiColors.of(context).textMainTertiaryDisabled,
                         ),
                   ),
-                )
+                ),
               ],
             ),
             const SizedBox(

@@ -102,7 +102,10 @@ class _TabStyle extends AnimatedWidget {
 }
 
 typedef _LayoutCallback = void Function(
-    List<double> xOffsets, TextDirection textDirection, double width);
+  List<double> xOffsets,
+  TextDirection textDirection,
+  double width,
+);
 
 class _TabLabelBarRenderer extends RenderFlex {
   _TabLabelBarRenderer({
@@ -169,7 +172,9 @@ class _TabLabelBar extends Flex {
 
   @override
   void updateRenderObject(
-      BuildContext context, _TabLabelBarRenderer renderObject) {
+    BuildContext context,
+    _TabLabelBarRenderer renderObject,
+  ) {
     super.updateRenderObject(context, renderObject);
     renderObject.onPerformLayout = onPerformLayout;
   }
@@ -320,8 +325,12 @@ class _IndicatorPainter extends CustomPainter {
     }
 
     final EdgeInsets insets = indicatorPadding.resolve(_currentTextDirection);
-    final Rect rect =
-        Rect.fromLTWH(tabLeft, 0.0, tabRight - tabLeft, tabBarSize.height);
+    final Rect rect = Rect.fromLTWH(
+      tabLeft,
+      0.0,
+      tabRight - tabLeft,
+      tabBarSize.height,
+    );
 
     if (!(rect.size >= insets.collapsedSize)) {
       throw FlutterError(
@@ -517,8 +526,13 @@ class _TabBarScrollPosition extends ScrollPositionWithSingleContext {
     }
     if (!_viewportDimensionWasNonZero || _needsPixelsCorrection) {
       _needsPixelsCorrection = false;
-      correctPixels(tabBar._initialScrollOffset(
-          viewportDimension, minScrollExtent, maxScrollExtent));
+      correctPixels(
+        tabBar._initialScrollOffset(
+          viewportDimension,
+          minScrollExtent,
+          maxScrollExtent,
+        ),
+      );
       result = false;
     }
     return super.applyContentDimensions(minScrollExtent, maxScrollExtent) &&
@@ -536,8 +550,11 @@ class _TabBarScrollController extends ScrollController {
   final _CustomTabBarState tabBar;
 
   @override
-  ScrollPosition createScrollPosition(ScrollPhysics physics,
-      ScrollContext context, ScrollPosition? oldPosition) {
+  ScrollPosition createScrollPosition(
+    ScrollPhysics physics,
+    ScrollContext context,
+    ScrollPosition? oldPosition,
+  ) {
     return _TabBarScrollPosition(
       physics: physics,
       context: context,
@@ -718,8 +735,10 @@ class _CustomTabBarState extends State<CustomTabBar> {
     super.initState();
     _tabKeys = widget.tabs.map((Widget tab) => GlobalKey()).toList();
     _labelPaddings = List<EdgeInsetsGeometry>.filled(
-        widget.tabs.length, EdgeInsets.zero,
-        growable: true);
+      widget.tabs.length,
+      EdgeInsets.zero,
+      growable: true,
+    );
   }
 
   TabBarTheme get _defaults {
@@ -906,7 +925,11 @@ class _CustomTabBarState extends State<CustomTabBar> {
   int get maxTabIndex => _indicatorPainter!.maxTabIndex;
 
   double _tabScrollOffset(
-      int index, double viewportWidth, double minExtent, double maxExtent) {
+    int index,
+    double viewportWidth,
+    double minExtent,
+    double maxExtent,
+  ) {
     if (!widget.isScrollable) {
       return 0.0;
     }
@@ -921,19 +944,33 @@ class _CustomTabBarState extends State<CustomTabBar> {
     }
 
     return clampDouble(
-        tabCenter + paddingStart - viewportWidth / 2.0, minExtent, maxExtent);
+      tabCenter + paddingStart - viewportWidth / 2.0,
+      minExtent,
+      maxExtent,
+    );
   }
 
   double _tabCenteredScrollOffset(int index) {
     final ScrollPosition position = _scrollController!.position;
-    return _tabScrollOffset(index, position.viewportDimension,
-        position.minScrollExtent, position.maxScrollExtent);
+    return _tabScrollOffset(
+      index,
+      position.viewportDimension,
+      position.minScrollExtent,
+      position.maxScrollExtent,
+    );
   }
 
   double _initialScrollOffset(
-      double viewportWidth, double minExtent, double maxExtent) {
+    double viewportWidth,
+    double minExtent,
+    double maxExtent,
+  ) {
     return _tabScrollOffset(
-        _currentIndex!, viewportWidth, minExtent, maxExtent);
+      _currentIndex!,
+      viewportWidth,
+      minExtent,
+      maxExtent,
+    );
   }
 
   void _scrollToCurrentIndex() {
@@ -987,7 +1024,10 @@ class _CustomTabBarState extends State<CustomTabBar> {
   }
 
   void _saveTabOffsets(
-      List<double> tabOffsets, TextDirection textDirection, double width) {
+    List<double> tabOffsets,
+    TextDirection textDirection,
+    double width,
+  ) {
     _tabStripWidth = width;
     _indicatorPainter?.saveTabOffsets(tabOffsets, textDirection);
   }
@@ -998,8 +1038,12 @@ class _CustomTabBarState extends State<CustomTabBar> {
     widget.onTap?.call(index);
   }
 
-  Widget _buildStyledTab(Widget child, bool isSelected,
-      Animation<double> animation, TabBarTheme defaults) {
+  Widget _buildStyledTab(
+    Widget child,
+    bool isSelected,
+    Animation<double> animation,
+    TabBarTheme defaults,
+  ) {
     return _TabStyle(
       animation: animation,
       isSelected: isSelected,
@@ -1017,21 +1061,24 @@ class _CustomTabBarState extends State<CustomTabBar> {
     if (_debugHasScheduledValidTabsCountCheck) {
       return true;
     }
-    WidgetsBinding.instance.addPostFrameCallback((Duration duration) {
-      _debugHasScheduledValidTabsCountCheck = false;
-      if (!mounted) {
-        return;
-      }
-      assert(() {
-        if (_controller!.length != widget.tabs.length) {
-          throw FlutterError(
-            "Controller's length property (${_controller!.length}) does not match the "
-            "number of tabs (${widget.tabs.length}) present in TabBar's tabs property.",
-          );
+    WidgetsBinding.instance.addPostFrameCallback(
+      (Duration duration) {
+        _debugHasScheduledValidTabsCountCheck = false;
+        if (!mounted) {
+          return;
         }
-        return true;
-      }());
-    }, debugLabel: 'TabBar.tabsCountCheck');
+        assert(() {
+          if (_controller!.length != widget.tabs.length) {
+            throw FlutterError(
+              "Controller's length property (${_controller!.length}) does not match the "
+              "number of tabs (${widget.tabs.length}) present in TabBar's tabs property.",
+            );
+          }
+          return true;
+        }());
+      },
+      debugLabel: 'TabBar.tabsCountCheck',
+    );
     _debugHasScheduledValidTabsCountCheck = true;
     return true;
   }
@@ -1090,7 +1137,9 @@ class _CustomTabBarState extends State<CustomTabBar> {
                 .add(const EdgeInsets.symmetric(vertical: verticalAdjustment));
           } else {
             adjustedPadding = const EdgeInsets.symmetric(
-                vertical: verticalAdjustment, horizontal: 16.0);
+              vertical: verticalAdjustment,
+              horizontal: 16.0,
+            );
           }
         }
       }
@@ -1119,28 +1168,48 @@ class _CustomTabBarState extends State<CustomTabBar> {
         assert(_currentIndex != previousIndex);
         final Animation<double> animation = _ChangeAnimation(_controller!);
         wrappedTabs[_currentIndex!] = _buildStyledTab(
-            wrappedTabs[_currentIndex!], true, animation, _defaults);
+          wrappedTabs[_currentIndex!],
+          true,
+          animation,
+          _defaults,
+        );
         wrappedTabs[previousIndex] = _buildStyledTab(
-            wrappedTabs[previousIndex], false, animation, _defaults);
+          wrappedTabs[previousIndex],
+          false,
+          animation,
+          _defaults,
+        );
       } else {
         final int tabIndex = _currentIndex!;
         final Animation<double> centerAnimation =
             _DragAnimation(_controller!, tabIndex);
         wrappedTabs[tabIndex] = _buildStyledTab(
-            wrappedTabs[tabIndex], true, centerAnimation, _defaults);
+          wrappedTabs[tabIndex],
+          true,
+          centerAnimation,
+          _defaults,
+        );
         if (_currentIndex! > 0) {
           final int tabIndex = _currentIndex! - 1;
           final Animation<double> previousAnimation =
               ReverseAnimation(_DragAnimation(_controller!, tabIndex));
           wrappedTabs[tabIndex] = _buildStyledTab(
-              wrappedTabs[tabIndex], false, previousAnimation, _defaults);
+            wrappedTabs[tabIndex],
+            false,
+            previousAnimation,
+            _defaults,
+          );
         }
         if (_currentIndex! < widget.tabs.length - 1) {
           final int tabIndex = _currentIndex! + 1;
           final Animation<double> nextAnimation =
               ReverseAnimation(_DragAnimation(_controller!, tabIndex));
           wrappedTabs[tabIndex] = _buildStyledTab(
-              wrappedTabs[tabIndex], false, nextAnimation, _defaults);
+            wrappedTabs[tabIndex],
+            false,
+            nextAnimation,
+            _defaults,
+          );
         }
       }
     }
@@ -1153,7 +1222,9 @@ class _CustomTabBarState extends State<CustomTabBar> {
 
       final MouseCursor effectiveMouseCursor =
           MaterialStateProperty.resolveAs<MouseCursor?>(
-                  widget.mouseCursor, selectedState) ??
+                widget.mouseCursor,
+                selectedState,
+              ) ??
               tabBarTheme.mouseCursor?.resolve(selectedState) ??
               MaterialStateMouseCursor.clickable.resolve(selectedState);
 
@@ -1191,7 +1262,9 @@ class _CustomTabBarState extends State<CustomTabBar> {
               Semantics(
                 selected: index == _currentIndex,
                 label: localizations.tabLabel(
-                    tabIndex: index + 1, tabCount: tabCount),
+                  tabIndex: index + 1,
+                  tabCount: tabCount,
+                ),
               ),
             ],
           ),
