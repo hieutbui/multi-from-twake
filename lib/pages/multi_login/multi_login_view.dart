@@ -186,6 +186,7 @@ class MultiLoginView extends StatelessWidget {
                       separator: 8.0,
                       buttonColor:
                           MultiColors.of(context).buttonsMainSecondaryDefault,
+                      borderRadius: 16,
                       iconSize: 18,
                       iconColor: Theme.of(context).colorScheme.onSurface,
                       height: 48,
@@ -207,6 +208,7 @@ class MultiLoginView extends StatelessWidget {
                       separator: 8.0,
                       buttonColor:
                           MultiColors.of(context).buttonsMainSecondaryDefault,
+                      borderRadius: 16,
                       iconSize: 18,
                       iconColor: Theme.of(context).colorScheme.onSurface,
                       height: 48,
