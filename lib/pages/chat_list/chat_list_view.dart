@@ -1,17 +1,12 @@
-import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
-import 'package:fluffychat/config/multi_sys_variables/multi_typography.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
+import 'package:fluffychat/pages/chat_list/animated_preferred_app_bar.dart';
 import 'package:fluffychat/pages/chat_list/chat_list.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_body_view.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_bottom_navigator.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_bottom_navigator_style.dart';
-import 'package:fluffychat/pages/chat_list/chat_list_header_style.dart';
 import 'package:fluffychat/pages/search/search.dart';
-import 'package:fluffychat/resource/image_paths.dart';
 import 'package:fluffychat/utils/responsive/responsive_utils.dart';
-import 'package:fluffychat/widgets/twake_components/twake_icon_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
 
 class ChatListView extends StatelessWidget {
@@ -53,9 +48,14 @@ class ChatListView extends StatelessWidget {
       child: ValueListenableBuilder(
         valueListenable: controller.isShowSearchView,
         builder: (context, isShowSearchView, _) {
+          final statusBarHeight = MediaQuery.of(context).padding.top;
           return Scaffold(
             backgroundColor: Colors.transparent,
-            appBar: _buildAppBar(context, controller, isShowSearchView),
+            appBar: ChatListAnimatedAppBar(
+              controller: controller,
+              isShowSearchView: isShowSearchView,
+              statusBarHeight: statusBarHeight,
+            ),
             bottomNavigationBar: isShowSearchView
                 ? const SizedBox.shrink()
                 : ValueListenableBuilder(
@@ -148,173 +148,6 @@ class ChatListView extends StatelessWidget {
             // ),
           );
         },
-      ),
-    );
-  }
-
-  PreferredSizeWidget _buildAppBar(
-    BuildContext context,
-    ChatListController controller,
-    bool isShowSearchView,
-  ) {
-    return PreferredSize(
-      preferredSize: !isShowSearchView
-          ? const Size.fromHeight(136)
-          : const Size.fromHeight(80),
-      child: AppBar(
-        flexibleSpace: Container(
-          decoration: const ShapeDecoration(
-            gradient: LinearGradient(
-              begin: Alignment(0.50, -0.00),
-              end: Alignment(0.50, 1.00),
-              colors: [Color(0xFF0E0F13), Color(0xFF232631)],
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(24),
-                bottomRight: Radius.circular(24),
-              ),
-            ),
-          ),
-          child: Container(
-            margin: EdgeInsets.only(
-              top: 12.0 + MediaQuery.of(context).padding.top,
-            ),
-            padding: const EdgeInsets.only(
-              bottom: 20,
-              left: 20,
-              right: 20,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (!isShowSearchView) ...[
-                  Row(
-                    children: [
-                      Text(
-                        L10n.of(context)!.chats,
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayMedium
-                            ?.copyWith(
-                              fontSize: MultiMobileTypography.headlineFontSmall,
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimaryContainer,
-                            ),
-                      ),
-                      const SizedBox(width: 12.0),
-                      Container(
-                        padding: const EdgeInsets.only(
-                          top: 6,
-                          left: 2,
-                          right: 12,
-                          bottom: 6,
-                        ),
-                        decoration: ShapeDecoration(
-                          color: MultiColors.of(context)
-                              .buttonsMainSecondary15Opasity,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                        ),
-                        child: Row(
-                          children: [
-                            const SizedBox(width: 2.0),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 5,
-                              ),
-                              decoration: ShapeDecoration(
-                                color: MultiColors.of(context)
-                                    .additionalAccentBlueMain,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                              ),
-                              child: ValueListenableBuilder(
-                                valueListenable:
-                                    controller.unreadRoomCountNotifier,
-                                builder: (context, value, child) {
-                                  return Text(
-                                    value.toString(),
-                                    textAlign: TextAlign.center,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelSmall
-                                        ?.copyWith(
-                                          color: const Color(0xFFEFF0FE),
-                                        ),
-                                  );
-                                },
-                              ),
-                            ),
-                            const SizedBox(width: 8.0),
-                            Text(
-                              L10n.of(context)!.unread,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall
-                                  ?.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onPrimaryContainer,
-                                  ),
-                            ),
-                            const SizedBox(width: 8),
-                          ],
-                        ),
-                      ),
-                      const Spacer(),
-                      TwakeIconButton(
-                        onTap: controller.onTapMessagePushSquare,
-                        imagePath: ImagePaths.icMessagePlusSquare,
-                        size: 24,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16.0),
-                ],
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: controller.searchChatController,
-                        textInputAction: TextInputAction.search,
-                        focusNode: controller.searchChatFocusNode,
-                        enabled: true,
-                        decoration:
-                            ChatListHeaderStyle.searchInputDecoration(context),
-                      ),
-                    ),
-                    if (isShowSearchView) ...[
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      GestureDetector(
-                        onTap: controller.hideSearchView,
-                        child: Text(
-                          "Cancel",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(
-                                color: MultiColors.of(context).textMainAccent,
-                              ),
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-        backgroundColor: Colors.black.withOpacity(0.5),
-        automaticallyImplyLeading: false,
       ),
     );
   }
