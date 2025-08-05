@@ -134,7 +134,7 @@ class ChatListController extends State<ChatList>
 
   TapDownDetails? tapDownDetails;
 
-  ValueNotifier<bool> isShowSearchView = ValueNotifier(false);
+  final ValueNotifier<bool> isShowSearchView = ValueNotifier(false);
 
   Client get activeClient => matrixState.client;
 
@@ -1137,6 +1137,8 @@ class ChatListController extends State<ChatList>
   @override
   void dispose() {
     scrollController.removeListener(_onScroll);
+    searchChatFocusNode.dispose();
+    isShowSearchView.dispose();
     super.dispose();
   }
 

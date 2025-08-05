@@ -7,6 +7,11 @@ import 'package:fluffychat/widgets/twake_components/twake_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
+class _Constants {
+  static const double appBarHeightInChatList = 136;
+  static const double appBarHeightInSearch = 80;
+}
+
 class ChatListAnimatedAppBar extends StatefulWidget
     implements PreferredSizeWidget {
   final bool isShowSearchView;
@@ -24,7 +29,8 @@ class ChatListAnimatedAppBar extends StatefulWidget
   State<ChatListAnimatedAppBar> createState() => _ChatListAnimatedAppBarState();
 
   @override
-  Size get preferredSize => Size.fromHeight(136 + statusBarHeight);
+  Size get preferredSize =>
+      Size.fromHeight(_Constants.appBarHeightInChatList + statusBarHeight);
 }
 
 class _ChatListAnimatedAppBarState extends State<ChatListAnimatedAppBar>
@@ -41,8 +47,8 @@ class _ChatListAnimatedAppBarState extends State<ChatListAnimatedAppBar>
     );
 
     _height = Tween<double>(
-      begin: 136 + widget.statusBarHeight,
-      end: 80 + widget.statusBarHeight,
+      begin: _Constants.appBarHeightInChatList + widget.statusBarHeight,
+      end: _Constants.appBarHeightInSearch + widget.statusBarHeight,
     ).animate(
       CurvedAnimation(
         parent: _controller,
@@ -76,8 +82,9 @@ class _ChatListAnimatedAppBarState extends State<ChatListAnimatedAppBar>
             backgroundColor: Colors.black.withOpacity(0.5),
             automaticallyImplyLeading: false,
             flexibleSpace: Container(
-              height:
-                  widget.isShowSearchView ? 80 + topPadding : 136 + topPadding,
+              height: widget.isShowSearchView
+                  ? _Constants.appBarHeightInSearch + topPadding
+                  : _Constants.appBarHeightInChatList + topPadding,
               decoration: const ShapeDecoration(
                 gradient: LinearGradient(
                   begin: Alignment(0.50, -0.00),
