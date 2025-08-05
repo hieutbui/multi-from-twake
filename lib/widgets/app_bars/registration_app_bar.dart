@@ -12,6 +12,7 @@ class RegistrationAppBar extends StatelessWidget
   final List<Widget>? actions;
   final String? rightButtonText;
   final bool isShowLeading;
+  final void Function()? onBackButtonPressed;
 
   const RegistrationAppBar({
     super.key,
@@ -23,6 +24,7 @@ class RegistrationAppBar extends StatelessWidget
     this.actions,
     this.rightButtonText,
     this.isShowLeading = true,
+    this.onBackButtonPressed,
   });
 
   @override
@@ -45,7 +47,13 @@ class RegistrationAppBar extends StatelessWidget
                     color: Colors.white,
                     size: 16,
                   ),
-                  onPressed: () => context.pop(),
+                  onPressed: () {
+                    if (onBackButtonPressed != null) {
+                      onBackButtonPressed?.call();
+                    } else {
+                      context.pop();
+                    }
+                  },
                   padding: const EdgeInsets.all(6),
                   constraints: const BoxConstraints(
                     minWidth: 28,

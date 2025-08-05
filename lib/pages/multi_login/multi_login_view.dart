@@ -122,6 +122,7 @@ class MultiLoginView extends StatelessWidget {
                                   (failure) => false,
                                   (success) => success is SigninLoading,
                                 );
+
                                 return MultiRegistrationButton(
                                   label: 'Continue',
                                   type: isEnabled

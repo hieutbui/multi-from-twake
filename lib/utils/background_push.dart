@@ -63,6 +63,8 @@ class BackgroundPush {
 
   Store get store => _store ??= Store();
 
+  bool get isPushEnabled => _pushToken != null;
+
   Future<void> loadLocale() async {
     final context = _matrixState?.context;
     // inspired by _lookupL10n in .dart_tool/flutter_gen/gen_l10n/l10n.dart
@@ -146,6 +148,53 @@ class BackgroundPush {
         FlutterAppBadger.updateBadgeCount(unreadCount);
       }
       return;
+    }
+  }
+
+  Future<bool> areNotificationsEnabled() async {
+    try {
+      // If we're not on a mobile platform, return false
+      if (!PlatformInfos.isMobile) {
+        return false;
+      }
+
+      // On Android, use the direct API
+      if (Platform.isAndroid) {
+        final androidImplementation = _flutterLocalNotificationsPlugin
+            .resolvePlatformSpecificImplementation<
+                AndroidFlutterLocalNotificationsPlugin>();
+
+        if (androidImplementation != null) {
+          return await androidImplementation.areNotificationsEnabled() ?? false;
+        }
+        return false;
+      }
+      // On iOS, first check if we have a stored permission value
+      else if (Platform.isIOS) {
+        // First check if we already know that permissions are enabled
+        final permissionGranted =
+            await store.getItemBool('ios_notification_permission', false);
+        if (permissionGranted) {
+          return true;
+        }
+
+        // Then check token - if we have one, permissions were granted
+        final token = await fcmSharedIsolate?.getToken();
+        final hasToken = token != null && token.isNotEmpty;
+
+        if (hasToken) {
+          // Store this for future checks
+          await store.setItemBool('ios_notification_permission', true);
+          return true;
+        }
+
+        return false;
+      }
+      // For other platforms, assume enabled
+      return true;
+    } catch (e) {
+      Logs().w('[Push] Error checking notification permissions', e);
+      return false;
     }
   }
 
@@ -324,6 +373,12 @@ class BackgroundPush {
             : fcmSharedIsolate?.getToken());
         Logs().d('BackgroundPush::pushToken: $_pushToken');
         if (_pushToken == null) throw ('PushToken is null');
+
+        // If we successfully got a token on iOS, store the permission status
+        if (Platform.isIOS && _pushToken != null && _pushToken!.isNotEmpty) {
+          await store.setItemBool('ios_notification_permission', true);
+          Logs().d('[Push] Stored iOS notification permission status');
+        }
       } catch (e, s) {
         Logs().w('[Push] cannot get token', e, e is String ? null : s);
         await _noFcmWarning();

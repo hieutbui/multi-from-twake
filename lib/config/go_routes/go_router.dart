@@ -21,11 +21,9 @@ import 'package:fluffychat/pages/multi_login/multi_login.dart';
 import 'package:fluffychat/pages/new_chat_or_group/new_chat_or_group.dart';
 import 'package:fluffychat/pages/new_folder/new_folder.dart';
 import 'package:fluffychat/pages/new_group/new_group_chat_info.dart';
-import 'package:fluffychat/pages/registration_contacts/registration_contacts.dart';
 import 'package:fluffychat/pages/registration_name/registration_name.dart';
 import 'package:fluffychat/pages/registration_nickname/models/registration_nickname_args.dart';
 import 'package:fluffychat/pages/registration_nickname/registration_nickname.dart';
-import 'package:fluffychat/pages/registration_notification/registration_notification.dart';
 import 'package:fluffychat/pages/registration_with_email/registration_with_email.dart';
 import 'package:fluffychat/pages/set_new_password/set_new_password.dart';
 import 'package:fluffychat/pages/settings_dashboard/settings_app_language/settings_app_language.dart';
@@ -173,26 +171,6 @@ abstract class AppRoutes {
               args: state.extra is RegistrationNicknameArgs
                   ? state.extra as RegistrationNicknameArgs
                   : null,
-            ),
-          ),
-          redirect: loggedInRedirect,
-        ),
-        GoRoute(
-          path: 'registrationNotification',
-          pageBuilder: (context, state) => defaultPageBuilder(
-            context,
-            RegistrationNotification(
-              userInfo: state.extra as Map<String, dynamic>? ?? {},
-            ),
-          ),
-          redirect: loggedInRedirect,
-        ),
-        GoRoute(
-          path: 'registrationContacts',
-          pageBuilder: (context, state) => defaultPageBuilder(
-            context,
-            RegistrationContacts(
-              userInfo: state.extra as Map<String, String>? ?? {},
             ),
           ),
           redirect: loggedInRedirect,
