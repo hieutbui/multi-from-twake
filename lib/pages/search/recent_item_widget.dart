@@ -103,15 +103,19 @@ class _GroupChatInformation extends StatelessWidget {
             size: avatarSize ?? RecentItemStyle.avatarSize,
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: 12),
         Flexible(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _SearchHighlightText(
                 text: recentChatPresentationSearch.displayName ?? "",
-                style: ListItemStyle.titleTextStyle(
-                  fontFamily: 'Inter',
+                style: TextStyle(
+                  fontSize: MultiMobileTypography.buttonFontLarge,
+                  fontFamily: MultiFonts.sfProDisplay,
+                  fontWeight: FontWeight.w500,
+                  height: 1.29,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
                 ),
                 searchWord: searchKeyword,
               ),
@@ -120,8 +124,13 @@ class _GroupChatInformation extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
                 softWrap: false,
-                style: ListItemStyle.subtitleTextStyle(
-                  fontFamily: 'Inter',
+                style: TextStyle(
+                  fontSize: MultiMobileTypography.bodyFontSubhead,
+                  fontFamily: MultiFonts.sfPro,
+                  fontWeight: FontWeight.w400,
+                  height: 1.20,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  letterSpacing: -0.24,
                 ),
               ),
             ],
