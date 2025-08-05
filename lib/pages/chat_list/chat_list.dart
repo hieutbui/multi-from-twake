@@ -27,6 +27,7 @@ import 'package:fluffychat/utils/adaptive_bottom_sheet.dart';
 import 'package:fluffychat/utils/dialog/twake_dialog.dart';
 import 'package:fluffychat/utils/extension/build_context_extension.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
+import 'package:fluffychat/utils/permission_service.dart';
 import 'package:fluffychat/utils/responsive/responsive_utils.dart';
 import 'package:fluffychat/utils/tor_stub.dart'
     if (dart.library.html) 'package:tor_detector_web/tor_detector_web.dart';
@@ -39,6 +40,8 @@ import 'package:fluffychat/widgets/mixins/popup_context_menu_action_mixin.dart';
 import 'package:fluffychat/widgets/mixins/popup_menu_widget_mixin.dart';
 import 'package:fluffychat/widgets/mixins/popup_menu_widget_style.dart';
 import 'package:fluffychat/widgets/mixins/twake_context_menu_mixin.dart';
+import 'package:fluffychat/widgets/request_contact_page.dart';
+import 'package:fluffychat/widgets/request_notification_page.dart';
 import 'package:fluffychat/widgets/twake_components/twake_icon_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -102,6 +105,9 @@ class ChatListController extends State<ChatList>
   final ScrollController scrollController = ScrollController();
 
   final StreamController<Client> _clientStream = StreamController.broadcast();
+
+  final PermissionHandlerService _permissionHandlerService =
+      PermissionHandlerService();
 
   String? activeSpaceId;
 
@@ -960,12 +966,80 @@ class ChatListController extends State<ChatList>
     // CallKeepManager().initialize();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (mounted) {
-        Matrix.of(context).backgroundPush?.setupPush();
+        await _checkNotificationPermissions();
+        await _checkContactPermissions();
       }
     });
     _checkTorBrowser();
     super.initState();
     tabController = TabController(length: folderCount, vsync: this);
+  }
+
+  Future<void> _checkNotificationPermissions() async {
+    final hasNotificationPermission =
+        await matrixState.backgroundPush?.areNotificationsEnabled() ?? false;
+
+    if (!hasNotificationPermission) {
+      await _showNotificationPermissionDialog();
+    }
+  }
+
+  Future<void> _checkContactPermissions() async {
+    final hasContactsPermission =
+        await _permissionHandlerService.hasContactsPermission;
+    if (!hasContactsPermission) {
+      await _showContactPermissionDialog();
+    }
+  }
+
+  Future<void> _showNotificationPermissionDialog() async {
+    final currentTheme = Theme.of(context);
+
+    await Navigator.of(context, rootNavigator: true).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (context) => Theme(
+          data: currentTheme,
+          child: RequestNotificationPage(
+            onTapEnableNotification: () => onTapEnableNotification(context),
+            onTapNotRightNow: () => onTapNotRightNow(context),
+            onBackButtonPressed: () => onTapNotRightNow(context),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _showContactPermissionDialog() async {
+    final currentTheme = Theme.of(context);
+
+    await Navigator.of(context, rootNavigator: true).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (context) => Theme(
+          data: currentTheme,
+          child: RequestContactPage(
+            onTapEnableContact: () => onTapEnableContact(context),
+            onTapNotRightNow: () => onTapNotRightNow(context),
+            onBackButtonPressed: () => onTapNotRightNow(context),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> onTapEnableNotification(BuildContext context) async {
+    await matrixState.backgroundPush?.setupPush();
+    Navigator.of(context).pop();
+  }
+
+  Future<void> onTapEnableContact(BuildContext context) async {
+    await _permissionHandlerService.requestContactsPermissionActions();
+    Navigator.of(context).pop();
+  }
+
+  Future<void> onTapNotRightNow(BuildContext context) async {
+    Navigator.of(context).pop();
   }
 
   void onOpenSearchPageInMultipleColumns() {

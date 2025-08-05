@@ -201,6 +201,14 @@ class PermissionHandlerService {
     return await Permission.contacts.status;
   }
 
+  Future<bool> get hasContactsPermission async {
+    return await Permission.contacts.isGranted;
+  }
+
+  Future<bool> get hasNotificationPermission async {
+    return await Permission.notification.isGranted;
+  }
+
   Future<PermissionStatus> requestContactsPermissionActions() async {
     final currentStatus = await contactsPermissionStatus;
     if (currentStatus == PermissionStatus.denied) {
