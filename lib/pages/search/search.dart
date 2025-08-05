@@ -23,9 +23,15 @@ import 'package:go_router/go_router.dart';
 import 'package:matrix/matrix.dart';
 
 class Search extends StatefulWidget {
+  final TextEditingController textEditingController;
+
   final VoidCallback? onCloseSearchPage;
 
-  const Search({super.key, this.onCloseSearchPage});
+  const Search({
+    super.key,
+    this.onCloseSearchPage,
+    required this.textEditingController,
+  });
 
   @override
   State<Search> createState() => SearchController();
@@ -46,7 +52,7 @@ class SearchController extends State<Search> with WidgetsBindingObserver {
   final preSearchRecentContactsNotifier =
       ValueNotifier<Either<Failure, Success>>(Right(SearchInitial()));
 
-  final TextEditingController textEditingController = TextEditingController();
+  late TextEditingController textEditingController;
 
   final scrollController = ScrollController();
 
@@ -185,6 +191,7 @@ class SearchController extends State<Search> with WidgetsBindingObserver {
 
   @override
   void initState() {
+    textEditingController = widget.textEditingController;
     searchContactAndRecentChatController =
         SearchContactsAndChatsController(context);
     super.initState();
@@ -234,7 +241,6 @@ class SearchController extends State<Search> with WidgetsBindingObserver {
     omniUserSearchController.dispose();
     serverSearchController.dispose();
     preSearchRecentContactsNotifier.dispose();
-    textEditingController.dispose();
     scrollController.dispose();
     super.dispose();
   }
