@@ -9,17 +9,17 @@ import 'package:fluffychat/di/global/dio_cache_interceptor_for_client.dart';
 import 'package:fluffychat/di/global/get_it_initializer.dart';
 import 'package:fluffychat/domain/model/room/room_extension.dart';
 import 'package:fluffychat/pages/bootstrap/bootstrap_dialog.dart';
+import 'package:fluffychat/pages/bootstrap/tom_bootstrap_dialog.dart';
 import 'package:fluffychat/pages/chat_list/chat_custom_slidable_action.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_actions.dart';
+import 'package:fluffychat/pages/chat_list/chat_list_view.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_view_style.dart';
 import 'package:fluffychat/pages/chat_list/create_group_bottom_sheet.dart';
 import 'package:fluffychat/pages/chat_list/edit_group_bottom_sheet.dart';
-import 'package:fluffychat/presentation/mixins/comparable_presentation_contact_mixin.dart';
-import 'package:fluffychat/pages/bootstrap/tom_bootstrap_dialog.dart';
-import 'package:fluffychat/pages/chat_list/chat_list_view.dart';
 import 'package:fluffychat/pages/settings_dashboard/settings_security/settings_security.dart';
 import 'package:fluffychat/presentation/enum/chat_list/chat_list_enum.dart';
 import 'package:fluffychat/presentation/extensions/client_extension.dart';
+import 'package:fluffychat/presentation/mixins/comparable_presentation_contact_mixin.dart';
 import 'package:fluffychat/presentation/mixins/go_to_group_chat_mixin.dart';
 import 'package:fluffychat/presentation/model/chat_list/chat_selection_actions.dart';
 import 'package:fluffychat/resource/image_paths.dart';
@@ -102,6 +102,8 @@ class ChatListController extends State<ChatList>
 
   final TextEditingController searchChatController = TextEditingController();
 
+  final FocusNode searchChatFocusNode = FocusNode();
+
   final ScrollController scrollController = ScrollController();
 
   final StreamController<Client> _clientStream = StreamController.broadcast();
@@ -131,6 +133,8 @@ class ChatListController extends State<ChatList>
   int folderCount = 3;
 
   TapDownDetails? tapDownDetails;
+
+  ValueNotifier<bool> isShowSearchView = ValueNotifier(false);
 
   Client get activeClient => matrixState.client;
 
@@ -882,6 +886,18 @@ class ChatListController extends State<ChatList>
     }
   }
 
+  void showSearchView() {
+    if (isShowSearchView.value == true) return;
+    isShowSearchView.value = true;
+  }
+
+  void hideSearchView() {
+    if (isShowSearchView.value == false) return;
+    searchChatFocusNode.unfocus();
+    searchChatController.text = "";
+    isShowSearchView.value = false;
+  }
+
   List<ChatListActions> _getListTabBarActionMenu() {
     return ChatListActions.values;
   }
@@ -973,6 +989,14 @@ class ChatListController extends State<ChatList>
     _checkTorBrowser();
     super.initState();
     tabController = TabController(length: folderCount, vsync: this);
+
+    searchChatFocusNode.addListener(
+      () {
+        if (searchChatFocusNode.hasFocus) {
+          showSearchView();
+        }
+      },
+    );
   }
 
   Future<void> _checkNotificationPermissions() async {
