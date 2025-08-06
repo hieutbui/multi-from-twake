@@ -93,7 +93,7 @@ abstract class TwakeThemes {
       fontWeight: FontWeight.w700,
       fontSize: MultiMobileTypography.headlineFontExtraLarge,
       height: 1.24,
-      letterSpacing: 0.3740000081062317,
+      letterSpacing: -0.55,
     ), // Mapped from Figma's headlineLargeTitle
     headlineMedium: TextStyle(
       fontFamily: MultiFonts.sfPro,
