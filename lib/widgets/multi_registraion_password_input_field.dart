@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -118,6 +119,10 @@ class _MultiRegistrationPasswordInputFieldState
                       strong:
                           Color(0xFF70BC7E) /* State-Success-Text-Default */,
                     ),
+                    backgroundColor:
+                        Theme.of(context).brightness == Brightness.dark
+                            ? const MultiDarkColors().additionalNeutralGrey
+                            : const MultiLightColors().backgroundInputsDefault,
                     duration: const Duration(milliseconds: 300),
                     thickness: 4.0,
                     callback: _updateStrength,
@@ -137,7 +142,7 @@ class _MultiRegistrationPasswordInputFieldState
                         fontWeight: FontWeight.w500,
                         height: 1.38,
                         letterSpacing: -0.08,
-                        color: _getStrengthColor(strength),
+                        color: _getStrengthColor(strength, context),
                       ),
                     );
                   },
@@ -179,9 +184,11 @@ class _MultiRegistrationPasswordInputFieldState
     }
   }
 
-  Color _getStrengthColor(double strength) {
+  Color _getStrengthColor(double strength, BuildContext context) {
     if (strength == 0) {
-      return Colors.white;
+      return Theme.of(context).brightness == Brightness.dark
+          ? const MultiDarkColors().additionalNeutralGrey
+          : const MultiLightColors().backgroundInputsDefault;
     } else if (strength < 1 / 3) {
       return const Color(0xFFEE9D41) /* State-Attention-Text-Main */;
     } else if (strength < 2 / 3) {
