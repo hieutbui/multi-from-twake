@@ -72,16 +72,7 @@ class _MultiRegistrationPasswordInputFieldState
           // Keep autovalidateMode to clear errors as you type
           autovalidateMode: AutovalidateMode.onUserInteraction,
           // Use simpler minLength validator that just checks length
-          validator: FormBuilderValidators.compose([
-            if (widget.isValidatePasswordStrength)
-              FormBuilderValidators.password(
-                errorText: 'Your password is not strong enough',
-              ),
-            if (widget.isRequired ?? false)
-              FormBuilderValidators.required(
-                errorText: 'Password is required',
-              ),
-          ]),
+          validator: _validator,
           style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                 color: Theme.of(context).colorScheme.onBackground,
               ),
@@ -202,5 +193,19 @@ class _MultiRegistrationPasswordInputFieldState
     setState(() {
       _password = value ?? '';
     });
+  }
+
+  String? _validator(String? value) {
+    if (!widget.focusNode.hasFocus) return null;
+
+    return FormBuilderValidators.compose([
+      FormBuilderValidators.password(
+        errorText: 'Your password is not strong enough',
+      ),
+      if (widget.isRequired ?? false)
+        FormBuilderValidators.required(
+          errorText: 'Password is required',
+        ),
+    ])(value);
   }
 }
