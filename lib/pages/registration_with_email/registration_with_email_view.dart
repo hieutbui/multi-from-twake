@@ -8,6 +8,7 @@ import 'package:fluffychat/widgets/multi_registraion_password_input_field.dart';
 import 'package:fluffychat/widgets/multi_registration_button.dart';
 import 'package:fluffychat/widgets/multi_registration_email_input_field.dart';
 import 'package:fluffychat/widgets/multi_registration_title_with_background.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
@@ -131,33 +132,25 @@ class RegistrationWithEmailView extends StatelessWidget {
                 const SizedBox(height: 12.0),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        'By continuing, you agree to our ',
-                        style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                              color: Theme.of(context).colorScheme.tertiary,
-                            ),
-                      ),
-                      TextButton(
-                        onPressed: controller.onTapRule,
-                        style: TextButton.styleFrom(
-                          minimumSize: Size.zero,
-                          padding: EdgeInsets.zero,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  child: Text.rich(
+                    TextSpan(
+                      text: 'By continuing, you agree to our ',
+                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                            color: MultiColors.of(context).textMainSecondary,
+                          ),
+                      children: [
+                        TextSpan(
+                          text: 'Rules',
+                          style:
+                              Theme.of(context).textTheme.labelLarge!.copyWith(
+                                    color: MultiColors.of(context)
+                                        .textMainPrimaryDefault,
+                                  ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = controller.onTapRule,
                         ),
-                        child: Text(
-                          'Rules',
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelLarge!
-                              .copyWith(
-                                color: Theme.of(context).colorScheme.onSurface,
-                              ),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(height: 32.0),
