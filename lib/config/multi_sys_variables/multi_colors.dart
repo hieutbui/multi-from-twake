@@ -957,7 +957,7 @@ class MultiDarkColors extends MultiColors {
   @override
   Color get backgroundGroupsActive => const Color(0xffffffff);
   @override
-  Color get additionalNeutralGrey => const Color(0xffffffff);
+  Color get additionalNeutralGrey => const Color(0xff7079A4);
   @override
   Color get additionalScrollIndicator => const Color(0xffd1d9e7);
   @override
