@@ -77,6 +77,7 @@ import 'package:fluffychat/di/global/hive_di.dart';
 import 'package:fluffychat/di/global/network_connectivity_di.dart';
 import 'package:fluffychat/di/global/network_di.dart';
 import 'package:fluffychat/domain/contact_manager/contacts_manager.dart';
+import 'package:fluffychat/domain/new_group_member_manger/new_group_member_manager.dart';
 import 'package:fluffychat/domain/repository/auth_repository.dart';
 import 'package:fluffychat/domain/repository/contact/address_book_repository.dart';
 import 'package:fluffychat/domain/repository/contact/hive_contact_repository.dart';
@@ -469,6 +470,9 @@ class GetItInitializer {
     );
     getIt.registerSingleton<ContactsManager>(
       ContactsManager(),
+    );
+    getIt.registerSingleton<NewGroupMemberManager>(
+      NewGroupMemberManager(),
     );
     getIt.registerLazySingleton<SaveLanguageInteractor>(
       () => SaveLanguageInteractor(
