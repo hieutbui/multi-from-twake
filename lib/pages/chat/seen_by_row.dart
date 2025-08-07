@@ -1,5 +1,7 @@
 import 'package:fluffychat/pages/chat/events/message_time_style.dart';
+import 'package:fluffychat/resource/image_paths.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:matrix/matrix.dart';
 
 enum MessageStatus {
@@ -76,29 +78,21 @@ class SeenByRow extends StatelessWidget {
           size: MessageTimeStyle.seenByRowIconSize,
         );
       case MessageStatus.sent:
-        return Icon(
-          Icons.done_all,
-          // color: MessageTimeStyle.seenByRowIconSecondaryColor(
-          //   timelineOverlayMessage,
-          //   context,
-          // ),
-          color: Colors.white,
-          size: MessageTimeStyle.seenByRowIconSize,
+        return SvgPicture.asset(
+          ImagePaths.icCheck,
+          width: MessageTimeStyle.seenByRowIconSize,
         );
       case MessageStatus.hasBeenSeen:
-        return Icon(
-          Icons.done_all,
-          color: MessageTimeStyle.seenByRowIconPrimaryColor(
-            timelineOverlayMessage,
-            context,
-          ),
-          size: MessageTimeStyle.seenByRowIconSize,
+        return SvgPicture.asset(
+          ImagePaths.icDoubleCheck,
+          width: MessageTimeStyle.seenByRowIconSize,
         );
       case MessageStatus.error:
-        return Icon(
-          Icons.error,
-          color: Theme.of(context).colorScheme.error,
-          size: MessageTimeStyle.seenByRowIconSize,
+        return Text(
+          'Delivery failed',
+          style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                color: Theme.of(context).colorScheme.error,
+              ),
         );
     }
   }

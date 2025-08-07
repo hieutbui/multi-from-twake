@@ -1,16 +1,17 @@
 import 'package:fluffychat/config/app_config.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:fluffychat/config/themes.dart';
 import 'package:fluffychat/domain/model/room/room_extension.dart';
 import 'package:fluffychat/presentation/mixins/chat_list_item_mixin.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_item_style.dart';
+import 'package:fluffychat/resource/image_paths.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
 import 'package:fluffychat/utils/room_status_extension.dart';
 import 'package:fluffychat/utils/string_extension.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
-import 'package:linagora_design_flutter/colors/linagora_ref_colors.dart';
-import 'package:fluffychat/config/multi_sys_variables/multi_sys_colors.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:matrix/matrix.dart';
 
 class ChatListItemSubtitle extends StatelessWidget with ChatListItemMixin {
@@ -67,12 +68,12 @@ class ChatListItemSubtitle extends StatelessWidget with ChatListItemMixin {
                     .getAllMentionedUserIdsFromMessage(room)
                     .contains(Matrix.of(context).client.userID);
                 return lastEvent.senderId == Matrix.of(context).client.userID
-                    ? Icon(
-                        Icons.done_all,
-                        color: lastEvent.receipts.isEmpty
-                            ? LinagoraRefColors.material().tertiary[30]
-                            : MultiSysColors.material().secondary,
-                        size: 20,
+                    ? SvgPicture.asset(
+                        lastEvent.receipts.isEmpty
+                            ? ImagePaths.icCheck
+                            : ImagePaths.icDoubleCheck,
+                        width: 20,
+                        color: MultiColors.of(context).stateSuccessTextDefault,
                       )
                     : AnimatedContainer(
                         duration: TwakeThemes.animationDuration,
