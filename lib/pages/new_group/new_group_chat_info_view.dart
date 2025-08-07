@@ -7,6 +7,7 @@ import 'package:fluffychat/config/multi_sys_variables/multi_typography.dart';
 import 'package:fluffychat/pages/new_group/new_group_chat_info.dart';
 import 'package:fluffychat/pages/new_group/new_group_chat_info_style.dart';
 import 'package:fluffychat/pages/new_group/widget/expansion_participants_list.dart';
+import 'package:fluffychat/presentation/model/contact/presentation_contact.dart';
 import 'package:fluffychat/presentation/model/pick_avatar_state.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions/int_extension.dart';
 import 'package:fluffychat/widgets/context_menu_builder_ios_paste_without_permission.dart';
@@ -94,8 +95,15 @@ class NewGroupChatInfoView extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Expanded(
-                  child: ExpansionParticipantsList(
-                    contactsList: newGroupInfoController.contactsList ?? {},
+                  child: ValueListenableBuilder<Set<PresentationContact>>(
+                    valueListenable: newGroupInfoController
+                        .contactSelectionManager.selectedContacts,
+                    builder: (context, value, child) {
+                      return ExpansionParticipantsList(
+                        contactsList: value,
+                        onDeleteMember: newGroupInfoController.deleteMember,
+                      );
+                    },
                   ),
                 ),
               ],

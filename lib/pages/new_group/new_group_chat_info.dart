@@ -8,6 +8,7 @@ import 'package:fluffychat/domain/app_state/room/upload_content_state.dart';
 import 'package:fluffychat/domain/app_state/validator/verify_name_view_state.dart';
 import 'package:fluffychat/domain/model/extensions/validator_failure_extension.dart';
 import 'package:fluffychat/domain/model/verification/name_with_space_only_validator.dart';
+import 'package:fluffychat/domain/new_group_member_manger/new_group_member_manager.dart';
 import 'package:fluffychat/domain/usecase/verify_name_interactor.dart';
 import 'package:fluffychat/pages/new_group/new_group_chat_info_view.dart';
 import 'package:fluffychat/pages/new_group/new_group_info_controller.dart';
@@ -37,9 +38,7 @@ import 'package:linagora_design_flutter/images_picker/images_picker.dart';
 import 'package:wechat_camera_picker/wechat_camera_picker.dart';
 
 class NewGroupChatInfo extends StatefulWidget {
-  final Set<PresentationContact> contactsList;
-
-  const NewGroupChatInfo({super.key, required this.contactsList});
+  const NewGroupChatInfo({super.key});
 
   @override
   State<StatefulWidget> createState() => NewGroupChatInfoController();
@@ -61,14 +60,14 @@ class NewGroupChatInfoController extends State<NewGroupChatInfo>
   final avatarFilePickerNotifier = ValueNotifier<MatrixFile?>(null);
   VerifyNameInteractor verifyNameInteractor = getIt.get<VerifyNameInteractor>();
 
+  final contactSelectionManager = getIt.get<NewGroupMemberManager>();
+
   final groupNameFocusNode = FocusNode();
   StreamSubscription? createNewGroupChatInteractorStreamSubscription;
 
   final responsiveUtils = getIt.get<ResponsiveUtils>();
 
   String groupName = "";
-
-  Set<PresentationContact>? contactsList;
 
   Future<ServerConfig> getServerConfig() async {
     final serverConfig = await Matrix.of(context).client.getConfig();
@@ -77,6 +76,10 @@ class NewGroupChatInfoController extends State<NewGroupChatInfo>
 
   void toggleEnableEncryption() {
     enableEncryptionNotifier.value = !enableEncryptionNotifier.value;
+  }
+
+  void deleteMember(PresentationContact contact) {
+    contactSelectionManager.removeSelectedContact(contact);
   }
 
   Future<Set<PresentationContact>> getAllContactsGroupChat({
@@ -92,7 +95,11 @@ class NewGroupChatInfoController extends State<NewGroupChatInfo>
         matrixId: Matrix.of(context).client.userID,
       ),
     };
-    newContactsList.addAll(getSelectedValidContacts(contactsList ?? {}));
+    newContactsList.addAll(
+      getSelectedValidContacts(
+        contactSelectionManager.selectedContacts.value,
+      ),
+    );
     return newContactsList;
   }
 
@@ -103,10 +110,9 @@ class NewGroupChatInfoController extends State<NewGroupChatInfo>
       matrixClient: client,
       createNewGroupChatRequest: CreateNewGroupChatRequest(
         groupName: groupName,
-        invite: getSelectedValidContacts(contactsList ?? {})
-            .map((contact) => contact.matrixId)
-            .whereNotNull()
-            .toList(),
+        invite: getSelectedValidContacts(
+          contactSelectionManager.selectedContacts.value,
+        ).map((contact) => contact.matrixId).whereNotNull().toList(),
         enableEncryption: enableEncryptionNotifier.value,
         urlAvatar: urlAvatar,
         powerLevelContentOverride: {
@@ -341,7 +347,6 @@ class NewGroupChatInfoController extends State<NewGroupChatInfo>
   void initState() {
     listenGroupNameChanged();
     listenToPickAvatarUIState(context);
-    contactsList = widget.contactsList;
     super.initState();
   }
 
