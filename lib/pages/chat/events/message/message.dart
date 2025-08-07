@@ -276,6 +276,14 @@ class _MessageState extends State<Message> with MessageAvatarMixin {
               recentEmojiFuture: widget.recentEmojiFuture,
             ),
           ),
+          placeHolderWidgetForOwnMessage(
+            widget.onAvatarTap,
+            sameSender: widget.event.isSameSenderWith(widget.previousEvent),
+            ownMessage: widget.event.isOwnMessage,
+            event: widget.event,
+            context: context,
+            selectMode: widget.selectMode,
+          ),
         ];
         final row = Row(
           crossAxisAlignment: CrossAxisAlignment.end,
