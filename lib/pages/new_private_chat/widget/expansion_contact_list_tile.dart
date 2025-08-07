@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart' as dartz;
 import 'package:fluffychat/app_state/failure.dart';
 import 'package:fluffychat/app_state/success.dart';
+import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
 import 'package:fluffychat/data/model/invitation/invitation_status_response.dart';
 import 'package:fluffychat/domain/app_state/invitation/get_invitation_status_state.dart';
 import 'package:fluffychat/domain/model/contact/contact_status.dart';
@@ -28,6 +29,7 @@ class ExpansionContactListTile extends StatefulWidget {
   final String highlightKeyword;
   final bool enableInvitation;
   final void Function()? onContactTap;
+  final void Function(PresentationContact)? onDeleteMember;
 
   const ExpansionContactListTile({
     super.key,
@@ -35,6 +37,7 @@ class ExpansionContactListTile extends StatefulWidget {
     this.highlightKeyword = '',
     this.enableInvitation = false,
     this.onContactTap,
+    this.onDeleteMember,
   });
 
   @override
@@ -238,6 +241,18 @@ class _ExpansionContactListTileState extends State<ExpansionContactListTile>
                     ],
                   ),
                 ),
+                if (widget.onDeleteMember != null)
+                  TextButton(
+                    onPressed: () =>
+                        widget.onDeleteMember?.call(widget.contact),
+                    child: Text(
+                      'Delete',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            color:
+                                MultiColors.of(context).buttonsMainGhostError,
+                          ),
+                    ),
+                  ),
               ],
             );
           },

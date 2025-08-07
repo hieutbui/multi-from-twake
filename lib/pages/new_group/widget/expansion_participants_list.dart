@@ -7,10 +7,12 @@ import 'package:flutter_gen/gen_l10n/l10n.dart';
 
 class ExpansionParticipantsList extends StatefulWidget {
   final Set<PresentationContact> contactsList;
+  final void Function(PresentationContact contact)? onDeleteMember;
 
   const ExpansionParticipantsList({
     super.key,
     required this.contactsList,
+    this.onDeleteMember,
   });
 
   @override
@@ -75,6 +77,7 @@ class _ExpansionParticipantsListState extends State<ExpansionParticipantsList> {
                         .map(
                           (contact) => ExpansionContactListTile(
                             contact: contact,
+                            onDeleteMember: widget.onDeleteMember,
                           ),
                         )
                         .toList(),
