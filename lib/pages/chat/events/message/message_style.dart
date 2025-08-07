@@ -108,6 +108,9 @@ class MessageStyle {
     right: 8.0,
   );
 
+  static const EdgeInsetsDirectional paddingAvatarForOwnMessage =
+      EdgeInsetsDirectional.only(start: 8.0);
+
   static EdgeInsetsDirectional paddingMessageContainer(
     bool displayTime,
     BuildContext context,
