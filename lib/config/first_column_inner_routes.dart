@@ -2,7 +2,6 @@ import 'package:fluffychat/pages/new_group/new_group.dart';
 import 'package:fluffychat/pages/new_group/new_group_chat_info.dart';
 import 'package:fluffychat/pages/new_private_chat/new_private_chat.dart';
 import 'package:fluffychat/pages/search/search.dart';
-import 'package:fluffychat/presentation/model/contact/presentation_contact.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -37,15 +36,16 @@ class FirstColumnInnerRoutes {
           const NewPrivateChat(),
         );
       case 'innernavigator/newgroupchatinfo':
-        if (arguments is Set<PresentationContact>) {
-          return _defaultPageRoute(
-            NewGroupChatInfo(
-              contactsList: arguments,
-            ),
-          );
-        } else {
-          return _defaultPageRoute(const NewGroupChatInfo(contactsList: {}));
-        }
+        // if (arguments is Set<PresentationContact>) {
+        //   return _defaultPageRoute(
+        //     NewGroupChatInfo(
+        //       contactsList: arguments,
+        //     ),
+        //   );
+        // } else {
+        //   return _defaultPageRoute(const NewGroupChatInfo(contactsList: {}));
+        // }
+        return _defaultPageRoute(const NewGroupChatInfo());
       default:
         return _defaultPageRoute(const SizedBox.shrink());
     }

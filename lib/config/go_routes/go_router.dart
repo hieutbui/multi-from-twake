@@ -33,7 +33,6 @@ import 'package:fluffychat/pages/twake_welcome/twake_welcome.dart';
 import 'package:fluffychat/pages/entrance/entrance.dart';
 import 'package:fluffychat/presentation/model/chat/chat_router_input_argument.dart';
 import 'package:fluffychat/presentation/model/forward/forward_argument.dart';
-import 'package:fluffychat/presentation/model/contact/presentation_contact.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
 import 'package:fluffychat/utils/responsive/responsive_utils.dart';
 import 'package:fluffychat/widgets/layouts/adaptive_layout/app_adaptive_scaffold_body.dart';
@@ -358,18 +357,22 @@ abstract class AppRoutes {
                       GoRoute(
                         path: 'newgroupinfo',
                         pageBuilder: (context, state) {
-                          if (state.extra is Set<PresentationContact>) {
-                            return defaultPageBuilder(
-                              context,
-                              NewGroupChatInfo(
-                                contactsList:
-                                    state.extra as Set<PresentationContact>,
-                              ),
-                            );
-                          }
+                          // if (state.extra is Set<PresentationContact>) {
+                          //   return defaultPageBuilder(
+                          //     context,
+                          //     NewGroupChatInfo(
+                          //       contactsList:
+                          //           state.extra as Set<PresentationContact>,
+                          //     ),
+                          //   );
+                          // }
+                          // return defaultPageBuilder(
+                          //   context,
+                          //   const NewGroupChatInfo(contactsList: {}),
+                          // );
                           return defaultPageBuilder(
                             context,
-                            const NewGroupChatInfo(contactsList: {}),
+                            const NewGroupChatInfo(),
                           );
                         },
                       ),
