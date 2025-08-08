@@ -127,6 +127,10 @@ class RegistrationNameView extends StatelessWidget {
                                       color: MultiColors.of(context)
                                           .textMainTertiaryDisabled,
                                     ),
+                                fillColor: Colors.transparent,
+                                border: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
                               ),
                             ),
                           ],

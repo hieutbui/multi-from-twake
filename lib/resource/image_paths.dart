@@ -128,6 +128,8 @@ class ImagePaths {
   static String get icRecord => _getImagePath('ic_record.svg');
   static String get icFlipForward => _getImagePath('ic_flip_forward.svg');
   static String get icEdit => _getImagePath('ic_edit.svg');
+  static String get imgRegistrationNameBackground =>
+      _getImagePath('img_registration_name_background.png');
 
   static String _getImagePath(String imageName) {
     return AssetsPaths.images + imageName;
