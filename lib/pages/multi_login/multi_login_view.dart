@@ -182,7 +182,7 @@ class MultiLoginView extends StatelessWidget {
                   padding: MultiLoginViewStyle.padding,
                   child: AppleAuthButton(
                     onPressed: controller.onContinueWithApple,
-                    text: 'Sign Up with Apple',
+                    text: 'Continue with Apple',
                     style: AuthButtonStyle(
                       separator: 8.0,
                       buttonColor:
@@ -204,7 +204,7 @@ class MultiLoginView extends StatelessWidget {
                   padding: MultiLoginViewStyle.padding,
                   child: GoogleAuthButton(
                     onPressed: controller.onContinueWithGoogle,
-                    text: 'Sign Up with Google',
+                    text: 'Continue with Google',
                     style: AuthButtonStyle(
                       separator: 8.0,
                       buttonColor:
