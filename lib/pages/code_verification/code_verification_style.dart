@@ -11,4 +11,12 @@ class CodeVerificationStyle {
 
   static const EdgeInsetsGeometry padding =
       EdgeInsets.symmetric(horizontal: 20.0);
+
+  static double getOTPFieldWidth(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    const marginLeft = 20;
+    const marginRight = 20;
+    const otpInputSeparate = 12;
+    return (screenWidth - marginLeft - marginRight - otpInputSeparate * 5) / 6;
+  }
 }
