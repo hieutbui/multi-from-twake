@@ -29,156 +29,152 @@ class RegistrationNicknameView extends StatelessWidget {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  child: Column(
-                    children: [
-                      // Main Content
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 60),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const SizedBox(height: 60),
 
-                            // AI Assistant Introduction Card
-                            Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.all(20),
-                              decoration: RegistrationNameViewStyle
-                                  .helloContainerDecoration,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Image.asset(
-                                    ImagePaths.imgHello,
-                                    width: 62,
-                                    height: 62,
-                                  ),
-                                  const SizedBox(width: 16),
-                                  Expanded(
-                                    child: Column(
+                        // AI Assistant Introduction Card
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(20),
+                          decoration: RegistrationNameViewStyle
+                              .helloContainerDecoration,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Image.asset(
+                                ImagePaths.imgHello,
+                                width: 62,
+                                height: 62,
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Hey, I\'m MULTI 👋',
+                                      style: TextStyle(
+                                        color: Colors.white.withAlpha(
+                                          222,
+                                        ) /* Text-Reversed-Primary */,
+                                        fontSize: 17,
+                                        fontFamily: 'SFPro',
+                                        fontWeight: FontWeight.w500,
+                                        height: 1.29,
+                                        letterSpacing: -0.41,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      'I\'m here to help you plan smarter and stay organized',
+                                      style: TextStyle(
+                                        color: Colors.white.withAlpha(
+                                          153,
+                                        ) /* Text-Reversed-Secondary */,
+                                        fontSize: 15,
+                                        fontFamily: 'SFPro',
+                                        fontWeight: FontWeight.w400,
+                                        height: 1.20,
+                                        letterSpacing: -0.24,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        const SizedBox(height: 48),
+
+                        Text(
+                          'Choose your Nickname',
+                          style: TextStyle(
+                            color: Colors.white
+                                .withAlpha(153) /* Text-Main-Secondary */,
+                            fontSize: 17,
+                            fontFamily: 'SFPro',
+                            fontWeight: FontWeight.w400,
+                            height: 1.18,
+                            letterSpacing: -0.41,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 16),
+                        TextFormField(
+                          controller: controller.nicknameController,
+                          onChanged: controller.handleNicknameInput,
+                          focusNode: controller.nicknameFocusNode,
+                          decoration: const InputDecoration(
+                            labelText: 'Nickname',
+                          ),
+                          textInputAction: TextInputAction.done,
+                          autofocus: true,
+                        ),
+                        const SizedBox(height: 16),
+                        ValueListenableBuilder(
+                          valueListenable: controller.nameSuggestions,
+                          builder: (context, suggestions, child) {
+                            return Wrap(
+                              spacing: 8,
+                              runSpacing: 8,
+                              alignment: WrapAlignment.start,
+                              children: suggestions.map((suggestion) {
+                                return GestureDetector(
+                                  onTap: () => controller
+                                      .selectNicknameSuggestion(suggestion),
+                                  child: Container(
+                                    height: 22,
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12.0,
+                                      vertical: 4.0,
+                                    ),
+                                    decoration: ShapeDecoration(
+                                      color: MultiColors.of(context)
+                                          .additionalBlackout,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          'Hey, I\'m MULTI 👋',
+                                          suggestion,
+                                          textAlign: TextAlign.center,
                                           style: TextStyle(
-                                            color: Colors.white.withAlpha(
-                                              222,
-                                            ) /* Text-Reversed-Primary */,
-                                            fontSize: 17,
-                                            fontFamily: 'SFPro',
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.29,
-                                            letterSpacing: -0.41,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 8),
-                                        Text(
-                                          'I\'m here to help you plan smarter and stay organized',
-                                          style: TextStyle(
-                                            color: Colors.white.withAlpha(
-                                              153,
-                                            ) /* Text-Reversed-Secondary */,
-                                            fontSize: 15,
+                                            color: Colors.white.withOpacity(
+                                              0.60,
+                                            ), // Text-Reversed-Secondary
+                                            fontSize: 12,
                                             fontFamily: 'SFPro',
                                             fontWeight: FontWeight.w400,
-                                            height: 1.20,
-                                            letterSpacing: -0.24,
+                                            height: 1.33,
                                           ),
+                                        ),
+                                        const SizedBox(width: 4),
+                                        SvgPicture.asset(
+                                          ImagePaths.icPlusCircle,
+                                          width: 12,
+                                          height: 12,
                                         ),
                                       ],
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
-
-                            const SizedBox(height: 48),
-
-                            Text(
-                              'Choose your Nickname',
-                              style: TextStyle(
-                                color: Colors.white
-                                    .withAlpha(153) /* Text-Main-Secondary */,
-                                fontSize: 17,
-                                fontFamily: 'SFPro',
-                                fontWeight: FontWeight.w400,
-                                height: 1.18,
-                                letterSpacing: -0.41,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            TextFormField(
-                              controller: controller.nicknameController,
-                              onChanged: controller.handleNicknameInput,
-                              focusNode: controller.nicknameFocusNode,
-                              decoration: const InputDecoration(
-                                labelText: 'Nickname',
-                              ),
-                              textInputAction: TextInputAction.done,
-                              autofocus: true,
-                            ),
-                            const SizedBox(height: 16),
-                            ValueListenableBuilder(
-                              valueListenable: controller.nameSuggestions,
-                              builder: (context, suggestions, child) {
-                                return Wrap(
-                                  spacing: 8,
-                                  runSpacing: 8,
-                                  alignment: WrapAlignment.start,
-                                  children: suggestions.map((suggestion) {
-                                    return GestureDetector(
-                                      onTap: () => controller
-                                          .selectNicknameSuggestion(suggestion),
-                                      child: Container(
-                                        height: 22,
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 12.0,
-                                          vertical: 4.0,
-                                        ),
-                                        decoration: ShapeDecoration(
-                                          color: MultiColors.of(context)
-                                              .additionalBlackout,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(100),
-                                          ),
-                                        ),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              suggestion,
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Colors.white.withOpacity(
-                                                  0.60,
-                                                ), // Text-Reversed-Secondary
-                                                fontSize: 12,
-                                                fontFamily: 'SFPro',
-                                                fontWeight: FontWeight.w400,
-                                                height: 1.33,
-                                              ),
-                                            ),
-                                            const SizedBox(width: 4),
-                                            SvgPicture.asset(
-                                              ImagePaths.icPlusCircle,
-                                              width: 12,
-                                              height: 12,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  }).toList(),
                                 );
-                              },
-                            ),
-                          ],
+                              }).toList(),
+                            );
+                          },
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
