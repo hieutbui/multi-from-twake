@@ -224,6 +224,8 @@ abstract class TwakeThemes {
               color: MultiColors.of(context, brightness: brightness)
                   .textMainTertiaryDisabled,
               overflow: TextOverflow.ellipsis,
+              // Floating label font size auto scale down to 3/4 when in floating status
+              fontSize: MultiMobileTypography.captionFontCaption2 / (3 / 4),
             ),
           ),
           filled: true,
