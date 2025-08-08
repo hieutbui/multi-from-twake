@@ -137,7 +137,7 @@ class RegistrationNameView extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsetsDirectional.all(20),
                 child: ValueListenableBuilder(
                   valueListenable: controller.isButtonEnabledNotifier,
                   builder: (context, isEnabled, _) {
