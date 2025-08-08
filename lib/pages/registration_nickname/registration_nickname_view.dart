@@ -7,7 +7,6 @@ import 'package:fluffychat/resource/image_paths.dart';
 import 'package:fluffychat/widgets/app_bars/registration_app_bar.dart';
 import 'package:fluffychat/widgets/multi_registration_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class RegistrationNicknameView extends StatelessWidget {
   final RegistrationNicknameController controller;
@@ -158,12 +157,6 @@ class RegistrationNicknameView extends StatelessWidget {
                                             fontWeight: FontWeight.w400,
                                             height: 1.33,
                                           ),
-                                        ),
-                                        const SizedBox(width: 4),
-                                        SvgPicture.asset(
-                                          ImagePaths.icPlusCircle,
-                                          width: 12,
-                                          height: 12,
                                         ),
                                       ],
                                     ),
