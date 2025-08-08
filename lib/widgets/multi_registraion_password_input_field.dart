@@ -1,8 +1,15 @@
 import 'package:fluffychat/config/multi_sys_variables/multi_colors.dart';
+import 'package:fluffychat/widgets/custom_password_strength_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:password_strength_indicator/password_strength_indicator.dart';
+
+class _Constants {
+  static const Color indicatorWeekColor = Color(0xFFEE9D41);
+  static const Color indicatorMediumColor = Colors.yellow;
+  static const Color indicatorStrongColor = Color(0xFF70BC7E);
+}
 
 class MultiRegistrationPasswordInputField extends StatefulWidget {
   final Key fieldKey;
@@ -102,23 +109,23 @@ class _MultiRegistrationPasswordInputFieldState
               children: [
                 Expanded(
                   flex: 3,
-                  child: PasswordStrengthIndicator(
-                    password: _password,
-                    colors: const StrengthColors(
-                      weak: Color(0xFFEE9D41) /* State-Attention-Text-Main */,
-                      medium: Colors.yellow,
-                      strong:
-                          Color(0xFF70BC7E) /* State-Success-Text-Default */,
-                    ),
-                    backgroundColor:
-                        Theme.of(context).brightness == Brightness.dark
+                  child: ValueListenableBuilder(
+                    valueListenable: _strength,
+                    builder: (context, strength, child) {
+                      return CustomPasswordStrengthIndicator(
+                        password: _password,
+                        colors: getStrengthColorsOfIndicator(strength, context),
+                        backgroundColor: Theme.of(context).brightness ==
+                                Brightness.dark
                             ? const MultiDarkColors().additionalNeutralGrey
                             : const MultiLightColors().backgroundInputsDefault,
-                    duration: const Duration(milliseconds: 300),
-                    thickness: 4.0,
-                    callback: _updateStrength,
-                    curve: Curves.easeOut,
-                    style: StrengthBarStyle.dashed,
+                        duration: const Duration(milliseconds: 300),
+                        thickness: 4.0,
+                        callback: _updateStrength,
+                        curve: Curves.easeOut,
+                        style: StrengthBarStyle.dashed,
+                      );
+                    },
                   ),
                 ),
                 const SizedBox(width: 12.0),
@@ -181,11 +188,11 @@ class _MultiRegistrationPasswordInputFieldState
           ? const MultiDarkColors().additionalNeutralGrey
           : const MultiLightColors().backgroundInputsDefault;
     } else if (strength < 1 / 3) {
-      return const Color(0xFFEE9D41) /* State-Attention-Text-Main */;
+      return _Constants.indicatorWeekColor;
     } else if (strength < 2 / 3) {
-      return Colors.yellow;
+      return _Constants.indicatorMediumColor;
     } else {
-      return const Color(0xFF70BC7E) /* State-Success-Text-Default */;
+      return _Constants.indicatorStrongColor;
     }
   }
 
@@ -207,5 +214,36 @@ class _MultiRegistrationPasswordInputFieldState
           errorText: 'Password is required',
         ),
     ])(value);
+  }
+
+  StrengthColors getStrengthColorsOfIndicator(
+    double strength,
+    BuildContext context,
+  ) {
+    if (strength == 0) {
+      return const StrengthColors(
+        weak: _Constants.indicatorWeekColor,
+        medium: _Constants.indicatorMediumColor,
+        strong: _Constants.indicatorStrongColor,
+      );
+    } else if (strength < 1 / 3) {
+      return const StrengthColors(
+        weak: _Constants.indicatorWeekColor,
+        medium: _Constants.indicatorWeekColor,
+        strong: _Constants.indicatorWeekColor,
+      );
+    } else if (strength < 2 / 3) {
+      return const StrengthColors(
+        weak: _Constants.indicatorMediumColor,
+        medium: _Constants.indicatorMediumColor,
+        strong: _Constants.indicatorMediumColor,
+      );
+    } else {
+      return const StrengthColors(
+        weak: _Constants.indicatorStrongColor,
+        medium: _Constants.indicatorStrongColor,
+        strong: _Constants.indicatorStrongColor,
+      );
+    }
   }
 }
