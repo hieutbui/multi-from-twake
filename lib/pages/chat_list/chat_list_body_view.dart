@@ -5,15 +5,14 @@ import 'package:fluffychat/pages/chat_list/chat_list_body_view_style.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_skeletonizer_widget.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_tab_bar_widget.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_view_builder.dart';
+import 'package:fluffychat/pages/chat_list/new_user_empty_view.dart';
 import 'package:fluffychat/pages/chat_list/space_view.dart';
 import 'package:fluffychat/presentation/enum/chat_list/chat_list_enum.dart';
-import 'package:fluffychat/resource/image_paths.dart';
 import 'package:fluffychat/utils/stream_extension.dart';
 import 'package:fluffychat/widgets/connection_status_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linagora_design_flutter/linagora_design_flutter.dart';
 import 'package:matrix/matrix.dart';
 
@@ -62,57 +61,7 @@ class ChatListBodyView extends StatelessWidget {
               }
               if (controller.activeClient.prevBatch != null) {
                 if (controller.chatListBodyIsEmpty) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: ChatListBodyViewStyle.paddingIconSkeletons,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              ImagePaths.icSkeletons,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: ChatListBodyViewStyle.paddingOwnProfile,
-                        child: FutureBuilder<Profile?>(
-                          future: controller.activeClient
-                              .fetchOwnProfile(getFromRooms: false),
-                          builder: (context, snapshotProfile) {
-                            if (snapshotProfile.connectionState !=
-                                ConnectionState.done) {
-                              return const SizedBox();
-                            }
-                            final name =
-                                snapshotProfile.data?.displayName ?? '👋';
-                            return Column(
-                              children: [
-                                Text(
-                                  L10n.of(context)!.welcomeToTwake(name),
-                                  style: Theme.of(context).textTheme.titleLarge,
-                                  textAlign: TextAlign.center,
-                                ),
-                                Padding(
-                                  padding: ChatListBodyViewStyle
-                                      .paddingTextStartNewChatMessage,
-                                  child: Text(
-                                    L10n.of(context)!.startNewChatMessage,
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  );
+                  return NewUserEmptyView(controller: controller);
                 }
                 return SingleChildScrollView(
                   controller: controller.scrollController,
