@@ -136,6 +136,8 @@ class ChatListController extends State<ChatList>
 
   final ValueNotifier<bool> isShowSearchView = ValueNotifier(false);
 
+  final ValueNotifier<bool> isContactPermissionGranted = ValueNotifier(true);
+
   Client get activeClient => matrixState.client;
 
   MatrixState get matrixState => Matrix.of(context);
@@ -1011,6 +1013,7 @@ class ChatListController extends State<ChatList>
   Future<void> _checkContactPermissions() async {
     final hasContactsPermission =
         await _permissionHandlerService.hasContactsPermission;
+    isContactPermissionGranted.value = hasContactsPermission;
     if (!hasContactsPermission) {
       await _showContactPermissionDialog();
     }
@@ -1059,7 +1062,15 @@ class ChatListController extends State<ChatList>
 
   Future<void> onTapEnableContact(BuildContext context) async {
     await _permissionHandlerService.requestContactsPermissionActions();
+    isContactPermissionGranted.value =
+        await _permissionHandlerService.hasContactsPermission;
     Navigator.of(context).pop();
+  }
+
+  Future<void> onTapEnableAccessContact() async {
+    await _permissionHandlerService.requestContactsPermissionActions();
+    isContactPermissionGranted.value =
+        await _permissionHandlerService.hasContactsPermission;
   }
 
   Future<void> onTapNotRightNow(BuildContext context) async {
@@ -1139,6 +1150,7 @@ class ChatListController extends State<ChatList>
     scrollController.removeListener(_onScroll);
     searchChatFocusNode.dispose();
     isShowSearchView.dispose();
+    isContactPermissionGranted.dispose();
     super.dispose();
   }
 
