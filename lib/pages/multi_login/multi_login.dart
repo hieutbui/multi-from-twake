@@ -14,6 +14,7 @@ import 'package:fluffychat/utils/platform_infos.dart';
 import 'package:fluffychat/utils/twake_snackbar.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import 'package:flutter/material.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:matrix/matrix.dart';
@@ -245,10 +246,15 @@ class MultiLoginController extends State<MultiLogin> {
   void _updateButtonState() {
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
+    final String? errorPasswordMessage = FormBuilderValidators.compose([
+      FormBuilderValidators.password(
+        maxLength: 99,
+        errorText: 'Your password is not strong enough',
+      ),
+    ])(passwordController.text.trim());
     isButtonEnabledNotifier.value = email.isNotEmpty &&
         password.isNotEmpty &&
-        RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-            .hasMatch(email);
+        (errorPasswordMessage == null);
   }
 
   @override

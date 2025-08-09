@@ -61,6 +61,7 @@ class SetNewPasswordView extends StatelessWidget {
                           focusNode: controller.passwordFocusNode,
                           isRequired: true,
                           controller: controller.passwordController,
+                          isShowErrorValidator: false,
                         ),
                         const SizedBox(height: 32.0),
                         MultiRegistrationButton(
