@@ -10,6 +10,7 @@ import 'package:fluffychat/pages/registration_with_email/registration_with_email
 import 'package:fluffychat/utils/twake_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 
 class RegistrationWithEmail extends StatefulWidget {
@@ -105,8 +106,8 @@ class RegistrationWithEmailController extends State<RegistrationWithEmail> {
     }
 
     // Check if fields have content (needed for button enable/disable)
-    final hasEmail = emailController.text.isNotEmpty;
-    final hasPassword = passwordController.text.isNotEmpty;
+    final hasEmail = emailController.text.trim().isNotEmpty;
+    final hasPassword = passwordController.text.trim().isNotEmpty;
 
     // For form validation, we only use basic checks here for enabling the button
     // Full validation will happen on submit
@@ -116,12 +117,18 @@ class RegistrationWithEmailController extends State<RegistrationWithEmail> {
     if (_emailTouched) {
       // Simple email check for enabling button
       emailValid = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-          .hasMatch(emailController.text);
+          .hasMatch(emailController.text.trim());
     }
 
     if (_passwordTouched) {
       // Simple password check for enabling button (minimum 8 chars)
-      passwordValid = passwordController.text.length >= 8;
+      final String? errorPasswordMessage = FormBuilderValidators.compose([
+        FormBuilderValidators.password(
+          maxLength: 99,
+          errorText: 'Your password is not strong enough',
+        ),
+      ])(passwordController.text.trim());
+      passwordValid = errorPasswordMessage == null;
     }
 
     // Update button state based on field content and basic validation
@@ -142,8 +149,8 @@ class RegistrationWithEmailController extends State<RegistrationWithEmail> {
       return;
     }
 
-    final email = emailController.text;
-    final password = passwordController.text;
+    final email = emailController.text.trim();
+    final password = passwordController.text.trim();
 
     if (email.isEmpty || password.isEmpty) {
       TwakeSnackBar.show(
@@ -188,8 +195,8 @@ class RegistrationWithEmailController extends State<RegistrationWithEmail> {
       context.push(
         '/home/codeVerification',
         extra: SignupRequest(
-          email: emailController.text,
-          password: passwordController.text,
+          email: emailController.text.trim(),
+          password: passwordController.text.trim(),
         ),
       );
     }
