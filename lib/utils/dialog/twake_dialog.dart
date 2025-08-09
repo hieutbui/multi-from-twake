@@ -188,6 +188,7 @@ class TwakeDialog {
 
   static Future<void> showStreamDialogFullScreen({
     required Future Function() future,
+    bool isNewUserCreateAccount = false,
   }) async {
     final twakeContext = TwakeApp.routerKey.currentContext;
     if (twakeContext == null) {
@@ -199,6 +200,7 @@ class TwakeDialog {
       context: twakeContext!,
       builder: (context) => InitClientDialog(
         future: future,
+        isNewUserCreateAccount: isNewUserCreateAccount,
       ),
       barrierDismissible: true,
       barrierColor: Colors.transparent,

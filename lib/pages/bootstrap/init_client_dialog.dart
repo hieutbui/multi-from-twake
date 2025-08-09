@@ -14,10 +14,12 @@ import 'package:flutter_gen/gen_l10n/l10n.dart';
 
 class InitClientDialog extends StatefulWidget {
   final Future Function() future;
+  final bool isNewUserCreateAccount;
 
   const InitClientDialog({
     super.key,
     required this.future,
+    this.isNewUserCreateAccount = false,
   });
 
   @override
@@ -105,6 +107,7 @@ class _InitClientDialogState extends State<InitClientDialog>
       '/rooms',
       extra: LoggedInBodyArgs(
         newActiveClient: client,
+        isNewUserCreateAccount: widget.isNewUserCreateAccount,
       ),
     );
   }
