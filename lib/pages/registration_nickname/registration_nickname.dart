@@ -46,6 +46,7 @@ class RegistrationNicknameController extends State<RegistrationNickname>
 
   final TextEditingController nicknameController = TextEditingController();
   final FocusNode nicknameFocusNode = FocusNode();
+  final ScrollController scrollController = ScrollController();
 
   final ValueNotifier<Either<Failure, Success>> setUsernameNotifier =
       ValueNotifier<Either<Failure, Success>>(
@@ -83,16 +84,19 @@ class RegistrationNicknameController extends State<RegistrationNickname>
     initializeDebouncer((keyword) => fetchUsernameSuggestion(keyword));
     // Listen to text changes to update button state
     nicknameController.addListener(_updateButtonState);
+    nicknameFocusNode.addListener(_onFocusChange);
   }
 
   @override
   void dispose() {
     nicknameController.removeListener(_updateButtonState);
     nicknameController.dispose();
+    nicknameFocusNode.removeListener(_onFocusChange);
     nicknameFocusNode.dispose();
     isButtonEnabledNotifier.dispose();
     getUsernameSuggestionNotifier.dispose();
     setUsernameNotifier.dispose();
+    scrollController.dispose();
     _getUsernameSuggestionSubscription?.cancel();
     _setUsernameSubscription?.cancel();
     _signinSubscription?.cancel();
@@ -138,6 +142,11 @@ class RegistrationNicknameController extends State<RegistrationNickname>
   void _handleGetUsernameSuggestionSuccessState(Success success) {
     if (success is GetUsernameSuggestionSuccess) {
       nameSuggestions.value = success.getUsernameSuggestionResponse.suggestions;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          _scrollToBottom();
+        }
+      });
     }
   }
 
@@ -327,6 +336,28 @@ class RegistrationNicknameController extends State<RegistrationNickname>
     }
 
     if (mounted) setState(() => isLoading = false);
+  }
+
+  void _onFocusChange() {
+    if (nicknameFocusNode.hasFocus) {
+      Future.delayed(const Duration(milliseconds: 600), () {
+        if (mounted) {
+          _scrollToBottom();
+        }
+      });
+    }
+  }
+
+  void _scrollToBottom() {
+    if (!scrollController.hasClients) {
+      return;
+    }
+
+    final position = scrollController.position;
+    final maxScrollExtent = position.maxScrollExtent;
+    if (maxScrollExtent > 0) {
+      scrollController.jumpTo(maxScrollExtent);
+    }
   }
 
   @override

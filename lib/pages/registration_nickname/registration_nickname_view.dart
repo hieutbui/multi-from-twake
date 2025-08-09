@@ -27,6 +27,7 @@ class RegistrationNicknameView extends StatelessWidget {
             children: [
               Expanded(
                 child: SingleChildScrollView(
+                  controller: controller.scrollController,
                   physics: const ClampingScrollPhysics(),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -110,6 +111,7 @@ class RegistrationNicknameView extends StatelessWidget {
                           focusNode: controller.nicknameFocusNode,
                           decoration: const InputDecoration(
                             labelText: 'Nickname',
+                            fillColor: Colors.transparent,
                           ),
                           textInputAction: TextInputAction.done,
                           autofocus: true,
@@ -133,7 +135,7 @@ class RegistrationNicknameView extends StatelessWidget {
                                       vertical: 4.0,
                                     ),
                                     decoration: ShapeDecoration(
-                                      color: MultiColors.of(context)
+                                      color: const MultiLightColors()
                                           .additionalBlackout,
                                       shape: RoundedRectangleBorder(
                                         borderRadius:
