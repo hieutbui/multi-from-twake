@@ -316,6 +316,7 @@ class RegistrationNicknameController extends State<RegistrationNickname>
                 user: success.authResponse.matrixUserId,
                 initialDeviceDisplayName: PlatformInfos.clientName,
               ),
+          isNewUserCreateAccount: true,
         );
       } on MatrixException catch (exception) {
         Logs().e('Login error: $exception');

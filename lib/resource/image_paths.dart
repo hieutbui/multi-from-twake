@@ -130,6 +130,8 @@ class ImagePaths {
   static String get icEdit => _getImagePath('ic_edit.svg');
   static String get imgRegistrationNameBackground =>
       _getImagePath('img_registration_name_background.png');
+  static String get icCheckCircleGreen =>
+      _getImagePath('ic_check_circle_green.svg');
 
   static String _getImagePath(String imageName) {
     return AssetsPaths.images + imageName;

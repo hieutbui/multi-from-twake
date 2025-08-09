@@ -16,6 +16,7 @@ import 'package:fluffychat/pages/chat_list/chat_list_view.dart';
 import 'package:fluffychat/pages/chat_list/chat_list_view_style.dart';
 import 'package:fluffychat/pages/chat_list/create_group_bottom_sheet.dart';
 import 'package:fluffychat/pages/chat_list/edit_group_bottom_sheet.dart';
+import 'package:fluffychat/pages/chat_list/new_account_to_do_list_bottom_sheet.dart';
 import 'package:fluffychat/pages/settings_dashboard/settings_security/settings_security.dart';
 import 'package:fluffychat/presentation/enum/chat_list/chat_list_enum.dart';
 import 'package:fluffychat/presentation/extensions/client_extension.dart';
@@ -137,6 +138,9 @@ class ChatListController extends State<ChatList>
   final ValueNotifier<bool> isShowSearchView = ValueNotifier(false);
 
   final ValueNotifier<bool> isContactPermissionGranted = ValueNotifier(true);
+
+  final ValueNotifier<bool> isNotificationPermissionGranted =
+      ValueNotifier(false);
 
   Client get activeClient => matrixState.client;
 
@@ -986,6 +990,9 @@ class ChatListController extends State<ChatList>
       if (mounted) {
         await _checkNotificationPermissions();
         await _checkContactPermissions();
+        if (widget.adaptiveScaffoldBodyArgs?.isNewUserCreateAccount == true) {
+          _showNewAccountToDoList();
+        }
       }
     });
     _checkTorBrowser();
@@ -1001,10 +1008,21 @@ class ChatListController extends State<ChatList>
     );
   }
 
+  void _showNewAccountToDoList() {
+    showAdaptiveBottomSheet(
+      backgroundColor: Colors.transparent,
+      context: context,
+      isScrollControlled: true,
+      builder: (_) {
+        return NewAccountToDoListBottomSheet(controller: this);
+      },
+    );
+  }
+
   Future<void> _checkNotificationPermissions() async {
     final hasNotificationPermission =
         await matrixState.backgroundPush?.areNotificationsEnabled() ?? false;
-
+    isNotificationPermissionGranted.value = hasNotificationPermission;
     if (!hasNotificationPermission) {
       await _showNotificationPermissionDialog();
     }
